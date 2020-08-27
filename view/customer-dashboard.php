@@ -74,11 +74,11 @@
     <!--    Navigation bar  -->
     <!--    Customer Dashboard heading and View Button  -->
     <div class="row bg-light">
-        <div class="h2 col-9">Customer Dashboard</div>
+        <div class="h2 col-8">Customer Dashboard</div>
 
-        <div class="col-3 d-flex justify-content-sm-center my-1">
-            <button class="rounded-pill btn btn-outline-primary mr-2" data-toggle="modal" data-target="#modal_new_customer" type="button">New Customer</button>
-            <button class="rounded-pill btn btn-outline-primary" onclick="window.location='customer-manage.php';" type="button">Manage Customers</button>
+        <div class="col-4 d-flex justify-content-sm-center my-1">
+            <button class="rounded-pill btn btn-outline-primary" data-toggle="modal" data-target="#modal_new_customer" type="button">New Customer</button>
+            <button class="rounded-pill btn btn-outline-primary ml-2" onclick="window.location='customer-manage.php';" type="button">Manage Customers</button>
         </div>
     </div>
 

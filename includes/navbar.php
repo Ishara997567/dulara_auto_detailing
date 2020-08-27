@@ -3,7 +3,7 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_toggler" aria-controls="navbar_toggler" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href="#">DULARA AUTO DETAILING</a>
+    <a class="navbar-brand" href="../view/dashboard1.php">DULARA AUTO DETAILING</a>
 
     <div class="collapse navbar-collapse" id="navbar_toggler">
         <ul class="navbar-nav ml-lg-auto">
