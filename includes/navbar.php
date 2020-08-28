@@ -3,7 +3,7 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_toggler" aria-controls="navbar_toggler" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href="#">DULARA AUTO DETAILING</a>
+    <a class="navbar-brand" href="../view/dashboard1.php">DULARA AUTO DETAILING</a>
 
     <div class="collapse navbar-collapse" id="navbar_toggler">
         <ul class="navbar-nav ml-lg-auto">
@@ -84,9 +84,11 @@
         <button class="btn btn-outline-primary my-2 my-sm-0 rounded-pill button-styles" type="submit"><i class="fa fa-fw fa-search"></i></button>
     </form>
     <div class="dropdown">
+
         <a class="nav-link dropdown-toggle" href="#" id="navbar_user_dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Mikash Kumarasinghe
         </a>
+
         <div class="dropdown-menu" aria-labelledby="navbar_user_dropdown">
             <a class="dropdown-item" href="#">Action</a>
             <a class="dropdown-item" href="#">Another action</a>
