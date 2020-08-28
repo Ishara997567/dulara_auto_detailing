@@ -84,9 +84,11 @@
         <button class="btn btn-outline-primary my-2 my-sm-0 rounded-pill button-styles" type="submit"><i class="fa fa-fw fa-search"></i></button>
     </form>
     <div class="dropdown">
+
         <a class="nav-link dropdown-toggle" href="#" id="navbar_user_dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Mikash Kumarasinghe
         </a>
+
         <div class="dropdown-menu" aria-labelledby="navbar_user_dropdown">
             <a class="dropdown-item" href="#">Action</a>
             <a class="dropdown-item" href="#">Another action</a>
