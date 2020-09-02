@@ -1,30 +1,24 @@
 <?php
 
 class DbConnection{
-    public $conn;
-    private $hostName = "localhost";
-    private $dbUsername = "root";
-    private $dbPassword = "";
-    private $dbName = "dulara_auto_detailing";
+    public $con;
+    private $host = 'localhost';
+    private $user = 'root';
+    private $password = '';
+    private $db = 'dulara_auto_detailing';
 
-    function __construct(){
-        $this->conn = new mysqli(
-            $this->hostName,
-            $this->dbUsername,
-            $this->dbPassword,
-            $this->dbName   
+    public function __construct(){
+        $this->con = new mysqli(
+            $this->host,
+            $this->user,
+            $this->password,
+            $this->db
         );
 
-        if(!$this->conn->connect_error){
-            $GLOBALS['con']=$this->conn;
-            echo "Success";
-        }
-
-        else{
-            echo "Not success";
-            $GLOBALS["con"]=$this->conn;
-        }
+            if(!$this->con->connect_error){
+                $GLOBALS['conn'] = $this->con;
+            } else {
+                echo "DB Not Connected!";
+            }
     }
 }
-
-?>

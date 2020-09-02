@@ -40,10 +40,12 @@
 <!-- Content    -->
 <div class="container-fluid">
     <!-- Top Row    -->
-    <div class="row bg-light d-flex justify-content-between">
-        <div class="h2">Worker Dashboard</div>
+    <div class="row padding display-3 jumbotron welcome">
+        <p><i class="fa fa-address-card"></i>&nbsp;Worker Dashboard</p>
+    </div>
         <!-- New Worker    -->
-        <div class="my-1 mr-3">
+    <div class="row padding">
+        <div class="col-12 d-flex justify-content-end">
             <button class="rounded-pill btn btn-outline-primary" type="button" data-toggle="modal" data-target="#modal_new_worker"><i class="fa fa-plus"></i> New Worker</button>
         </div>
     </div>
@@ -194,3 +196,7 @@
             </div>
         </div>
     </div>
+</div>
+</body>
+
+<?php include '../includes/footer.php';?>

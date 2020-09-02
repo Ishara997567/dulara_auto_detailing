@@ -4,12 +4,67 @@
         a:link{
             text-decoration: none;
         }
-        .img-fluid{
-            height:25px;
-            width:200px;
+        .circle-amount{
+            border-radius: 50%;
+            line-height: 150px;
+            vertical-align: center;
+            width: 150px;
+            height: 150px;
+            padding: 10px;
+            background: #fff;
+            border: 3px solid #000;
+            color: #000;
+            text-align: center;
+            font: 100px Arial, sans-serif;
+
         }
     </style>
     <title>Main Dashboard</title>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart1);
+        google.charts.setOnLoadCallback(drawChart2);
+
+        function drawChart1() {
+            var data = google.visualization.arrayToDataTable([
+                ['Year', 'Sales', 'Expenses'],
+                ['2004',  1000,      400],
+                ['2005',  1170,      460],
+                ['2006',  660,       1120],
+                ['2007',  1030,      540]
+            ]);
+
+            var options = {
+                title: 'Worker KPI',
+                curveType: 'function',
+                legend: { position: 'bottom' }
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('line_chart1'));
+
+            chart.draw(data, options);
+        }
+        function drawChart2() {
+            var data = google.visualization.arrayToDataTable([
+                ['Year', 'Sales', 'Expenses'],
+                ['2004',  1000,      400],
+                ['2005',  1170,      460],
+                ['2006',  660,       1120],
+                ['2007',  1030,      540]
+            ]);
+
+            var options = {
+                title: 'Customer Feedbakc Reception',
+                curveType: 'function',
+                legend: { position: 'bottom' }
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('line_chart2'));
+
+            chart.draw(data, options);
+        }
+    </script>
     </head>
     <body>
 <!-- Navigation Bar -->
@@ -17,164 +72,163 @@
 <?php include '../includes/navbar.php'; ?>
 
 <!-- Side Panel -->
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-3">
-            <div class="accordion mt-2" id="accordion1">
-                <!-- Services -->
-                <div class="card">
-                    <div class="card-header" id="service_heading">
-                        <h5 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#service_collapse" aria-expanded="true" aria-controls="service_collapse">
-                                Services
-                            </button>
-                        </h5>
-                    </div>
-
-                    <div id="service_collapse" class="collapse ml-5" aria-labelledby="service_heading" data-parent="#accordion1">
-                        <div class="card-body">
-                            <a href="#">Add New Service</a><br>
-                            <a href="#">Manage Services</a><br>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Inventory -->
-
-                <div class="card">
-                    <div class="card-header" id="inventory_heading">
-                        <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#inventory_collapse" aria-expanded="false" aria-controls="inventory_collapse">
-                                Inventory
-                            </button>
-                        </h5>
-                    </div>
-                    <div id="inventory_collapse" class="collapse ml-5" aria-labelledby="inventory_heading" data-parent="#accordion1">
-                        <div class="card-body">
-                            <a href="#">Add New Item</a><br>
-                            <a href="#">Manage Inventory</a><br>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Job    -->
-
-                <div class="card">
-                    <div class="card-header" id="job_heading">
-                        <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#job_collapse" aria-expanded="false" aria-controls="job_collapse">
-                                Jobs
-                            </button>
-                        </h5>
-                    </div>
-                    <div id="job_collapse" class="collapse ml-5" aria-labelledby="job_heading" data-parent="#accordion1">
-                        <div class="card-body">
-                            <a href="#">Manage Jobs</a><br>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Sales  -->
-                <div class="card mt-2">
-                    <div class="card-header" id="sales_heading">
-                        <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#sales_collapse" aria-expanded="false" aria-controls="sales_collapse">
-                                Sales
-                            </button>
-                        </h5>
-                    </div>
-                    <div id="sales_collapse" class="collapse ml-5" aria-labelledby="job_heading" data-parent="#accordion1">
-                        <div class="card-body">
-                            <a href="#">Services</a><br>
-                            <a href="#">Hello</a><br>
-                            <a href="#">Fuck</a>
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- Customer   -->
-                <div class="card">
-                    <div class="card-header" id="customer_heading">
-                        <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#customer_collapse" aria-expanded="false" aria-controls="customer_collapse">
-                                Customer
-                            </button>
-                        </h5>
-                    </div>
-                    <div id="customer_collapse" class="collapse ml-5" aria-labelledby="customer_heading" data-parent="#accordion1">
-                        <div class="card-body">
-                            <a href="#">Services</a><br>
-                            <a href="#">Hello</a><br>
-                            <a href="#">Fuck</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Worker -->
-                <div class="card">
-                    <div class="card-header" id="worker_heading">
-                        <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#worker_collapse" aria-expanded="false" aria-controls="worker_collapse">
-                                Worker
-                            </button>
-                        </h5>
-                    </div>
-                    <div id="worker_collapse" class="collapse ml-5" aria-labelledby="worker_heading" data-parent="#accordion1">
-                        <div class="card-body">
-                            <a href="#">Services</a><br>
-                            <a href="#">Hello</a><br>
-                            <a href="#">Fuck</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- System User    -->
-                <div class="card mt-2">
-                    <div class="card-header" id="systemuser_heading">
-                        <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#sytemuser_collapse" aria-expanded="false" aria-controls="sytemuser_collapse">
-                                System Users
-                            </button>
-                        </h5>
-                    </div>
-                    <div id="sytemuser_collapse" class="collapse ml-5" aria-labelledby="systemuser_heading" data-parent="#accordion1">
-                        <div class="card-body">
-                            <a href="#">Services</a><br>
-                            <a href="#">Hello</a><br>
-                            <a href="#">Fuck</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Reports    -->
-
-                <div class="card">
-                    <div class="card-header" id="reports_heading">
-                        <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#reports_collapse" aria-expanded="false" aria-controls="reports_collapse">
-                                Reports
-                            </button>
-                        </h5>
-                    </div>
-                    <div id="reports_collapse" class="collapse ml-5" aria-labelledby="reports_heading" data-parent="#accordion1">
-                        <div class="card-body">
-                            <a href="#">Services</a><br>
-                            <a href="#">Hello</a><br>
-                            <a href="#">Fuck</a>
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
-
-
-        </div>
-
-
-
+<div class="container-fluid padding">
+    <!-- Dashboard Title    -->
+    <div class="row bg-dark align-items-end">
+        <ul class="nav flex-column">
+            <li class="nav-link">
+                <a href="#" class="display-1 navbar-brand"><i class="fa fa-tachometer"></i> Dashboard</a>
+            </li>
+        </ul>
 
     </div>
+    <div class="row padding">
+        <!-- Side bar   -->
+        <div class="col-2 d-none d-md-block sidebar bg-dark">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" href="service-manage.php"><i class="fa fa-car"></i>&nbsp;&nbsp;Services</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="inventory-dashboard.php"><i class="fa fa-list"></i>&nbsp;&nbsp;Inventory</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="job-dashboard.php"><i class="fa fa-tasks"></i>&nbsp;&nbsp;Jobs</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="customer-dashboard.php"><i class="fa fa-users"></i>&nbsp;&nbsp;Customer</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="sales-dashboard.php"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;Sale</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="worker-dashboard.php"><i class="fa fa-address-card"></i>&nbsp;&nbsp;Worker</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="notifications.php"><i class="fa fa-bell"></i>&nbsp;&nbsp;Notifications</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="fa fa-bar-chart"></i>&nbsp;&nbsp;Reports</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Card for Jobs  -->
+        <div class="col-10 mt-2">
+            <div id="slides" class="carousel slide" data-ride="carousel" data-interval="1000">
+                <ul class="carousel-indicators">
+                    <li data-target="#slides" data-slide-to="0" class="active"></li>
+                    <li data-target="#slides" data-slide-to="1"></li>
+                    <li data-target="#slides" data-slide-to="2"></li>
+                    <li data-target="#slides" data-slide-to="3"></li>
+                </ul>
+
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="../includes/images/carousel/background.jpg" width="1100" height="450">
+<!--                        <div class="carousel-caption">-->
+<!--                            <h1 class="display-1">DULARA</h1>-->
+<!--                            <h1 class="display-1">AUTO DETAILING</h1>-->
+<!--                            <div class="display-3">The finest automobile service center in area</div>-->
+<!--                        </div>-->
+                    </div>
+
+                    <div class="carousel-item">
+                        <img src="../includes/images/carousel/background2.jpg" width="1100" height="450">
+                    </div>
+
+                    <div class="carousel-item">
+                        <img src="../includes/images/carousel/background3.jpg" width="1100" height="450">
+                    </div>
+
+                    <div class="carousel-item">
+                        <img src="../includes/images/carousel/background4.jpg" width="1100" height="450">
+                    </div>
+
+
+                </div>
+
+            </div>
+            <!-- First Row 2 Cards  -->
+            <div class="row mt-2">
+                <div class="col-4">
+                    <div class="card border-success">
+                        <div class="h3 card-header">Total Jobs for Today</div>
+                        <div class="card-body d-flex justify-content-center">
+                            <p class="card-text circle-amount">99</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="card border-dark">
+                        <div class="h3 card-header">Total Job Completion</div>
+                        <div class="card-body d-flex justify-content-center">
+                            <p class="card-text text-center circle-amount">99</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="card border-danger">
+                        <div class="h3  card-header">Loyalty Enrollments</div>
+                        <div class="card-body d-flex justify-content-center">
+                            <p class="card-text text-center circle-amount">7</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 2nd Row 2 Cards  -->
+            <div class="row mt-3">
+                <div class="col-6">
+                    <div class="card">
+                        <div class="h3 card-header">Worker KPI</div>
+                        <div class="card-body">
+                            <div id="line_chart1"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="card">
+                        <div class="h3 card-header">Customer Feedback</div>
+                        <div class="card-body">
+                            <div id="line_chart2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 3rd Row 2 Cards  -->
+            <div class="row mt-3">
+                <div class="col-6">
+                    <div class="card border-secondary">
+                        <div class="h3 card-header">Today Purchasing Amount</div>
+                        <div class="card-body">
+                            <p class="display-3 text-center">Rs. 1,200,000</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="card border-primary">
+                        <div class="h3 card-header">Goods Received Today</div>
+                        <div class="card-body">
+                            <p class="display-3 text-center">Rs. 1,000,000</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<!-- Side Panel -->
+<!-- End of Side Panel -->
 <div class="col-2">&nbsp;</div>
 <div class="col-10">&nbsp;</div>
 <?php include '../includes/footer.php'; ?>

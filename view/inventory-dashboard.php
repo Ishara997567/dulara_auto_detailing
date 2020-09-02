@@ -9,6 +9,10 @@
 <!-- Page Content   -->
 <div class="container-fluid">
 
+    <div class="row padding display-3 jumbotron welcome">
+        <p><i class="fa fa-list"></i>&nbsp;Inventory Dashboard</p>
+    </div>
+
     <!-- Cards row  -->
     <div class="row">
         <!-- Card to display today's newly bought items -->
@@ -109,7 +113,8 @@
                                 <!-- Supplier Dropdown  -->
                                 <div class="form-group col-5">
                                     <label for="supplier">Supplier</label>
-                                    <select name="supplier" id="supplier" class="form-control">
+                                    <select name="supplier" id="supplier" class="custom-select form-control">
+                                        <option selected>Choose...</option>
                                         <option value="">s1 - Supplier One</option>
                                         <option value="">s2 - Supplier Two</option>
                                         <option value="">s3 - Supplier Three</option>
@@ -123,7 +128,8 @@
                                 <!-- Item Category Dropdown -->
                                 <div class="form-group col-5">
                                     <label for="item_category">Item Category</label>
-                                    <select name="item_category" id="item_category" class="form-control">
+                                    <select name="item_category" id="item_category" class="custom-select form-control">
+                                        <option selected>Choose...</option>
                                         <option value="">Item Category 1</option>
                                         <option value="">Item Category 2</option>
                                         <option value="">Item Category 3</option>
@@ -135,7 +141,8 @@
                                 <!-- Item Size Dropdown -->
                                 <div class="form-group col-5">
                                     <label for="item_size">Item Size</label>
-                                    <select name="item_size" id="item_size" class="form-control">
+                                    <select name="item_size" id="item_size" class="custom-select form-control">
+                                        <option selected>Choose...</option>
                                         <option value="">Item Size 1</option>
                                         <option value="">Item Size 2</option>
                                         <option value="">Item Size 3</option>
@@ -272,24 +279,222 @@
                 <td>Mark</td>
                 <td>Otto</td>
                 <td>@mdo</td>
-                <td><a href="#"><i class="fa fa-file-text-o fa-lg"></i></a></td>
+                <td><a href="#modal_manage_item" data-toggle="modal"><i class="fa fa-file-text-o fa-lg"></i></a></td>
             </tr>
             <tr>
                 <th scope="row">2</th>
                 <td>Jacob</td>
                 <td>Thornton</td>
                 <td>@fat</td>
-                <td><a href="#"><i class="fa fa-file-text-o fa-lg"></i></a></td>
+                <td><a href="#modal_manage_item" data-toggle="modal"><i class="fa fa-file-text-o fa-lg"></i></a></td>
             </tr>
             <tr>
                 <th scope="row">3</th>
                 <td colspan="2">Larry the Bird</td>
                 <td>@twitter</td>
-                <td><a href="#"><i class="fa fa-file-text-o fa-lg"></i></a></td>
+                <td><a href="#modal_manage_item" data-toggle="modal"><i class="fa fa-file-text-o fa-lg"></i></a></td>
             </tr>
             </tbody>
         </table>
     </div>
+
+
+
+
+
+
+
+    <!-- Modal for Manage Items -->
+    <div class="modal fade" id="modal_manage_item" tabindex="-1" role="dialog" aria-labelledby="modal_manage_item" aria-hidden="true">
+        <div class="modal-xl modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Manage Item</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="#" method="post">
+                        <!-- First Row  -->
+                        <div class="form-group row">
+                            <!-- Item code  -->
+                            <label for="item_code" class="col-2 col-form-label">Item Code</label>
+                            <div class="col-2">
+                                <input type="text" readonly class="form-control" id="Item_code" value="II000001">
+                            </div>
+                        </div>
+
+                        <!-- Second Row  -->
+                        <div class="form-group row">
+                            <!-- Item name  -->
+                            <label for="item_name" class="col-2 col-form-label">Item Name</label>
+                            <div class="input-group col-5">
+                                <input type="text"  class="form-control mr-2" id="item_name" value="">
+                                <button type="button" class="btn btn-outline-primary" id="btn_item_name_pencil"><i class="fa fa-pencil"></i></button>
+                                <button type="button" class="btn btn-outline-primary" id="btn_item_name_check"><i class="fa fa-check"></i></button>
+                            </div>
+                        </div>
+
+                        <!-- Third Row  -->
+                        <div class="form-group row">
+                            <!-- Manufacturer code  -->
+                            <label for="manufacturer_code" class="col-2 col-form-label">Manufacturer Code</label>
+                            <div class="input-group col-5">
+                                <input type="text"  class="form-control mr-2" id="manufacturer_code" value="">
+                                <button type="button" class="btn btn-outline-primary" id="btn_manufacturer_code_pencil"><i class="fa fa-pencil"></i></button>
+                                <button type="button" class="btn btn-outline-primary" id="btn_manufacturer_code_check"><i class="fa fa-check"></i></button>
+                            </div>
+                        </div>
+
+                        <!-- Forth Row  -->
+                        <div class="form-group row">
+                            <!-- Manufacturer name  -->
+                            <label for="manufacturer_name" class="col-2 col-form-label">Manufacturer Name</label>
+                            <div class="input-group col-5">
+                                <input type="text"  class="form-control mr-2" id="manufacturer_name" value="">
+                                <button type="button" class="btn btn-outline-primary" id="btn_manufacturer_name_pencil"><i class="fa fa-pencil"></i></button>
+                                <button type="button" class="btn btn-outline-primary" id="btn_manufacturer_name_check"><i class="fa fa-check"></i></button>
+                            </div>
+                        </div>
+
+                        <!-- Fifth Row  -->
+                        <div class="form-group row mb-4">
+                            <!-- Supplier  -->
+                            <label for="supplier" class="col-2 col-form-label">Supplier</label>
+                            <div class="input-group col-5">
+                                <input type="text"  class="form-control mr-2" id="supplier" value="">
+                                <button type="button" class="btn btn-outline-primary" id="btn_supplier_pencil"><i class="fa fa-pencil"></i></button>
+                                <button type="button" class="btn btn-outline-primary" id="btn_supplier_check"><i class="fa fa-check"></i></button>
+                            </div>
+                        </div>
+
+
+                        <!-- Sixth Row  -->
+                        <div class="form-group row">
+                            <!-- Item category  -->
+                            <label for="item_category" class="col-2 col-form-label">Item Category</label>
+                            <div class="input-group col-4">
+                                <input type="text"  class="form-control mr-2" id="item_category" value=" Change to dropdown">
+                                <button type="button" class="btn btn-outline-primary" id="btn_item_category_pencil"><i class="fa fa-pencil"></i></button>
+                                <button type="button" class="btn btn-outline-primary" id="btn_item_category_check"><i class="fa fa-check"></i></button>
+                            </div>
+
+
+                            <!-- Item Size  -->
+                            <label for="item_size" class="col-2 col-form-label">Item Size</label>
+                            <div class="input-group col-4">
+                                <input type="text"  class="form-control mr-2" id="item_size" value=" Change to dropdown">
+                                <button type="button" class="btn btn-outline-primary" id="btn_item_size_pencil"><i class="fa fa-pencil"></i></button>
+                                <button type="button" class="btn btn-outline-primary" id="btn_item_size_check"><i class="fa fa-check"></i></button>
+                            </div>
+                        </div>
+                        <!-- Seventh Row  -->
+                        <div class="form-group row">
+                            <!-- Quantity  -->
+                            <label for="quantity" class="col-2 col-form-label">Quantity</label>
+                            <div class="input-group col-4 my-2">
+                                <input type="text"  class="form-control mr-2" id="quantity" value=" Change to dropdown">
+                                <button type="button" class="btn btn-outline-primary" id="btn_quantity_pencil"><i class="fa fa-pencil"></i></button>
+                                <button type="button" class="btn btn-outline-primary" id="btn_quantity_check"><i class="fa fa-check"></i></button>
+                            </div>
+
+                            <!-- ROP  -->
+                            <label for="rop" class="col-2 col-form-label">ROP</label>
+                            <div class="input-group col-4 my-2">
+                                <input type="text"  class="form-control mr-2" id="rop" value=" Change to dropdown">
+                                <button type="button" class="btn btn-outline-primary" id="btn_rop_pencil"><i class="fa fa-pencil"></i></button>
+                                <button type="button" class="btn btn-outline-primary" id="btn_rop_check"><i class="fa fa-check"></i></button>
+                            </div>
+
+                            <!-- Eighth Row     -->
+                            <!-- Order Quantity  -->
+                            <label for="order_quantity" class="col-2 col-form-label">Order Quantity</label>
+                            <div class="input-group col-4">
+                                <input type="text"  class="form-control mr-2" id="order_quantity" value=" Change to dropdown">
+                                <button type="button" class="btn btn-outline-primary" id="btn_order_quantity_pencil"><i class="fa fa-pencil"></i></button>
+                                <button type="button" class="btn btn-outline-primary" id="btn_order_quantity_check"><i class="fa fa-check"></i></button>
+                            </div>
+
+                            <!-- Lead Time  -->
+                            <label for="lead_time" class="col-2 col-form-label">Lead Time</label>
+                            <div class="input-group col-4">
+                                <input type="text"  class="form-control mr-2" id="lead_time" value=" Change to dropdown">
+                                <button type="button" class="btn btn-outline-primary" id="btn_lead_time_pencil"><i class="fa fa-pencil"></i></button>
+                                <button type="button" class="btn btn-outline-primary" id="btn_lead_time_check"><i class="fa fa-check"></i></button>
+                            </div>
+                        </div>
+
+                        <!-- Ninth Row  -->
+                        <div class="form-group row">
+                            <!-- Purchase Unit Price Rs.  -->
+                            <label for="p_unit_price" class="col-2 col-form-label">Purchase Unit Price Rs.</label>
+                            <div class="input-group col-4 my-2">
+                                <input type="text"  class="form-control mr-2" id="p_unit_price" value=" Change to dropdown">
+                                <button type="button" class="btn btn-outline-primary" id="btn_p_unit_price_pencil"><i class="fa fa-pencil"></i></button>
+                                <button type="button" class="btn btn-outline-primary" id="btn_p_unit_price_check"><i class="fa fa-check"></i></button>
+                            </div>
+
+                            <!-- Selling Unit Price Rs.  -->
+                            <label for="s_unit_price" class="col-2 col-form-label">Selling Unit Price Rs.</label>
+                            <div class="input-group col-4 my-2">
+                                <input type="text"  class="form-control mr-2" id="s_unit_price" value=" Change to dropdown">
+                                <button type="button" class="btn btn-outline-primary" id="btn_s_unit_price_pencil"><i class="fa fa-pencil"></i></button>
+                                <button type="button" class="btn btn-outline-primary" id="btn_s_unit_price_check"><i class="fa fa-check"></i></button>
+                            </div>
+
+                            <!-- Tenth Row     -->
+                            <!-- Discount  -->
+                            <label for="order_quantity" class="col-2 col-form-label">Discount</label>
+                            <div class="input-group col-4">
+                                <input type="text"  class="form-control mr-2" id="discount" value=" Change to dropdown">
+                                <button type="button" class="btn btn-outline-primary" id="btn_discount_pencil"><i class="fa fa-pencil"></i></button>
+                                <button type="button" class="btn btn-outline-primary" id="btn_discount_check"><i class="fa fa-check"></i></button>
+                            </div>
+
+                            <!-- Handling Charges Rs.  -->
+                            <label for="handling_charges" class="col-2 col-form-label">Handling Charges Rs.</label>
+                            <div class="input-group col-4">
+                                <input type="text"  class="form-control" id="handling_charges" value=" Change to dropdown">
+                                <button type="button" class="btn btn-outline-primary" id="btn_handling_charges_pencil"><i class="fa fa-pencil"></i></button>
+                                <button type="button" class="btn btn-outline-primary" id="btn_handling_charges_check"><i class="fa fa-check"></i></button>
+                            </div>
+                        </div>
+
+                        <!-- Eleventh Row  -->
+                        <div class="form-group row mt-4">
+                            <!-- Vat Rate  -->
+                            <label for="vat_rate" class="col-2 col-form-label">Vat Rate</label>
+                            <div class="input-group col-4">
+                                <input type="text"  class="form-control mr-2" id="vat_rate" value=" Change to dropdown">
+                                <button type="button" class="btn btn-outline-primary" id="btn_vat_rate_pencil"><i class="fa fa-pencil"></i></button>
+                                <button type="button" class="btn btn-outline-primary" id="btn_vat_rate_check"><i class="fa fa-check"></i></button>
+                            </div>
+
+
+                            <!-- Location  -->
+                            <label for="location" class="col-2 col-form-label">Location</label>
+                            <div class="input-group col-4">
+                                <input type="text"  class="form-control mr-2" id="location" value=" Change to dropdown">
+                                <button type="button" class="btn btn-outline-primary" id="btn_location_pencil"><i class="fa fa-pencil"></i></button>
+                                <button type="button" class="btn btn-outline-primary" id="btn_location_check"><i class="fa fa-check"></i></button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
 </div>
 
 <?php include '../includes/footer.php' ?>

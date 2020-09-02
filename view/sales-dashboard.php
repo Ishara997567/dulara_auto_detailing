@@ -92,7 +92,7 @@
     <div class="container-fluid">
         <!-- Top Row for Navigations-->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="navbar-brand">Sales Dashboard</div>
+            <div class="navbar-brand"><i class="fa fa-shopping-cart"></i>&nbsp;Sales Dashboard</div>
 
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav">
@@ -110,7 +110,7 @@
 
 
                     <!-- Modal for Purchase Order-->
-                    <div class="modal fade" id="po_modal" tabindex="-1" role="dialog" aria-labelledby="po_modal_modal" aria-hidden="true">
+                    <div class="modal fade" id="po_modal" tabindex="-1" role="dialog" aria-labelledby="po_modal" aria-hidden="true">
                         <div class="modal-xl modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -133,7 +133,8 @@
                                             <!-- Supplier   -->
                                             <div class="form-group col-md-6">
                                                 <label for="supplier">Supplier</label>
-                                                <select name="supplier" id="supplier" class="form-control">
+                                                <select class="custom-select" name="supplier" id="supplier" class="form-control">
+                                                    <option selected>Choose...</option>
                                                     <option value="s125">Supplier Name</option>
                                                     <option value="s523">Supplier Name</option>
                                                     <option value="s153">Supplier Name</option>
@@ -329,7 +330,8 @@
                                             <!-- Purchase Order ID  -->
                                             <div class="form-group col-md-4">
                                                 <label for="po">Purchase Order ID</label>
-                                                <select name="po" id="po" class="form-control">
+                                                <select class="custom-select" name="po" id="po" class="form-control">
+                                                    <option selected>Choose...</option>
                                                     <option value="PO123696">PO123696</option>
                                                     <option value="PO123392">PO123392</option>
                                                     <option value="PO136944">PO136944</option>
@@ -340,7 +342,8 @@
                                             <!-- Supplier   -->
                                             <div class="form-group col-md-4">
                                                 <label for="supplier">Supplier</label>
-                                                <select name="supplier" id="supplier" class="form-control">
+                                                <select class="custom-select" name="supplier" id="supplier" class="form-control">
+                                                    <option selected>Choose...</option>
                                                     <option value="s125">Supplier Name</option>
                                                     <option value="s523">Supplier Name</option>
                                                     <option value="s153">Supplier Name</option>
@@ -451,7 +454,8 @@
                                         <!-- GRN Order ID  -->
                                         <div class="form-group col-md-6">
                                             <label for="grn">GRN Order ID</label>
-                                            <select name="grn" id="grn" class="form-control">
+                                            <select class="custom-select" name="grn" id="grn" class="form-control">
+                                                <option selected>Choose...</option>
                                                 <option value="GRN123696">GRN123696</option>
                                                 <option value="GRN123392">GRN123392</option>
                                                 <option value="GRN136944">GRN136944</option>
@@ -636,10 +640,6 @@
                             </div>
                         </div>
                     </div>
-
-
-
-
                 </ul>
             </div>
         </nav>
