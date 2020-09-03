@@ -16,6 +16,7 @@ $(document).ready(function (){
         {
             if(username=="")
             {
+
                 $("#alertmsg").html("Username Cannot be Empty!!!");
                 $("#alertmsg").addClass("alert alert-danger");
                 $("#username").focus();

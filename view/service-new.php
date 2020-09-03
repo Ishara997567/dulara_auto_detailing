@@ -8,10 +8,8 @@
     <!-- Content    -->
     <div class="container-fluid">
         <!-- Top Row    -->
-        <div class="row bg-light">
-            <div class="h2 col-12">
-                <p class="d-flex justify-content-start">Create A New Service</p>
-            </div>
+        <div class="row padding display-3 jumbotron welcome">
+            <p><i class="fa fa-plus"></i>&nbsp;Create A New Service</p>
         </div>
         <!-- Form   -->
         <form action="#" method="post">
@@ -34,7 +32,8 @@
                 <!-- Category Dropdown  -->
                 <div class="form-group col-5">
                     <label for="service_category">Service Category</label>
-                    <select name="service_category" id="service_category" class="form-control">
+                    <select class="custom-select" name="service_category" id="service_category" class="form-control">
+                        <option value="choose" selected>Choose...</option>
                         <option value="">c1 - Service Category One</option>
                         <option value="">c2 - Service Category Two</option>
                         <option value="">c3 - Service Category Three</option>
@@ -46,7 +45,8 @@
                 <!-- Sub Category Dropdown -->
                 <div class="form-group col-5">
                     <label for="service_required_item_1">Service Sub Category</label>
-                    <select name="item_category" id="service_required_item_1" class="form-control">
+                    <select class="custom-select" name="item_category" id="service_required_item_1" class="form-control">
+                        <option value="choose" selected>Choose...</option>
                         <option value="">Service Sub Category 1</option>
                         <option value="">Service Sub Category 2</option>
                         <option value="">Service Sub Category 3</option>
@@ -70,7 +70,8 @@
                 <!-- Service Item #1 Dropdown -->
                 <div class="form-group col-5">
                     <label for="service_required_item_1">Service Required Item #1</label>
-                    <select name="service_required_item_1" id="service_required_item_1" class="form-control">
+                    <select class="custom-select" name="service_required_item_1" id="service_required_item_1" class="form-control">
+                        <option value="choose" selected>Choose...</option>
                         <option value="">i1 - Item 1</option>
                         <option value="">i2 - Item 2</option>
                         <option value="">i3 - Item 3</option>
@@ -82,7 +83,8 @@
                 <!-- Service Item #2 Dropdown -->
                 <div class="form-group col-5">
                     <label for="service_required_item_2">Service Required Item #2</label>
-                    <select name="service_required_item_2" id="service_required_item_2" class="form-control">
+                    <select class="custom-select" name="service_required_item_2" id="service_required_item_2" class="form-control">
+                        <option value="choose" selected>Choose...</option>
                         <option value="">i1 - Item 1</option>
                         <option value="">i2 - Item 2</option>
                         <option value="">i3 - Item 3</option>
@@ -97,7 +99,8 @@
                 <!-- Service Item #3 Dropdown -->
                 <div class="form-group col-5">
                     <label for="service_required_item_3">Service Required Item #3</label>
-                    <select name="service_required_item_3" id="service_required_item_3" class="form-control">
+                    <select class="custom-select" name="service_required_item_3" id="service_required_item_3" class="form-control">
+                        <option value="choose" selected>Choose...</option>
                         <option value="">i1 - Item 1</option>
                         <option value="">i2 - Item 2</option>
                         <option value="">i3 - Item 3</option>
@@ -109,7 +112,8 @@
                 <!-- Service Item #4 Dropdown -->
                 <div class="form-group col-5">
                     <label for="service_required_item_4">Service Required Item #4</label>
-                    <select name="service_required_item_4" id="service_required_item_4" class="form-control">
+                    <select class="custom-select" name="service_required_item_4" id="service_required_item_4" class="form-control">
+                        <option value="choose" selected>Choose...</option>
                         <option value="">i1 - Item 1</option>
                         <option value="">i2 - Item 2</option>
                         <option value="">i3 - Item 3</option>
@@ -124,7 +128,8 @@
                 <!-- Service Item #5 Dropdown -->
                 <div class="form-group col-5">
                     <label for="service_required_item_5">Service Required Item #5</label>
-                    <select name="service_required_item_5" id="service_required_item_5" class="form-control">
+                    <select class="custom-select" name="service_required_item_5" id="service_required_item_5" class="form-control">
+                        <option value="choose" selected>Choose...</option>
                         <option value="">i1 - Item 1</option>
                         <option value="">i2 - Item 2</option>
                         <option value="">i3 - Item 3</option>
@@ -136,7 +141,8 @@
                 <!-- Service Item #6 Dropdown -->
                 <div class="form-group col-5">
                     <label for="service_required_item_6">Service Required Item #6</label>
-                    <select name="service_required_item_6" id="service_required_item_6" class="form-control">
+                    <select class="custom-select" name="service_required_item_6" id="service_required_item_6" class="form-control">
+                        <option value="choose" selected>Choose...</option>
                         <option value="">i1 - Item 1</option>
                         <option value="">i2 - Item 2</option>
                         <option value="">i3 - Item 3</option>
@@ -160,7 +166,8 @@
                 <!-- Assigned Worker #1 Dropdown    -->
                 <div class="form-group col-5">
                     <label for="assigned_worker_1">Assigned Worker #1</label>
-                    <select name="assigned_worker_1" id="assigned_worker_1" class="form-control">
+                    <select class="custom-select" name="assigned_worker_1" id="assigned_worker_1" class="form-control">
+                        <option value="choose" selected>Choose...</option>
                         <option value="">w1 - Worker 1</option>
                         <option value="">w2 - Worker 2</option>
                         <option value="">w3 - Worker 3</option>
@@ -172,7 +179,8 @@
                 <!-- Assigned Worker #2 Dropdown    -->
                 <div class="form-group col-5">
                     <label for="assigned_worker_2">Assigned Worker #2</label>
-                    <select name="assigned_worker_2" id="assigned_worker_2" class="form-control">
+                    <select class="custom-select" name="assigned_worker_2" id="assigned_worker_2" class="form-control">
+                        <option value="choose" selected>Choose...</option>
                         <option value="">w1 - Worker 1</option>
                         <option value="">w2 - Worker 2</option>
                         <option value="">w3 - Worker 3</option>
@@ -187,7 +195,8 @@
                 <!-- Assigned Worker #3 Dropdown    -->
                 <div class="form-group col-5">
                     <label for="assigned_worker_3">Assigned Worker #3</label>
-                    <select name="assigned_worker_3" id="assigned_worker_3" class="form-control">
+                    <select class="custom-select" name="assigned_worker_3" id="assigned_worker_3" class="form-control">
+                        <option value="choose" selected>Choose...</option>
                         <option value="">w1 - Worker 1</option>
                         <option value="">w2 - Worker 2</option>
                         <option value="">w3 - Worker 3</option>
@@ -199,7 +208,8 @@
                 <!-- Assigned Worker #4 Dropdown    -->
                 <div class="form-group col-5">
                     <label for="assigned_worker_4">Assigned Worker #4</label>
-                    <select name="assigned_worker_4" id="assigned_worker_4" class="form-control">
+                    <select class="custom-select" name="assigned_worker_4" id="assigned_worker_4" class="form-control">
+                        <option value="choose" selected>Choose...</option>
                         <option value="">w1 - Worker 1</option>
                         <option value="">w2 - Worker 2</option>
                         <option value="">w3 - Worker 3</option>
@@ -222,9 +232,9 @@
             <div class="form-row mb-2">
                 <div class="col-8">&nbsp;</div>
                 <div class="btn-group col-2" role="group" aria-label="Page Submission">
-                    <button type="submit" class="form-control btn btn-outline-success" id="btn_add_item"><i class="fa fa-save"></i> Save</button>
+                    <button type="button" class="form-control btn btn-outline-danger rounded-pill" id="btn_cancel"><i class="fa fa-times"></i> Cancel</button>
                     &nbsp;
-                    <button type="button" class="form-control btn btn-outline-danger" id="btn_cancel"><i class="fa fa-times"></i> Cancel</button>
+                    <button type="submit" class="form-control btn btn-outline-primary rounded-pill" id="btn_add_item"><i class="fa fa-save"></i> Save</button>
                 </div>
             </div>
         </form>

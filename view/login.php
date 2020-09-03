@@ -67,6 +67,41 @@ $loginObj = new Login();
         <h1 class="display-1">DULARA AUTO DETAILING</h1>
         <h2 class="text-center display-4">The finest automobile service center in the area</h2>
     </div>
+<!-- Success Message    -->
+    <?php
+    if(isset($_GET['m'])){
+        $success_message = $_GET['m'];
+        $success_message = base64_decode($success_message);
+        ?>
+        <!-- Success Message -->
+        <div class="row padding d-flex justify-content-center">
+            <div class="col-10 text-center alert alert-success display-4">
+                <?php echo $success_message; ?>
+            </div>
+        </div>
+        <!-- End of Success Message    -->
+    <?php } ?>
+
+
+
+
+    <!-- Fatal Message    -->
+    <?php
+    if(isset($_GET['fatal'])){
+        $fatal_message = $_GET['fatal'];
+        $fatal_message = base64_decode($fatal_message);
+        ?>
+        <!-- Success Message -->
+        <div class="row padding d-flex justify-content-center">
+            <div class="col-10 text-center alert alert-danger display-4">
+                <?php echo $fatal_message; ?>
+            </div>
+        </div>
+        <!-- End of Fatal Message    -->
+    <?php } ?>
+
+
+
     <!--Create Account  -->
     <div class="row padding welcome">
         <div class="col-4 d-flex justify-content-center">
@@ -108,17 +143,6 @@ $loginObj = new Login();
         </div>
     </div>
 
-    <!--        <div class="row">-->
-    <!--            <div class="col-md-3">&nbsp;</div>-->
-    <!--            <div class="col-md-6">-->
-    <!--                <div id="alertmsg">-->
-    <!---->
-    <!--                </div>-->
-    <!--            </div>-->
-    <!--            <div class="col-md-3">&nbsp;</div>-->
-    <!--        </div>-->
-
-
 
 
     <!-- Content    -->
@@ -151,14 +175,13 @@ $loginObj = new Login();
                             <div class="modal-body">
 
                                 <!--   Modal Form-->
-
-
                                 <!-- jQuery Error Message   -->
 
 
                                 <div class="row padding d-flex justify-content-center">
                                     <div class="col-8 text-center">
                                         <div id="alert_new_user">
+
                                         </div>
                                     </div>
                                 </div>
@@ -209,27 +232,43 @@ $loginObj = new Login();
                                     </div>
                                 </fieldset>
 
+                                <!-- Date of Birth  -->
+
+
                                 <div class="form-row">
                                     <div class="form-group col-6">
                                         <label for="dob">Date of Birth</label>
                                         <input type="date" name="dob" id="dob" class="form-control" />
                                     </div>
+
+
+                                    <!-- NIC    -->
+
                                     <div class="form-group col-6">
                                         <label for="nic">NIC</label>
                                         <input type="text" name="nic" id="nic" class="form-control"/>
                                     </div>
                                 </div>
 
+
+                                <!-- Contact No 1   -->
+
                                 <div class="form-row">
                                     <div class="form-group col-6">
                                         <label for="cn1">Contact Number 1</label>
                                         <input type="text" name="cn1" id="cn1" class="form-control">
                                     </div>
+
+                                    <!-- Contact No 1   -->
+
+
                                     <div class="form-group col-6">
                                         <label for="cn2">Contact Number 2</label>
                                         <input type="text" name="cn2" id="cn2" class="form-control">
                                     </div>
                                 </div>
+
+                                <!-- User Access Level  -->
 
 
                                 <div class="form-row">
@@ -249,6 +288,8 @@ $loginObj = new Login();
                                         </select>
                                     </div>
 
+                                    <!-- User Image -->
+
                                     <div class="form-group col-6">
                                         <label for="user_img">User Image</label>
                                         <input type="file" name="user_img" id="user_img" class="form-control"/>
@@ -260,7 +301,7 @@ $loginObj = new Login();
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Save changes</button>
+                                <button type="submit" class="btn btn-primary" id="btn_submit" name="submit">Save changes</button>
                             </div>
                         </form>
                     </div>
