@@ -8,10 +8,8 @@
 <!-- Content    -->
 <div class="container-fluid">
     <!-- Top Row    -->
-    <div class="row">
-        <div class="h2 col-12">
-            <p class="d-flex justify-content-start">Manage Service</p>
-        </div>
+    <div class="row padding display-3 jumbotron welcome">
+        <p><i class="fa fa-car"></i>&nbsp;Manage Services</p>
     </div>
     <!-- Form   -->
     <form action="#" method="post">

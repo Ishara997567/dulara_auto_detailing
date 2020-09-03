@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="9e244c1c-63d3-46fd-9947-7a1cc4069edb" name="XAMPP Apache Server" url="http://localhost:8080/dulara_auto_detailing">
+        <fileTransfer mountedRoot="C:\xampp\htdocs\dulara_auto_detailing" accessType="MOUNT" port="0" />
+      </webServer>
+    </option>
+  </component>
+</project>

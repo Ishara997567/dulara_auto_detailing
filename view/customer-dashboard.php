@@ -73,10 +73,15 @@
 <div class="container-fluid">
     <!--    Navigation bar  -->
     <!--    Customer Dashboard heading and View Button  -->
-    <div class="row bg-light">
-        <div class="h2 col-8">Customer Dashboard</div>
+    <div class="row padding jumbotron welcome display-3">
+        <p><i class="fa fa-users"></i>&nbsp;Customer Dashboard</p>
 
-        <div class="col-4 d-flex justify-content-sm-center my-1">
+    </div>
+
+    <div class="row padding mt-n2 mb-3">
+        <div class="col-8">&nbsp;</div>
+
+        <div class="col-4 d-flex justify-content-sm-center">
             <button class="rounded-pill btn btn-outline-primary" data-toggle="modal" data-target="#modal_new_customer" type="button">New Customer</button>
             <button class="rounded-pill btn btn-outline-primary ml-2" onclick="window.location='customer-manage.php';" type="button">Manage Customers</button>
         </div>
@@ -212,7 +217,7 @@
                         </div>
                     </div>
                     <div class="col-md-12 d-flex justify-content-end mt-2">
-                        <a href="#" class="btn btn-outline-primary rounded-pill">Manage Loyalty</a>
+                        <a href="customer-loyalty-manage.php" class="btn btn-outline-primary rounded-pill">Manage Loyalty</a>
                     </div>
                 </div>
             </div>
