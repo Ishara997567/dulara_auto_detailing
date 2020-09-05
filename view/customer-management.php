@@ -1,5 +1,5 @@
 <?php include '../includes/header.php'; ?>
-<title>Customer Dashboard</title>
+<title>Customer Management</title>
 <!--Load the AJAX API-->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
@@ -71,21 +71,26 @@
 <?php include '../includes/navbar.php'; ?>
 <!--    Page Content    -->
 <div class="container-fluid">
-    <!--    Navigation bar  -->
-    <!--    Customer Dashboard heading and View Button  -->
-    <div class="row padding jumbotron welcome display-3">
-        <p><i class="fa fa-users"></i>&nbsp;Customer Dashboard</p>
+<!--    <div class="row padding jumbotron welcome display-3">-->
+<!--        <p><i class="fa fa-users"></i>&nbsp;Customer Dashboard</p>-->
+<!---->
+<!--    </div>-->
 
-    </div>
 
-    <div class="row padding mt-n2 mb-3">
-        <div class="col-8">&nbsp;</div>
+    <!-- Top Row    -->
+    <div class="row padding welcome bg-light mb-3 py-2">
+        <!-- Module Name    -->
+        <div class="col-8">
+            <div class="navbar-brand ml-5"><i class="fa fa-users"></i>&nbsp;Customer Management</div>
+        </div>
 
-        <div class="col-4 d-flex justify-content-sm-center">
-            <button class="rounded-pill btn btn-outline-primary" data-toggle="modal" data-target="#modal_new_customer" type="button">New Customer</button>
-            <button class="rounded-pill btn btn-outline-primary ml-2" onclick="window.location='customer-manage.php';" type="button">Manage Customers</button>
+        <!-- New Job    -->
+        <div class="col-4 d-flex justify-content-end">
+            <button class="rounded-pill btn btn-outline-primary" data-toggle="modal" data-target="#modal_new_customer" type="button"><i class="fa fa-plus"></i> New Customer</button>
+            <button class="rounded-pill btn btn-outline-primary ml-2" onclick="window.location='customer-manage.php';" type="button"><i class="fa fa-file-text-o"></i> Manage Customer Details</button>
         </div>
     </div>
+
 
     <!-- Modal New Customer-->
     <div class="modal fade" id="modal_new_customer" tabindex="-1" role="dialog" aria-hidden="true">

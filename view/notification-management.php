@@ -1,5 +1,5 @@
 <?php include '../includes/header.php'; ?>
-    <title>Notifications</title>
+    <title>Notification Management</title>
     </head>
     <body>
 <!-- Navigation Bar -->
@@ -8,7 +8,10 @@
 <div class="container-fluid">
     <!-- Top Row    -->
     <div class="row bg-light">
-        <div class="h2 col-9">Notifications</div>
+<!--        <div class="h2 col-9">Notifications</div>-->
+        <div class="col-9">
+            <div class="navbar-brand ml-5"><i class="fa fa-tasks"></i>&nbsp;Notification Management</div>
+        </div>
         <div class="h5 col-3 d-flex justify-content-sm-end">
             <p class="mt-1">Do not disturb</p> &nbsp;&nbsp;
             <label class="switch mb-3">

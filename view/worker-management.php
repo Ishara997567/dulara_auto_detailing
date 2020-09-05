@@ -1,5 +1,5 @@
 <?php include '../includes/header.php'; ?>
-<title>Worker Dashboard</title>
+<title>Worker Management</title>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
     google.charts.load("current", {packages:['corechart']});
@@ -39,16 +39,20 @@
 
 <!-- Content    -->
 <div class="container-fluid">
+
     <!-- Top Row    -->
-    <div class="row padding display-3 jumbotron welcome">
-        <p><i class="fa fa-address-card"></i>&nbsp;Worker Dashboard</p>
-    </div>
+    <div class="row padding welcome bg-light mb-3 py-2 mr-n5">
+        <!-- Module Name    -->
+        <div class="col-8">
+            <div class="navbar-brand ml-5"><i class="fa fa-address-card"></i>&nbsp;Worker Management</div>
+        </div>
+
         <!-- New Worker    -->
-    <div class="row padding">
-        <div class="col-12 d-flex justify-content-end">
+        <div class="col-3 d-flex justify-content-end">
             <button class="rounded-pill btn btn-outline-primary" type="button" data-toggle="modal" data-target="#modal_new_worker"><i class="fa fa-plus"></i> New Worker</button>
         </div>
     </div>
+
 
     <!-- Modal for new worker   -->
     <div class="modal fade" id="modal_new_worker" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -77,7 +81,7 @@
         <div class="col-6">
             <div class="card">
                 <h5 class="card-header">
-                    Currently Engaged Worker
+                    Currently Engaged Workers
                 </h5>
                 <div class="card-body">
                     <!-- First two engaged workers  -->

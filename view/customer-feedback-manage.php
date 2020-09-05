@@ -8,12 +8,8 @@
 <!-- Content    -->
 <div class="container-fluid">
     <!-- Top Row    -->
-    <div class="row bg-light d-flex justify-content-between">
-        <div class="h2">Feedback Management</div>
-        <!-- New Message    -->
-        <div class="my-1 mr-3">
-            <button class="rounded-pill btn btn-outline-primary" type="button" data-toggle="modal" data-target="#new_message_modal" data-whatever="@mdo"><i class="fa fa-plus"></i> New Message</button>
-        </div>
+    <div class="row padding jumbotron welcome display-4">
+        <p><i class="fa fa-smile-o"></i> Customer Feedback Management</p>
     </div>
 
     <!-- Modal for New Message   -->
@@ -95,7 +91,11 @@
         </div>
     </div>
 
-
+    <div class="row padding mb-2">
+        <div class="col-12">
+            <button class="rounded-pill btn btn-outline-primary" type="button" data-toggle="modal" data-target="#new_message_modal" data-whatever="@mdo"><i class="fa fa-plus"></i> New Message</button>
+        </div>
+    </div>
     <!-- View Message   -->
     <div class="table-responsive">
         <table class="table table-sm">

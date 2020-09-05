@@ -7,16 +7,17 @@
 <!-- Content    -->
 <div class="container-fluid">
     <!-- Top Row    -->
-    <div class="row padding display-3 jumbotron welcome">
-        <p><i class="fa fa-tasks"></i>&nbsp;Job Dashboard</p>
-    </div>
+    <div class="row padding welcome bg-light mb-3 py-2 mr-n5">
+        <!-- Module Name    -->
+        <div class="col-8">
+            <div class="navbar-brand ml-5"><i class="fa fa-tasks"></i>&nbsp;Job Management</div>
+        </div>
+
         <!-- New Job    -->
-    <div class="row padding">
-        <div class="col-12 d-flex justify-content-end">
+        <div class="col-3 d-flex justify-content-end">
             <button class="rounded-pill btn btn-outline-primary" type="button" data-toggle="modal" data-target="#new_job_modal" data-whatever="@mdo"><i class="fa fa-plus"></i> New Job</button>
         </div>
     </div>
-
     <!-- Modal for New Job   -->
 
     <div class="modal fade" id="new_job_modal" tabindex="-1" role="dialog" aria-labelledby="new_job_modal_label" aria-hidden="true">

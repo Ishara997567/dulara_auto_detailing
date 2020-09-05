@@ -5,19 +5,11 @@
 <?php include '../includes/navbar.php'; ?>
 <div class="container-fluid padding">
     <div class="row padding jumbotron welcome display-4">
+        <p>
+        <i class="fa fa-trophy"></i>
         Customer Loyalty Management
+        </p>
     </div>
-    <!--    <div class="row padding">-->
-    <!--        <div class="col-md-8">-->
-    <!--            &nbsp;-->
-    <!--        </div>-->
-    <!---->
-    <!--        <div class="col-md-4 d-flex justify-content-end">-->
-    <!--            <button class="rounded-pill btn btn-outline-primary" data-toggle="modal" data-target="#modal_new_loyalty" type="button">New Loyalty Program</button>-->
-    <!--        </div>-->
-    <!---->
-    <!--    </div>-->
-    <!-- Modal for New Loyalty Program  -->
 
 
     <div class="modal fade" id="modal_new_loyalty" tabindex="-1" role="dialog" aria-hidden="true">
@@ -111,7 +103,7 @@
     <!-- Customer Info Manage  -->
 
     <div class="row padding">
-        <div class="col-md-3"><button class="rounded-pill btn btn-outline-primary" data-toggle="modal" data-target="#modal_new_loyalty" type="button">New Loyalty Program</button></div>
+        <div class="col-md-3"><button class="rounded-pill btn btn-outline-primary" data-toggle="modal" data-target="#modal_new_loyalty" type="button"><i class="fa fa-plus"></i> New Loyalty Program</button></div>
         <div class="col-md-9 justify-content-end">
             <form class="form-inline p-0" id="frm_item_search">
                 <input class="rounded-pill form-control my-1 mr-sm-2 w-75" type="search" placeholder="Search . . ." aria-label="Search">
