@@ -1,5 +1,5 @@
 <?php include '../includes/header.php' ?>
-    <title>Inventory</title>
+    <title>Inventory Management</title>
     </head>
     <body>
 
@@ -9,12 +9,21 @@
 <!-- Page Content   -->
 <div class="container-fluid">
 
-    <div class="row padding display-3 jumbotron welcome">
-        <p><i class="fa fa-list"></i>&nbsp;Inventory Dashboard</p>
+    <!-- Top Row    -->
+    <div class="row padding welcome bg-light mb-3 py-2 mr-n5">
+        <!-- Module Name    -->
+        <div class="col-8">
+            <div class="navbar-brand ml-5"><i class="fa fa-list"></i>&nbsp;Inventory Management</div>
+        </div>
+
+        <!-- New Item  -->
+        <div class="col-3 d-flex justify-content-end">
+            <button class="btn btn-outline-primary rounded-pill my-xl-1" data-toggle="modal" data-target="#modal_new_item"><i class="fa fa-plus"></i> New Item</button>
+        </div>
     </div>
 
     <!-- Cards row  -->
-    <div class="row">
+    <div class="row padding">
         <!-- Card to display today's newly bought items -->
         <div class="col-md-6">
             <div class="card text-white bg-primary mb-3 mt-3" style="max-width: 45rem;">
@@ -25,12 +34,15 @@
                         <li>Seat Belt</li>
                         <li>Air Filters</li>
                         <li>Silencer</li>
+                        <li>Silencer</li>
+                        <li>Silencer</li>
+                        <li>Silencer</li>
                     </ul>
                 </div>
             </div>
         </div>
         <!-- Card to display items to be ordered soon -->
-        <div class="col-md-6 bg-danger">
+        <div class="col-md-6">
             <div class="card text-white bg-dark mb-3 mt-3" style="max-width: 45rem;">
                 <div class="card-header"><h4>Order Soon...</h4></div>
                 <div class="card-body">
@@ -67,11 +79,6 @@
 
     <!-- New and Search Item -->
     <div class="row">
-        <!-- New    -->
-        <div class="col-md-3 d-flex justify-content-md-start">
-            <button class="btn btn-outline-primary rounded-pill my-xl-1" data-toggle="modal" data-target="#modal_new_item"><i class="fa fa-plus"></i> New</button>
-        </div>
-
         <!-- Modal new Item-->
         <div class="modal fade" id="modal_new_item" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-xl modal-dialog modal-dialog-centered" role="document">
@@ -252,6 +259,7 @@
         </div>
 
 
+        <div class="col-md-3">&nbsp;</div>
         <!-- Search Bar -->
         <div class="col-md-9">
             <form class="form-inline" id="frm_item_search">

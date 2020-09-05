@@ -84,44 +84,44 @@
     </div>
     <div class="row padding">
         <!-- Side bar   -->
-        <div class="col-2 d-none d-md-block sidebar bg-dark">
+        <div class="col-3 d-none d-md-block sidebar bg-dark">
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link" href="service-manage.php"><i class="fa fa-car"></i>&nbsp;&nbsp;Services</a>
+                    <a class="nav-link" href="service-management.php"><i class="fa fa-car"></i>&nbsp;&nbsp;Services Management</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="inventory-dashboard.php"><i class="fa fa-list"></i>&nbsp;&nbsp;Inventory</a>
+                    <a class="nav-link" href="inventory-management.php"><i class="fa fa-list"></i>&nbsp;&nbsp;Inventory Management</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="job-dashboard.php"><i class="fa fa-tasks"></i>&nbsp;&nbsp;Jobs</a>
+                    <a class="nav-link" href="job-management.php"><i class="fa fa-tasks"></i>&nbsp;&nbsp;Jobs Management</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="customer-dashboard.php"><i class="fa fa-users"></i>&nbsp;&nbsp;Customer</a>
+                    <a class="nav-link" href="customer-management.php"><i class="fa fa-users"></i>&nbsp;&nbsp;Customer Management</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="sales-dashboard.php"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;Sale</a>
+                    <a class="nav-link" href="sales-dashboard.php"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;Sale Management</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="worker-dashboard.php"><i class="fa fa-address-card"></i>&nbsp;&nbsp;Worker</a>
+                    <a class="nav-link" href="worker-management.php"><i class="fa fa-address-card"></i>&nbsp;&nbsp;Worker Management</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="notifications.php"><i class="fa fa-bell"></i>&nbsp;&nbsp;Notifications</a>
+                    <a class="nav-link" href="notification-management.php"><i class="fa fa-bell"></i>&nbsp;&nbsp;Notifications Management</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fa fa-bar-chart"></i>&nbsp;&nbsp;Reports</a>
+                    <a class="nav-link" href="#"><i class="fa fa-bar-chart"></i>&nbsp;&nbsp;Reports Management</a>
                 </li>
             </ul>
         </div>
 
         <!-- Card for Jobs  -->
-        <div class="col-10 mt-2">
+        <div class="col-9 mt-2">
             <div id="slides" class="carousel slide" data-ride="carousel" data-interval="1000">
                 <ul class="carousel-indicators">
                     <li data-target="#slides" data-slide-to="0" class="active"></li>
@@ -132,7 +132,7 @@
 
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img src="../includes/images/carousel/background.jpg" width="1100" height="450">
+                        <img src="../includes/images/carousel/background.jpg" width="1000" height="450">
 <!--                        <div class="carousel-caption">-->
 <!--                            <h1 class="display-1">DULARA</h1>-->
 <!--                            <h1 class="display-1">AUTO DETAILING</h1>-->
@@ -141,15 +141,15 @@
                     </div>
 
                     <div class="carousel-item">
-                        <img src="../includes/images/carousel/background2.jpg" width="1100" height="450">
+                        <img src="../includes/images/carousel/background2.jpg" width="1000" height="450">
                     </div>
 
                     <div class="carousel-item">
-                        <img src="../includes/images/carousel/background3.jpg" width="1100" height="450">
+                        <img src="../includes/images/carousel/background3.jpg" width="1000" height="450">
                     </div>
 
                     <div class="carousel-item">
-                        <img src="../includes/images/carousel/background4.jpg" width="1100" height="450">
+                        <img src="../includes/images/carousel/background4.jpg" width="1000" height="450">
                     </div>
 
 

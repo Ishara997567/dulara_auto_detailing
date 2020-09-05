@@ -1,5 +1,5 @@
 <?php include '../includes/header.php'; ?>
-<title>Manage Customers</title>
+<title>Manage Customer Details</title>
 </head>
 <body>
 <?php include '../includes/navbar.php'; ?>
@@ -7,7 +7,8 @@
     <!-- Heading    -->
     <div class="row padding">
         <div class="col-12 display-4 jumbotron welcome">
-            Customer Management
+            <i class="fa fa-file-text-o"></i>
+            Manage Customer Details
         </div>
     </div>
 
