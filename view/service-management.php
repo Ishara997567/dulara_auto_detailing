@@ -2,6 +2,7 @@
 include '../model/service_model.php';
 
 $serviceObj = new Service();
+$all_results = $serviceObj->selectService();
 
 ?>
 
@@ -239,7 +240,7 @@ $serviceObj = new Service();
 
                                         <!-- New Service Form  -->
 
-                                        <form action="#" method="post">
+                                        <form action="../controller/servicecontroller.php?status=create_service" method="post">
                                             <!-- First Row  -->
                                             <div class="form-row">
                                                 <!-- Service code  -->
@@ -250,7 +251,7 @@ $serviceObj = new Service();
                                                 <!-- Service Name  -->
                                                 <div class="form-group col-8">
                                                     <label for="service_name">Service Name</label>
-                                                    <input type="text" class="form-control" id="service_name" placeholder="Service Name">
+                                                    <input type="text" class="form-control" id="service_name" name="service_name" placeholder="Service Name">
                                                 </div>
                                             </div>
 
@@ -268,7 +269,7 @@ $serviceObj = new Service();
 
                                                 <div class="form-group col-6">
                                                     <label for="service_category">Service Category</label>
-                                                    <select class="custom-select" name="service_category" id="service_category" class="form-control">
+                                                    <select class="custom-select" name="service_cat_id" id="service_category" class="form-control">
 
                                                         <option value="choose" selected>Choose...</option>
 
@@ -285,15 +286,26 @@ $serviceObj = new Service();
                                                 </div>
 
                                                 <!-- Sub Category Dropdown -->
+
+                                                <?php
+
+                                                $results = $serviceObj->selectSubCategories();
+
+
+                                                ?>
+
+
                                                 <div class="form-group col-6">
                                                     <label for="service_required_item_1">Service Sub Category</label>
-                                                    <select class="custom-select" name="item_category" id="service_required_item_1" class="form-control">
-                                                        <option value="choose" selected>Choose...</option>
-                                                        <option value="">Service Sub Category 1</option>
-                                                        <option value="">Service Sub Category 2</option>
-                                                        <option value="">Service Sub Category 3</option>
-                                                        <option value="">Service Sub Category 4</option>
-                                                        <option value="">Service Sub Category 5</option>
+                                                    <select class="custom-select" name="service_sub_cat_id" id="service_required_item_1" class="form-control">
+                                                        <?php
+
+                                                        while($row_result = $results->fetch_assoc()){
+                                                            ?>
+
+                                                            <option value="<?php echo $row_result['service_sub_cat_id']; ?>"><?php echo $row_result['service_sub_cat_name']; ?></option>
+
+                                                        <?php } ?>
                                                     </select>
                                                 </div>
                                             </div>
@@ -302,7 +314,7 @@ $serviceObj = new Service();
                                                 <!-- Service Price    -->
                                                 <div class="form-group col-4">
                                                     <label for="service_price">Service Price Rs.</label>
-                                                    <input type="text" class="form-control" id="service_price" placeholder="Service Price">
+                                                    <input type="text" class="form-control" id="service_price" name="service_price" placeholder="Service Price">
                                                 </div>
 
                                             </div>
@@ -312,26 +324,26 @@ $serviceObj = new Service();
                                                 <!-- Service Item #1 Dropdown -->
                                                 <div class="form-group col-6">
                                                     <label for="service_required_item_1">Service Required Item #1</label>
-                                                    <select class="custom-select" name="service_required_item_1" id="service_required_item_1" class="form-control">
+                                                    <select class="custom-select" name="service_ri1" id="service_required_item_1" class="form-control">
                                                         <option value="choose" selected>Choose...</option>
-                                                        <option value="">i1 - Item 1</option>
-                                                        <option value="">i2 - Item 2</option>
-                                                        <option value="">i3 - Item 3</option>
-                                                        <option value="">i4 - Item 4</option>
-                                                        <option value="">i5 - Item 5</option>
+                                                        <option value="10">i1 - Item 1</option>
+                                                        <option value="20">i2 - Item 2</option>
+                                                        <option value="30">i3 - Item 3</option>
+                                                        <option value="40">i4 - Item 4</option>
+                                                        <option value="50">i5 - Item 5</option>
                                                     </select>
                                                 </div>
 
                                                 <!-- Service Item #2 Dropdown -->
                                                 <div class="form-group col-6">
                                                     <label for="service_required_item_2">Service Required Item #2</label>
-                                                    <select class="custom-select" name="service_required_item_2" id="service_required_item_2" class="form-control">
+                                                    <select class="custom-select" name="service_ri2" id="service_required_item_2" class="form-control">
                                                         <option value="choose" selected>Choose...</option>
-                                                        <option value="">i1 - Item 1</option>
-                                                        <option value="">i2 - Item 2</option>
-                                                        <option value="">i3 - Item 3</option>
-                                                        <option value="">i4 - Item 4</option>
-                                                        <option value="">i5 - Item 5</option>
+                                                        <option value="10">i1 - Item 1</option>
+                                                        <option value="20">i2 - Item 2</option>
+                                                        <option value="30">i3 - Item 3</option>
+                                                        <option value="40">i4 - Item 4</option>
+                                                        <option value="5010">i5 - Item 5</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -341,26 +353,26 @@ $serviceObj = new Service();
                                                 <!-- Service Item #3 Dropdown -->
                                                 <div class="form-group col-6">
                                                     <label for="service_required_item_3">Service Required Item #3</label>
-                                                    <select class="custom-select" name="service_required_item_3" id="service_required_item_3" class="form-control">
+                                                    <select class="custom-select" name="service_ri3" id="service_required_item_3" class="form-control">
                                                         <option value="choose" selected>Choose...</option>
-                                                        <option value="">i1 - Item 1</option>
-                                                        <option value="">i2 - Item 2</option>
-                                                        <option value="">i3 - Item 3</option>
-                                                        <option value="">i4 - Item 4</option>
-                                                        <option value="">i5 - Item 5</option>
+                                                        <option value="10">i1 - Item 1</option>
+                                                        <option value="20">i2 - Item 2</option>
+                                                        <option value="30">i3 - Item 3</option>
+                                                        <option value="40">i4 - Item 4</option>
+                                                        <option value="50">i5 - Item 5</option>
                                                     </select>
                                                 </div>
 
                                                 <!-- Service Item #4 Dropdown -->
                                                 <div class="form-group col-6">
                                                     <label for="service_required_item_4">Service Required Item #4</label>
-                                                    <select class="custom-select" name="service_required_item_4" id="service_required_item_4" class="form-control">
+                                                    <select class="custom-select" name="service_ri4" id="service_required_item_4" class="form-control">
                                                         <option value="choose" selected>Choose...</option>
-                                                        <option value="">i1 - Item 1</option>
-                                                        <option value="">i2 - Item 2</option>
-                                                        <option value="">i3 - Item 3</option>
-                                                        <option value="">i4 - Item 4</option>
-                                                        <option value="">i5 - Item 5</option>
+                                                        <option value="10">i1 - Item 1</option>
+                                                        <option value="20">i2 - Item 2</option>
+                                                        <option value="30">i3 - Item 3</option>
+                                                        <option value="40">i4 - Item 4</option>
+                                                        <option value="50">i5 - Item 5</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -370,49 +382,49 @@ $serviceObj = new Service();
                                                 <!-- Service Item #5 Dropdown -->
                                                 <div class="form-group col-6">
                                                     <label for="service_required_item_5">Service Required Item #5</label>
-                                                    <select class="custom-select" name="service_required_item_5" id="service_required_item_5" class="form-control">
+                                                    <select class="custom-select" name="service_ri5" id="service_required_item_5" class="form-control">
                                                         <option value="choose" selected>Choose...</option>
-                                                        <option value="">i1 - Item 1</option>
-                                                        <option value="">i2 - Item 2</option>
-                                                        <option value="">i3 - Item 3</option>
-                                                        <option value="">i4 - Item 4</option>
-                                                        <option value="">i5 - Item 5</option>
+                                                        <option value="10">i1 - Item 1</option>
+                                                        <option value="20">i2 - Item 2</option>
+                                                        <option value="30">i3 - Item 3</option>
+                                                        <option value="40">i4 - Item 4</option>
+                                                        <option value="50">i5 - Item 5</option>
                                                     </select>
                                                 </div>
 
                                                 <!-- Service Item #6 Dropdown -->
                                                 <div class="form-group col-6">
                                                     <label for="service_required_item_6">Service Required Item #6</label>
-                                                    <select class="custom-select" name="service_required_item_6" id="service_required_item_6" class="form-control">
+                                                    <select class="custom-select" name="service_ri6" id="service_required_item_6" class="form-control">
                                                         <option value="choose" selected>Choose...</option>
-                                                        <option value="">i1 - Item 1</option>
-                                                        <option value="">i2 - Item 2</option>
-                                                        <option value="">i3 - Item 3</option>
-                                                        <option value="">i4 - Item 4</option>
-                                                        <option value="">i5 - Item 5</option>
+                                                        <option value="10">i1 - Item 1</option>
+                                                        <option value="20">i2 - Item 2</option>
+                                                        <option value="30">i3 - Item 3</option>
+                                                        <option value="40">i4 - Item 4</option>
+                                                        <option value="50">i5 - Item 5</option>
                                                     </select>
                                                 </div>
                                             </div>
 
                                             <!-- Seventh Row  -->
-                                            <div class="form-row">
-                                                <!-- Remarks   -->
-                                                <div class="form-group col-10">
-                                                    <label for="remarks">Remarks</label>
-                                                    <input type="text" class="form-control" id="remarks" placeholder="Remarks">
-                                                </div>
-                                            </div>
+                                            <!--                                            <div class="form-row">-->
+                                            <!-- Remarks   -->
+                                            <!--                                                <div class="form-group col-10">-->
+                                            <!--                                                    <label for="remarks">Remarks</label>-->
+                                            <!--                                                    <input type="text" class="form-control" id="remarks" placeholder="Remarks">-->
+                                            <!--                                                </div>-->
+                                            <!--                                            </div>-->
 
                                             <!-- Eight Row  -->
                                             <div class="form-row">
                                                 <!-- Assigned Worker #1 Dropdown    -->
                                                 <div class="form-group col-6">
                                                     <label for="assigned_worker_1">Assigned Worker #1</label>
-                                                    <select class="custom-select" name="assigned_worker_1" id="assigned_worker_1" class="form-control">
+                                                    <select class="custom-select" name="service_ass_w1" id="assigned_worker_1" class="form-control">
                                                         <option value="choose" selected>Choose...</option>
-                                                        <option value="">w1 - Worker 1</option>
-                                                        <option value="">w2 - Worker 2</option>
-                                                        <option value="">w3 - Worker 3</option>
+                                                        <option value="100">w1 - Worker 1</option>
+                                                        <option value="200">w2 - Worker 2</option>
+                                                        <option value="400">w3 - Worker 3</option>
                                                         <option value="">w4 - Worker 4</option>
                                                         <option value="">w5 - Worker 5</option>
                                                     </select>
@@ -421,13 +433,13 @@ $serviceObj = new Service();
                                                 <!-- Assigned Worker #2 Dropdown    -->
                                                 <div class="form-group col-6">
                                                     <label for="assigned_worker_2">Assigned Worker #2</label>
-                                                    <select class="custom-select" name="assigned_worker_2" id="assigned_worker_2" class="form-control">
+                                                    <select class="custom-select" name="service_ass_w2" id="assigned_worker_2" class="form-control">
                                                         <option value="choose" selected>Choose...</option>
-                                                        <option value="">w1 - Worker 1</option>
-                                                        <option value="">w2 - Worker 2</option>
-                                                        <option value="">w3 - Worker 3</option>
-                                                        <option value="">w4 - Worker 4</option>
-                                                        <option value="">w5 - Worker 5</option>
+                                                        <option value="100">w1 - Worker 1</option>
+                                                        <option value="200">w2 - Worker 2</option>
+                                                        <option value="400">w3 - Worker 3</option>
+                                                        <option value="500">w4 - Worker 4</option>
+                                                        <option value="600">w5 - Worker 5</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -437,26 +449,26 @@ $serviceObj = new Service();
                                                 <!-- Assigned Worker #3 Dropdown    -->
                                                 <div class="form-group col-6">
                                                     <label for="assigned_worker_3">Assigned Worker #3</label>
-                                                    <select class="custom-select" name="assigned_worker_3" id="assigned_worker_3" class="form-control">
+                                                    <select class="custom-select" name="service_ass_w3" id="assigned_worker_3" class="form-control">
                                                         <option value="choose" selected>Choose...</option>
-                                                        <option value="">w1 - Worker 1</option>
-                                                        <option value="">w2 - Worker 2</option>
-                                                        <option value="">w3 - Worker 3</option>
-                                                        <option value="">w4 - Worker 4</option>
-                                                        <option value="">w5 - Worker 5</option>
+                                                        <option value="100">w1 - Worker 1</option>
+                                                        <option value="200">w2 - Worker 2</option>
+                                                        <option value="400">w3 - Worker 3</option>
+                                                        <option value="500">w4 - Worker 4</option>
+                                                        <option value="600">w5 - Worker 5</option>
                                                     </select>
                                                 </div>
 
                                                 <!-- Assigned Worker #4 Dropdown    -->
                                                 <div class="form-group col-6">
                                                     <label for="assigned_worker_4">Assigned Worker #4</label>
-                                                    <select class="custom-select" name="assigned_worker_4" id="assigned_worker_4" class="form-control">
+                                                    <select class="custom-select" name="service_ass_w4" id="assigned_worker_4" class="form-control">
                                                         <option value="choose" selected>Choose...</option>
-                                                        <option value="">w1 - Worker 1</option>
-                                                        <option value="">w2 - Worker 2</option>
-                                                        <option value="">w3 - Worker 3</option>
-                                                        <option value="">w4 - Worker 4</option>
-                                                        <option value="">w5 - Worker 5</option>
+                                                        <option value="100">w1 - Worker 1</option>
+                                                        <option value="200">w2 - Worker 2</option>
+                                                        <option value="400">w3 - Worker 3</option>
+                                                        <option value="500">w4 - Worker 4</option>
+                                                        <option value="600">w5 - Worker 5</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -466,7 +478,7 @@ $serviceObj = new Service();
                                                 <!-- Description    -->
                                                 <div class="form-group col-6">
                                                     <label for="description">Description</label>
-                                                    <textarea class="form-control" id="description" rows="3"></textarea>
+                                                    <textarea class="form-control" id="description" name="service_description" rows="3"></textarea>
                                                 </div>
                                             </div>
 
@@ -628,6 +640,10 @@ $serviceObj = new Service();
         <!-- End of New Service Modal -->
 
         <!-- Manage Service Modal   -->
+
+
+
+
         <div class="modal fade" role="dialog" id="modal_service_manage" tabindex="-1" aria-hidden="true" aria-labelledby="modal_service_manage">
             <div class="modal-xl modal-dialog"role="document">
                 <div class="modal-content">
@@ -637,163 +653,20 @@ $serviceObj = new Service();
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-
-                    <div class="modal-body">
+                    <form action="#" method="post" id="frm_manage_service">
+                    <div class="modal-body" id="body_modal_manage">
                         <!-- Manage Form    -->
 
 
-                        <form action="#" method="post">
-                            <!-- First Row  -->
-                            <div class="form-group row">
-                                <!-- Service code  -->
-                                <label for="service_code" class="col-2 col-form-label">Service Code</label>
-                                <div class="col-2">
-                                    <input type="text" readonly class="form-control" id="service_code" value="S000001">
-                                </div>
-                            </div>
 
-                            <!-- Second Row  -->
-                            <div class="form-group row">
-                                <!-- Service name  -->
-                                <label for="service_name" class="col-2 col-form-label">Service Name</label>
-                                <div class="input-group col-5">
-                                    <input type="text" readonly class="form-control mr-2" id="service_name" value="PHP echo Value">
-                                    <button type="button" class="btn btn-outline-primary" id="btn_service_name_pencil"><i class="fa fa-pencil"></i></button>
-                                    <button type="button" class="btn btn-outline-primary" id="btn_service_name_check"><i class="fa fa-check"></i></button>
-                                </div>
-                            </div>
-
-                            <!-- Third Row  -->
-                            <div class="form-group row">
-                                <!-- Service category  -->
-                                <label for="service_category" class="col-2 col-form-label">Service Category</label>
-                                <div class="input-group col-5">
-                                    <input type="text" readonly class="form-control mr-2" id="service_category" value="PHP echo Value Change to dropdown">
-                                    <button type="button" class="btn btn-outline-primary" id="btn_service_category_pencil"><i class="fa fa-pencil"></i></button>
-                                    <button type="button" class="btn btn-outline-primary" id="btn_service_category_check"><i class="fa fa-check"></i></button>
-                                </div>
-                            </div>
-
-                            <!-- Forth Row  -->
-                            <div class="form-group row">
-                                <!-- Service sub category  -->
-                                <label for="service_sub_category" class="col-2 col-form-label">Service Sub Category</label>
-                                <div class="input-group col-5">
-                                    <input type="text" readonly class="form-control mr-2" id="service_sub_category" value="PHP echo Value Change to dropdown">
-                                    <p class="span2">
-                                    <p><button type="button" class="btn btn-outline-primary" id="btn_service_sub_category_pencil"><i class="fa fa-pencil"></i></button></p>
-                                    <p><button type="button" class="btn btn-outline-primary" id="btn_service_sub_category_check"><i class="fa fa-check"></i></button></p>
-                                </div>
-                            </div>
-
-                            <!-- Sixth Row -->
-                            <div class="form-row">
-                                <div class="form-group col-5">
-                                    <label><b>Service Required Item List</b></label>
-                                </div>
-                            </div>
-
-                            <!--Seventh Row -->
-                            <div class="form-group row">
-                                <!-- Item 1 -->
-                                <div class="input-group col-6 mb-2">
-                                    <input type="text" readonly class="col-2 form-control mr-2" value="Item Code 1">
-                                    <input type="text" readonly class="form-control mr-2" id="editable_item_1" value="PHP echo Value">
-                                    <button type="button" class="btn btn-outline-primary" id="btn_editable_item_1_pencil"><i class="fa fa-pencil"></i></button>
-                                    <button type="button" class="btn btn-outline-primary" id="btn_editable_item_1_check"><i class="fa fa-check"></i></button>
-                                </div>
-
-                                <!-- Item 2 -->
-                                <div class="input-group col-6 mb-2">
-                                    <input type="text" readonly class="col-2 form-control mr-2" value="Item Code 2">
-                                    <input type="text" readonly class="form-control mr-2" id="editable_item_2" value="PHP echo Value">
-                                    <button type="button" class="btn btn-outline-primary" id="btn_editable_item_2_pencil"><i class="fa fa-pencil"></i></button>
-                                    <button type="button" class="btn btn-outline-primary" id="btn_editable_item_2_check"><i class="fa fa-check"></i></button>
-                                </div>
-
-                                <!-- Item 3 -->
-                                <div class="input-group col-6 mb-2">
-                                    <input type="text" readonly class="col-2 form-control mr-2" value="Item Code 3">
-                                    <input type="text" readonly class="form-control mr-2" id="editable_item_3" value="PHP echo Value">
-                                    <button type="button" class="btn btn-outline-primary" id="btn_editable_item_3_pencil"><i class="fa fa-pencil"></i></button>
-                                    <button type="button" class="btn btn-outline-primary" id="btn_editable_item_3_check"><i class="fa fa-check"></i></button>
-                                </div>
-
-                                <!-- Item 4 -->
-                                <div class="input-group col-6 mb-2">
-                                    <input type="text" readonly class="col-2 form-control mr-2" value="Item Code 4">
-                                    <input type="text" readonly class="form-control mr-2" id="editable_item_4" value="PHP echo Value">
-                                    <button type="button" class="btn btn-outline-primary" id="btn_editable_item_4_pencil"><i class="fa fa-pencil"></i></button>
-                                    <button type="button" class="btn btn-outline-primary" id="btn_editable_item_4_check"><i class="fa fa-check"></i></button>
-                                </div>
-
-                                <!-- Item 5 -->
-                                <div class="input-group col-6 mb-2">
-                                    <input type="text" readonly class="col-2 form-control mr-2" value="Item Code 5">
-                                    <input type="text" readonly class="form-control mr-2" id="editable_item_5" value="PHP echo Value">
-                                    <button type="button" class="btn btn-outline-primary" id="btn_editable_item_5_pencil"><i class="fa fa-pencil"></i></button>
-                                    <button type="button" class="btn btn-outline-primary" id="btn_editable_item_5_check"><i class="fa fa-check"></i></button>
-                                </div>
-
-                                <!-- Item 6 -->
-                                <div class="input-group col-6 mb-2">
-                                    <input type="text" readonly class="col-2 form-control mr-2" value="Item Code 6">
-                                    <input type="text" readonly class="form-control mr-2" id="editable_item_6" value="PHP echo Value">
-                                    <button type="button" class="btn btn-outline-primary" id="btn_editable_item_6_pencil"> <i class="fa fa-pencil"></i> </button>
-                                    <button type="button" class="btn btn-outline-primary" id="btn_editable_item_6_check"><i class="fa fa-check"></i></button>
-                                </div>
-                            </div>
-
-                            <!-- Eight Row -->
-                            <div class="form-row">
-                                <div class="form-group col-5">
-                                    <label><b>Worker Assignment List</b></label>
-                                </div>
-                            </div>
-
-                            <!--Ninth Row -->
-                            <div class="form-group row">
-                                <!-- Worker 1 -->
-                                <div class="input-group col-6 mb-2">
-                                    <input type="text" readonly class="col-2 form-control mr-2" value="Worker Code 1">
-                                    <input type="text" readonly class="form-control mr-2" id="editable_worker_1" value="PHP echo Value">
-                                    <button type="button" class="btn btn-outline-primary" id="btn_editable_worker_1_pencil"> <i class="fa fa-pencil"></i> </button>
-                                    <button type="button" class="btn btn-outline-primary" id="btn_editable_worker_1_check"><i class="fa fa-check"></i></button>
-                                </div>
-
-                                <!-- Worker 2 -->
-                                <div class="input-group col-6 mb-2">
-                                    <input type="text" readonly class="col-2 form-control mr-2" value="Worker Code 2">
-                                    <input type="text" readonly class="form-control mr-2" id="editable_worker_2" value="PHP echo Value">
-                                    <button type="button" class="btn btn-outline-primary" id="btn_editable_worker_2_pencil"> <i class="fa fa-pencil"></i> </button>
-                                    <button type="button" class="btn btn-outline-primary" id="btn_editable_worker_2_check"><i class="fa fa-check"></i></button>
-                                </div>
-
-                                <!-- Worker 3 -->
-                                <div class="input-group col-6 mb-2">
-                                    <input type="text" readonly class="col-2 form-control mr-2" value="Worker Code 3">
-                                    <input type="text" readonly class="form-control mr-2" id="editable_worker_1" value="PHP echo Value">
-                                    <button type="button" class="btn btn-outline-primary" id="btn_editable_worker_3_pencil"> <i class="fa fa-pencil"></i> </button>
-                                    <button type="button" class="btn btn-outline-primary" id="btn_editable_worker_3_check"><i class="fa fa-check"></i></button>
-                                </div>
-
-                                <!-- Worker 4 -->
-                                <div class="input-group col-6 mb-2">
-                                    <input type="text" readonly class="col-2 form-control mr-2" value="Worker Code 4">
-                                    <input type="text" readonly class="form-control mr-2" id="editable_worker_4" value="PHP echo Value">
-                                    <button type="button" class="btn btn-outline-primary" id="btn_editable_worker_4_pencil"> <i class="fa fa-pencil"></i> </button>
-                                    <button type="button" class="btn btn-outline-primary" id="btn_editable_worker_4_check"><i class="fa fa-check"></i></button>
-                                </div>
-                            </div>
-                        </form>
                         <!-- End of Manage Form -->
                     </div>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </div>
-
+                    </form>
                 </div>
             </div>
         </div>
@@ -802,39 +675,38 @@ $serviceObj = new Service();
 
         <!-- End of Modals  -->
 
+
         <!-- Item Table -->
         <div class="table-responsive mt-2">
-            <table class="table table-sm">
+            <table class="table table-sm" id="table_manage">
                 <thead>
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
+
+                    <th scope="col">Service ID</th>
+                    <th scope="col">Service Name</th>
+                    <th scope="col">Service Price</th>
+                    <th scope="col">Service Category</th>
+                    <th scope="col">Service Sub Category</th>
                     <!--                <th scope="col">Manage</th>-->
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td><a href="#modal_service_manage" data-toggle="modal"><i class="fa fa-file-text-o fa-lg"></i></a></td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                    <td><a href="#modal_service_manage" data-toggle="modal"><i class="fa fa-file-text-o fa-lg"></i></a></td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td colspan="2">Larry the Bird</td>
-                    <td>@twitter</td>
-                    <td><a href="#modal_service_manage" data-toggle="modal"><i class="fa fa-file-text-o fa-lg"></i></a></td>
-                </tr>
+                <?php
+                while($row = $all_results->fetch_assoc()){
+                    $service_id = $row["service_id"];
+                    ?>
+                    <tr>
+
+                        <th scope="row"><?php echo $service_id; ?></th>
+                        <td id="s_name" data-serviceName="<?php echo $row["service_name"]; ?>"><?php echo $row["service_name"]; ?></td>
+                        <td><?php echo $row["service_price"]; ?></td>
+                        <td><?php echo $row["service_cat_id"]; ?></td>
+                        <td><?php echo $row["service_sub_cat_id"]; ?></td>
+                        <td id="table_data_manage_service_id"><a href="#modal_service_manage" data-toggle="modal" data-id="<?php echo $service_id;?>"><i class="fa fa-file-text-o fa-lg"></i></a></td>
+
+                        
+                    </tr>
+                <?php } ?>
                 </tbody>
             </table>
         </div>
@@ -849,3 +721,4 @@ $serviceObj = new Service();
     </div>
     </body>
 <?php include '../includes/footer.php'; ?>
+<script src="../assets/js/services_manage.js"></script>
