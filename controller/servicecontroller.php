@@ -346,6 +346,26 @@ switch($status)
         break;
 
 
+    case "manage_category":
+        $changed_cat_id = $_POST["changed_cat_id"];
+        $changed_cat_name = $_POST["changed_cat_name"];
+
+
+        $r = $serviceObj->changeCategory($changed_cat_id, $changed_cat_name);
+
+        if($r > 0)
+        {
+            echo 1;
+        }
+        else
+        {
+            echo 0;
+        }
+
+
+        break;
+
+
     default:
         echo "Thank You";
         break;

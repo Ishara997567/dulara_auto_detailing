@@ -1,5 +1,6 @@
 <?php include_once '../commons/DbConnection.php';
 
+
     $dbConnection = new DbConnection();
 
 class Service{
@@ -69,8 +70,23 @@ class Service{
 
     public function changeSubCategory($sub_cat_id, $sub_cat_name)
     {
+
+        $now = new DateTime(null, new DateTimeZone('Asia/Colombo'));
+        $mysql_timestamp = $now->format('Y-m-d H:i:s');
+
         $con = $GLOBALS["conn"];
-        $sql = "UPDATE service_sub_category SET service_sub_cat_name = '$sub_cat_name' WHERE service_sub_cat_id = '$sub_cat_id'; ";
+        $sql = "UPDATE service_sub_category SET service_sub_cat_name = '$sub_cat_name', service_sub_cat_created_at = '$mysql_timestamp' WHERE service_sub_cat_id = '$sub_cat_id'; ";
+        $con->query($sql);
+        return $con->affected_rows;
+    }
+
+    public function changeCategory($cat_id, $cat_name)
+    {
+        $now = new DateTime(null, new DateTimeZone('Asia/Colombo'));
+        $mysql_timestamp = $now->format('Y-m-d H:i:s');
+
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE service_category SET service_cat_name = '$cat_name', service_cat_created_at = '$mysql_timestamp' WHERE service_cat_id = '$cat_id'; ";
         $con->query($sql);
         return $con->affected_rows;
     }

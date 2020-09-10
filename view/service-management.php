@@ -121,6 +121,12 @@ $all_cat_results_results = $serviceObj->selectCategories();
                 <div class="modal-body">
 
                     <div class="row padding d-flex justify-content-center">
+                        <div class="col-8 text-center" id="msg_sub_category_update">
+
+                        </div>
+                    </div>
+
+                    <div class="row padding d-flex justify-content-center">
                         <div class="col-8 text-center" id="msg_category_update">
 
                         </div>
@@ -152,12 +158,13 @@ $all_cat_results_results = $serviceObj->selectCategories();
 
                                     <!-- Manage Sub Category Table  -->
                                     <div class="table-responsive">
-                                        <table class="table table-sm">
+                                        <table class="table table-sm" id="table_sub_cat_manage">
                                             <thead>
                                             <tr class="d-flex">
-                                                <th scope="col" class="col-3 text-center">Sub Category ID</th>
-                                                <th scope="col" class="col-6 text-center">Sub Category Name</th>
-                                                <th scope="col" class="col-3 text-center">&nbsp;</th>
+                                                <th scope="col" class="col-2 text-center">Sub Category ID</th>
+                                                <th scope="col" class="col-8 text-center">Sub Category Name</th>
+                                                <th scope="col" class="col-1 text-center">&nbsp;</th>
+                                                <th scope="col" class="col-1 text-center">&nbsp;</th>
                                             </tr>
                                             </thead>
 
@@ -168,9 +175,10 @@ $all_cat_results_results = $serviceObj->selectCategories();
                                             ?>
 
                                                 <tr class="d-flex">
-                                                    <th scope="row" class="col-3 text-center"><?php echo $row_sub_categories["service_sub_cat_id"]; ?></th>
-                                                    <td id="td_service_name" class="col-6"><input type="text" id="txt_change_sub_cat_name" class="form-control text-center" value="<?php echo $row_sub_categories["service_sub_cat_name"]; ?>" readonly/></td>
-                                                    <td id="table_manage_categories" class="col-3 text-center"><a href="#" data-id="<?php echo $row_sub_categories["service_sub_cat_id"]; ?>">Edit</a></td>
+                                                    <th scope="row" class="col-2 text-center"><?php echo $row_sub_categories["service_sub_cat_id"]; ?></th>
+                                                    <td id="td_service_name" class="col-8"><input type="text" id="txt_change_sub_cat_name<?php echo $row_sub_categories["service_sub_cat_id"]; ?>" class="form-control text-center" value="<?php echo $row_sub_categories["service_sub_cat_name"]; ?>" readonly/></td>
+                                                    <td id="table_manage_categories" class="col-1 text-center"><a href="#" data-id="<?php echo $row_sub_categories["service_sub_cat_id"]; ?>" class="btn btn-outline-primary mr-n5"><i class="fa fa-pencil"></i></a></td>
+                                                    <td id="table_manage_categories_del" class="col-1 text-center"><a href="#" data-id="<?php echo $row_sub_categories["service_sub_cat_id"]; ?>" class="btn btn-outline-danger"><i class="fa fa-times"></i></a></td>
                                                 </tr>
                                             <?php } ?>
                                             </tbody>
@@ -195,12 +203,13 @@ $all_cat_results_results = $serviceObj->selectCategories();
 
 
                                     <div class="table-responsive">
-                                        <table class="table table-sm">
+                                        <table class="table table-sm" id="table_cat_manage">
                                             <thead>
                                             <tr class="d-flex">
-                                                <th scope="col" class="col-3 text-center">Category ID</th>
-                                                <th scope="col" class="col-6 text-center">Category Name</th>
-                                                <th scope="col" class="col-3 text-center">&nbsp;</th>
+                                                <th scope="col" class="col-2 text-center">Category ID</th>
+                                                <th scope="col" class="col-8 text-center">Category Name</th>
+                                                <th scope="col" class="col-1 text-center">&nbsp;</th>
+                                                <th scope="col" class="col-1 text-center">&nbsp;</th>
                                             </tr>
                                             </thead>
 
@@ -211,9 +220,10 @@ $all_cat_results_results = $serviceObj->selectCategories();
                                                 ?>
 
                                                 <tr class="d-flex">
-                                                    <th scope="row" class="col-3 text-center"><?php echo $row__categories["service_cat_id"]; ?></th>
-                                                    <td id="td_category_name" class="col-6"><input type="text" id="txt_change_cat_name" class="form-control text-center" value="<?php echo $row__categories["service_cat_name"]; ?>" readonly/></td>
-                                                    <td id="table_manage_category" class="col-3 text-center"><a href="#" data-id="<?php echo $row__categories["service_cat_id"]; ?>">Edit</a></td>
+                                                    <th scope="row" class="col-2 text-center"><?php echo $row__categories["service_cat_id"]; ?></th>
+                                                    <td id="td_category_name" class="col-8"><input type="text" id="txt_change_cat_name<?php echo $row__categories["service_cat_id"]; ?>" class="form-control text-center" value="<?php echo $row__categories["service_cat_name"]; ?>" readonly/></td>
+                                                    <td id="table_manage_category" class="col-1 text-center"><a href="#" data-id="<?php echo $row__categories["service_cat_id"]; ?>" class="btn btn-outline-primary mr-n5"><i class="fa fa-pencil"></i></a></td>
+                                                    <td id="table_manage_category_del" class="col-1 text-center"><a href="#" data-id="<?php echo $row__categories["service_cat_id"]; ?>" class="btn btn-outline-danger"><i class="fa fa-times"></i></a></td>
                                                 </tr>
                                             <?php } ?>
                                             </tbody>
@@ -426,7 +436,7 @@ $all_cat_results_results = $serviceObj->selectCategories();
                                                     <option value="choose" selected>Choose...</option>
 
                                                     <?php
-
+                                                    $all_cat_results_results = $serviceObj->selectCategories();
                                                     while($row_result = $all_cat_results_results->fetch_assoc()){
                                                         ?>
 

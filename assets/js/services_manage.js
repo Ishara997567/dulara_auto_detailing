@@ -87,26 +87,80 @@ $(document).ready(function() {
         })
     })
 
-    $("#table_manage_categories").on("click", "a", function(){
-        $("#td_service_name input[id='txt_change_sub_cat_name']").prop("readonly", false);
+    //Manage Sub Categories
+    $("#table_sub_cat_manage").on("click", "#table_manage_categories a", function(){
         const subCatId = $(this).data('id');
+        const subCatInputField = $("#td_service_name input[id='txt_change_sub_cat_name"+subCatId+"']");
+        subCatInputField.prop("readonly", false);
+
+        subCatInputField.focus();
+        let tmpStr = subCatInputField.val();
+        subCatInputField.val('');
+        subCatInputField.val(tmpStr);
+
+
         $(".modal-footer #btn_save").click(function(){
-            const changedSubCatName = $("#td_service_name input[id='txt_change_sub_cat_name']").val();
+            const changedSubCatName = subCatInputField.val();
 
             const url = "../controller/servicecontroller.php?status=manage_sub_category";
 
-            $.post(url, {changed_sub_cat_id:subCatId, changed_sub_cat_name:changedSubCatName}, function(data, success){
+            $.post(url, {changed_sub_cat_id:subCatId, changed_sub_cat_name:changedSubCatName}, function(data){
                 if(data === "1") {
-                    $("#msg_category_update").html("Sub Category Updated Successfully!").addClass("alert alert-success");
+                    $("#msg_sub_category_update").html("Sub Category Updated Successfully!").addClass("alert alert-success");
                 } else {
-                    $("#msg_category_update").html("Sub Category could not be Updated!").addClass("alert alert-danger");
+                    $("#msg_sub_category_update").html("Sub Category could not be Updated!").addClass("alert alert-danger");
                 }
             })
 
-            $("#td_service_name input[id='txt_change_sub_cat_name']").prop("readonly", true);
-
+            $("#td_service_name input[id='txt_change_sub_cat_name"+subCatId+"']").prop("readonly", true);
+            window.setTimeout(function (){location.reload()}, 2000);
         })
 
+    })
+    $("#table_manage_categories_del a").click(function(){
+        const delSubCatId = $(this).data('id');
+       $("#td_service_name input[id='txt_change_sub_cat_name"+delSubCatId+"']").prop("readonly", true);
+    })
+
+
+
+
+
+
+    //Manage Categories
+    $("#table_cat_manage").on("click", "#table_manage_category a", function(){
+        const catId = $(this).data('id');
+        const catInputField = $("#td_category_name input[id='txt_change_cat_name"+catId+"']");
+        catInputField.prop("readonly", false);
+
+        catInputField.focus();
+        let tmpStr = catInputField.val();
+        catInputField.val('');
+        catInputField.val(tmpStr);
+
+        $(".modal-footer #btn_save").click(function(){
+            const changedCatName = catInputField.val();
+
+            const url = "../controller/servicecontroller.php?status=manage_category";
+
+            $.post(url, {changed_cat_id:catId, changed_cat_name:changedCatName}, function(data){
+                if(data === "1") {
+                    $("#msg_category_update").html("Category Updated Successfully!").addClass("alert alert-success");
+                } else {
+                    $("#msg_category_update").html("Category could not be Updated!").addClass("alert alert-danger");
+                }
+            })
+
+            $("#td_category_name input[id='txt_change_cat_name"+catId+"']").prop("readonly", true);
+            window.setTimeout(function (){location.reload()}, 2000);
+        })
+
+    })
+
+    $("#table_manage_category_del a").click(function(){
+        const delCatId = $(this).data('id');
+        const inputField = $("#td_category_name input[id='txt_change_cat_name"+delCatId+"']");
+        inputField.prop("readonly", true);
     })
 })
 
