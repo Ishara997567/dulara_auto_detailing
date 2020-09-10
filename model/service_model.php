@@ -37,6 +37,13 @@ class Service{
         return $con->query($sql);
     }
 
+    public function selectSubCategoriesById($sub_cat_id)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT * FROM service_sub_category WHERE service_sub_cat_id='$sub_cat_id';";
+        return $con->query($sql);
+    }
+
     public function createService($service_name, $service_price, $service_ri1, $service_ri2, $service_ri3, $service_ri4, $service_ri5, $service_ri6, $service_ass_w1, $service_ass_w2, $service_ass_w3,$service_ass_w4, $service_cat_id, $service_sub_cat_id, $service_description)
     {
 
@@ -58,5 +65,13 @@ class Service{
         $con = $GLOBALS["conn"];
         $sql = "SELECT * FROM service WHERE service_id = '$service_id';";
         return $con->query($sql);
+    }
+
+    public function changeSubCategory($sub_cat_id, $sub_cat_name)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE service_sub_category SET service_sub_cat_name = '$sub_cat_name' WHERE service_sub_cat_id = '$sub_cat_id'; ";
+        $con->query($sql);
+        return $con->affected_rows;
     }
 }

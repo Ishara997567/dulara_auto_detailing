@@ -8,7 +8,7 @@ switch($status)
 {
     case "create_category":
 
-        $cat_name = $_POST["cat_name"];
+        $cat_name = ucwords($_POST["cat_name"]);
         $cat_description = $_POST["cat_description"];
 
 
@@ -38,8 +38,8 @@ switch($status)
 
     case "create_sub_category" :
 
-        $sub_cat_name = $_POST["sub_cat_name"];
-        $sub_cat_cat_id = $_POST["sub_cat_cat_id"];
+        $sub_cat_name = ucwords($_POST["sub_cat_name"]);
+        $sub_cat_cat_id = $_POST["select_sub_cat"];
         $sub_cat_description = $_POST["sub_cat_description"];
 
         $last_sub_cat_id = $serviceObj->createSubCategory($sub_cat_name, $sub_cat_cat_id, $sub_cat_description);
@@ -67,7 +67,7 @@ switch($status)
 
 
     case "create_service":
-        $service_name = $_POST["service_name"];
+        $service_name = ucwords($_POST["service_name"]);
         $service_price = $_POST["service_price"];
 
         $service_ri1 = $_POST["service_ri1"];
@@ -114,6 +114,13 @@ switch($status)
 
         $manage_category_result = $serviceObj->selectCategoryById($row_service["service_cat_id"]);
         $row_category = $manage_category_result->fetch_assoc();
+
+        $manage_sub_category_result = $serviceObj->selectSubCategoriesById($row_service["service_sub_cat_id"]);
+        $row_sub_category = $manage_sub_category_result->fetch_assoc();
+
+        $category_result = $serviceObj->selectCategories();
+        $sub_category_result = $serviceObj->selectSubCategories();
+
         ?>
 
 
@@ -131,7 +138,7 @@ switch($status)
         <!-- Second Row  -->
         <div class="form-group row">
             <!-- Service name  -->
-            <label for="service_name" class="col-2 col-form-label">Service Name</label>
+            <label for="manage_service_name" class="col-2 col-form-label">Service Name</label>
             <div class="input-group col-5">
                 <input type="text" readonly class="form-control mr-2" id="manage_service_name" value="<?php echo $row_service["service_name"]; ?>">
                 <button type="button" class="btn btn-outline-primary" id="btn_service_name_pencil"><i class="fa fa-pencil"></i></button>
@@ -139,22 +146,41 @@ switch($status)
             </div>
         </div>
 
-    <!-- Serivce Price Row  -->
-        <div class="form-group row">
+        <!-- Service Price Row  -->
+        <div class="form-group row" id="input_group_service_price">
             <!-- Service name  -->
             <label for="service_price" class="col-2 col-form-label">Service Price</label>
             <div class="input-group col-5">
-                <input type="text" readonly class="form-control mr-2" id="service_price" value="<?php echo $row_service["service_price"]; ?>">
+                <input type="text" readonly class="form-control mr-2" id="service_price" name="txt_service_price" value="<?php echo $row_service["service_price"]; ?>">
                 <button type="button" class="btn btn-outline-primary" id="btn_service_price_pencil"><i class="fa fa-pencil"></i></button>
                 <button type="button" class="btn btn-outline-primary" id="btn_service_price_check"><i class="fa fa-check"></i></button>
+
             </div>
         </div>
 
         <!-- Third Row  -->
         <div class="form-group row">
             <!-- Service category  -->
-            <label for="service_category" class="col-2 col-form-label">Service Category</label>
+            <label for="select_service_category" class="col-2 col-form-label">Service Category</label>
             <div class="input-group col-5">
+
+                <!-- Hidden Select Drop Down    -->
+
+                <select class="custom-select mr-2" name="service_cat_id" id="select_service_category" class="form-control">
+                    <option value="choose" selected>Choose...</option>
+                    <?php
+                    while($category_row_result = $category_result->fetch_assoc())
+                    {
+                        ?>
+                        <option value="<?php echo $category_row_result["service_cat_id"]; ?>"><?php echo $category_row_result["service_cat_name"]; ?></option>
+
+                    <?php } ?>
+                </select>
+
+                <!-- End of Hidden Select Drop Down    -->
+
+
+
                 <input type="text" readonly class="form-control mr-2" id="service_category" value="<?php echo $row_category["service_cat_name"]; ?>">
                 <button type="button" class="btn btn-outline-primary" id="btn_service_category_pencil"><i class="fa fa-pencil"></i></button>
                 <button type="button" class="btn btn-outline-primary" id="btn_service_category_check"><i class="fa fa-check"></i></button>
@@ -166,7 +192,23 @@ switch($status)
             <!-- Service sub category  -->
             <label for="service_sub_category" class="col-2 col-form-label">Service Sub Category</label>
             <div class="input-group col-5">
-                <input type="text" readonly class="form-control mr-2" id="service_sub_category" value=" Change to dropdown">
+
+                <!-- Hidden Select Drop Down    -->
+
+                <select class="custom-select mr-2" name="service_sub_cat_id" id="select_service_sub_category" class="form-control">
+                    <option value="choose" selected>Choose...</option>
+                    <?php
+                    while($sub_category_row_result = $sub_category_result->fetch_assoc())
+                    {
+                        ?>
+                        <option value="<?php echo $sub_category_row_result["service_sub_cat_id"]; ?>"><?php echo $sub_category_row_result["service_sub_cat_name"]; ?></option>
+
+                    <?php } ?>
+                </select>
+
+                <!-- End of Hidden Select Drop Down    -->
+
+                <input type="text" readonly class="form-control mr-2" id="service_sub_category" value="<?php echo $row_sub_category["service_sub_cat_name"] ;?>">
                 <p class="span2">
                 <p><button type="button" class="btn btn-outline-primary" id="btn_service_sub_category_pencil"><i class="fa fa-pencil"></i></button></p>
                 <p><button type="button" class="btn btn-outline-primary" id="btn_service_sub_category_check"><i class="fa fa-check"></i></button></p>
@@ -280,11 +322,28 @@ switch($status)
 
 
 
-<?php
+        <?php
         break;
 
 
+    case "manage_sub_category":
+       $changed_sub_cat_id = $_POST["changed_sub_cat_id"];
+       $changed_sub_cat_name = $_POST["changed_sub_cat_name"];
 
+
+       $r = $serviceObj->changeSubCategory($changed_sub_cat_id, $changed_sub_cat_name);
+
+       if($r > 0)
+       {
+           echo 1;
+       }
+       else
+       {
+           echo 0;
+       }
+
+
+        break;
 
 
     default:
