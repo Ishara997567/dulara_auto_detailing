@@ -106,7 +106,9 @@ switch($status)
         break;
 
     case "manage_service":
-        $service_id = $_POST["service_id"];
+
+            $service_id = $_POST["service_id"];
+
 
 
         $manage_service_result = $serviceObj->selectToManageService($service_id);
@@ -316,31 +318,25 @@ switch($status)
         </div>
 
 
-
-
-
-
-
-
         <?php
         break;
 
 
     case "manage_sub_category":
-       $changed_sub_cat_id = $_POST["changed_sub_cat_id"];
-       $changed_sub_cat_name = $_POST["changed_sub_cat_name"];
+        $changed_sub_cat_id = $_POST["changed_sub_cat_id"];
+        $changed_sub_cat_name = $_POST["changed_sub_cat_name"];
 
 
-       $r = $serviceObj->changeSubCategory($changed_sub_cat_id, $changed_sub_cat_name);
+        $r = $serviceObj->changeSubCategory($changed_sub_cat_id, $changed_sub_cat_name);
 
-       if($r > 0)
-       {
-           echo 1;
-       }
-       else
-       {
-           echo 0;
-       }
+        if($r > 0)
+        {
+            echo 1;
+        }
+        else
+        {
+            echo 0;
+        }
 
 
         break;
@@ -365,6 +361,96 @@ switch($status)
 
         break;
 
+
+    case "search":
+
+
+        if(isset($_POST["searchStr"]))
+        {
+            $search_str = $_POST["searchStr"];
+            if(!empty($search_str)) {
+                $all_service_result = $serviceObj->selectService();
+                ?>
+
+                <div class="table-responsive mt-2">
+                    <table class="table table-sm" id="table_search_manage">
+                        <thead>
+                        <tr>
+
+                            <th scope="col">Service ID</th>
+                            <th scope="col">Service Name</th>
+                            <th scope="col">Service Price</th>
+                            <th scope="col">Service Category</th>
+                            <th scope="col">Service Sub Category</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+
+
+
+
+                        <?php
+                        while($row = $all_service_result->fetch_assoc()) {
+
+                            $service_search_id = $row["service_id"];
+
+                            $category_result = $serviceObj->selectCategoryById($row["service_cat_id"]);
+                            $category_row = $category_result->fetch_assoc();
+
+                            $sub_cat_result = $serviceObj->selectSubCategoriesById($row["service_sub_cat_id"]);
+                            $sub_cat_row = $sub_cat_result->fetch_assoc();
+
+
+
+                            $row_query_builder = http_build_query($row);
+                            $category_query_builder = http_build_query($category_row);
+                            $sub_cat_query_builder = http_build_query($sub_cat_row);
+
+                            $total_query_builder = $row_query_builder.$category_query_builder.$sub_cat_query_builder;
+
+                            $total_query_builder = str_replace("+"," ",$total_query_builder);
+
+                            if(strpos(strtolower($total_query_builder), strtolower($search_str)))
+                            {
+                                ?>
+
+
+
+                                <tr>
+
+                                    <th scope="row"><?php echo $service_search_id; ?></th>
+                                    <td id="s_name" data-serviceName="<?php echo $row["service_name"]; ?>"><?php echo $row["service_name"]; ?></td>
+                                    <td><?php echo "Rs. ".$row["service_price"]; ?></td>
+                                    <td><?php echo $category_row["service_cat_name"]; ?></td>
+                                    <td><?php echo $sub_cat_row["service_sub_cat_name"]; ?></td>
+                                    <td id="table_data_manage_service_id"><a href="#modal_service_manage" data-toggle="modal" data-id="<?php echo $service_search_id;?>"><i class="fa fa-file-text-o fa-lg"></i></a></td>
+
+                                </tr>
+
+
+
+
+
+
+                                <?php
+                            }
+                        }
+                        ?>
+                        </tbody>
+                    </table>
+                </div>
+                <?php
+
+
+
+
+            }
+
+
+        }
+
+        break;
 
     default:
         echo "Thank You";

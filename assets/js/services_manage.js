@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $("#table_manage").on("click", "#table_data_manage_service_id a", function () {
+    $("#table_manage, #table_search_manage").on("click", "#table_data_manage_service_id a", function () {
         const sid = $(this).data('id');
 
         const url = "../controller/servicecontroller.php?status=manage_service";
@@ -161,6 +161,21 @@ $(document).ready(function() {
         const delCatId = $(this).data('id');
         const inputField = $("#td_category_name input[id='txt_change_cat_name"+delCatId+"']");
         inputField.prop("readonly", true);
+    })
+
+
+    //Search Results
+    const searchField = $("#frm_item_search input[type='search']");
+    const button = $("#frm_item_search button[type='button']");
+    searchField.keyup(function (){
+        let searchStr = searchField.val();
+
+        let url = "../controller/servicecontroller.php?status=search";
+
+        $.post(url, {searchStr: searchStr},function(data, status){
+                $("#search_results_table").html(data).show();
+
+        })
     })
 })
 

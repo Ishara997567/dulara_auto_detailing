@@ -170,9 +170,9 @@ $all_cat_results_results = $serviceObj->selectCategories();
 
                                             <tbody>
                                             <?php
-                                                while($row_sub_categories = $all_sub_category_results->fetch_assoc()){
+                                            while($row_sub_categories = $all_sub_category_results->fetch_assoc()){
 
-                                            ?>
+                                                ?>
 
                                                 <tr class="d-flex">
                                                     <th scope="row" class="col-2 text-center"><?php echo $row_sub_categories["service_sub_cat_id"]; ?></th>
@@ -344,7 +344,7 @@ $all_cat_results_results = $serviceObj->selectCategories();
         <div class="col-md-9">
             <form class="form-inline" id="frm_item_search">
                 <input class="rounded-pill form-control my-1 mr-sm-2 w-75" type="search" placeholder="Search . . ." aria-label="Search">
-                <button class="btn btn-outline-primary rounded-pill my-xl-1" type="submit"><i class="fa fa-search"></i> Search</button>
+                <button class="btn btn-outline-primary rounded-pill my-xl-1" type="button"><i class="fa fa-search"></i> Search</button>
             </form>
         </div>
     </div>
@@ -843,51 +843,51 @@ $all_cat_results_results = $serviceObj->selectCategories();
 
 
     <!-- Item Table -->
-    <div class="table-responsive mt-2">
-        <table class="table table-sm" id="table_manage">
-            <thead>
-            <tr>
 
-                <th scope="col">Service ID</th>
-                <th scope="col">Service Name</th>
-                <th scope="col">Service Price</th>
-                <th scope="col">Service Category</th>
-                <th scope="col">Service Sub Category</th>
-                <!--                <th scope="col">Manage</th>-->
-            </tr>
-            </thead>
-            <tbody>
-            <?php
-            while($row = $all_service_results->fetch_assoc()){
-                $service_id = $row["service_id"];
-
-                $category_result = $serviceObj->selectCategoryById($row["service_id"]);
-                $category_row = $category_result->fetch_assoc();
-
-                $sub_cat_result = $serviceObj->selectSubCategoriesById($row["service_sub_cat_id"]);
-                $sub_cat_row = $sub_cat_result->fetch_assoc();
-                ?>
+        <div class="table-responsive mt-2">
+            <table class="table table-sm" id="table_manage">
+                <thead>
                 <tr>
 
-                    <th scope="row"><?php echo $service_id; ?></th>
-                    <td id="s_name" data-serviceName="<?php echo $row["service_name"]; ?>"><?php echo $row["service_name"]; ?></td>
-                    <td><?php echo "Rs. ".$row["service_price"]; ?></td>
-                    <td><?php echo $category_row["service_cat_name"]; ?></td>
-                    <td><?php echo $sub_cat_row["service_sub_cat_name"]; ?></td>
-                    <td id="table_data_manage_service_id"><a href="#modal_service_manage" data-toggle="modal" data-id="<?php echo $service_id;?>"><i class="fa fa-file-text-o fa-lg"></i></a></td>
-
-
+                    <th scope="col">Service ID</th>
+                    <th scope="col">Service Name</th>
+                    <th scope="col">Service Price</th>
+                    <th scope="col">Service Category</th>
+                    <th scope="col">Service Sub Category</th>
+                    <!--                <th scope="col">Manage</th>-->
                 </tr>
-            <?php } ?>
-            </tbody>
-        </table>
-    </div>
+                </thead>
+                <tbody>
+                <?php
+                $all_service_results = $serviceObj->selectService();
+                while($row = $all_service_results->fetch_assoc()){
+                    $service_id = $row["service_id"];
+
+                    $category_result = $serviceObj->selectCategoryById($row["service_cat_id"]);
+                    $category_row = $category_result->fetch_assoc();
+
+                    $sub_cat_result = $serviceObj->selectSubCategoriesById($row["service_sub_cat_id"]);
+                    $sub_cat_row = $sub_cat_result->fetch_assoc();
+                    ?>
+                    <tr>
+
+                        <th scope="row"><?php echo $service_id; ?></th>
+                        <td id="s_name" data-serviceName="<?php echo $row["service_name"]; ?>"><?php echo $row["service_name"]; ?></td>
+                        <td><?php echo "Rs. ".$row["service_price"]; ?></td>
+                        <td><?php echo $category_row["service_cat_name"]; ?></td>
+                        <td><?php echo $sub_cat_row["service_sub_cat_name"]; ?></td>
+                        <td id="table_data_manage_service_id"><a href="#modal_service_manage" data-toggle="modal" data-id="<?php echo $service_id;?>"><i class="fa fa-file-text-o fa-lg"></i></a></td>
 
 
+                    </tr>
+                <?php } ?>
+                </tbody>
+            </table>
+        </div>
 
 
-
-
+    <hr>
+<div id="search_results_table"></div>
 
 
 </div>
