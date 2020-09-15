@@ -876,7 +876,7 @@ $all_cat_results_results = $serviceObj->selectCategories();
                         <td><?php echo "Rs. ".$row["service_price"]; ?></td>
                         <td><?php echo $category_row["service_cat_name"]; ?></td>
                         <td><?php echo $sub_cat_row["service_sub_cat_name"]; ?></td>
-                        <td id="table_data_manage_service_id"><a href="#modal_service_manage" data-toggle="modal" data-id="<?php echo $service_id;?>"><i class="fa fa-file-text-o fa-lg"></i></a></td>
+                        <td id="table_data_manage_service_id"><a href="#modal_service_manage" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-id="<?php echo $service_id;?>"><i class="fa fa-file-text-o fa-lg"></i></a></td>
 
 
                     </tr>

@@ -20,7 +20,7 @@
 
         <!-- New Item  -->
         <div class="col-4 d-flex justify-content-end">
-            <button class="btn btn-outline-primary rounded-pill my-xl-1" data-toggle="modal" data-target="#modal_new_item"><i class="fa fa-plus"></i> New Item</button>
+            <button class="btn btn-outline-primary rounded-pill my-xl-1" data-toggle="modal" data-target="#modal_new_item"><i class="fa fa-plus"></i> New</button>
             <button type="button" class="btn btn-outline-primary rounded-pill my-xl-1 mx-2" data-toggle="modal" data-target="#modal_manage_categories"><i class="fa fa-file-text-o"></i> Manage Categories</button>
         </div>
     </div>
@@ -44,7 +44,7 @@
                 <div class="modal-body">
 
                     <div class="row padding d-flex justify-content-center">
-                        <div class="col-8 text-center" id="msg_sub_category_update">
+                        <div class="col-8 text-center" id="msg_item_size_update">
 
                         </div>
                     </div>
@@ -60,13 +60,13 @@
                             <ul class="nav nav-tabs card-header-tabs">
 
                                 <li class="nav-item">
-                                    <a href="#pane_manage_categories" class="nav-link" data-toggle="tab">
+                                    <a href="#pane_manage_categories" class="active nav-link" data-toggle="tab">
                                         Manage Categories
                                     </a>
                                 </li>
 
                                 <li class="nav-item">
-                                    <a href="#pane_manage_item_size" class="active nav-link" data-toggle="tab">
+                                    <a href="#pane_manage_item_size" class="nav-link" data-toggle="tab">
                                         Manage Item Size
                                     </a>
                                 </li>
@@ -76,7 +76,7 @@
 
                         <div class="card-body">
                             <div class="tab-content">
-                                <div class="active tab-pane" id="pane_manage_item_size">
+                                <div class="tab-pane" id="pane_manage_item_size">
 
 
 
@@ -93,12 +93,19 @@
                                             </thead>
 
                                             <tbody>
-                                            <tr class="d-flex">
-                                                <th scope="row" class="col-2 text-center">1</th>
-                                                <td id="td_item_size" class="col-8"><input type="text" id="txt_change_item_size_name" class="form-control text-center" value="Medium" readonly/></td>
-                                                <td id="table_manage_item_size" class="col-1 text-center"><a href="#" data-id="" class="btn btn-outline-primary mr-n5"><i class="fa fa-pencil"></i></a></td>
-                                                <td id="table_manage_item_size_del" class="col-1 text-center"><a href="#" data-id="" class="btn btn-outline-danger"><i class="fa fa-times"></i></a></td>
-                                            </tr>
+                                            <?php
+                                            $item_size_result = $inventoryObj->getAllSizes();
+                                            while($row_item_size = $item_size_result->fetch_assoc()){
+
+                                                ?>
+
+                                                <tr class="d-flex">
+                                                    <th scope="row" class="col-2 text-center"><?php echo $row_item_size["item_size_id"]; ?></th>
+                                                    <td id="td_item_size_name" class="col-8"><input type="text" id="txt_change_item_size_name<?php echo $row_item_size["item_size_id"]; ?>" class="form-control text-center" value="<?php echo $row_item_size["item_size_name"]; ?>" readonly/></td>
+                                                    <td id="table_manage_size" class="col-1 text-center"><a href="#" data-id="<?php echo $row_item_size["item_size_id"]; ?>" class="btn btn-outline-primary mr-n5"><i class="fa fa-pencil"></i></a></td>
+                                                    <td id="table_manage_size_del" class="col-1 text-center"><a href="#" data-id="<?php echo $row_item_size["item_size_id"]; ?>" class="btn btn-outline-danger"><i class="fa fa-times"></i></a></td>
+                                                </tr>
+                                            <?php } ?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -113,7 +120,7 @@
 
                                 </div>
 
-                                <div class="tab-pane" id="pane_manage_categories">
+                                <div class="active tab-pane" id="pane_manage_categories">
 
 
 
@@ -132,13 +139,19 @@
                                             </thead>
 
                                             <tbody>
-                                            <tr class="d-flex">
-                                                <th scope="row" class="col-2 text-center">1</th>
-                                                <td id="td_category_name" class="col-8"><input type="text" id="txt_change_cat_name" class="form-control text-center" value="Engine Oil" readonly/></td>
-                                                <td id="table_manage_category" class="col-1 text-center"><a href="#" data-id="" class="btn btn-outline-primary mr-n5"><i class="fa fa-pencil"></i></a></td>
-                                                <td id="table_manage_category_del" class="col-1 text-center"><a href="#" data-id="" class="btn btn-outline-danger"><i class="fa fa-times"></i></a></td>
-                                            </tr>
+                                            <?php
+                                            $item_cat_result = $inventoryObj->getAllCategories();
+                                            while($row_cat = $item_cat_result->fetch_assoc()){
 
+                                                ?>
+
+                                                <tr class="d-flex">
+                                                    <th scope="row" class="col-2 text-center"><?php echo $row_cat["item_cat_id"]; ?></th>
+                                                    <td id="td_category_name" class="col-8"><input type="text" id="txt_change_cat_name<?php echo $row_cat["item_cat_id"]; ?>" class="form-control text-center" value="<?php echo $row_cat["item_cat_name"]; ?>" readonly/></td>
+                                                    <td id="table_manage_category" class="col-1 text-center"><a href="#" data-id="<?php echo $row_cat["item_cat_id"]; ?>" class="btn btn-outline-primary mr-n5"><i class="fa fa-pencil"></i></a></td>
+                                                    <td id="table_manage_category_del" class="col-1 text-center"><a href="#" data-id="<?php echo $row_cat["item_cat_id"]; ?>" class="btn btn-outline-danger"><i class="fa fa-times"></i></a></td>
+                                                </tr>
+                                            <?php } ?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -147,7 +160,6 @@
 
 
 
-                                    <!-- End of Sub Category Table  -->
 
 
 
@@ -288,7 +300,7 @@
             <div class="modal-xl modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">New Item, New Category and New Item Size</h5>
+                        <h5 class="modal-title">New</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -304,7 +316,10 @@
                                         <a href="#pane_new_item_form" data-toggle="tab" class="nav-link active">New Item</a>
                                     </li>
 
-
+                                    <!-- Add Stock Level Link   -->
+                                    <li class="nav-item">
+                                        <a href="#pane_stock_level_form" data-toggle="tab" class="nav-link">Add Stock Level</a>
+                                    </li>
 
 
                                     <!-- New Category Link   -->
@@ -371,12 +386,15 @@
                                                 <div class="form-group col-5">
                                                     <label for="supplier">Supplier</label>
                                                     <select name="supplier" id="supplier" class="custom-select form-control">
-                                                        <option selected>Choose...</option>
-                                                        <option value="s1">s1 - Supplier One</option>
-                                                        <option value="s2">s2 - Supplier Two</option>
-                                                        <option value="s3">s3 - Supplier Three</option>
-                                                        <option value="s4">s4 - Supplier Four</option>
-                                                        <option value="s5">s5 - Supplier Five</option>
+                                                        <option selected value="choose">Choose...</option>
+                                                        <?php
+                                                        $supplier_result = $inventoryObj->getAllSuppliers();
+                                                        while($sup_row = $supplier_result->fetch_assoc())
+                                                        {
+                                                        ?>
+                                                        <option value="<?php echo $sup_row["sup_id"]; ?>"><?php echo $sup_row["sup_name"]; ?></option>
+
+                                                        <?php } ?>
                                                     </select>
                                                 </div>
                                             </div>
@@ -386,13 +404,13 @@
                                                 <div class="form-group col-5">
                                                     <label for="item_category">Item Category</label>
                                                     <select name="item_category" id="item_category" class="custom-select form-control">
-                                                        <option selected>Choose...</option>
+                                                        <option selected value="choose">Choose...</option>
                                                         <?php
                                                         $category_result = $inventoryObj->getAllCategories();
                                                         while($cat_row = $category_result->fetch_assoc())
                                                         {
-                                                        ?>
-                                                        <option value="<?php echo $cat_row["item_cat_id"] ?>"><?php echo $cat_row["item_cat_name"] ?></option>
+                                                            ?>
+                                                            <option value="<?php echo $cat_row["item_cat_id"] ?>"><?php echo $cat_row["item_cat_name"] ?></option>
                                                         <?php } ?>
                                                     </select>
                                                 </div>
@@ -410,28 +428,6 @@
                                                             <option value="<?php echo $size_row["item_size_id"] ?>"><?php echo $size_row["item_size_name"] ?></option>
                                                         <?php } ?>
                                                     </select>
-                                                </div>
-                                            </div>
-
-                                            <!-- Fourth row -->
-                                            <div class="form-row">
-
-                                                <!-- ROP   -->
-                                                <div class="form-group col-4">
-                                                    <label for="rop">ROP</label>
-                                                    <input type="text" class="form-control" id="rop" name="rop" placeholder="ROP">
-                                                </div>
-
-                                                <!-- Order quantity   -->
-                                                <div class="form-group col-4">
-                                                    <label for="order_qty">Order Quantity</label>
-                                                    <input type="text" class="form-control" id="order_qty" name="order_qty" placeholder="Order Quantity">
-                                                </div>
-
-                                                <!-- Lead time   -->
-                                                <div class="form-group col-4">
-                                                    <label for="lt">Lead Time</label>
-                                                    <input type="text" class="form-control" id="lt" name="lt" placeholder="Lead Time">
                                                 </div>
                                             </div>
 
@@ -490,13 +486,13 @@
                                                 </div>
                                             </div>
 
-                                        <!-- New Item Save Button    -->
-                                        <div class="form-row mt-3">
-                                            <div class="form-group col-10">&nbsp;</div>
-                                            <div class="form-group col-2 d-flex justify-content-center">
-                                                <input type="submit" class="rounded-pill btn btn-primary" name="submit" id="submit" value="Save"/>
+                                            <!-- New Item Save Button    -->
+                                            <div class="form-row mt-3">
+                                                <div class="form-group col-10">&nbsp;</div>
+                                                <div class="form-group col-2 d-flex justify-content-center">
+                                                    <input type="submit" class="rounded-pill btn btn-primary" name="submit" id="submit" value="Save"/>
+                                                </div>
                                             </div>
-                                        </div>
                                         </form>
 
                                         <!-- End of New Item Form   -->
@@ -505,6 +501,105 @@
 
 
 
+                                    </div>
+
+                                    <!-- Add Stock Level Pane   -->
+                                    <div class="tab-pane" id="pane_stock_level_form">
+                                        <div class="row padding d-flex justify-content-center">
+                                            <div class="col-6 text-center" id="error_stock_level">
+
+                                            </div>
+                                        </div>
+                                        <!-- Add Stock Form -->
+                                        <form action="#" method="post">
+                                            <div class="form-group row">
+                                                <!-- Stock Item ID  -->
+                                                <label for="stock_level_item_id" class="col-form-label col-2">Item ID</label>
+                                                <div class="col-3">
+                                                    <input type="text" id="stock_level_item_id" name="stock_level_item_id" class="form-control" value="Relevant ID" readonly/>
+                                                </div>
+
+                                                <!-- Stock Item Name    -->
+                                                <label for="stock_level_item_name" class="col-form-label col-2">Item Name</label>
+                                                <div class="col-5">
+                                                    <input type="text" id="stock_level_item_name" name="stock_level_item_name" class="form-control" value="Relevant Name" readonly/>
+                                                </div>
+                                            </div>
+
+
+                                            <hr>
+
+
+                                            <div class="form-group row">
+                                                <!-- ROL -->
+                                                <label for="stock_level_rol" class="col-2 col-form-label">Item Re Order Level</label>
+                                                <div class="col-4">
+                                                    <input type="number" id="stock_rol" name="stock_level_rol" min="1" step="1" class="form-control"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <!-- EOQ / Re Order Quantity -->
+                                                <label for="stock_level_eoq" class="col-2 col-form-label">Re Order Quantity</label>
+                                                <div class="col-4">
+                                                    <input type="number" min="1" step="1" id="stock_level_eoq" name="stock_level_eoq" min="0" step="1" class="form-control"/>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group row">
+                                                <!-- Minimum Stock Level -->
+                                                <label for="stock_level_min_lvl" class="col-2 col-form-label">Minimum Stock Level</label>
+                                                <div class="col-4">
+                                                    <input type="number" id="stock_level_min_lvl" name="stock_level_min_lvl" min="0" step="1" class="form-control"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <!-- Maximum Stock Level -->
+                                                <label for="stock_level_max_lvl" class="col-2 col-form-label">Max Stock Level</label>
+                                                <div class="col-4">
+                                                    <input type="number" id="stock_level_max_lvl" name="stock_level_max_lvl" min="0" step="1" class="form-control"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <!-- Lead Time -->
+                                                <label for="stock_level_lead_time" class="col-2 col-form-label">Lead Time</label>
+                                                <div class="col-4">
+                                                    <input type="number" id="stock_level_lead_time" name="stock_level_lead_time" min="0" step="1" class="form-control"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <!-- Danger Stock Level -->
+                                                <label for="stock_level_dng_lvl" class="col-2 col-form-label">Danger Stock Level</label>
+                                                <div class="col-4">
+                                                    <input type="number" id="stock_level_dng_lvl" name="stock_level_dng_lvl" min="0" step="1" class="form-control"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <!-- Buffer Stock -->
+                                                <label for="stock_level_buffer" class="col-2 col-form-label">Buffer Stock</label>
+                                                <div class="col-4">
+                                                    <input type="number" id="stock_level_buffer" name="stock_level_buffer" min="0" step="1" class="form-control"/>
+                                                </div>
+                                            </div>
+
+                                            <!-- Add Stock Save Button    -->
+
+                                            <div class="form-row mt-3">
+                                                <div class="form-group col-8">&nbsp;</div>
+                                                <div class="form-group col-4 d-flex justify-content-center">
+                                                    <input type="submit" class="rounded-pill btn btn-primary" name="submit" id="add_stock_submit"
+                                                           value="Save"/>
+                                                </div>
+                                            </div>
+
+                                        </form>
+
+                                        <!--End of Add Stock Form -->
                                     </div>
 
                                     <!-- New Item Size Pane   -->
@@ -548,12 +643,13 @@
                                                 </div>
                                             </div>
 
-                                            <!-- Sub Category Save Button    -->
+                                            <!-- Item Size Save Button    -->
 
                                             <div class="form-row mt-3">
                                                 <div class="form-group col-8">&nbsp;</div>
                                                 <div class="form-group col-4 d-flex justify-content-center">
-                                                    <input type="submit" class="rounded-pill btn btn-primary" name="submit" id="submit" value="Save"/>
+                                                    <input type="submit" class="rounded-pill btn btn-primary" name="submit" id="item_size_submit"
+                                                           value="Save"/>
                                                 </div>
                                             </div>
 
@@ -606,7 +702,8 @@
                                             <div class="form-row mt-3">
                                                 <div class="form-group col-8">&nbsp;</div>
                                                 <div class="form-group col-4 d-flex justify-content-center">
-                                                    <input type="submit" class="rounded-pill btn btn-primary" name="submit" id="submit" value="Save"/>
+                                                    <input type="submit" class="rounded-pill btn btn-primary" name="submit" id="category_submit"
+                                                           value="Save"/>
                                                 </div>
                                             </div>
                                         </form>
@@ -629,255 +726,301 @@
             </div>
         </div>
 
-        <!-- End of New Item, New Category, New Item Size Modal -->
-
-<div class="col-md-3">&nbsp;</div>
-<!-- Search Bar -->
-<div class="col-md-9">
-    <form class="form-inline" id="frm_item_search">
-        <input class="rounded-pill form-control my-1 mr-sm-2 w-75" type="search" placeholder="Search . . ." aria-label="Search">
-        <button class="btn btn-outline-primary rounded-pill my-xl-1" type="submit"><i class="fa fa-search"></i> Search</button>
-    </form>
-</div>
-</div>
-
-<!-- Item Table -->
-<div class="table-responsive">
-    <table class="table table-sm">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
-            <!--                <th scope="col">Manage</th>-->
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-            <td><a href="#modal_manage_item" data-toggle="modal"><i class="fa fa-file-text-o fa-lg"></i></a></td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-            <td><a href="#modal_manage_item" data-toggle="modal"><i class="fa fa-file-text-o fa-lg"></i></a></td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td colspan="2">Larry the Bird</td>
-            <td>@twitter</td>
-            <td><a href="#modal_manage_item" data-toggle="modal"><i class="fa fa-file-text-o fa-lg"></i></a></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+        <!-- End of New Item, Add Stock Level, New Category, New Item Size Modal -->
 
 
+    </div>
+
+    <!-- Item Table -->
+    <div class="table-responsive">
+        <table class="table table-hover table-sm mydatatable mx-4">
+            <thead>
+            <tr>
+                <th scope="col">Item ID</th>
+                <th scope="col">Item Name</th>
+                <th scope="col">Category</th>
+                <th scope="col">Supplier</th>
+                <th scope="col">Sale Unit Price(Rs.)</th>
+                <th scope="col">Purchase Unit Price(Rs.)</th>
+                <th scope="col"></th>
+                <!--                <th scope="col">Manage</th>-->
+            </tr>
+            </thead>
+            <tbody>
+
+            <?php
+            $item_results = $inventoryObj->getAllItems();
+
+            while($row_item = $item_results->fetch_assoc()){
+
+                $supplier_result = $inventoryObj->getSupplierById($row_item["item_supplier_id"]);
+                $row_supplier = $supplier_result->fetch_assoc();
+
+                $category_result = $inventoryObj->getCategoryById($row_item["item_category_id"]);
+                $row_category = $category_result->fetch_assoc();
+            ?>
+            <tr">
+                <th scope="row"><?php echo $row_item["item_id"]; ?></th>
+                <td><?php echo $row_item["item_name"]; ?></td>
+                <td><?php echo $row_category["item_cat_name"];?></td>
+                <td><?php echo $row_supplier["sup_name"]; ?></td>
+                <td><?php echo $row_item["item_sale_uprice"]; ?></td>
+                <td><?php echo $row_item["item_purchase_uprice"]; ?></td>
+                <td><a href="#modal_add_stock" data-toggle="modal" class="btn btn-sm btn-outline-primary add-stock" data-id="<?php echo $row_item["item_id"]; ?>"><i class="fa fa-exchange"></i></a>
+                    <a href="#modal_manage_item" data-toggle="modal" class="btn btn-sm btn-outline-primary manage-item" data-id="<?php echo $row_item["item_id"]; ?>"><i class="fa fa-file-text-o fa-lg"></i></a></td>
+            </tr>
+
+<?php } ?>
+            </tbody>
+        </table>
+    </div>
 
 
 
 
 
-<!-- Modal for Manage Items -->
-<div class="modal fade" id="modal_manage_item" tabindex="-1" role="dialog" aria-labelledby="modal_manage_item" aria-hidden="true">
-    <div class="modal-xl modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Manage Item</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+
+
+    <!-- Modal for Manage Items -->
+    <div class="modal fade" id="modal_manage_item" tabindex="-1" role="dialog" aria-labelledby="modal_manage_item" aria-hidden="true">
+        <div class="modal-xl modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Manage Item</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="#" method="post">
+                    <div class="modal-body" id="manage_modal_body">
+
+                        <!-- Modal From the Controller with Relevant Item Id    -->
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
             </div>
-            <form action="#" method="post">
-                <div class="modal-body">
-
-                    <!-- First Row  -->
-                    <div class="form-group row">
-                        <!-- Item code  -->
-                        <label for="item_code" class="col-2 col-form-label">Item Code</label>
-                        <div class="col-2">
-                            <input type="text" readonly class="form-control" id="item_code" value="II000001">
-                        </div>
-                    </div>
-
-                    <!-- Second Row  -->
-                    <div class="form-group row">
-                        <!-- Item name  -->
-                        <label for="item_name" class="col-2 col-form-label">Item Name</label>
-                        <div class="input-group col-5">
-                            <input type="text"  class="form-control mr-2" id="item_name" value="">
-                            <button type="button" class="btn btn-outline-primary" id="btn_item_name_pencil"><i class="fa fa-pencil"></i></button>
-                            <button type="button" class="btn btn-outline-primary" id="btn_item_name_check"><i class="fa fa-check"></i></button>
-                        </div>
-                    </div>
-
-                    <!-- Third Row  -->
-                    <div class="form-group row">
-                        <!-- Manufacturer code  -->
-                        <label for="manufacturer_code" class="col-2 col-form-label">Manufacturer Code</label>
-                        <div class="input-group col-5">
-                            <input type="text"  class="form-control mr-2" id="manufacturer_code" value="">
-                            <button type="button" class="btn btn-outline-primary" id="btn_manufacturer_code_pencil"><i class="fa fa-pencil"></i></button>
-                            <button type="button" class="btn btn-outline-primary" id="btn_manufacturer_code_check"><i class="fa fa-check"></i></button>
-                        </div>
-                    </div>
-
-                    <!-- Forth Row  -->
-                    <div class="form-group row">
-                        <!-- Manufacturer name  -->
-                        <label for="manufacturer_name" class="col-2 col-form-label">Manufacturer Name</label>
-                        <div class="input-group col-5">
-                            <input type="text"  class="form-control mr-2" id="manufacturer_name" value="">
-                            <button type="button" class="btn btn-outline-primary" id="btn_manufacturer_name_pencil"><i class="fa fa-pencil"></i></button>
-                            <button type="button" class="btn btn-outline-primary" id="btn_manufacturer_name_check"><i class="fa fa-check"></i></button>
-                        </div>
-                    </div>
-
-                    <!-- Fifth Row  -->
-                    <div class="form-group row mb-4">
-                        <!-- Supplier  -->
-                        <label for="supplier" class="col-2 col-form-label">Supplier</label>
-                        <div class="input-group col-5">
-                            <input type="text"  class="form-control mr-2" id="supplier" value="">
-                            <button type="button" class="btn btn-outline-primary" id="btn_supplier_pencil"><i class="fa fa-pencil"></i></button>
-                            <button type="button" class="btn btn-outline-primary" id="btn_supplier_check"><i class="fa fa-check"></i></button>
-                        </div>
-                    </div>
-
-
-                    <!-- Sixth Row  -->
-                    <div class="form-group row">
-                        <!-- Item category  -->
-                        <label for="item_category" class="col-2 col-form-label">Item Category</label>
-                        <div class="input-group col-4">
-                            <input type="text"  class="form-control mr-2" id="item_category" value=" Change to dropdown">
-                            <button type="button" class="btn btn-outline-primary" id="btn_item_category_pencil"><i class="fa fa-pencil"></i></button>
-                            <button type="button" class="btn btn-outline-primary" id="btn_item_category_check"><i class="fa fa-check"></i></button>
-                        </div>
-
-
-                        <!-- Item Size  -->
-                        <label for="item_size" class="col-2 col-form-label">Item Size</label>
-                        <div class="input-group col-4">
-                            <input type="text"  class="form-control mr-2" id="item_size" value=" Change to dropdown">
-                            <button type="button" class="btn btn-outline-primary" id="btn_item_size_pencil"><i class="fa fa-pencil"></i></button>
-                            <button type="button" class="btn btn-outline-primary" id="btn_item_size_check"><i class="fa fa-check"></i></button>
-                        </div>
-                    </div>
-                    <!-- Seventh Row  -->
-                    <div class="form-group row">
-                        <!-- Quantity  -->
-                        <label for="quantity" class="col-2 col-form-label">Quantity</label>
-                        <div class="input-group col-4 my-2">
-                            <input type="text"  class="form-control mr-2" id="quantity" value=" Change to dropdown">
-                            <button type="button" class="btn btn-outline-primary" id="btn_quantity_pencil"><i class="fa fa-pencil"></i></button>
-                            <button type="button" class="btn btn-outline-primary" id="btn_quantity_check"><i class="fa fa-check"></i></button>
-                        </div>
-
-                        <!-- ROP  -->
-                        <label for="rop" class="col-2 col-form-label">ROP</label>
-                        <div class="input-group col-4 my-2">
-                            <input type="text"  class="form-control mr-2" id="rop" value=" Change to dropdown">
-                            <button type="button" class="btn btn-outline-primary" id="btn_rop_pencil"><i class="fa fa-pencil"></i></button>
-                            <button type="button" class="btn btn-outline-primary" id="btn_rop_check"><i class="fa fa-check"></i></button>
-                        </div>
-
-                        <!-- Eighth Row     -->
-                        <!-- Order Quantity  -->
-                        <label for="order_quantity" class="col-2 col-form-label">Order Quantity</label>
-                        <div class="input-group col-4">
-                            <input type="text"  class="form-control mr-2" id="order_quantity" value=" Change to dropdown">
-                            <button type="button" class="btn btn-outline-primary" id="btn_order_quantity_pencil"><i class="fa fa-pencil"></i></button>
-                            <button type="button" class="btn btn-outline-primary" id="btn_order_quantity_check"><i class="fa fa-check"></i></button>
-                        </div>
-
-                        <!-- Lead Time  -->
-                        <label for="lead_time" class="col-2 col-form-label">Lead Time</label>
-                        <div class="input-group col-4">
-                            <input type="text"  class="form-control mr-2" id="lead_time" value=" Change to dropdown">
-                            <button type="button" class="btn btn-outline-primary" id="btn_lead_time_pencil"><i class="fa fa-pencil"></i></button>
-                            <button type="button" class="btn btn-outline-primary" id="btn_lead_time_check"><i class="fa fa-check"></i></button>
-                        </div>
-                    </div>
-
-                    <!-- Ninth Row  -->
-                    <div class="form-group row">
-                        <!-- Purchase Unit Price Rs.  -->
-                        <label for="p_unit_price" class="col-2 col-form-label">Purchase Unit Price Rs.</label>
-                        <div class="input-group col-4 my-2">
-                            <input type="text"  class="form-control mr-2" id="p_unit_price" value=" Change to dropdown">
-                            <button type="button" class="btn btn-outline-primary" id="btn_p_unit_price_pencil"><i class="fa fa-pencil"></i></button>
-                            <button type="button" class="btn btn-outline-primary" id="btn_p_unit_price_check"><i class="fa fa-check"></i></button>
-                        </div>
-
-                        <!-- Selling Unit Price Rs.  -->
-                        <label for="s_unit_price" class="col-2 col-form-label">Selling Unit Price Rs.</label>
-                        <div class="input-group col-4 my-2">
-                            <input type="text"  class="form-control mr-2" id="s_unit_price" value=" Change to dropdown">
-                            <button type="button" class="btn btn-outline-primary" id="btn_s_unit_price_pencil"><i class="fa fa-pencil"></i></button>
-                            <button type="button" class="btn btn-outline-primary" id="btn_s_unit_price_check"><i class="fa fa-check"></i></button>
-                        </div>
-
-                        <!-- Tenth Row     -->
-                        <!-- Discount  -->
-                        <label for="order_quantity" class="col-2 col-form-label">Discount</label>
-                        <div class="input-group col-4">
-                            <input type="text"  class="form-control mr-2" id="discount" value=" Change to dropdown">
-                            <button type="button" class="btn btn-outline-primary" id="btn_discount_pencil"><i class="fa fa-pencil"></i></button>
-                            <button type="button" class="btn btn-outline-primary" id="btn_discount_check"><i class="fa fa-check"></i></button>
-                        </div>
-
-                        <!-- Handling Charges Rs.  -->
-                        <label for="handling_charges" class="col-2 col-form-label">Handling Charges Rs.</label>
-                        <div class="input-group col-4">
-                            <input type="text"  class="form-control" id="handling_charges" value=" Change to dropdown">
-                            <button type="button" class="btn btn-outline-primary" id="btn_handling_charges_pencil"><i class="fa fa-pencil"></i></button>
-                            <button type="button" class="btn btn-outline-primary" id="btn_handling_charges_check"><i class="fa fa-check"></i></button>
-                        </div>
-                    </div>
-
-                    <!-- Eleventh Row  -->
-                    <div class="form-group row mt-4">
-                        <!-- Vat Rate  -->
-                        <label for="vat_rate" class="col-2 col-form-label">Vat Rate</label>
-                        <div class="input-group col-4">
-                            <input type="text"  class="form-control mr-2" id="vat_rate" value="Change to dropdown">
-                            <button type="button" class="btn btn-outline-primary" id="btn_vat_rate_pencil"><i class="fa fa-pencil"></i></button>
-                            <button type="button" class="btn btn-outline-primary" id="btn_vat_rate_check"><i class="fa fa-check"></i></button>
-                        </div>
-
-
-                        <!-- Location  -->
-                        <label for="location" class="col-2 col-form-label">Location</label>
-                        <div class="input-group col-4">
-                            <input type="text"  class="form-control mr-2" id="location" value=" Change to dropdown">
-                            <button type="button" class="btn btn-outline-primary" id="btn_location_pencil"><i class="fa fa-pencil"></i></button>
-                            <button type="button" class="btn btn-outline-primary" id="btn_location_check"><i class="fa fa-check"></i></button>
-                        </div>
-                    </div>
-
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
-                </div>
-            </form>
         </div>
     </div>
-</div>
+
+
+
+
+    <!-- Add Stock Modal    -->
+
+    <div class="modal fade" role="dialog" id="modal_add_stock" tabindex="-1" aria-hidden="true" aria-labelledby="modal_add_stock">
+        <div class="modal-xl modal-dialog" role="document">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Stock</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <!-- Add Stock Modal Form   -->
+                <form action="#" method="post">
+                    <div class="modal-body">
+
+
+                        <div class="form-group row">
+                            <!-- Stock Item ID  -->
+                            <label for="stock_item_id" class="col-form-label col-2">Item ID</label>
+                            <div class="col-3">
+                                <input type="text" id="stock_item_id" name="stock_item_id" class="form-control" value="Relevant ID" readonly/>
+                            </div>
+
+                            <!-- Stock Item Name    -->
+                            <label for="stock_item_name" class="col-form-label col-2">Item Name</label>
+                            <div class="col-5">
+                                <input type="text" id="stock_item_name" name="stock_item_name" class="form-control" value="Relevant Name" readonly/>
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group row">
+                            <!-- Barcode   -->
+                            <label for="stock_barcode" class="col-2 col-form-label">Barcode</label>
+                            <div class="col-3">
+                                <input type="number" step="1" min="1" id="stock_barcode" name="stock_barcode" class="form-control"/>
+                            </div>
+                            <div class="col-3">
+                                <button type="button" id="btn_generate_stock_barcode" class="btn btn-outline-primary rounded-pill">Generate</button>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group row">
+                            <!-- Generated Barcode  -->
+                            <div class="col-2">&nbsp;</div>
+                            <div class="col-4 d-flex justify-content-start" id="barcode_image"></div>
+                        </div>
+
+
+                        <div class="form-group row">
+                            <!-- MFD Date   -->
+                            <label for="stock_mfd" class="col-2 col-form-label">Manufactured Date</label>
+                            <div class="col-4">
+                                <input type="date" name="stock_mfd" id="stock_mfd" class="form-control" value="<?php echo date("Y-m-d"); ?>" min="<?php echo date("Y-m-d"); ?>"/>
+                            </div>
+
+
+                            <!-- EXP date   -->
+                            <label for="stock_date" class="col-2 col-form-label">Stock Date</label>
+                            <div class="col-4">
+                                <input type="date" name="stock_date" id="stock_date" class="form-control" min="<?php echo date("Y-m-d"); ?>"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <!-- EXP date   -->
+                            <label for="stock_exp" class="col-2 col-form-label">Expiry Date</label>
+                            <div class="col-4">
+                                <input type="date" name="stock_exp" id="stock_exp" class="form-control" min="<?php echo date("Y-m-d"); ?>"/>
+                            </div>
+
+                            <!-- Stock Quantity -->
+                            <label for="stock_qty" class="col-2 col-form-label">Stock Quantity</label>
+                            <div class="col-4">
+                                <input type="number" min="1" step="1" id="stock_qty" name="stock_qty" min="0" step="1" class="form-control"/>
+                            </div>
+                        </div>
+
+                        <hr>
+
+
+                        <div class="form-group row">
+                            <!-- ROL -->
+                            <label for="stock_rol" class="col-2 col-form-label">Item Re Order Level</label>
+                            <div class="col-4">
+                                <input type="number" id="stock_rol" name="stock_rol" min="1" step="1" class="form-control"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <!-- EOQ / Re Order Quantity -->
+                            <label for="stock_eoq" class="col-2 col-form-label">Re Order Quantity</label>
+                            <div class="col-4">
+                                <input type="number" min="1" step="1" id="stock_eoq" name="stock_eoq" class="form-control"/>
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group row">
+                            <!-- Minimum Stock Level -->
+                            <label for="stock_min_lvl" class="col-2 col-form-label">Minimum Stock Level</label>
+                            <div class="col-4">
+                                <input type="number" id="stock_min_lvl" name="stock_min_lvl" min="0" step="1" class="form-control"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <!-- Maximum Stock Level -->
+                            <label for="stock_max_lvl" class="col-2 col-form-label">Max Stock Level</label>
+                            <div class="col-4">
+                                <input type="number" id="stock_max_lvl" name="stock_max_lvl" min="0" step="1" class="form-control"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <!-- Lead Time -->
+                            <label for="stock_lead_time" class="col-2 col-form-label">Lead Time</label>
+                            <div class="col-4">
+                                <input type="number" id="stock_lead_time" name="stock_lead_time" min="0" step="1" class="form-control"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <!-- Danger Stock Level -->
+                            <label for="stock_dng_lvl" class="col-2 col-form-label">Danger Stock Level</label>
+                            <div class="col-4">
+                                <input type="number" id="stock_dng_lvl" name="stock_dng_lvl" min="0" step="1" class="form-control"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <!-- Buffer Stock -->
+                            <label for="stock_buffer" class="col-2 col-form-label">Buffer Stock</label>
+                            <div class="col-4">
+                                <input type="number" id="stock_buffer" name="stock_buffer" min="0" step="1" class="form-control"/>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save</button>
+
+                    </div>
+                </form>
+            </div>
+
+            <!--End of Add Stock Modal Form   -->
+        </div>
+    </div>
+
+
+
+    <!-- End of Add Stock Modal -->
 
 
 
 
 
+
+
+
+
+    <!-- Add Stock Level Modal  -->
+    <div class="modal fade" role="dialog" id="modal_add_stock_level" tabindex="-1" aria-hidden="true" aria-labelledby="modal_add_stock_level">
+        <div class="modal-xl modal-dialog" role="document">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Stock Level</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <!-- Add Stock Level Modal Form   -->
+
+                    <div class="modal-body">
+
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save</button>
+
+                    </div>
+
+            </div>
+
+            <!--End of Add Stock Level Modal Form   -->
+        </div>
+    </div>
+
+
+    <!-- End of Add Stock Level Modal  -->
 </div>
 
 <?php include '../includes/footer.php' ?>
 <script src="../assets/js/inventory.js"></script>
+<script src="../assets/js/inventory_validation.js"></script>
+<script>
+    $(".mydatatable").DataTable();
+</script>
+
+
