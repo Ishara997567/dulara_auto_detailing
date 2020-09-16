@@ -506,12 +506,38 @@
                                     <!-- Add Stock Level Pane   -->
                                     <div class="tab-pane" id="pane_stock_level_form">
                                         <div class="row padding d-flex justify-content-center">
-                                            <div class="col-6 text-center" id="error_stock_level">
-
+                                            <div class="col-6 text-center" id="error_stock_level" class="alert alert-success">
+                                                <?php
+                                                if(isset($_GET['error_stock']))
+                                                {
+                        $msg = $_GET['error_message'];
+                        echo $msg;
+                                                }
+                                                ?>
                                             </div>
                                         </div>
                                         <!-- Add Stock Form -->
-                                        <form action="#" method="post">
+                                        <form action="../controller/inventorycontroller.php?status=add_stock_level" method="post">
+                                            <!-- Item Category -->
+                                            <div class="form-group row">
+                                                <label for="stock_lvl_item_category" class="col-2 col-form-label">Item Category</label>
+                                                <div class="col-3">
+                                                    <select name="stock_lvl_item_category" id="stock_lvl_item_category" class="custom-select">
+                                                        <option value="choose" selected>Choose</option>
+                                                        <?php
+                                                        $cat_result = $inventoryObj->getAllCategories();
+                                                        while($cat_row = $cat_result->fetch_assoc())
+                                                        {
+                                                        ?>
+
+                                                            <option value="<?php echo $cat_row["item_cat_id"];?>"><?php echo $cat_row["item_cat_name"];?></option>
+
+                                                        <?php } ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
                                             <div class="form-group row">
                                                 <!-- Stock Item ID  -->
                                                 <label for="stock_level_item_id" class="col-form-label col-2">Item ID</label>
@@ -521,8 +547,8 @@
 
                                                 <!-- Stock Item Name    -->
                                                 <label for="stock_level_item_name" class="col-form-label col-2">Item Name</label>
-                                                <div class="col-5">
-                                                    <input type="text" id="stock_level_item_name" name="stock_level_item_name" class="form-control" value="Relevant Name" readonly/>
+                                                <div class="col-5" id="change_to_select">
+                                                    <input type="text" id="stock_level_item_name" name="stock_level_item_name" class="ui-widget form-control"/>
                                                 </div>
                                             </div>
 
@@ -534,7 +560,7 @@
                                                 <!-- ROL -->
                                                 <label for="stock_level_rol" class="col-2 col-form-label">Item Re Order Level</label>
                                                 <div class="col-4">
-                                                    <input type="number" id="stock_rol" name="stock_level_rol" min="1" step="1" class="form-control"/>
+                                                    <input type="number" id="stock_level_rol" name="stock_level_rol" min="1" step="1" class="form-control"/>
                                                 </div>
                                             </div>
 
@@ -542,7 +568,7 @@
                                                 <!-- EOQ / Re Order Quantity -->
                                                 <label for="stock_level_eoq" class="col-2 col-form-label">Re Order Quantity</label>
                                                 <div class="col-4">
-                                                    <input type="number" min="1" step="1" id="stock_level_eoq" name="stock_level_eoq" min="0" step="1" class="form-control"/>
+                                                    <input type="number" id="stock_level_eoq" name="stock_level_eoq" min="0" step="1" class="form-control"/>
                                                 </div>
                                             </div>
 
@@ -740,8 +766,9 @@
                 <th scope="col">Item Name</th>
                 <th scope="col">Category</th>
                 <th scope="col">Supplier</th>
-                <th scope="col">Sale Unit Price(Rs.)</th>
-                <th scope="col">Purchase Unit Price(Rs.)</th>
+                <th scope="col" class="text-center">Sale Unit Price(Rs.)</th>
+                <th scope="col" class="text-center">Purchase Unit Price(Rs.)</th>
+                <th scope="col" class="text-center">Stock</th>
                 <th scope="col"></th>
                 <!--                <th scope="col">Manage</th>-->
             </tr>
@@ -759,13 +786,14 @@
                 $category_result = $inventoryObj->getCategoryById($row_item["item_category_id"]);
                 $row_category = $category_result->fetch_assoc();
             ?>
-            <tr">
+            <tr>
                 <th scope="row"><?php echo $row_item["item_id"]; ?></th>
                 <td><?php echo $row_item["item_name"]; ?></td>
                 <td><?php echo $row_category["item_cat_name"];?></td>
                 <td><?php echo $row_supplier["sup_name"]; ?></td>
-                <td><?php echo $row_item["item_sale_uprice"]; ?></td>
-                <td><?php echo $row_item["item_purchase_uprice"]; ?></td>
+                <td class="text-center"><?php echo $row_item["item_sale_uprice"]; ?></td>
+                <td class="text-center"><?php echo $row_item["item_purchase_uprice"]; ?></td>
+                <td class="text-center"><?php echo $inventoryObj->getStockQty($row_item["item_id"]); ?></td>
                 <td><a href="#modal_add_stock" data-toggle="modal" class="btn btn-sm btn-outline-primary add-stock" data-id="<?php echo $row_item["item_id"]; ?>"><i class="fa fa-exchange"></i></a>
                     <a href="#modal_manage_item" data-toggle="modal" class="btn btn-sm btn-outline-primary manage-item" data-id="<?php echo $row_item["item_id"]; ?>"><i class="fa fa-file-text-o fa-lg"></i></a></td>
             </tr>
@@ -824,141 +852,14 @@
                 </div>
 
                 <!-- Add Stock Modal Form   -->
-                <form action="#" method="post">
-                    <div class="modal-body">
-
-
-                        <div class="form-group row">
-                            <!-- Stock Item ID  -->
-                            <label for="stock_item_id" class="col-form-label col-2">Item ID</label>
-                            <div class="col-3">
-                                <input type="text" id="stock_item_id" name="stock_item_id" class="form-control" value="Relevant ID" readonly/>
-                            </div>
-
-                            <!-- Stock Item Name    -->
-                            <label for="stock_item_name" class="col-form-label col-2">Item Name</label>
-                            <div class="col-5">
-                                <input type="text" id="stock_item_name" name="stock_item_name" class="form-control" value="Relevant Name" readonly/>
-                            </div>
-                        </div>
-
-
-
-                        <div class="form-group row">
-                            <!-- Barcode   -->
-                            <label for="stock_barcode" class="col-2 col-form-label">Barcode</label>
-                            <div class="col-3">
-                                <input type="number" step="1" min="1" id="stock_barcode" name="stock_barcode" class="form-control"/>
-                            </div>
-                            <div class="col-3">
-                                <button type="button" id="btn_generate_stock_barcode" class="btn btn-outline-primary rounded-pill">Generate</button>
-                            </div>
-
-                        </div>
-
-                        <div class="form-group row">
-                            <!-- Generated Barcode  -->
-                            <div class="col-2">&nbsp;</div>
-                            <div class="col-4 d-flex justify-content-start" id="barcode_image"></div>
-                        </div>
-
-
-                        <div class="form-group row">
-                            <!-- MFD Date   -->
-                            <label for="stock_mfd" class="col-2 col-form-label">Manufactured Date</label>
-                            <div class="col-4">
-                                <input type="date" name="stock_mfd" id="stock_mfd" class="form-control" value="<?php echo date("Y-m-d"); ?>" min="<?php echo date("Y-m-d"); ?>"/>
-                            </div>
-
-
-                            <!-- EXP date   -->
-                            <label for="stock_date" class="col-2 col-form-label">Stock Date</label>
-                            <div class="col-4">
-                                <input type="date" name="stock_date" id="stock_date" class="form-control" min="<?php echo date("Y-m-d"); ?>"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <!-- EXP date   -->
-                            <label for="stock_exp" class="col-2 col-form-label">Expiry Date</label>
-                            <div class="col-4">
-                                <input type="date" name="stock_exp" id="stock_exp" class="form-control" min="<?php echo date("Y-m-d"); ?>"/>
-                            </div>
-
-                            <!-- Stock Quantity -->
-                            <label for="stock_qty" class="col-2 col-form-label">Stock Quantity</label>
-                            <div class="col-4">
-                                <input type="number" min="1" step="1" id="stock_qty" name="stock_qty" min="0" step="1" class="form-control"/>
-                            </div>
-                        </div>
-
-                        <hr>
-
-
-                        <div class="form-group row">
-                            <!-- ROL -->
-                            <label for="stock_rol" class="col-2 col-form-label">Item Re Order Level</label>
-                            <div class="col-4">
-                                <input type="number" id="stock_rol" name="stock_rol" min="1" step="1" class="form-control"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <!-- EOQ / Re Order Quantity -->
-                            <label for="stock_eoq" class="col-2 col-form-label">Re Order Quantity</label>
-                            <div class="col-4">
-                                <input type="number" min="1" step="1" id="stock_eoq" name="stock_eoq" class="form-control"/>
-                            </div>
-                        </div>
-
-
-
-                        <div class="form-group row">
-                            <!-- Minimum Stock Level -->
-                            <label for="stock_min_lvl" class="col-2 col-form-label">Minimum Stock Level</label>
-                            <div class="col-4">
-                                <input type="number" id="stock_min_lvl" name="stock_min_lvl" min="0" step="1" class="form-control"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <!-- Maximum Stock Level -->
-                            <label for="stock_max_lvl" class="col-2 col-form-label">Max Stock Level</label>
-                            <div class="col-4">
-                                <input type="number" id="stock_max_lvl" name="stock_max_lvl" min="0" step="1" class="form-control"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <!-- Lead Time -->
-                            <label for="stock_lead_time" class="col-2 col-form-label">Lead Time</label>
-                            <div class="col-4">
-                                <input type="number" id="stock_lead_time" name="stock_lead_time" min="0" step="1" class="form-control"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <!-- Danger Stock Level -->
-                            <label for="stock_dng_lvl" class="col-2 col-form-label">Danger Stock Level</label>
-                            <div class="col-4">
-                                <input type="number" id="stock_dng_lvl" name="stock_dng_lvl" min="0" step="1" class="form-control"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <!-- Buffer Stock -->
-                            <label for="stock_buffer" class="col-2 col-form-label">Buffer Stock</label>
-                            <div class="col-4">
-                                <input type="number" id="stock_buffer" name="stock_buffer" min="0" step="1" class="form-control"/>
-                            </div>
-                        </div>
-
+                <form action="../controller/inventorycontroller.php?status=add_stock" method="post">
+                    <div class="modal-body add-stock-form">
 
                     </div>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save</button>
+                        <button type="submit" class="btn btn-primary" name="btn_save_stock">Save</button>
 
                     </div>
                 </form>
@@ -976,44 +877,6 @@
 
 
 
-
-
-
-
-    <!-- Add Stock Level Modal  -->
-    <div class="modal fade" role="dialog" id="modal_add_stock_level" tabindex="-1" aria-hidden="true" aria-labelledby="modal_add_stock_level">
-        <div class="modal-xl modal-dialog" role="document">
-
-            <div class="modal-content">
-
-                <div class="modal-header">
-                    <h5 class="modal-title">Add Stock Level</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-                <!-- Add Stock Level Modal Form   -->
-
-                    <div class="modal-body">
-
-
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save</button>
-
-                    </div>
-
-            </div>
-
-            <!--End of Add Stock Level Modal Form   -->
-        </div>
-    </div>
-
-
-    <!-- End of Add Stock Level Modal  -->
 </div>
 
 <?php include '../includes/footer.php' ?>

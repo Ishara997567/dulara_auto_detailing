@@ -52,5 +52,30 @@ $(document).ready(function (){
             return false;
         }
 
+
+
+    })
+    //Category Validation
+    $("#category_submit").click(function (){
+        const itemCatName = $("#item_cat_name").val();
+
+        if(itemCatName === "")
+        {
+            $("#error_new_category").html("Category Name can not be Empty!").addClass("alert alert-danger");
+            $("#item_cat_name").focus();
+            return false;
+        }
+    })
+
+    //Item Size Validation
+    $("#item_size_submit").click(function (){
+        const itemSizeName = $("#item_size_name").val();
+
+        if(itemSizeName === "")
+        {
+            $("#error_new_item_size").html("Item Size Name can not be Empty!").addClass("alert alert-danger");
+            $("#item_size_name").focus();
+            return false;
+        }
     })
 })

@@ -38,7 +38,7 @@ if($_REQUEST["status"])
             }
             else
             {
-                $msg = base64_encode("New Item Failed to Created!");
+                $msg = base64_encode("New Item Failed to Create!");
                 ?>
                 <script>window.location = "../view/inventory-management.php?error_message=<?php echo $msg; ?>";</script>
 
@@ -65,7 +65,7 @@ if($_REQUEST["status"])
             }
             else
             {
-                $msg = base64_encode("New Item Size Failed to Created!");
+                $msg = base64_encode("New Item Size Failed to Create!");
                 ?>
                 <script>window.location = "../view/inventory-management.php?error_message=<?php echo $msg; ?>";</script>
 
@@ -91,9 +91,9 @@ if($_REQUEST["status"])
             }
             else
             {
-                $msg = base64_encode("New Item Category Failed to Created!");
+                $msg = base64_encode("New Item Category Failed to Create!");
                 ?>
-                <script>window.location = "../view/inventory-management.php?error_message=<?php echo $msg; ?>";</script>
+                <script>window.location = "../view/inventory-management.php?error_stock=<?php echo $msg; ?>";</script>
 
                 <?php
             }
@@ -138,15 +138,6 @@ if($_REQUEST["status"])
 
             break;
 
-        case "generate_barcode":
-            $barcode = $_POST["barcode"];
-
-            ?>
-            <img src="http://barcodes4.me/barcode/c128a/<?php echo $barcode; ?>.png" width="100px" height="60px">
-
-            <?php
-            break;
-
         case "manage_item":
             $manage_item_id = $_POST["manageItemId"];
 
@@ -162,7 +153,7 @@ if($_REQUEST["status"])
             $size_result = $inventoryObj->getItemSizeById($item_row["item_size_id"]);
             $row_size = $size_result->fetch_assoc();
             ?>
-<!--            Manage Item Modal Body-->
+            <!--            Manage Item Modal Body-->
 
             <!-- First Row  -->
             <div class="form-group row">
@@ -301,5 +292,249 @@ if($_REQUEST["status"])
             <?php
 
             break;
+
+        case "change_txt_select":
+            $item_cat_id = $_POST["itemCatId"];
+
+            $item_r = $inventoryObj->getItemByCategoryAndSearch($item_cat_id);
+            ?>
+            <select name="stock_lvl_select_item_name" id="stock_lvl_select_item_name" class="custom-select">
+                <?php
+                while($item_row = $item_r->fetch_assoc())
+                {
+                    ?>
+                    <option value="<?php echo $item_row["item_id"]; ?>"><?php echo $item_row["item_name"]; ?></option>
+                    <?php
+                }
+                ?>
+            </select>
+            <?php
+
+            break;
+
+        case "add_stock_level":
+            $stk_lvl_item_id = $_POST["stock_lvl_select_item_name"];
+            $stk_lvl_rol = $_POST["stock_level_rol"];
+            $stk_lvl_eoq = $_POST["stock_level_eoq"];
+            $stk_lvl_min = $_POST["stock_level_min_lvl"];
+            $stk_lvl_max = $_POST["stock_level_max_lvl"];
+            $stk_lvl_lt = $_POST["stock_level_lead_time"];
+            $stk_lvl_danger = $_POST["stock_level_dng_lvl"];
+            $stk_lvl_buffer = $_POST["stock_level_buffer"];
+
+            $r = $inventoryObj->addStockLevel($stk_lvl_item_id, $stk_lvl_rol, $stk_lvl_eoq, $stk_lvl_min, $stk_lvl_max, $stk_lvl_lt, $stk_lvl_danger, $stk_lvl_buffer);
+
+            if($r > 0)
+            {
+                $msg = base64_encode("Stock Level Added Successfully!");
+                ?>
+                <script>window.location = "../view/inventory-management.php?success_message=<?php echo $msg; ?>";</script>
+
+                <?php
+
+            }
+            else
+            {
+                $msg = base64_encode("Stock Level has already been Added!");
+                ?>
+                <script>window.location = "../view/inventory-management.php?error_message=<?php echo $msg; ?>";</script>
+
+                <?php
+            }
+            break;
+        case "show_stock_data":
+            $stock_item_id = $_POST["stockItemId"];
+            $item_result = $inventoryObj->getItemById($stock_item_id);
+
+            $stock_level_result = $inventoryObj->getStockLevel($stock_item_id);
+
+            while($item_row = $item_result->fetch_assoc())
+            {
+                ?>
+
+
+                <div class="form-group row">
+                    <!-- Stock Item ID  -->
+                    <label for="stock_item_id" class="col-form-label col-2">Item ID</label>
+                    <div class="col-3">
+                        <input type="text" id="stock_item_id" name="stock_item_id" class="form-control" value="<?php echo $item_row["item_id"]; ?>" readonly/>
+                    </div>
+
+                    <!-- Stock Item Name    -->
+                    <label for="stock_item_name" class="col-form-label col-2">Item Name</label>
+                    <div class="col-5">
+                        <input type="text" id="stock_item_name" name="stock_item_name" class="form-control" value="<?php echo $item_row["item_name"]; ?>" readonly/>
+                    </div>
+                </div>
+
+            <?php
+
+            ?>
+
+            <div class="form-group row">
+                <!-- Barcode   -->
+                <label for="stock_barcode" class="col-2 col-form-label">Barcode</label>
+                <div class="col-3">
+                    <input type="number" step="1" min="1" id="stock_barcode" name="stock_barcode" class="form-control"/>
+                </div>
+                <div class="col-3">
+                    <button type="button" id="btn_generate_stock_barcode" class="btn btn-outline-primary rounded-pill">Generate</button>
+                </div>
+
+            </div>
+
+            <div class="form-group row">
+                <!-- Generated Barcode  -->
+                <div class="col-2">&nbsp;</div>
+                <div class="col-4 d-flex justify-content-start" id="barcode_image"></div>
+            </div>
+
+
+            <div class="form-group row">
+                <!-- MFD Date   -->
+                <label for="stock_mfd" class="col-2 col-form-label">Manufactured Date</label>
+                <div class="col-4">
+                    <input type="date" name="stock_mfd" id="stock_mfd" class="form-control" value="<?php echo date("Y-m-d"); ?>" min="<?php echo date("Y-m-d"); ?>"/>
+                </div>
+
+
+                <!-- EXP date   -->
+                <label for="stock_date" class="col-2 col-form-label">Stock Date</label>
+                <div class="col-4">
+                    <input type="date" name="stock_date" id="stock_date" class="form-control" min="<?php echo date("Y-m-d"); ?>"/>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <!-- EXP date   -->
+                <label for="stock_exp" class="col-2 col-form-label">Expiry Date</label>
+                <div class="col-4">
+                    <input type="date" name="stock_exp" id="stock_exp" class="form-control" min="<?php echo date("Y-m-d"); ?>"/>
+                </div>
+
+                <!-- Stock Quantity -->
+                <label for="stock_qty" class="col-2 col-form-label">Stock Quantity</label>
+                <div class="col-4">
+                    <input type="number" min="1" step="1" id="stock_qty" name="stock_qty" class="form-control"/>
+                </div>
+            </div>
+
+            <hr>
+
+                <?php
+
+                while($r=$stock_level_result->fetch_assoc())
+                {
+                ?>
+
+
+
+            <div class="form-group row">
+                <!-- ROL -->
+                <label for="stock_rol" class="col-2 col-form-label">Item Re Order Level</label>
+                <div class="col-4">
+                    <input type="number" id="stock_rol" name="stock_rol" min="1" step="1" class="form-control" readonly value="<?php echo $r["stk_lvl_rol"]; ?>"/>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <!-- EOQ / Re Order Quantity -->
+                <label for="stock_eoq" class="col-2 col-form-label">Re Order Quantity</label>
+                <div class="col-4">
+                    <input type="number" min="1" step="1" id="stock_eoq" name="stock_eoq" class="form-control" readonly value="<?php echo $r["stk_lvl_eoq"]; ?>"/>
+                </div>
+            </div>
+
+
+
+            <div class="form-group row">
+                <!-- Minimum Stock Level -->
+                <label for="stock_min_lvl" class="col-2 col-form-label">Minimum Stock Level</label>
+                <div class="col-4">
+                    <input type="number" id="stock_min_lvl" name="stock_min_lvl" min="0" step="1" class="form-control" readonly value="<?php echo $r["stk_lvl_min"]; ?>"/>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <!-- Maximum Stock Level -->
+                <label for="stock_max_lvl" class="col-2 col-form-label">Max Stock Level</label>
+                <div class="col-4">
+                    <input type="number" id="stock_max_lvl" name="stock_max_lvl" min="0" step="1" class="form-control" readonly value="<?php echo $r["stk_lvl_max"]; ?>"/>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <!-- Lead Time -->
+                <label for="stock_lead_time" class="col-2 col-form-label">Lead Time</label>
+                <div class="col-4">
+                    <input type="number" id="stock_lead_time" name="stock_lead_time" min="0" step="1" class="form-control" readonly value="<?php echo $r["stk_lvl_lt"]; ?>"/>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <!-- Danger Stock Level -->
+                <label for="stock_dng_lvl" class="col-2 col-form-label">Danger Stock Level</label>
+                <div class="col-4">
+                    <input type="number" id="stock_dng_lvl" name="stock_dng_lvl" min="0" step="1" class="form-control" readonly value="<?php echo $r["stk_lvl_danger"]; ?>"/>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <!-- Buffer Stock -->
+                <label for="stock_buffer" class="col-2 col-form-label">Buffer Stock</label>
+                <div class="col-4">
+                    <input type="number" id="stock_buffer" name="stock_buffer" min="0" step="1" class="form-control" readonly value="<?php echo $r["stk_lvl_buffer"]; ?>"/>
+                </div>
+            </div>
+            <?php
+              }
+            }
+            break;
+
+        case "add_stock":
+
+            if(isset($_POST["btn_save_stock"])) {
+
+                $item_id = $_POST["stock_item_id"];
+                $item_stock_barcode = $_POST["stock_barcode"];
+                $item_stock_manu_date = $_POST["stock_mfd"];
+                $item_stock_date = $_POST["stock_exp"];
+                $item_stock_exp_date = $_POST["stock_date"];
+                $item_stock_qty = $_POST["stock_qty"];
+
+                $rows_affected = $inventoryObj->addStock($item_id, $item_stock_barcode, $item_stock_manu_date, $item_stock_date, $item_stock_exp_date, $item_stock_qty);
+
+                if($rows_affected > 0)
+                {
+                    $msg = base64_encode("Stock Added Successfully!");
+                    ?>
+                    <script>window.location = "../view/inventory-management.php?success_message=<?php echo $msg; ?>";</script>
+
+                    <?php
+
+                }
+                else
+                {
+                    $msg = base64_encode("Stock Failed to Add!");
+                    ?>
+                    <script>window.location = "../view/inventory-management.php?error_stock=<?php echo $msg; ?>";</script>
+
+                    <?php
+                }
+            }
+            break;
+
+        case "generate_barcode":
+            $barcode = $_POST["barcode"];
+
+            ?>
+            <img src="http://barcodes4.me/barcode/c128a/<?php echo $barcode; ?>.png" width="100px" height="60px">
+
+            <?php
+
+            break;
     }
 }
+
+?>
+<script src="../assets/js/inventory.js"></script>
