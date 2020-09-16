@@ -110,4 +110,47 @@ class Inventory
         $sql = "SELECT * FROM item_size WHERE item_size_id = '$item_size_id';";
         return $con->query($sql);
     }
+
+    public function getItemByCategoryAndSearch($cat_id)
+    {
+        $con=$GLOBALS["conn"];
+        $sql = "SELECT item_id, item_name FROM item WHERE item_category_id = '$cat_id'";
+        return $con->query($sql);
+    }
+
+    public function addStockLevel($stk_lvl_item_id, $stk_lvl_rol, $stk_lvl_eoq, $stk_lvl_min, $stk_lvl_max, $stk_lvl_lt, $stk_lvl_danger, $stk_lvl_buffer)
+    {
+        $con=$GLOBALS["conn"];
+        $sql = "INSERT INTO item_stock_level (stk_lvl_item_id, stk_lvl_rol, stk_lvl_eoq, stk_lvl_min, stk_lvl_max, stk_lvl_lt, stk_lvl_danger, stk_lvl_buffer) VALUES ('$stk_lvl_item_id','$stk_lvl_rol','$stk_lvl_eoq','$stk_lvl_min','$stk_lvl_max','$stk_lvl_lt','$stk_lvl_danger','$stk_lvl_buffer');";
+        $con->query($sql);
+        return $con->affected_rows;
+    }
+
+    public function addStock($item_id, $item_stock_barcode, $item_stock_manu_date, $item_stock_date, $item_stock_exp_date, $item_stock_qty)
+    {
+        $con=$GLOBALS["conn"];
+        $sql = "INSERT INTO item_stock (item_id, item_stock_barcode, item_stock_manu_date, item_stock_date, item_stock_exp_date, item_stock_qty) VALUES ('$item_id', '$item_stock_barcode', '$item_stock_manu_date', '$item_stock_date', '$item_stock_exp_date', '$item_stock_qty');";
+        $con->query($sql);
+        return $con->affected_rows;
+    }
+
+    public function getStockQty($stock_item_id)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT SUM(item_stock_qty) as tot_stock FROM item_stock WHERE item_id = '$stock_item_id';";
+        $tot_result = $con->query($sql);
+        $tot_row = $tot_result->fetch_assoc();
+
+        if($tot_row["tot_stock"] === null)
+            $tot_row["tot_stock"]=0;
+        return $tot_row["tot_stock"];
+    }
+
+    public function getStockLevel($stk_lvl_item_id)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT * FROM item_stock_level WHERE stk_lvl_item_id= '$stk_lvl_item_id';";
+        return $con->query($sql);
+    }
+
 }

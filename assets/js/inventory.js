@@ -77,15 +77,8 @@ $(document).ready(function(){
         $("#td_item_size_name input[id='txt_change_item_size_name"+delItemSizeId+"']").prop("readonly", true);
     })
 
-    $("#btn_generate_stock_barcode").click(function (){
 
-        const barcode = $("#stock_barcode").val();
 
-        const url = "../controller/inventorycontroller.php?status=generate_barcode";
-        $.post(url, {barcode:barcode}, function(data){
-            $("#barcode_image").html(data);
-        })
-    })
 
 
 
@@ -95,9 +88,44 @@ $(document).ready(function(){
 
         const url = "../controller/inventorycontroller.php?status=manage_item";
 
-        $.post(url, {manageItemId:manageItemId}, function(data, success){
+        $.post(url, {manageItemId:manageItemId}, function(data){
             $("#manage_modal_body").html(data).show();
         })
     })
 
+    //Add Stock Level
+    $("#pane_stock_level_form").on("change", "#stock_lvl_item_category", function (){
+    const itemCatId = $(this).val();
+    $.ajax({
+        method: "POST",
+        url: "../controller/inventorycontroller.php?status=change_txt_select",
+        data: {itemCatId:itemCatId},
+        success: function(response){
+            $("#change_to_select").html(response).show();
+        }
+    });
+    });
+
+    //Add Stock
+    $(".mydatatable").on("click", ".add-stock", function (){
+        let stockItemId = $(this).data('id');
+            $.ajax({
+                method: "post",
+                url: "../controller/inventorycontroller.php?status=show_stock_data",
+                data: {stockItemId:stockItemId},
+                success: function (response){
+                    $(".add-stock-form").html(response);
+                }
+            })
+
+    })
+    //barcode
+    $("#btn_generate_stock_barcode").click(function (){
+        const barcode = $("#stock_barcode").val();
+        const url = "../controller/inventorycontroller.php?status=generate_barcode";
+        $.post(url, {barcode:barcode}, function(data){
+            $("#barcode_image").html(data).show();
+        })
+    })
 })
+
