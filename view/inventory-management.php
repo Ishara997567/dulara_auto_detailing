@@ -814,20 +814,26 @@
         <div class="modal-xl modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Manage Item</h5>
+                    <h5 class="modal-title">Manage Item</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="#" method="post">
+                <form action="../controller/inventorycontroller.php?status=update_item" method="post">
+                    <div class="row padding welcome d-flex justify-content-center mt-5">
+                        <div class="col-8 my-message text-center">
+
+                        </div>
+                    </div>
                     <div class="modal-body" id="manage_modal_body">
+
 
                         <!-- Modal From the Controller with Relevant Item Id    -->
 
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <button type="submit" class="btn btn-primary" name="manage_item_save">Save changes</button>
                     </div>
                 </form>
             </div>
@@ -882,6 +888,7 @@
 <?php include '../includes/footer.php' ?>
 <script src="../assets/js/inventory.js"></script>
 <script src="../assets/js/inventory_validation.js"></script>
+<script src="../assets/js/inventory_update.js"></script>
 <script>
     $(".mydatatable").DataTable();
 </script>

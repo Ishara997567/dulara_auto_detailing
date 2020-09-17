@@ -144,7 +144,7 @@ switch($status)
             <div class="input-group col-5">
                 <input type="text" readonly class="form-control mr-2" id="manage_service_name" value="<?php echo $row_service["service_name"]; ?>">
                 <button type="button" class="btn btn-outline-primary" id="btn_service_name_pencil"><i class="fa fa-pencil"></i></button>
-                <button type="button" class="btn btn-outline-primary" id="btn_service_name_check"><i class="fa fa-check"></i></button>
+                <button type="button" class="btn btn-outline-success" id="btn_service_name_check"><i class="fa fa-check"></i></button>
             </div>
         </div>
 
@@ -155,7 +155,7 @@ switch($status)
             <div class="input-group col-5">
                 <input type="text" readonly class="form-control mr-2" id="service_price" name="txt_service_price" value="<?php echo $row_service["service_price"]; ?>">
                 <button type="button" class="btn btn-outline-primary" id="btn_service_price_pencil"><i class="fa fa-pencil"></i></button>
-                <button type="button" class="btn btn-outline-primary" id="btn_service_price_check"><i class="fa fa-check"></i></button>
+                <button type="button" class="btn btn-outline-success" id="btn_service_price_check"><i class="fa fa-check"></i></button>
 
             </div>
         </div>
@@ -185,7 +185,7 @@ switch($status)
 
                 <input type="text" readonly class="form-control mr-2" id="service_category" value="<?php echo $row_category["service_cat_name"]; ?>">
                 <button type="button" class="btn btn-outline-primary" id="btn_service_category_pencil"><i class="fa fa-pencil"></i></button>
-                <button type="button" class="btn btn-outline-primary" id="btn_service_category_check"><i class="fa fa-check"></i></button>
+                <button type="button" class="btn btn-outline-success" id="btn_service_category_check"><i class="fa fa-check"></i></button>
             </div>
         </div>
 
@@ -213,7 +213,7 @@ switch($status)
                 <input type="text" readonly class="form-control mr-2" id="service_sub_category" value="<?php echo $row_sub_category["service_sub_cat_name"] ;?>">
                 <p class="span2">
                 <p><button type="button" class="btn btn-outline-primary" id="btn_service_sub_category_pencil"><i class="fa fa-pencil"></i></button></p>
-                <p><button type="button" class="btn btn-outline-primary" id="btn_service_sub_category_check"><i class="fa fa-check"></i></button></p>
+                <p><button type="button" class="btn btn-outline-success" id="btn_service_sub_category_check"><i class="fa fa-check"></i></button></p>
             </div>
         </div>
 
@@ -231,7 +231,7 @@ switch($status)
                 <input type="text" readonly class="col-2 form-control mr-2" value="Item Code 1">
                 <input type="text" readonly class="form-control mr-2" id="editable_item_1" value="">
                 <button type="button" class="btn btn-outline-primary" id="btn_editable_item_1_pencil"><i class="fa fa-pencil"></i></button>
-                <button type="button" class="btn btn-outline-primary" id="btn_editable_item_1_check"><i class="fa fa-check"></i></button>
+                <button type="button" class="btn btn-outline-success" id="btn_editable_item_1_check"><i class="fa fa-check"></i></button>
             </div>
 
             <!-- Item 2 -->
@@ -239,7 +239,7 @@ switch($status)
                 <input type="text" readonly class="col-2 form-control mr-2" value="Item Code 2">
                 <input type="text" readonly class="form-control mr-2" id="editable_item_2" value="">
                 <button type="button" class="btn btn-outline-primary" id="btn_editable_item_2_pencil"><i class="fa fa-pencil"></i></button>
-                <button type="button" class="btn btn-outline-primary" id="btn_editable_item_2_check"><i class="fa fa-check"></i></button>
+                <button type="button" class="btn btn-outline-success" id="btn_editable_item_2_check"><i class="fa fa-check"></i></button>
             </div>
 
             <!-- Item 3 -->
@@ -247,7 +247,7 @@ switch($status)
                 <input type="text" readonly class="col-2 form-control mr-2" value="Item Code 3">
                 <input type="text" readonly class="form-control mr-2" id="editable_item_3" value="">
                 <button type="button" class="btn btn-outline-primary" id="btn_editable_item_3_pencil"><i class="fa fa-pencil"></i></button>
-                <button type="button" class="btn btn-outline-primary" id="btn_editable_item_3_check"><i class="fa fa-check"></i></button>
+                <button type="button" class="btn btn-outline-success" id="btn_editable_item_3_check"><i class="fa fa-check"></i></button>
             </div>
 
             <!-- Item 4 -->
@@ -255,7 +255,7 @@ switch($status)
                 <input type="text" readonly class="col-2 form-control mr-2" value="Item Code 4">
                 <input type="text" readonly class="form-control mr-2" id="editable_item_4" value="">
                 <button type="button" class="btn btn-outline-primary" id="btn_editable_item_4_pencil"><i class="fa fa-pencil"></i></button>
-                <button type="button" class="btn btn-outline-primary" id="btn_editable_item_4_check"><i class="fa fa-check"></i></button>
+                <button type="button" class="btn btn-outline-success" id="btn_editable_item_4_check"><i class="fa fa-check"></i></button>
             </div>
 
             <!-- Item 5 -->
@@ -263,7 +263,7 @@ switch($status)
                 <input type="text" readonly class="col-2 form-control mr-2" value="Item Code 5">
                 <input type="text" readonly class="form-control mr-2" id="editable_item_5" value="">
                 <button type="button" class="btn btn-outline-primary" id="btn_editable_item_5_pencil"><i class="fa fa-pencil"></i></button>
-                <button type="button" class="btn btn-outline-primary" id="btn_editable_item_5_check"><i class="fa fa-check"></i></button>
+                <button type="button" class="btn btn-outline-success" id="btn_editable_item_5_check"><i class="fa fa-check"></i></button>
             </div>
 
             <!-- Item 6 -->
@@ -271,7 +271,7 @@ switch($status)
                 <input type="text" readonly class="col-2 form-control mr-2" value="Item Code 6">
                 <input type="text" readonly class="form-control mr-2" id="editable_item_6" value="">
                 <button type="button" class="btn btn-outline-primary" id="btn_editable_item_6_pencil"> <i class="fa fa-pencil"></i> </button>
-                <button type="button" class="btn btn-outline-primary" id="btn_editable_item_6_check"><i class="fa fa-check"></i></button>
+                <button type="button" class="btn btn-outline-success" id="btn_editable_item_6_check"><i class="fa fa-check"></i></button>
             </div>
         </div>
 
@@ -289,7 +289,7 @@ switch($status)
                 <input type="text" readonly class="col-2 form-control mr-2" value="Worker Code 1">
                 <input type="text" readonly class="form-control mr-2" id="editable_worker_1" value="">
                 <button type="button" class="btn btn-outline-primary" id="btn_editable_worker_1_pencil"> <i class="fa fa-pencil"></i> </button>
-                <button type="button" class="btn btn-outline-primary" id="btn_editable_worker_1_check"><i class="fa fa-check"></i></button>
+                <button type="button" class="btn btn-outline-success" id="btn_editable_worker_1_check"><i class="fa fa-check"></i></button>
             </div>
 
             <!-- Worker 2 -->
@@ -297,7 +297,7 @@ switch($status)
                 <input type="text" readonly class="col-2 form-control mr-2" value="Worker Code 2">
                 <input type="text" readonly class="form-control mr-2" id="editable_worker_2" value="">
                 <button type="button" class="btn btn-outline-primary" id="btn_editable_worker_2_pencil"> <i class="fa fa-pencil"></i> </button>
-                <button type="button" class="btn btn-outline-primary" id="btn_editable_worker_2_check"><i class="fa fa-check"></i></button>
+                <button type="button" class="btn btn-outline-success" id="btn_editable_worker_2_check"><i class="fa fa-check"></i></button>
             </div>
 
             <!-- Worker 3 -->
@@ -305,7 +305,7 @@ switch($status)
                 <input type="text" readonly class="col-2 form-control mr-2" value="Worker Code 3">
                 <input type="text" readonly class="form-control mr-2" id="editable_worker_1" value="">
                 <button type="button" class="btn btn-outline-primary" id="btn_editable_worker_3_pencil"> <i class="fa fa-pencil"></i> </button>
-                <button type="button" class="btn btn-outline-primary" id="btn_editable_worker_3_check"><i class="fa fa-check"></i></button>
+                <button type="button" class="btn btn-outline-success" id="btn_editable_worker_3_check"><i class="fa fa-check"></i></button>
             </div>
 
             <!-- Worker 4 -->
@@ -313,7 +313,7 @@ switch($status)
                 <input type="text" readonly class="col-2 form-control mr-2" value="Worker Code 4">
                 <input type="text" readonly class="form-control mr-2" id="editable_worker_4" value="">
                 <button type="button" class="btn btn-outline-primary" id="btn_editable_worker_4_pencil"> <i class="fa fa-pencil"></i> </button>
-                <button type="button" class="btn btn-outline-primary" id="btn_editable_worker_4_check"><i class="fa fa-check"></i></button>
+                <button type="button" class="btn btn-outline-success" id="btn_editable_worker_4_check"><i class="fa fa-check"></i></button>
             </div>
         </div>
 

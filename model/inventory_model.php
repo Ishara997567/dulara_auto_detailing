@@ -153,4 +153,115 @@ class Inventory
         return $con->query($sql);
     }
 
+    //Update Item Details
+
+        //Item Name
+    public function updateItemName($item_id, $item_name)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE item SET item_name='$item_name' WHERE item_id='$item_id';";
+        $con->query($sql);
+    }
+        //Item Manu Code
+    public function updateItemManuCode($item_id, $item_manu_code)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE item SET item_manu_code='$item_manu_code' WHERE item_id='$item_id';";
+        $con->query($sql);
+    }
+
+    //Item Manu Name
+    public function updateItemManuName($item_id, $item_manu_name)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE item SET item_manu_name='$item_manu_name' WHERE item_id='$item_id';";
+        $con->query($sql);
+    }
+
+    //sup id
+    public function updateSupId($item_id, $sup_id)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE item SET item_supplier_id='$sup_id' WHERE item_id='$item_id';";
+        $con->query($sql);
+    }
+
+    //cat id
+    public function updateCatId($item_id, $cat_id)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE item SET item_category_id='$cat_id' WHERE item_id='$item_id';";
+        $con->query($sql);
+    }
+
+    //size id
+    public function updateSizeId($item_id, $size_id)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE item SET item_size_id='$size_id' WHERE item_id='$item_id';";
+        $con->query($sql);
+    }
+
+    //p unit price
+    public function updatePurchaseUPrice($item_id, $price)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE item SET item_purchase_uprice='$price' WHERE item_id='$item_id';";
+        $con->query($sql);
+    }
+
+    //s unit price
+    public function updateSaleUPrice($item_id, $price)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE item SET item_sale_uprice='$price' WHERE item_id='$item_id';";
+        $con->query($sql);
+    }
+
+    //Item Discount
+    public function updateDiscount($item_id, $price)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE item SET item_discount='$price' WHERE item_id='$item_id';";
+        $con->query($sql);
+    }
+
+
+
+    //Item handling
+    public function updateHandling($item_id, $price)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE item SET item_handling='$price' WHERE item_id='$item_id';";
+        $con->query($sql);
+    }
+
+
+
+    //Item vat
+    public function updateVat($item_id, $rate)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE item SET item_vat_rate='$rate' WHERE item_id='$item_id';";
+        $con->query($sql);
+    }
+
+
+    //Item vat
+    public function updateLocation($item_id, $location)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE item SET item_location='$location' WHERE item_id='$item_id';";
+        $con->query($sql);
+    }
+
+
+
+
+
+
+
+    //End of Update Item Details
+
+
 }
