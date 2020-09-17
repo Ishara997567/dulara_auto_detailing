@@ -263,5 +263,17 @@ class Inventory
 
     //End of Update Item Details
 
+    public function getStockItemAscOrder()
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT SUM(s.item_stock_qty) as sum_stock, i.item_name, l.stk_lvl_min, l.stk_lvl_max 
+                FROM item i, item_stock s, item_stock_level l
+                WHERE s.item_id = i.item_id
+                AND i.item_id = l.stk_lvl_item_id 
+                GROUP BY i.item_id
+                ORDER BY sum_stock ASC LIMIT 5;";
+
+        return $con->query($sql);
+    }
 
 }

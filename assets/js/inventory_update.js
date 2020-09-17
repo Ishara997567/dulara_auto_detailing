@@ -200,5 +200,11 @@ $(document).ready(function (){
         })
     })
 
+    $(".btn-manage-save").click(function(){
+        window.setTimeout(function () {
+            location.reload()
+        }, 2000);
+    })
+
 
 })

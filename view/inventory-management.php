@@ -263,30 +263,22 @@
                 <div class="card-header"><h4>Order Soon...</h4></div>
                 <div class="card-body">
                     <ul class="card-text">
+                        <?php
+                        $item_stock_result = $inventoryObj->getStockItemAscOrder();
+
+
+                       while($isr = $item_stock_result->fetch_assoc())
+                       {
+                        $percentage = ($isr["sum_stock"] / $isr["stk_lvl_max"]) * 100
+
+                        ?>
                         <li>
-                            Engine Oil
+                            <?php echo $isr["item_name"]; ?>
                             <div class="progress">
-                                <div class="progress-bar bg-danger" role="progressbar" style="width: 10%" aria-valuenow="10%" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width: <?php echo $percentage;?>%" aria-valuenow="<?php echo $isr["sum_stock"];?>" aria-valuemin="<?php echo $isr["stk_lvl_min"];?>" aria-valuemax="<?php echo $isr["stk_lvl_max"];?>"><?php echo round($percentage);?>%</div>
                             </div>
                         </li>
-                        <li>
-                            Seat Belt
-                            <div class="progress">
-                                <div class="progress-bar bg-danger" role="progressbar" style="width: 15%" aria-valuenow="15%" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </li>
-                        <li>
-                            Air Filters
-                            <div class="progress">
-                                <div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20%" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </li>
-                        <li>
-                            Silencer
-                            <div class="progress">
-                                <div class="progress-bar bg-danger" role="progressbar" style="width: 22%" aria-valuenow="22%" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </li>
+                        <?php } ?>
                     </ul>
                 </div>
             </div>
@@ -819,8 +811,8 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="../controller/inventorycontroller.php?status=update_item" method="post">
-                    <div class="row padding welcome d-flex justify-content-center mt-5">
+                <form action="inventory-management.php" method="post">
+                    <div class="row padding welcome d-flex justify-content-center mt-3">
                         <div class="col-8 my-message text-center">
 
                         </div>
@@ -833,7 +825,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" name="manage_item_save">Save changes</button>
+                        <button type="submit" class="btn btn-primary btn-manage-save" name="manage_item_save">Save changes</button>
                     </div>
                 </form>
             </div>
