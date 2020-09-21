@@ -161,7 +161,7 @@ $(document).ready(function (){
                 $(".my-message").html("Handling Charge Updated Successfully!").addClass("alert alert-success");
             }
             else{
-                $(".my-message").html("Handling Charge to Update!").addClass("alert alert-danger");
+                $(".my-message").html("Handling Charge Failed to Update!").addClass("alert alert-danger");
             }
         })
     })
@@ -178,7 +178,7 @@ $(document).ready(function (){
                 $(".my-message").html("Vat Rate Updated Successfully!").addClass("alert alert-success");
             }
             else{
-                $(".my-message").html("Vat Rate to Update!").addClass("alert alert-danger");
+                $(".my-message").html("Vat Rate Failed to Update!").addClass("alert alert-danger");
             }
         })
     })
@@ -195,7 +195,7 @@ $(document).ready(function (){
                 $(".my-message").html("Location Updated Successfully!").addClass("alert alert-success");
             }
             else{
-                $(".my-message").html("Location to Update!").addClass("alert alert-danger");
+                $(".my-message").html("Location Failed to Update!").addClass("alert alert-danger");
             }
         })
     })
@@ -205,6 +205,173 @@ $(document).ready(function (){
             location.reload()
         }, 2000);
     })
+
+
+    //Updating Stock Levels
+    const u = "../controller/inventorycontroller.php?status=update_stock_levels";
+
+            //Updating rol
+    $("#btn_rol_check").click(function (){
+        let stockItemId = $("#stock_item_id").val();
+        let rol = $("#stock_rol").val();
+
+        $.ajax({
+            url: u,
+            method: "post",
+            data: {stockItemId:stockItemId, rol:rol},
+            success: function (data, success){
+                if(success) {
+                    $(".stock-level-message").html("Re Order Level Updated Successfully!").addClass("alert alert-success");
+                }
+                else{
+                    $(".stock-level-message").html("Re Order Level Failed to Update!").addClass("alert alert-danger");
+                }
+            }
+        })
+    })
+
+    //Updating roq
+    $("#btn_roq_check").click(function (){
+        let stockItemId = $("#stock_item_id").val();
+        let roq = $("#stock_eoq").val();
+
+        $.ajax({
+            url: u,
+            method: "post",
+            data: {stockItemId:stockItemId, roq:roq},
+            success: function (data, success){
+                if(success) {
+                    $(".stock-level-message").html("Re Order Quantity Updated Successfully!").addClass("alert alert-success");
+                }
+                else{
+                    $(".stock-level-message").html("Re Order Quantity Failed to Update!").addClass("alert alert-danger");
+                }
+            }
+        })
+    })
+
+    let stockMax = $("#stock_max_lvl").val();
+    let stockMin = $("#stock_min_lvl").val();
+    //Updating min stock level
+    $("#btn_min_stock_check").click(function (){
+        let stockItemId = $("#stock_item_id").val();
+        stockMin = $("#stock_min_lvl").val();
+
+        if(parseInt(stockMin) > parseInt(stockMax))
+        {
+            $(".stock-level-message").html("Minimum Stock Level Should be Less Than Maximum Stock Level!").addClass("alert alert-danger");
+            return false;
+        }
+
+
+
+        $.ajax({
+            url: u,
+            method: "post",
+            data: {stockItemId:stockItemId, stockMin:stockMin},
+            success: function (data, success){
+                if(success) {
+                    $(".stock-level-message").html("Minimum Stock Level Updated Successfully!").addClass("alert alert-success");
+                }
+                else{
+                    $(".stock-level-message").html("Minimum Stock Level Failed to Update!").addClass("alert alert-danger");
+                }
+            }
+        })
+    })
+
+    //Updating max stock level
+    $("#btn_max_stock_check").click(function (){
+        let stockItemId = $("#stock_item_id").val();
+        stockMax = $("#stock_max_lvl").val();
+
+        if(parseInt(stockMin) > parseInt(stockMax))
+        {
+            $(".stock-level-message").html("Minimum Stock Level Should be Less Than Maximum Stock Level!").addClass("alert alert-danger");
+            return false;
+        }
+
+
+        $.ajax({
+            url: u,
+            method: "post",
+            data: {stockItemId:stockItemId, stockMax:stockMax},
+            success: function (data, success){
+                if(success) {
+                    $(".stock-level-message").html("Maximum Stock Level Updated Successfully!").addClass("alert alert-success");
+                }
+                else{
+                    $(".stock-level-message").html("Maximum Stock Level Failed to Update!").addClass("alert alert-danger");
+                }
+            }
+        })
+    })
+
+    //Updating lt
+    $("#btn_lt_check").click(function (){
+        let stockItemId = $("#stock_item_id").val();
+        let lt = $("#stock_lead_time").val();
+
+        $.ajax({
+            url: u,
+            method: "post",
+            data: {stockItemId:stockItemId, lt:lt},
+            success: function (data, success){
+                if(success) {
+                    $(".stock-level-message").html("Lead Time Updated Successfully!").addClass("alert alert-success");
+                }
+                else{
+                    $(".stock-level-message").html("Lead Time Failed to Update!").addClass("alert alert-danger");
+                }
+            }
+        })
+    })
+
+    //Updating Danger Stock Level
+    $("#btn_danger_stock_check").click(function (){
+        let stockItemId = $("#stock_item_id").val();
+        let danger = $("#stock_dng_lvl").val();
+
+        $.ajax({
+            url: u,
+            method: "post",
+            data: {stockItemId:stockItemId, danger:danger},
+            success: function (data, success){
+                if(success) {
+                    $(".stock-level-message").html("Danger Stock Level Updated Successfully!").addClass("alert alert-success");
+                }
+                else{
+                    $(".stock-level-message").html("Danger Stock Failed to Update!").addClass("alert alert-danger");
+                }
+            }
+        })
+    })
+
+    //Updating buffer Stock Level
+    $("#btn_buffer_stock_check").click(function (){
+        let stockItemId = $("#stock_item_id").val();
+        let buffer = $("#stock_buffer").val();
+
+        $.ajax({
+            url: u,
+            method: "post",
+            data: {stockItemId:stockItemId, buffer:buffer},
+            success: function (data, success){
+                if(success) {
+                    $(".stock-level-message").html("Buffer Stock Level Updated Successfully!").addClass("alert alert-success");
+                }
+                else{
+                    $(".stock-level-message").html("Buffer Stock Failed to Update!").addClass("alert alert-danger");
+                }
+            }
+        })
+    })
+
+
+
+
+
+
 
 
 })

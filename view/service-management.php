@@ -1,7 +1,10 @@
 <?php include '../includes/header.php';
 include '../model/service_model.php';
+include '../model/inventory_model.php';
 
 $serviceObj = new Service();
+$inventoryObj = new Inventory();
+
 $all_service_results = $serviceObj->selectService();
 $all_sub_category_results = $serviceObj->selectSubCategories();
 $all_cat_results_results = $serviceObj->selectCategories();
@@ -336,18 +339,7 @@ $all_cat_results_results = $serviceObj->selectCategories();
 
     </div>
 
-    <!-- New and Search Item -->
-    <div class="row">
-        <div class="col-md-3 d-flex justify-content-md-start">&nbsp;</div>
 
-        <!-- Search Bar -->
-        <div class="col-md-9">
-            <form class="form-inline" id="frm_item_search">
-                <input class="rounded-pill form-control my-1 mr-sm-2 w-75" type="search" placeholder="Search . . ." aria-label="Search">
-                <button class="btn btn-outline-primary rounded-pill my-xl-1" type="button"><i class="fa fa-search"></i> Search</button>
-            </form>
-        </div>
-    </div>
 
 
     <!-- Modals -->
@@ -481,17 +473,20 @@ $all_cat_results_results = $serviceObj->selectCategories();
                                         </div>
 
                                         <!-- Fourth row -->
+                                        <?php $item_result = $inventoryObj->getAllItems(); ?>
                                         <div class="form-row">
                                             <!-- Service Item #1 Dropdown -->
                                             <div class="form-group col-6">
                                                 <label for="service_required_item_1">Service Required Item #1</label>
                                                 <select class="custom-select form-control" name="service_ri1" id="service_required_item_1">
                                                     <option value="choose" selected>Choose...</option>
-                                                    <option value="10">i1 - Item 1</option>
-                                                    <option value="20">i2 - Item 2</option>
-                                                    <option value="30">i3 - Item 3</option>
-                                                    <option value="40">i4 - Item 4</option>
-                                                    <option value="50">i5 - Item 5</option>
+                                                    <?php
+                                                    while($ir = $item_result->fetch_assoc())
+                                                    {
+                                                    ?>
+
+                                                    <option value="<?php echo $ir["item_id"] ;?>"><?php echo $ir["item_name"] ;?></option>
+                                                  <?php } ?>
                                                 </select>
                                             </div>
 
@@ -500,11 +495,14 @@ $all_cat_results_results = $serviceObj->selectCategories();
                                                 <label for="service_required_item_2">Service Required Item #2</label>
                                                 <select class="custom-select form-control" name="service_ri2" id="service_required_item_2">
                                                     <option value="choose" selected>Choose...</option>
-                                                    <option value="10">i1 - Item 1</option>
-                                                    <option value="20">i2 - Item 2</option>
-                                                    <option value="30">i3 - Item 3</option>
-                                                    <option value="40">i4 - Item 4</option>
-                                                    <option value="5010">i5 - Item 5</option>
+                                                    <?php
+                                                    $item_result = $inventoryObj->getAllItems();
+                                                    while($ir = $item_result->fetch_assoc())
+                                                    {
+                                                        ?>
+
+                                                        <option value="<?php echo $ir["item_id"] ;?>"><?php echo $ir["item_name"] ;?></option>
+                                                    <?php } ?>
                                                 </select>
                                             </div>
                                         </div>
@@ -516,11 +514,14 @@ $all_cat_results_results = $serviceObj->selectCategories();
                                                 <label for="service_required_item_3">Service Required Item #3</label>
                                                 <select class="custom-select form-control" name="service_ri3" id="service_required_item_3">
                                                     <option value="choose" selected>Choose...</option>
-                                                    <option value="10">i1 - Item 1</option>
-                                                    <option value="20">i2 - Item 2</option>
-                                                    <option value="30">i3 - Item 3</option>
-                                                    <option value="40">i4 - Item 4</option>
-                                                    <option value="50">i5 - Item 5</option>
+                                                    <?php
+                                                    $item_result = $inventoryObj->getAllItems();
+                                                    while($ir = $item_result->fetch_assoc())
+                                                    {
+                                                        ?>
+
+                                                        <option value="<?php echo $ir["item_id"] ;?>"><?php echo $ir["item_name"] ;?></option>
+                                                    <?php } ?>
                                                 </select>
                                             </div>
 
@@ -529,11 +530,14 @@ $all_cat_results_results = $serviceObj->selectCategories();
                                                 <label for="service_required_item_4">Service Required Item #4</label>
                                                 <select class="custom-select form-control" name="service_ri4" id="service_required_item_4">
                                                     <option value="choose" selected>Choose...</option>
-                                                    <option value="10">i1 - Item 1</option>
-                                                    <option value="20">i2 - Item 2</option>
-                                                    <option value="30">i3 - Item 3</option>
-                                                    <option value="40">i4 - Item 4</option>
-                                                    <option value="50">i5 - Item 5</option>
+                                                    <?php
+                                                    $item_result = $inventoryObj->getAllItems();
+                                                    while($ir = $item_result->fetch_assoc())
+                                                    {
+                                                        ?>
+
+                                                        <option value="<?php echo $ir["item_id"] ;?>"><?php echo $ir["item_name"] ;?></option>
+                                                    <?php } ?>
                                                 </select>
                                             </div>
                                         </div>
@@ -545,11 +549,14 @@ $all_cat_results_results = $serviceObj->selectCategories();
                                                 <label for="service_required_item_5">Service Required Item #5</label>
                                                 <select class="custom-select form-control" name="service_ri5" id="service_required_item_5">
                                                     <option value="choose" selected>Choose...</option>
-                                                    <option value="10">i1 - Item 1</option>
-                                                    <option value="20">i2 - Item 2</option>
-                                                    <option value="30">i3 - Item 3</option>
-                                                    <option value="40">i4 - Item 4</option>
-                                                    <option value="50">i5 - Item 5</option>
+                                                    <?php
+                                                    $item_result = $inventoryObj->getAllItems();
+                                                    while($ir = $item_result->fetch_assoc())
+                                                    {
+                                                        ?>
+
+                                                        <option value="<?php echo $ir["item_id"] ;?>"><?php echo $ir["item_name"] ;?></option>
+                                                    <?php } ?>
                                                 </select>
                                             </div>
 
@@ -558,23 +565,19 @@ $all_cat_results_results = $serviceObj->selectCategories();
                                                 <label for="service_required_item_6">Service Required Item #6</label>
                                                 <select class="custom-select form-control" name="service_ri6" id="service_required_item_6">
                                                     <option value="choose" selected>Choose...</option>
-                                                    <option value="10">i1 - Item 1</option>
-                                                    <option value="20">i2 - Item 2</option>
-                                                    <option value="30">i3 - Item 3</option>
-                                                    <option value="40">i4 - Item 4</option>
-                                                    <option value="50">i5 - Item 5</option>
+                                                    <?php
+                                                    $item_result = $inventoryObj->getAllItems();
+                                                    while($ir = $item_result->fetch_assoc())
+                                                    {
+                                                        ?>
+
+                                                        <option value="<?php echo $ir["item_id"] ;?>"><?php echo $ir["item_name"] ;?></option>
+                                                    <?php } ?>
                                                 </select>
                                             </div>
                                         </div>
 
-                                        <!-- Seventh Row  -->
-                                        <!--                                            <div class="form-row">-->
-                                        <!-- Remarks   -->
-                                        <!--                                                <div class="form-group col-10">-->
-                                        <!--                                                    <label for="remarks">Remarks</label>-->
-                                        <!--                                                    <input type="text" class="form-control" id="remarks" placeholder="Remarks">-->
-                                        <!--                                                </div>-->
-                                        <!--                                            </div>-->
+
 
                                         <!-- Eight Row  -->
                                         <div class="form-row">
@@ -845,7 +848,7 @@ $all_cat_results_results = $serviceObj->selectCategories();
     <!-- Item Table -->
 
         <div class="table-responsive mt-2">
-            <table class="table table-sm" id="table_manage">
+            <table class="table table-sm table-dark table-hover" id="table_manage">
                 <thead>
                 <tr>
 
@@ -854,6 +857,7 @@ $all_cat_results_results = $serviceObj->selectCategories();
                     <th scope="col">Service Price</th>
                     <th scope="col">Service Category</th>
                     <th scope="col">Service Sub Category</th>
+                    <th>&nbsp;</th>
                     <!--                <th scope="col">Manage</th>-->
                 </tr>
                 </thead>
@@ -895,3 +899,6 @@ $all_cat_results_results = $serviceObj->selectCategories();
 <?php include '../includes/footer.php'; ?>
 <script src="../assets/js/services_manage.js"></script>
 <script src="../assets/js/new_service_validation.js"></script>
+<script>
+    $("#table_manage").DataTable();
+</script>

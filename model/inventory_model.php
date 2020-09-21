@@ -266,14 +266,84 @@ class Inventory
     public function getStockItemAscOrder()
     {
         $con = $GLOBALS["conn"];
-        $sql = "SELECT SUM(s.item_stock_qty) as sum_stock, i.item_name, l.stk_lvl_min, l.stk_lvl_max 
+        $sql = "SELECT SUM(s.item_stock_qty) AS sum_stock, i.item_name, l.stk_lvl_min, l.stk_lvl_max,
+                round(SUM(s.item_stock_qty) / l.stk_lvl_max * 100) AS percentage 
                 FROM item i, item_stock s, item_stock_level l
                 WHERE s.item_id = i.item_id
                 AND i.item_id = l.stk_lvl_item_id 
-                GROUP BY i.item_id
-                ORDER BY sum_stock ASC LIMIT 5;";
+                GROUP BY s.item_id
+                ORDER BY percentage ASC LIMIT 5;";
 
         return $con->query($sql);
+    }
+
+    public function getTodayStock()
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT i.item_name, s.item_stock_id, s.item_id, s.item_stock_qty
+                FROM item_stock s, item i
+                WHERE i.item_id = s.item_id
+                AND DATE(s.item_stock_created_at) = CURDATE()
+                ORDER BY s.item_stock_id DESC LIMIT 5;";
+            return $con->query($sql);
+    }
+
+    //Update Stock Levels
+        //update rol
+    public function updateROL($item_id, $rol)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE item_stock_level SET stk_lvl_rol='$rol' WHERE stk_lvl_item_id='$item_id';";
+        $con->query($sql);
+    }
+
+    //update roq
+    public function updateROQ($item_id, $roq)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE item_stock_level SET stk_lvl_eoq='$roq' WHERE stk_lvl_item_id='$item_id';";
+        $con->query($sql);
+    }
+
+    //update min stock level
+    public function updateMinStock($item_id, $min)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE item_stock_level SET stk_lvl_min='$min' WHERE stk_lvl_item_id='$item_id';";
+        $con->query($sql);
+    }
+
+    //update max stock level
+    public function updateMaxStock($item_id, $max)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE item_stock_level SET stk_lvl_max='$max' WHERE stk_lvl_item_id='$item_id';";
+        $con->query($sql);
+    }
+
+    //update lead time
+    public function updateLeadTime($item_id, $lt)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE item_stock_level SET stk_lvl_lt='$lt' WHERE stk_lvl_item_id='$item_id';";
+        $con->query($sql);
+        echo $con->affected_rows;
+    }
+
+    //update danger stock level
+    public function updateDangerStock($item_id, $danger)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE item_stock_level SET stk_lvl_danger='$danger' WHERE stk_lvl_item_id='$item_id';";
+        $con->query($sql);
+    }
+
+//update buffer stock level
+    public function updateBufferStock($item_id, $buffer)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE item_stock_level SET stk_lvl_buffer='$buffer' WHERE stk_lvl_item_id='$item_id';";
+        $con->query($sql);
     }
 
 }

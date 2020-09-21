@@ -324,6 +324,120 @@ $(document).ready(function() {
             data: {stockItemId: stockItemId},
             success: function (response) {
                 $(".add-stock-form").html(response);
+
+                //Edit Stock Items
+                    //Hide Check Buttons
+                $("#btn_rol_check").hide();
+                $("#btn_roq_check").hide();
+                $("#btn_min_stock_check").hide();
+                $("#btn_max_stock_check").hide();
+                $("#btn_lt_check").hide();
+                $("#btn_danger_stock_check").hide();
+                $("#btn_buffer_stock_check").hide();
+
+
+                //rol change
+                $("#btn_rol_pencil").click(function () {
+                    $(this).hide();
+                    $('#btn_rol_check').show();
+                    $("input[id='stock_rol']").prop("readonly", false);
+
+                    $("#btn_rol_check").click(function () {
+                        $("input[id='stock_rol']").prop("readonly", true);
+                        $(this).hide();
+                        $("#btn_rol_pencil").show();
+                    })
+
+                })
+                //roq change
+                $("#btn_roq_pencil").click(function () {
+                    $(this).hide();
+                    $('#btn_roq_check').show();
+                    $("input[id='stock_eoq']").prop("readonly", false);
+
+                    $("#btn_roq_check").click(function () {
+                        $("input[id='stock_eoq']").prop("readonly", true);
+                        $(this).hide();
+                        $("#btn_roq_pencil").show();
+                    })
+
+                })
+
+                //min change
+                $("#btn_min_stock_pencil").click(function () {
+                    $(this).hide();
+                    $('#btn_min_stock_check').show();
+                    $("input[id='stock_min_lvl']").prop("readonly", false);
+
+                    $("#btn_min_stock_check").click(function () {
+                        $("input[id='stock_min_lvl']").prop("readonly", true);
+                        $(this).hide();
+                        $("#btn_min_stock_pencil").show();
+                    })
+
+                })
+
+                //max change
+                $("#btn_max_stock_pencil").click(function () {
+                    $(this).hide();
+                    $('#btn_max_stock_check').show();
+                    $("input[id='stock_max_lvl']").prop("readonly", false);
+
+                    $("#btn_max_stock_check").click(function () {
+                        $("input[id='stock_max_lvl']").prop("readonly", true);
+                        $(this).hide();
+                        $("#btn_max_stock_pencil").show();
+                    })
+
+                })
+
+                //lt change
+                $("#btn_lt_pencil").click(function () {
+                    $(this).hide();
+                    $('#btn_lt_check').show();
+                    $("input[id='stock_lead_time']").prop("readonly", false);
+
+                    $("#btn_lt_check").click(function () {
+                        $("input[id='stock_lead_time']").prop("readonly", true);
+                        $(this).hide();
+                        $("#btn_lt_pencil").show();
+                    })
+
+                })
+
+                //danger change
+                $("#btn_danger_stock_pencil").click(function () {
+                    $(this).hide();
+                    $('#btn_danger_stock_check').show();
+                    $("input[id='stock_dng_lvl']").prop("readonly", false);
+
+                    $("#btn_danger_stock_check").click(function () {
+                        $("input[id='stock_dng_lvl']").prop("readonly", true);
+                        $(this).hide();
+                        $("#btn_danger_stock_pencil").show();
+                    })
+
+                })
+
+                //buffer change
+                $("#btn_buffer_stock_pencil").click(function () {
+                    $(this).hide();
+                    $('#btn_buffer_stock_check').show();
+                    $("input[id='stock_buffer']").prop("readonly", false);
+
+                    $("#btn_buffer_stock_check").click(function () {
+                        $("input[id='stock_buffer']").prop("readonly", true);
+                        $(this).hide();
+                        $("#btn_buffer_stock_pencil").show();
+                    })
+
+                })
+
+
+
+
+
+
             }
         })
 
@@ -336,6 +450,10 @@ $(document).ready(function() {
             $("#barcode_image").html(data).show();
         })
     })
+
+
+    //Edit Stock Levels
+        //Hiding Check Buttons
 
 })
 

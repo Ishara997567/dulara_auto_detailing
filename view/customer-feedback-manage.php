@@ -97,8 +97,13 @@
         </div>
     </div>
     <!-- View Message   -->
+    <div class="card my-2 border-dark">
+        <div class="card-header">
+            <h3 class="card-title">Messages</h3>
+        </div>
+        <div class="card-body">
     <div class="table-responsive">
-        <table class="table table-sm">
+        <table class="table table-danger table-hover table-sm feedback-message">
             <thead>
             <tr>
                 <th scope="col">#</th>
@@ -137,16 +142,18 @@
             </tbody>
         </table>
     </div>
+        </div>
+    </div>
 
-    <!-- Search Bar -->
-    <form class="form-inline d-flex justify-content-end mr-4">
-        <input class="form-control rounded-pill my-1 mr-sm-2 w-75" type="search" placeholder="Search . . ." aria-label="Search">
-        <button class="btn btn-outline-primary rounded-pill my-xl-1" type="button"><i class="fa fa-search"></i> Search</button>
-    </form>
 
     <!-- Feedback Table -->
+    <div class="card border-info">
+        <div class="card-header">
+            <h3 class="card-title">Feedbacks</h3>
+        </div>
+        <div class="card-body">
     <div class="table-responsive">
-        <table class="table table-hover">
+        <table class="table table-hover table-info feedback-history">
             <thead>
             <tr>
                 <th scope="col">Feedback ID</th>
@@ -176,7 +183,8 @@
             </tr>
             <tr>
                 <th scope="row">3</th>
-                <td colspan="2">Larry the Bird</td>
+                <td>Larry the Bird</td>
+                <td>@twitter</td>
                 <td>@twitter</td>
                 <td><a href="#" class="btn-sm btn-outline-danger"><i class="fa fa-heart fa-lg"></i></a></td>
                 <td><a href="#" class="btn-sm btn-outline-dark"><i class="fa fa-comment-o fa-lg"></i></a></td>
@@ -184,7 +192,13 @@
             </tbody>
         </table>
     </div>
+        </div>
+    </div>
 
 </div>
 
 <?php include '../includes/footer.php'; ?>
+<script>
+    $(".feedback-message").DataTable();
+    $(".feedback-history").DataTable();
+</script>

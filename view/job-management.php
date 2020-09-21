@@ -35,8 +35,8 @@
                         <!-- Job ID -->
                         <div class="form-group row">
                             <label for="job_id" class="col-sm-4 col-form-label">Job ID</label>
-                            <div class="col-sm-8">
-                                <input type="text" readonly class="form-control-plaintext" id="job_id" value="JI04567">
+                            <div class="col-sm-4">
+                                <input type="text" readonly class="form-control" id="job_id" value="JI04567">
                             </div>
                         </div>
                         <hr/>
@@ -377,22 +377,13 @@
 
 
 
-    <div class="row padding">&nbsp;</div>
-    <div class="row padding mb-2">
-        <div class="col-md-3">&nbsp;</div>
-        <div class="col-md-9 justify-content-end">
-            <form class="form-inline p-0 mr-n3" id="frm_item_search">
-                <input class="rounded-pill form-control my-1 mr-sm-2 w-75" type="search" placeholder="Search . . ." aria-label="Search">
-                <button class="btn btn-outline-primary rounded-pill" type="submit"><i class="fa fa-search"></i> Search</button>
-            </form>
-        </div>
-    </div>
+
 
     <!-- Second Row -->
     <div class="card">
         <h5 class="card-header">Job History</h5>
         <div class="card-body">
-            <table class="table table-sm">
+            <table class="table table-sm table-dark table-hover my-job-datatable">
                 <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -416,7 +407,8 @@
                 </tr>
                 <tr>
                     <th scope="row">3</th>
-                    <td colspan="2">Larry the Bird</td>
+                    <td>Larry the Bird</td>
+                    <td>@twitter</td>
                     <td>@twitter</td>
                 </tr>
                 </tbody>
@@ -426,3 +418,6 @@
 </div>
 
 <?php include '../includes/footer.php'; ?>
+<script>
+    $(".my-job-datatable").DataTable();
+</script>

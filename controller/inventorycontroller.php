@@ -356,6 +356,7 @@ if($_REQUEST["status"])
             $item_r = $inventoryObj->getItemByCategoryAndSearch($item_cat_id);
             ?>
             <select name="stock_lvl_select_item_name" id="stock_lvl_select_item_name" class="custom-select">
+                <option value="choose">Choose...</option>
                 <?php
                 while($item_row = $item_r->fetch_assoc())
                 {
@@ -489,16 +490,20 @@ if($_REQUEST["status"])
                     <div class="form-group row">
                         <!-- ROL -->
                         <label for="stock_rol" class="col-2 col-form-label">Item Re Order Level</label>
-                        <div class="col-4">
-                            <input type="number" id="stock_rol" name="stock_rol" min="1" step="1" class="form-control" readonly value="<?php echo $r["stk_lvl_rol"]; ?>"/>
+                        <div class="input-group col-4">
+                            <input type="number" id="stock_rol" name="stock_rol" min="1" step="1" class="form-control mr-2" readonly value="<?php echo $r["stk_lvl_rol"]; ?>"/>
+                            <button type="button" class="btn btn-outline-primary" id="btn_rol_pencil"><i class="fa fa-pencil"></i></button>
+                            <button type="button" class="btn btn-outline-success" id="btn_rol_check"><i class="fa fa-check"></i></button>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <!-- EOQ / Re Order Quantity -->
                         <label for="stock_eoq" class="col-2 col-form-label">Re Order Quantity</label>
-                        <div class="col-4">
-                            <input type="number" min="1" step="1" id="stock_eoq" name="stock_eoq" class="form-control" readonly value="<?php echo $r["stk_lvl_eoq"]; ?>"/>
+                        <div class="input-group col-4">
+                            <input type="number" min="1" step="1" id="stock_eoq" name="stock_eoq" class="form-control mr-2" readonly value="<?php echo $r["stk_lvl_eoq"]; ?>"/>
+                            <button type="button" class="btn btn-outline-primary" id="btn_roq_pencil"><i class="fa fa-pencil"></i></button>
+                            <button type="button" class="btn btn-outline-success" id="btn_roq_check"><i class="fa fa-check"></i></button>
                         </div>
                     </div>
 
@@ -507,40 +512,50 @@ if($_REQUEST["status"])
                     <div class="form-group row">
                         <!-- Minimum Stock Level -->
                         <label for="stock_min_lvl" class="col-2 col-form-label">Minimum Stock Level</label>
-                        <div class="col-4">
-                            <input type="number" id="stock_min_lvl" name="stock_min_lvl" min="0" step="1" class="form-control" readonly value="<?php echo $r["stk_lvl_min"]; ?>"/>
+                        <div class="input-group col-4">
+                            <input type="number" id="stock_min_lvl" name="stock_min_lvl" min="0" step="1" class="form-control mr-2" readonly value="<?php echo $r["stk_lvl_min"]; ?>"/>
+                            <button type="button" class="btn btn-outline-primary" id="btn_min_stock_pencil"><i class="fa fa-pencil"></i></button>
+                            <button type="button" class="btn btn-outline-success" id="btn_min_stock_check"><i class="fa fa-check"></i></button>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <!-- Maximum Stock Level -->
                         <label for="stock_max_lvl" class="col-2 col-form-label">Max Stock Level</label>
-                        <div class="col-4">
-                            <input type="number" id="stock_max_lvl" name="stock_max_lvl" min="0" step="1" class="form-control" readonly value="<?php echo $r["stk_lvl_max"]; ?>"/>
+                        <div class="input-group col-4">
+                            <input type="number" id="stock_max_lvl" name="stock_max_lvl" min="0" step="1" class="form-control mr-2" readonly value="<?php echo $r["stk_lvl_max"]; ?>"/>
+                            <button type="button" class="btn btn-outline-primary" id="btn_max_stock_pencil"><i class="fa fa-pencil"></i></button>
+                            <button type="button" class="btn btn-outline-success" id="btn_max_stock_check"><i class="fa fa-check"></i></button>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <!-- Lead Time -->
                         <label for="stock_lead_time" class="col-2 col-form-label">Lead Time</label>
-                        <div class="col-4">
-                            <input type="number" id="stock_lead_time" name="stock_lead_time" min="0" step="1" class="form-control" readonly value="<?php echo $r["stk_lvl_lt"]; ?>"/>
+                        <div class="input-group col-4">
+                            <input type="number" id="stock_lead_time" name="stock_lead_time" min="0" step="1" class="form-control mr-2" readonly value="<?php echo $r["stk_lvl_lt"]; ?>"/>
+                            <button type="button" class="btn btn-outline-primary" id="btn_lt_pencil"><i class="fa fa-pencil"></i></button>
+                            <button type="button" class="btn btn-outline-success" id="btn_lt_check"><i class="fa fa-check"></i></button>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <!-- Danger Stock Level -->
                         <label for="stock_dng_lvl" class="col-2 col-form-label">Danger Stock Level</label>
-                        <div class="col-4">
-                            <input type="number" id="stock_dng_lvl" name="stock_dng_lvl" min="0" step="1" class="form-control" readonly value="<?php echo $r["stk_lvl_danger"]; ?>"/>
+                        <div class="input-group col-4">
+                            <input type="number" id="stock_dng_lvl" name="stock_dng_lvl" min="0" step="1" class="form-control mr-2" readonly value="<?php echo $r["stk_lvl_danger"]; ?>"/>
+                            <button type="button" class="btn btn-outline-primary" id="btn_danger_stock_pencil"><i class="fa fa-pencil"></i></button>
+                            <button type="button" class="btn btn-outline-success" id="btn_danger_stock_check"><i class="fa fa-check"></i></button>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <!-- Buffer Stock -->
                         <label for="stock_buffer" class="col-2 col-form-label">Buffer Stock</label>
-                        <div class="col-4">
-                            <input type="number" id="stock_buffer" name="stock_buffer" min="0" step="1" class="form-control" readonly value="<?php echo $r["stk_lvl_buffer"]; ?>"/>
+                        <div class="input-group col-4">
+                            <input type="number" id="stock_buffer" name="stock_buffer" min="0" step="1" class="form-control mr-2" readonly value="<?php echo $r["stk_lvl_buffer"]; ?>"/>
+                            <button type="button" class="btn btn-outline-primary" id="btn_buffer_stock_pencil"><i class="fa fa-pencil"></i></button>
+                            <button type="button" class="btn btn-outline-success" id="btn_buffer_stock_check"><i class="fa fa-check"></i></button>
                         </div>
                     </div>
                     <?php
@@ -715,34 +730,56 @@ if($_REQUEST["status"])
                     $inventoryObj->updateLocation($manage_item_id, $manage_location);
             }
 
+            break;
+
+        case "update_stock_levels":
 
 
-//
-//                //manu name
-//                if($mfd_name !== $i_row["item_manu_name"])
-//                {
-//                    $ar = $inventoryObj->updateItemManuName($item_id, $mfd_name);
-//
-//                    if($ar > 0)
-//                    {
-//                        echo "Item Manufacturer Name Updated Successfully!";
-//                    }
-//
-//                    else
-//                    {
-//                        echo "Item Manufacturer Name Failed to Update!";
-//                    }
-//                }
+            //Stock Rol Update
+            if(isset($_POST["stockItemId"]) && isset($_POST["rol"])) {
+                $stock_item_id = $_POST["stockItemId"];
+                $rol = $_POST["rol"];
+                $inventoryObj->updateROL($stock_item_id, $rol);
+            }
+
+            //Stock Roq Update
+            if(isset($_POST["stockItemId"]) && isset($_POST["roq"])) {
+                $stock_item_id = $_POST["stockItemId"];
+                $roq = $_POST["roq"];
+                $inventoryObj->updateROQ($stock_item_id, $roq);
+            }
 
 
+            //Stock MIN Update
+            if(isset($_POST["stockItemId"]) && isset($_POST["stockMin"])) {
+                $stock_item_id = $_POST["stockItemId"];
+                $min = $_POST["stockMin"];
+                $inventoryObj->updateMinStock($stock_item_id, $min);
+            }
 
+            //Stock MAX Update
+            if(isset($_POST["stockItemId"]) && isset($_POST["stockMax"])) {
+                $stock_item_id = $_POST["stockItemId"];
+                $max = $_POST["stockMax"];
+                $inventoryObj->updateMaxStock($stock_item_id, $max);
+            }
 
+            //Stock lt Update
+            if(isset($_POST["stockItemId"]) && isset($_POST["lt"])) {
+                $stock_item_id = $_POST["stockItemId"];
+                $lt = $_POST["lt"];
+                $inventoryObj->updateLeadTime($stock_item_id, $lt);
 
+            }
 
+            //Stock Danger Update
+            if(isset($_POST["stockItemId"]) && isset($_POST["buffer"])) {
+                $stock_item_id = $_POST["stockItemId"];
+                $buffer = $_POST["buffer"];
+                $inventoryObj->updateBufferStock($stock_item_id, $buffer);
+            }
 
-
-
-
+            break;
     }
 }
 

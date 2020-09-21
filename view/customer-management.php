@@ -71,10 +71,10 @@
 <?php include '../includes/navbar.php'; ?>
 <!--    Page Content    -->
 <div class="container-fluid">
-<!--    <div class="row padding jumbotron welcome display-3">-->
-<!--        <p><i class="fa fa-users"></i>&nbsp;Customer Dashboard</p>-->
-<!---->
-<!--    </div>-->
+    <!--    <div class="row padding jumbotron welcome display-3">-->
+    <!--        <p><i class="fa fa-users"></i>&nbsp;Customer Dashboard</p>-->
+    <!---->
+    <!--    </div>-->
 
 
     <!-- Top Row    -->
@@ -92,6 +92,55 @@
     </div>
 
 
+
+
+
+    <!-- End of Manage Categories Modal -->
+
+
+
+    <!-- Success Message From the Controller    -->
+    <?php
+    if(isset($_GET['success_message']))
+    {
+        ?>
+
+        <div class="row padding d-flex justify-content-center">
+            <div class="col-11 display-4 text-center alert alert-success">
+                <?php
+                echo base64_decode($_GET['success_message']);
+
+                ?>
+            </div>
+        </div>
+
+    <?php  } ?>
+    <!-- End of Success Message From the Controller    -->
+
+
+    <!-- Error Message From the Controller  -->
+    <?php
+    if(isset($_GET["error_message"]))
+    {
+        ?>
+        <div class="row padding d-flex justify-content-center">
+            <div class="col-11 display-4 text-center alert alert-danger">
+
+                <?php
+                echo base64_decode($_GET['error_message']);
+                ?>
+            </div>
+        </div>
+
+    <?php  } ?>
+
+    <!-- End of Error Message From the Controller  -->
+
+
+
+
+
+
     <!-- Modal New Customer-->
     <div class="modal fade" id="modal_new_customer" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-xl modal-dialog modal-dialog-centered" role="document">
@@ -102,19 +151,25 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <form action="#" method="post">
+                <form action="../controller/customercontroller.php?status=add_customer" method="post">
+                    <div class="modal-body">
+                        <div class="row padding d-flex justify-content-center">
+                            <div class="col-6 text-center" id="error_new_customer">
+
+                            </div>
+                        </div>
+
                         <div class="form-row">
                             <!-- Cus code  -->
                             <div class="form-group col-2">
                                 <label for="cus_code">Customer Code</label>
-                                <input type="text" class="form-control" readonly="readonly" id="cus_code" placeholder="Customer Code">
+                                <input type="text" class="form-control" readonly="readonly" id="cus_code" name="cus_code" placeholder="Customer Code">
                             </div>
 
                             <!-- Cus Name  -->
                             <div class="form-group col-8">
                                 <label for="cus_name">Customer Name</label>
-                                <input type="text" class="form-control" id="cus_name" placeholder="Customer Name">
+                                <input type="text" class="form-control" id="cus_name" name="cus_name" placeholder="Customer Name">
                             </div>
                         </div>
 
@@ -122,22 +177,22 @@
                         <div class="form-row">
                             <div class="form-group col-2">
                                 <label for="home_no">Address</label>
-                                <input type="text" class="form-control" id="home_no" placeholder="Home Number">
+                                <input type="text" class="form-control" id="home_no" name="cus_add_l1" placeholder="Home Number">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-4 ">
-                                <input type="text" class="form-control" id="s_name" placeholder="Street Name">
+                                <input type="text" class="form-control" id="s_name" name="cus_add_l2" placeholder="Street Name">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-3">
-                                <input type="text" class="form-control" id="city" placeholder="City">
+                                <input type="text" class="form-control" id="city" name="cus_add_l3" placeholder="City">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-3">
-                                <input type="text" class="form-control" id="state" placeholder="State" >
+                                <input type="text" class="form-control" id="state" name="cus_add_l4" placeholder="State" >
                             </div>
                         </div>
 
@@ -145,13 +200,13 @@
                             <!-- contact no 1 -->
                             <div class="form-group col-6">
                                 <label for="cn1">Contact No 1</label>
-                                <input type="text" class="form-control" id="cn1" placeholder="Mobile Number">
+                                <input type="text" class="form-control" id="cn1" name="cus_cn1" placeholder="Mobile Number">
                             </div>
 
                             <!-- contact no 2 -->
                             <div class="form-group col-6">
                                 <label for="cn2">Contact No 2</label>
-                                <input type="text" class="form-control" id="cn2" placeholder="Office Number">
+                                <input type="text" class="form-control" id="cn2" name="cus_cn2" placeholder="Office Number">
                             </div>
                         </div>
 
@@ -159,15 +214,16 @@
                         <div class="form-row">
                             <div class="form-group col-6">
                                 <label for="email">Customer Email</label>
-                                <input type="email" class="form-control" id="email" placeholder="username@example.com" >
+                                <input type="email" class="form-control" id="cus_email" name="cus_email" placeholder="username@example.com" >
                             </div>
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-outline-success">Save changes</button>
-                </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="submit" name="cus_submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -281,3 +337,5 @@
             </div>
         </div>
         <?php include '../includes/footer.php'; ?>
+
+        <script src="../assets/js/customer_validations.js"></script>
