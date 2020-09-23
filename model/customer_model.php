@@ -4,10 +4,10 @@ $dbConnection = new DbConnection();
 
 class Customer
 {
-    public function addCustomer($cus_name, $cus_add_l1, $cus_add_l2, $cus_add_l3, $cus_add_l4, $cus_cn1, $cus_cn2, $cus_email)
+    public function addCustomer($cus_name,$cus_vehicle, $cus_add_l1, $cus_add_l2, $cus_add_l3, $cus_add_l4, $cus_cn1, $cus_cn2, $cus_email)
     {
         $con = $GLOBALS["conn"];
-        $sql = "INSERT INTO customer (cus_name, cus_add_l1, cus_add_l2, cus_add_l3, cus_add_l4, cus_cn1, cus_cn2, cus_email) VALUES ('$cus_name', '$cus_add_l1', '$cus_add_l2', '$cus_add_l3', '$cus_add_l4', '$cus_cn1', '$cus_cn2', '$cus_email')";
+        $sql = "INSERT INTO customer (cus_name, cus_vehicle_no, cus_add_l1, cus_add_l2, cus_add_l3, cus_add_l4, cus_cn1, cus_cn2, cus_email) VALUES ('$cus_name', '$cus_vehicle','$cus_add_l1', '$cus_add_l2', '$cus_add_l3', '$cus_add_l4', '$cus_cn1', '$cus_cn2', '$cus_email')";
         $con->query($sql);
         return $con->insert_id;
     }
@@ -88,6 +88,13 @@ class Customer
         $con = $GLOBALS["conn"];
         $sql = "UPDATE customer SET cus_email= '$email' WHERE cus_id='$cus_id';";
         $con->query($sql);
+    }
+
+    public function selectByVehicleNo($vehicle_no)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT * FROM customer WHERE cus_vehicle_no = '$vehicle_no';";
+        return $con->query($sql);
     }
 
 }

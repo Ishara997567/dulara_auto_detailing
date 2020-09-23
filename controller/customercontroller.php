@@ -1,6 +1,6 @@
 <?php include '../model/customer_model.php';
-
 $cusObj = new Customer();
+
 
 if($_REQUEST["status"])
 {
@@ -8,9 +8,21 @@ if($_REQUEST["status"])
 
     switch ($status)
     {
+        case "check_vehicle_no":
+            if(isset($_POST['vn'])) {
+                $vehicle_no = $_POST['vn'];
+                $r = $cusObj->selectByVehicleNo($vehicle_no);
+
+                if ($r->num_rows !== 0)
+                    echo "The Vehicle Number is Already Registered in the System!";
+            }
+
+            break;
+
         case "add_customer":
 
             $cus_name = $_POST["cus_name"];
+            $cus_vehicle = strtoupper($_POST["cus_vehicle_no"]);
             $cus_add_l1 = $_POST["cus_add_l1"];
             $cus_add_l2 = $_POST["cus_add_l2"];
             $cus_add_l3 = $_POST["cus_add_l3"];
@@ -19,7 +31,7 @@ if($_REQUEST["status"])
             $cus_cn2 = $_POST["cus_cn2"];
             $cus_email = $_POST["cus_email"];
 
-            $cus_id = $cusObj->addCustomer($cus_name, $cus_add_l1, $cus_add_l2, $cus_add_l3, $cus_add_l4, $cus_cn1, $cus_cn2, $cus_email);
+            $cus_id = $cusObj->addCustomer($cus_name, $cus_vehicle, $cus_add_l1, $cus_add_l2, $cus_add_l3, $cus_add_l4, $cus_cn1, $cus_cn2, $cus_email);
 
             if($cus_id > 0)
             {
@@ -55,6 +67,16 @@ if($_REQUEST["status"])
                         <input type="text" class="form-control" readonly id="cus_code" value="<?php echo $cus_row["cus_id"]; ?>">
                     </div>
 
+                </div>
+
+
+                <div class="form-row">
+                    <!-- Cus Vehicle Number  -->
+                    <div class="form-group col-2">
+                        <label for="cus_vehicle_no">Vehicle Number</label>
+                        <input type="text" class="form-control" readonly id="cus_vehicle_no" value="<?php echo $cus_row["cus_vehicle_no"]; ?>">
+                    </div>
+
                     <!-- Cus Name  -->
                     <div class="form-group col-8">
                         <label for="cus_name">Customer Name</label>
@@ -67,6 +89,12 @@ if($_REQUEST["status"])
                         <button type="button" class="btn btn-outline-success" id="btn_cus_name_check"><i class="fa fa-check"></i></button>
                     </div>
                 </div>
+
+
+
+
+
+
 
                 <!-- Address Rows -->
                 <div class="form-row">

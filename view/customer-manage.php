@@ -26,6 +26,7 @@ $cusObj = new Customer();
                 <tr>
                     <th scope="col" width="10%" class="text-center">Customer ID</th>
                     <th scope="col" width="30%">Customer Name</th>
+                    <th scope="col" width="20%">Vehicle Number</th>
                     <th scope="col">City</th>
                     <th scope="col">Service</th>
                     <th scope="col">&nbsp;</th>
@@ -43,6 +44,7 @@ $cusObj = new Customer();
                     <tr>
                         <th scope="row"><?php echo $cus_row["cus_id"]; ?></th>
                         <td><?php echo $cus_row["cus_name"]; ?></td>
+                        <td><?php echo $cus_row["cus_vehicle_no"]; ?></td>
                         <td><?php echo $cus_row["cus_add_l3"]; ?></td>
                         <td>Full Service</td>
                         <td id="modal_link"><a href="#cus_info_modal" data-target="#cus_info_modal" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-id="<?php echo $cus_row["cus_id"]; ?>"><i class="fa fa-file-text-o fa-lg"></i></a></td>
@@ -75,7 +77,7 @@ $cusObj = new Customer();
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-outline-success">Save Changes</button>
+                        <button type="button" class="btn btn-outline-primary save-changes">Save Changes</button>
                     </div>
                 </form>
             </div>

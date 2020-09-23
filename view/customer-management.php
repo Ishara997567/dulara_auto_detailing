@@ -166,12 +166,30 @@
                                 <input type="text" class="form-control" readonly="readonly" id="cus_code" name="cus_code" placeholder="Customer Code">
                             </div>
 
+                        </div>
+
+
+
+
+                        <div class="form-row">
+                            <!-- Cus Vehicle No  -->
+                            <div class="form-group col-4">
+                                <label for="cus_code">Vehicle Number</label>
+                                <input type="text" class="form-control" id="cus_vehicle_no" name="cus_vehicle_no" placeholder="Vehicle Number">
+                            </div>
+
                             <!-- Cus Name  -->
                             <div class="form-group col-8">
                                 <label for="cus_name">Customer Name</label>
                                 <input type="text" class="form-control" id="cus_name" name="cus_name" placeholder="Customer Name">
                             </div>
                         </div>
+
+
+
+
+
+
 
                         <!-- Address Rows -->
                         <div class="form-row">
