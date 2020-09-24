@@ -26,7 +26,56 @@ $(document).ready(function (){
 
     $(".pending-job-table").on("click", ".see-more", function (){
         let jobId = $(this).data('id');
-        alert(jobId);
+
+        let url = '../controller/jobcontroller.php?status=manage_pending_jobs';
+
+        $.post(url, {jobId:jobId}, function(data){
+            $(".manage-pending-jobs").html(data);
+
+            $("#p_status").change(function (){
+                if(this.value === "1")
+                    $(".pending-job-message").html("Job Status Changed!").addClass("text-warning");
+                else
+                {
+                    $(".pending-job-message").html("");
+                }
+            });
+        })
+    });
+
+    $(".completed-job-table").on("click", ".completed-see-more", function (){
+        let jobId = $(this).data('id');
+
+        let url = '../controller/jobcontroller.php?status=manage_completed_jobs';
+
+        $.post(url, {jobId:jobId}, function(data){
+            $(".manage-completed-jobs").html(data);
+
+            $(".confirm-buttons").hide();
+
+            $("#c_status").change(function (){
+                if(this.value === "0") {
+                    $(".confirm-buttons").show();
+
+                    $(".confirm-pending").click(function () {
+                        $(".confirm-buttons").hide();
+                        $(".completed-job-message").html("Job Status Changed Back to 'Pending'!").addClass("text-warning");
+                        let url = '../controller/jobcontroller.php?status=job_status_back_to_pending';
+                        $.post(url, {changedStatusJobId:jobId}, function(){
+                            window.setTimeout(function(){
+                                location.reload();
+                            },2000)
+                        });
+                    });
+
+                    $(".decline-pending").click(function () {
+                        $(".confirm-buttons").hide();
+                        $(".completed-job-message").html("");
+                    });
+                }
+
+            });
+        });
     });
 
 });

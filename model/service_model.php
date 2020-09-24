@@ -90,4 +90,19 @@ class Service{
         $con->query($sql);
         return $con->affected_rows;
     }
+
+    //Get Service Name to Auto-Fill the Invoice
+    public function getServiceBySearch($term)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT * FROM service WHERE service_name LIKE '%{$term}%';";
+        return $con->query($sql);
+    }
+
+    public function getServiceByName($service_name)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT * FROM service WHERE service_name = '$service_name'";
+        return $con->query($sql);
+    }
 }

@@ -346,4 +346,18 @@ class Inventory
         $con->query($sql);
     }
 
+    //Get Items for auto-filling in invoice
+    public function getItemBySearch($term)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT * FROM item WHERE item_name LIKE '%{$term}%';";
+        return $con->query($sql);
+    }
+
+    public function getItemByName($item_name)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT * FROM item WHERE item_name = '$item_name'";
+        return $con->query($sql);
+    }
 }

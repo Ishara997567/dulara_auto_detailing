@@ -123,13 +123,13 @@ $jobObj = new Job(); ?>
                                 <select class="custom-select" id="vehicle_make" name="vehicle_make">
                                     <option value="choose" selected>Select Vehicle Make</option>
                                     <?php
-                                        $vm_result = $jobObj->getAllVehicleMakes();
-                                        while($r = $vm_result->fetch_assoc())
-                                        {
-                                            ?>
-                                            <option value="<?php echo $r['vehicle_make_id']; ?>"><?php echo $r['vehicle_make_name']; ?></option>
-                                    <?php
-                                        }
+                                    $vm_result = $jobObj->getAllVehicleMakes();
+                                    while($r = $vm_result->fetch_assoc())
+                                    {
+                                        ?>
+                                        <option value="<?php echo $r['vehicle_make_id']; ?>"><?php echo $r['vehicle_make_name']; ?></option>
+                                        <?php
+                                    }
                                     ?>
                                 </select>
                             </div>
@@ -148,6 +148,16 @@ $jobObj = new Job(); ?>
                                 </select>
                             </div>
                         </div>
+
+
+                        <!-- Vehicle ODO -->
+                        <div class="form-group row">
+                            <label for="vehicle_odo" class="col-sm-4 col-form-label">Vehicle ODO</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="vehicle_odo" name="vehicle_odo" placeholder="In Kilometers">
+                            </div>
+                        </div>
+
 
 
 
@@ -193,35 +203,35 @@ $jobObj = new Job(); ?>
                         <div class="card-body">
                             <h5 class="card-title"><i class="fa fa-clock-o"></i> Pending Jobs</h5>
                             <p class="card-text table-responsive">
-                                <table class="table table-sm table-hover pending-job-table">
+                            <table class="table table-sm table-hover pending-job-table">
                                 <thead>
-                                    <tr>
-                                        <th scope="col">Job ID</th>
-                                        <th scope="col">Vehicle No</th>
-                                        <th scope="col">Customer Name</th>
-                                        <th scope="col">Vehicle Model</th>
-                                        <th scope="col">&nbsp;</th>
-                                    </tr>
+                                <tr>
+                                    <th scope="col">Job ID</th>
+                                    <th scope="col">Vehicle No</th>
+                                    <th scope="col">Customer Name</th>
+                                    <th scope="col">Vehicle Model</th>
+                                    <th scope="col">&nbsp;</th>
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    <?php
-                                    $r = $jobObj->getAllPendingJobs();
-                                    while($row = $r->fetch_assoc())
-                                    {
+                                <?php
+                                $r = $jobObj->getAllPendingJobs();
+                                while($row = $r->fetch_assoc())
+                                {
                                     ?>
                                     <tr>
 
-                                            <th scope="row"><?php echo $row['job_id'] ;?></th>
-                                            <td><?php echo $row['job_vehicle_id'] ;?></td>
-                                            <td><?php echo $row['cus_name'] ;?></td>
-                                            <td><?php echo $row['vehicle_model_name'] ;?></td>
-                                            <td><button type="button" class="btn btn-sm btn-outline-primary see-more rounded-pill" data-id="<?php echo $row['job_id'] ;?>" data-toggle="modal" data-target="#modal_pending_jobs">See More</button></td>
+                                        <th scope="row"><?php echo $row['job_id'] ;?></th>
+                                        <td><?php echo $row['job_vehicle_id'] ;?></td>
+                                        <td><?php echo $row['cus_name'] ;?></td>
+                                        <td><?php echo $row['vehicle_model_name'] ;?></td>
+                                        <td><button type="button" class="btn btn-sm btn-outline-primary see-more rounded-pill" data-id="<?php echo $row['job_id'] ;?>" data-toggle="modal" data-target="#modal_pending_jobs">See More</button></td>
 
 
                                     </tr>
-                                    <?php } ?>
+                                <?php } ?>
                                 </tbody>
-                                </table>
+                            </table>
 
                             </p>
                         </div>
@@ -232,8 +242,40 @@ $jobObj = new Job(); ?>
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title"><i class="fa fa-check"></i> Completed Jobs</h5>
-                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                            <button type="button" data-toggle="modal" data-target="#modal_completed_jobs" class="btn btn-primary">See More</button>
+                            <p class="card-text table-responsive">
+                            <table class="table table-sm table-hover completed-job-table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Job ID</th>
+                                    <th scope="col">Vehicle No</th>
+                                    <th scope="col">Customer Name</th>
+                                    <th scope="col">Vehicle Model</th>
+                                    <th scope="col">&nbsp;</th>
+                                    <th scope="col">&nbsp;</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php
+                                $r = $jobObj->getAllCompletedJobs();
+                                while($row = $r->fetch_assoc())
+                                {
+                                    ?>
+                                    <tr>
+
+                                        <th scope="row"><?php echo $row['job_id'] ;?></th>
+                                        <td><?php echo $row['job_vehicle_id'] ;?></td>
+                                        <td><?php echo $row['cus_name'] ;?></td>
+                                        <td width="20%" class="text-center"><?php echo $row['vehicle_model_name'] ;?></td>
+                                        <td width="15%"><button type="button" class="btn btn-sm btn-outline-primary completed-see-more rounded-pill" data-id="<?php echo $row['job_id'] ;?>" data-toggle="modal" data-target="#modal_completed_jobs">See More</button></td>
+                                        <td width="10%"><a href="job-invoice.php?invoice_job_id=<?php echo base64_encode($row['job_id']) ;?>" class="btn btn-sm btn-outline-primary link-invoice rounded-pill">Invoice</a></td>
+
+
+                                    </tr>
+                                <?php } ?>
+                                </tbody>
+                            </table>
+
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -250,81 +292,22 @@ $jobObj = new Job(); ?>
         <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Pending Jobs</h5>
+                    <h5 class="modal-title">See More</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <form action="../controller/jobcontroller.php?status=job_status_change" method="post">
+                    <div class="modal-body manage-pending-jobs">
 
+                        <!-- Data coming from the controller    -->
 
-
-                    <form action="#" method="post">
-
-                        <div class="form-row">
-                            <div class="form-group col-1">
-                                <label>Job ID</label>
-                            </div>
-                            <div class="form-group col-2">
-                                <label>Vehicle Number</label>
-                            </div>
-                            <div class="form-group col-3">
-                                <label>Customer Name</label>
-                            </div>
-                            <div class="form-group col-2">
-                                <label>Vehicle Make</label>
-                            </div>
-                            <div class="form-group col-2">
-                                <label>Vehicle Model</label>
-                            </div>
-                            <div class="form-group col-2">
-                                <label>Status</label>
-                            </div>
-                        </div>
-
-                        <?php
-                        $r = $jobObj->getAllPendingJobs();
-                        while($row = $r->fetch_assoc())
-                        {
-                        ?>
-
-                        <div class="form-row">
-                            <div class="form-group col-1">
-                                <input type="text" class="form-control" value="<?php echo $row["job_id"] ;?>" readonly id="p_job_id"/>
-                            </div>
-                            <div class="form-group col-2">
-                                <input type="text" class="form-control" value="<?php echo $row["job_vehicle_id"] ;?>" readonly id="p_vehicle_no"/>
-                            </div>
-                            <div class="form-group col-3">
-                                <input type="text" class="form-control" value="<?php echo $row["cus_name"] ;?>" readonly id="p_customer_name"/>
-                            </div>
-                            <div class="form-group col-2">
-                                <input type="text" class="form-control" value="<?php echo $row["vehicle_make_name"] ;?>" readonly id="p_vehicle_make"/>
-                            </div>
-                            <div class="form-group col-2">
-                                <input type="text" class="form-control" value="<?php echo $row["vehicle_model_name"] ;?>" readonly id="p_vehicle_model"/>
-                            </div>
-
-                            <div class="form-group col-2">
-                                <select id="<?php echo $row["job_id"]; ?>" class="custom-select">
-                                    <option value="0" selected>Pending</option>
-                                    <option value="1">Completed</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <?php } ?>
-
-
-                    </form>
-
-
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Save Changes</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary"name="pending_job_submit">Save Changes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -332,74 +315,23 @@ $jobObj = new Job(); ?>
     <!-- End of Pending Jobs Modal  -->
     <!-- Completed Pending Job Modal    -->
     <div class="modal fade" id="modal_completed_jobs" tabindex="-1" role="dialog" aria-labelledby="modal_completed_jobs" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Pending Jobs</h5>
+                    <h5 class="modal-title">See More</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <form action="../controller/jobcontroller.php?status=generate_invoice" method="post">
+                <div class="modal-body manage-completed-jobs">
 
 
-
-                    <form action="#" method="post">
-
-                        <div class="form-row">
-                            <div class="form-group col-3">
-                                <label for="c_job_id_1">Job ID</label>
-                                <input type="text" class="form-control" readonly id="c_job_id_1"/>
-                            </div>
-                            <div class="form-group col-3">
-                                <label for="customer_name_1">Customer Name</label>
-                                <input type="text" class="form-control" readonly id="customer_name_1"/>
-                            </div>
-                            <div class="form-group col-3">
-                                <label for="vehicle_model_1">Vehicle Model</label>
-                                <input type="text" class="form-control" readonly id="p_vehicle_model_1"/>
-                            </div>
-                            <div class="form-group col-3">
-                                <label for="status_1">Status</label>
-                                <input type="button" class="form-control btn btn-outline-primary rounded-pill" value="Generate Invoice">
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group col-3">
-                                <input type="text" class="form-control" readonly id="c_job_id_2"/>
-                            </div>
-                            <div class="form-group col-3">
-                                <input type="text" class="form-control" readonly id="customer_name_2"/>
-                            </div>
-                            <div class="form-group col-3">
-                                <input type="text" class="form-control" readonly id="vehicle_model_2"/>
-                            </div>
-                            <div class="form-group col-3">
-                                <input type="button" class="form-control btn btn-outline-primary rounded-pill" value="Generate Invoice">
-                            </div>
-                        </div>
-
-
-                        <div class="form-row">
-                            <div class="form-group col-3">
-                                <input type="text" class="form-control" readonly id="job_id_3"/>
-                            </div>
-                            <div class="form-group col-3">
-                                <input type="text" class="form-control" readonly id="customer_name_3"/>
-                            </div>
-                            <div class="form-group col-3">
-                                <input type="text" class="form-control" readonly id="vehicle_model_3"/>
-                            </div>
-                            <div class="form-group col-3">
-                                <input type="button" class="form-control btn btn-outline-primary rounded-pill" value="Generate Invoice">
-                            </div>
-                        </div>
-
-                    </form>
                 </div>
+                </form>
                 <div class="modal-footer">
-
+                    <button type="submit" class="btn btn-primary generate-invoice-button" name="submit_generate_invoice">Generate Invoice</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -455,6 +387,7 @@ $jobObj = new Job(); ?>
 </div>
 <?php include '../includes/footer.php'; ?>
 <script src="../assets/js/job.js"></script>
+<script src="../assets/js/job-invoice.js"></script>
 <script>
     $(".my-job-datatable").DataTable();
 </script>
