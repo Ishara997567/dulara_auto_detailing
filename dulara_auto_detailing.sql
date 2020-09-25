@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 24, 2020 at 09:11 PM
+-- Generation Time: Sep 25, 2020 at 06:09 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.2
 
@@ -54,6 +54,75 @@ INSERT INTO `customer` (`cus_id`, `cus_name`, `cus_vehicle_no`, `cus_add_l1`, `c
 (9, 'Nuwan Nimasha', 'BBE-9876', '', '', '', '', '0754123659', '', ''),
 (10, 'Niroshan Premarathtne', 'BSX-8767', '', '', '', '', '0781235496', '0712458963', 'niroshan@email.com'),
 (11, 'Kethaka Ranasinghe', 'KE-8978', '', '', '', '', '0764789651', '', 'kethaka@gmail.com');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `invoice`
+--
+
+CREATE TABLE `invoice` (
+  `invoice_id` int(11) NOT NULL,
+  `job_id` int(11) DEFAULT NULL,
+  `invoice_item_total_amount` int(11) DEFAULT NULL,
+  `invoice_service_total_amount` int(11) DEFAULT NULL,
+  `invoice_amount` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `invoice`
+--
+
+INSERT INTO `invoice` (`invoice_id`, `job_id`, `invoice_item_total_amount`, `invoice_service_total_amount`, `invoice_amount`) VALUES
+(11, 8, 2400, 1500, 3900),
+(12, 4, 0, 1500, 1500),
+(13, 10, 0, 20000, 20000),
+(14, 6, 4800, 0, 4800);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `invoice_item`
+--
+
+CREATE TABLE `invoice_item` (
+  `id` int(11) NOT NULL,
+  `invoice_item_id` int(11) DEFAULT NULL,
+  `invoice_item_qty` int(11) DEFAULT NULL,
+  `invoice_item_price` int(11) DEFAULT NULL,
+  `invoice_item_amount` int(11) DEFAULT NULL,
+  `invoice_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `invoice_item`
+--
+
+INSERT INTO `invoice_item` (`id`, `invoice_item_id`, `invoice_item_qty`, `invoice_item_price`, `invoice_item_amount`, `invoice_id`) VALUES
+(15, 8, 2, 1200, 2400, 11),
+(16, 8, 4, 1200, 4800, 14);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `invoice_service`
+--
+
+CREATE TABLE `invoice_service` (
+  `id` int(11) NOT NULL,
+  `invoice_service_id` int(11) DEFAULT NULL,
+  `invoice_service_price` int(11) DEFAULT NULL,
+  `invoice_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `invoice_service`
+--
+
+INSERT INTO `invoice_service` (`id`, `invoice_service_id`, `invoice_service_price`, `invoice_id`) VALUES
+(10, 7, 1500, 11),
+(11, 7, 1500, 12),
+(12, 6, 20000, 13);
 
 -- --------------------------------------------------------
 
@@ -246,11 +315,12 @@ CREATE TABLE `job` (
 --
 
 INSERT INTO `job` (`job_id`, `job_vehicle_id`, `job_cus_id`, `job_vehicle_make_id`, `job_vehicle_model_id`, `job_vehicle_odo`, `job_vehicle_mileage`, `job_start_time`, `job_finish_time`, `job_description`, `job_created_user_id`, `job_status`) VALUES
-(4, 'BBX-9190', 1, 3, 3, 80000, 10000, '2020-09-23 11:40:13', '2020-09-24 03:00:56', 'This is my personal vehicle', NULL, 0),
+(4, 'BBX-9190', 1, 3, 3, 80000, 10000, '2020-09-23 11:40:13', '2020-09-25 15:09:53', 'This is my personal vehicle', NULL, 1),
 (5, 'CAR-4567', 2, 2, 2, 150000, 2500, '2020-09-23 12:41:21', '2020-09-24 05:39:28', 'Gollardo Lamborhini!!!', NULL, 0),
-(6, 'KE-8978', 11, 1, 1, 200000, 5000, '2020-09-23 13:36:19', '2020-09-24 05:42:37', '', NULL, 1),
-(8, 'BBY-9190', 3, 1, 1, 100000, 3000, '2020-09-24 06:50:58', NULL, '', NULL, 0),
-(9, 'BBY-9342', 6, 2, 2, 180000, 4000, '2020-09-24 06:52:38', NULL, '', NULL, 0);
+(6, 'KE-8978', 11, 1, 1, 200000, 5000, '2020-09-23 13:36:19', '2020-09-25 15:20:35', '', NULL, 1),
+(8, 'BBY-9190', 3, 1, 1, 100000, 3000, '2020-09-24 06:50:58', '2020-09-25 14:57:26', '', NULL, 1),
+(9, 'BBY-9342', 6, 2, 2, 180000, 4000, '2020-09-24 06:52:38', NULL, '', NULL, 0),
+(10, 'BSX-8767', 10, 3, 3, 50000, 5000, '2020-09-25 08:28:12', '2020-09-25 15:17:07', '', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -527,6 +597,24 @@ ALTER TABLE `customer`
   ADD PRIMARY KEY (`cus_id`);
 
 --
+-- Indexes for table `invoice`
+--
+ALTER TABLE `invoice`
+  ADD PRIMARY KEY (`invoice_id`);
+
+--
+-- Indexes for table `invoice_item`
+--
+ALTER TABLE `invoice_item`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `invoice_service`
+--
+ALTER TABLE `invoice_service`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `item`
 --
 ALTER TABLE `item`
@@ -637,6 +725,24 @@ ALTER TABLE `customer`
   MODIFY `cus_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
+-- AUTO_INCREMENT for table `invoice`
+--
+ALTER TABLE `invoice`
+  MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `invoice_item`
+--
+ALTER TABLE `invoice_item`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `invoice_service`
+--
+ALTER TABLE `invoice_service`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
@@ -670,7 +776,7 @@ ALTER TABLE `item_stock_level`
 -- AUTO_INCREMENT for table `job`
 --
 ALTER TABLE `job`
-  MODIFY `job_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `job_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `job_item`
