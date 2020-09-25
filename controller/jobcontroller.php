@@ -349,6 +349,54 @@ if($_REQUEST['status']) {
 
             break;
 
+        case "make_invoice":
+
+            //getting post job id value
+            $invoice_job_id = $_POST['jobId'];
+
+        //getting post item values
+            $invoice_item_id = $_POST['invoiceItemId'];
+            $invoice_item_price = $_POST['invoiceItemPrice'];
+            $invoice_item_qty = $_POST['invoiceItemQty'];
+            $invoice_item_amount = $_POST['invoiceItemAmount'];
+
+        //getting post service values
+
+
+            $invoice_service_id = $_POST['invoiceServiceId'];
+            $invoice_service_charge = $_POST['invoiceServiceCharge'];
+
+            //Finding the total amount of amount
+            $invoice_item_total_amount = array_sum($invoice_item_amount);
+            $invoice_service_total_amount = array_sum($invoice_service_charge);
+            //Invoice Total Amount
+            $invoice_total_amount = $invoice_item_total_amount + $invoice_service_total_amount;
+
+            //Inserting Data to Invoice Table
+        $invoice_id = $jobObj->addInvoice($invoice_job_id,$invoice_item_total_amount,$invoice_service_total_amount,$invoice_total_amount);
+
+        //Inserting Data into invoice_item table
+            for($i=0; $i < sizeof($invoice_item_id); $i++)
+            {
+                $jobObj->addInvoiceItems($invoice_item_id[$i],$invoice_item_qty[$i], $invoice_item_price[$i], $invoice_item_amount[$i], $invoice_id);
+            }
+
+            for($j=0; $j<sizeof($invoice_service_id); $j++)
+            {
+                $jobObj->addInvoiceServices($invoice_service_id[$j], $invoice_service_charge[$j], $invoice_id);
+            }
+
+            if($invoice_id > 0)
+            {
+                echo 1;
+
+            }
+            else
+            {
+                echo 0;
+            }
+
+
     }
 }
 

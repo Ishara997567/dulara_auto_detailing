@@ -355,31 +355,37 @@ $jobObj = new Job(); ?>
             <table class="table table-sm table-dark table-hover my-job-datatable">
                 <thead>
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
+                    <th scope="col">Invoice ID</th>
+                    <th scope="col">Job ID</th>
+                    <th scope="col">Vehicle No</th>
+                    <th scope="col">Customer Name</th>
+                    <th scope="col">Vehicle Make</th>
+                    <th scope="col">Vehicle Model</th>
+                    <th scope="col">Vehicle ODO</th>
+                    <th scope="col">Vehicle Mileage</th>
+                    <th scope="col">Total Invoice Amount</th>
                 </tr>
                 </thead>
                 <tbody>
+                <?php
+                $invoiced_result = $jobObj->getInvoicedJobs();
+                while($invoiced_row = $invoiced_result->fetch_assoc())
+
+                {
+                ?>
                 <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
+                    <th scope="row"><?php echo $invoiced_row['invoice_id'];?></th>
+                    <td><?php echo $invoiced_row['job_id']; ?></td>
+                    <td><?php echo $invoiced_row['job_vehicle_id'];?></td>
+                    <td><?php echo $invoiced_row['cus_name']; ?></td>
+                    <td><?php echo $invoiced_row['vehicle_make_name']; ?></td>
+                    <td><?php echo $invoiced_row['vehicle_model_name']; ?></td>
+                    <td><?php echo $invoiced_row['job_vehicle_odo']; ?></td>
+                    <td><?php echo $invoiced_row['job_vehicle_mileage']; ?></td>
+                    <td><?php echo $invoiced_row['invoice_amount']; ?></td>
+
                 </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Larry the Bird</td>
-                    <td>@twitter</td>
-                    <td>@twitter</td>
-                </tr>
+                <?php } ?>
                 </tbody>
             </table>
         </div>

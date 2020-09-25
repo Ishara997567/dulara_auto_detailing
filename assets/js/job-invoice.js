@@ -6,15 +6,15 @@ $(document).ready(function (){
         $(".tbody-item").append("<tr>" +
             "<td><input type='text' class='form-control' id='invoice_item_id"+i+"' name='invoice_item_id[]' readonly></td>" +
             "<td class='ui-front ui-widget'><input type='text' class='form-control' id='invoice_item_name[]' name='invoice_item_name[]' placeholder='Enter Iem Name'></td>" +
-            "<td><input type='text' class='form-control' id='invoice_item_price"+i+"' name='invoice_item_price[]'></td>" +
-            "<td><input type='text' class='form-control' id='invoice_item_qty' name='invoice_item_qty[]'></td>" +
-            "<td><input type='text' class='form-control' id='invoice_item_amount' name='invoice_item_amount[]' readonly></td>" +
+            "<td><input type='number' class='form-control' id='invoice_item_price"+i+"' name='invoice_item_price[]'></td>" +
+            "<td><input type='number' class='form-control' id='invoice_item_qty"+i+"' name='invoice_item_qty[]'></td>" +
+            "<td><input type='number' class='form-control' id='invoice_item_amount"+i+"' name='invoice_item_amount[]' readonly></td>" +
             "<td><button type='button' class='btn btn-outline-danger rounded-circle' name='invoice_item_row_cancel[]'><i class='fa fa-minus'></i></button></td>" +
 
             "</tr>");
 
         $(".tbody-item").on("click", "button[name='invoice_item_row_cancel[]']", function (){
-           $(this).closest('tr').remove();
+            $(this).closest('tr').remove();
         });
 
         //Autocomplete Item Name
@@ -28,11 +28,23 @@ $(document).ready(function (){
             let url = '../controller/jobcontroller.php?status=fill_item_row';
             $.post(url, {itemName:itemName}, function (data){
                 data = $.parseJSON(data);
-               $("#invoice_item_id"+i).val(data.item_id);
-               $("#invoice_item_price"+i).val(data.item_price);
+                $("#invoice_item_id"+i).val(data.item_id);
+                $("#invoice_item_price"+i).val(data.item_price);
 
             });
         });
+
+        //Calculating the total amount of items
+        $("#invoice_item_amount"+i).click(function (){
+
+        let itemPrice = $("#invoice_item_price"+i).val();
+        let itemQty = $("#invoice_item_qty"+i).val();
+        let itemAmount = (itemPrice * itemQty);
+        $("#invoice_item_amount"+i).val(itemAmount);
+
+        });
+
+
     });
 
 
@@ -71,6 +83,59 @@ $(document).ready(function (){
 
     });
 
+$(".invoice-data").click(function (e){
+    e.preventDefault();
+    //Getting Job Id
+    let jobId = $("#invoice_job_id").val();
+    //Getting Item Data
+        let invoiceItemId = $("input[name='invoice_item_id[]']").map(function () {
+            return this.value;
+        }).get();
 
+        let invoiceItemPrice = $("input[name='invoice_item_price[]']").map(function (){
+            return this.value;
+        }).get();
 
+        let invoiceItemQty = $("input[name='invoice_item_qty[]']").map(function (){
+            return this.value;
+        }).get();
+
+        let invoiceItemAmount = $("input[name='invoice_item_amount[]']").map(function (){
+            return this.value;
+        }).get();
+
+        //Getting Services Data
+
+        let invoiceServiceId = $("input[name='invoice_service_id[]']").map(function(){
+            return this.value;
+        }).get();
+
+        let invoiceServiceCharge = $("input[name='invoice_service_charge[]']").map(function(){
+            return this.value;
+        }).get();
+
+        let url = '../controller/jobcontroller.php?status=make_invoice';
+
+        $.post(url, {
+                jobId:jobId,
+
+                invoiceItemId:invoiceItemId,
+                invoiceItemPrice:invoiceItemPrice,
+                invoiceItemQty:invoiceItemQty,
+                invoiceItemAmount:invoiceItemAmount,
+
+                invoiceServiceId:invoiceServiceId,
+                invoiceServiceCharge:invoiceServiceCharge
+
+        },
+            function (data,success){
+                if(success)
+                {
+                    $(".invoice-success-message").html("Invoice Created Successfully!").addClass("alert alert-success");
+                } else {
+                    $(".invoice-success-message").html("Invoice Failed To Create!").addClass("alert alert-danger");
+
+                }
+            });
+    });
 });

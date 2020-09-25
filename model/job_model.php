@@ -90,4 +90,37 @@ class Job
         $sql = "SELECT j.job_id, j.job_vehicle_id, j.job_vehicle_odo, j.job_vehicle_mileage, j.job_start_time, j.job_finish_time, c.cus_name, c.cus_cn1, c.cus_cn2,vmodel.vehicle_model_name, vmake.vehicle_make_name FROM job j, customer c, vehicle_model vmodel, vehicle_make vmake WHERE j.job_status = 1 AND j.job_cus_id=c.cus_id AND j.job_vehicle_model_id=vmodel.vehicle_model_id AND j.job_vehicle_make_id=vmake.vehicle_make_id AND j.job_id='$job_id';";
         return $con->query($sql);
     }
+
+    //Making the Invoice
+        //adding to invoice table
+    public function addInvoice($job_id, $tot_item_amount, $tot_service_amount, $invoice_amount)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "INSERT INTO invoice (job_id, invoice_item_total_amount, invoice_service_total_amount, invoice_amount) VALUES ('$job_id', '$tot_item_amount', '$tot_service_amount', '$invoice_amount');";
+        $con->query($sql);
+        return $con->insert_id;
+    }
+
+    //adding to invoice_item table
+    public function addInvoiceItems($item_id, $item_qty, $item_price, $item_amount, $invoice_id)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "INSERT INTO invoice_item (invoice_item_id, invoice_item_qty, invoice_item_price, invoice_item_amount, invoice_id) VALUES ('$item_id','$item_qty','$item_price','$item_amount','$invoice_id');";
+        $con->query($sql);
+    }
+
+    //adding to invoice_service table
+    public function addInvoiceServices($s_id, $s_price, $invoice_id)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "INSERT INTO invoice_service (invoice_service_id, invoice_service_price, invoice_id) VALUES ('$s_id','$s_price','$invoice_id');";
+        $con->query($sql);
+    }
+
+    public function getInvoicedJobs()
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT i.invoice_id, i.invoice_amount, i.job_id, j.job_vehicle_id, c.cus_name, mk.vehicle_make_name, ml.vehicle_model_name, j.job_vehicle_odo, j.job_vehicle_mileage FROM invoice i, job j, customer c, vehicle_make mk, vehicle_model ml WHERE i.job_id = j.job_id AND j.job_cus_id=c.cus_id AND j.job_vehicle_model_id=ml.vehicle_model_id AND j.job_vehicle_make_id = mk.vehicle_make_id;";
+        return $con->query($sql);
+    }
 }

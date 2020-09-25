@@ -11,6 +11,12 @@ $jobObj = new Job(); ?>
 <!-- Content    -->
 <div class="container-fluid padding my-2">
 
+    <div class="row padding welcome d-flex justify-content-center">
+        <div class="col-10 text-center display-4 invoice-success-message">
+
+        </div>
+    </div>
+
     <!-- Invoice Form   -->
     <form action="#" method="post">
         <?php
@@ -130,6 +136,7 @@ $jobObj = new Job(); ?>
             </table>
         </div>
 
+        <input type="submit" class="btn btn-primary invoice-data" name="submit" value="Submit"/>
     </form>
 </div>
 <?php include '../includes/footer.php'; ?>
