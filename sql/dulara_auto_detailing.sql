@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 24, 2020 at 09:11 PM
+-- Generation Time: Oct 05, 2020 at 08:00 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.2
 
@@ -54,6 +54,89 @@ INSERT INTO `customer` (`cus_id`, `cus_name`, `cus_vehicle_no`, `cus_add_l1`, `c
 (9, 'Nuwan Nimasha', 'BBE-9876', '', '', '', '', '0754123659', '', ''),
 (10, 'Niroshan Premarathtne', 'BSX-8767', '', '', '', '', '0781235496', '0712458963', 'niroshan@email.com'),
 (11, 'Kethaka Ranasinghe', 'KE-8978', '', '', '', '', '0764789651', '', 'kethaka@gmail.com');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `invoice`
+--
+
+CREATE TABLE `invoice` (
+  `invoice_id` int(11) NOT NULL,
+  `job_id` int(11) DEFAULT NULL,
+  `invoice_item_total_amount` int(11) DEFAULT NULL,
+  `invoice_service_total_amount` int(11) DEFAULT NULL,
+  `invoice_amount` int(11) DEFAULT NULL,
+  `invoice_created_at` timestamp NULL DEFAULT current_timestamp(),
+  `invoice_created_user_id` int(11) DEFAULT NULL,
+  `invoice_status` int(11) DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `invoice`
+--
+
+INSERT INTO `invoice` (`invoice_id`, `job_id`, `invoice_item_total_amount`, `invoice_service_total_amount`, `invoice_amount`, `invoice_created_at`, `invoice_created_user_id`, `invoice_status`) VALUES
+(36, 6, 3000, 300, 3300, '2020-09-29 13:22:53', NULL, 1),
+(37, 4, 3400, 1800, 5200, '2020-09-29 17:35:14', NULL, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `invoice_item`
+--
+
+CREATE TABLE `invoice_item` (
+  `id` int(11) NOT NULL,
+  `invoice_item_id` int(11) DEFAULT NULL,
+  `invoice_item_qty` int(11) DEFAULT NULL,
+  `invoice_item_price` int(11) DEFAULT NULL,
+  `invoice_item_amount` int(11) DEFAULT NULL,
+  `invoice_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `invoice_item`
+--
+
+INSERT INTO `invoice_item` (`id`, `invoice_item_id`, `invoice_item_qty`, `invoice_item_price`, `invoice_item_amount`, `invoice_id`) VALUES
+(27, 1, 1, 1000, 1000, 36),
+(28, 6, 1, 1000, 1000, 36),
+(29, 7, 1, 1000, 1000, 36),
+(30, 8, 2, 1200, 2400, 37),
+(31, 7, 1, 1000, 1000, 37);
+
+--
+-- Triggers `invoice_item`
+--
+DELIMITER $$
+CREATE TRIGGER `updateStock` BEFORE INSERT ON `invoice_item` FOR EACH ROW BEGIN
+	UPDATE item_stock SET item_stock.item_stock_qty = item_stock.item_stock_qty - NEW.invoice_item_qty WHERE NEW.invoice_item_id = item_stock.item_id;
+END
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `invoice_service`
+--
+
+CREATE TABLE `invoice_service` (
+  `id` int(11) NOT NULL,
+  `invoice_service_id` int(11) DEFAULT NULL,
+  `invoice_service_price` int(11) DEFAULT NULL,
+  `invoice_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `invoice_service`
+--
+
+INSERT INTO `invoice_service` (`id`, `invoice_service_id`, `invoice_service_price`, `invoice_id`) VALUES
+(18, 2, 300, 36),
+(19, 1, 1500, 37),
+(20, 2, 300, 37);
 
 -- --------------------------------------------------------
 
@@ -172,19 +255,21 @@ CREATE TABLE `item_stock` (
 --
 
 INSERT INTO `item_stock` (`item_stock_id`, `item_id`, `item_stock_barcode`, `item_stock_manu_date`, `item_stock_date`, `item_stock_exp_date`, `item_stock_qty`, `item_stock_created_at`, `item_stock_created_user_id`, `item_stock_status`) VALUES
-(1, 1, 0, '0000-00-00', '0000-00-00', '0000-00-00', 500, '2020-09-16 14:53:01', NULL, 1),
-(2, 6, 1000, '2020-09-17', '2020-09-25', '2020-09-23', 400, '2020-09-16 14:57:35', NULL, 1),
-(3, 7, 1000, '2020-09-16', '2020-09-30', '2020-09-24', 200, '2020-09-16 16:30:10', NULL, 1),
-(4, 8, 1500, '2020-09-16', '0000-00-00', '0000-00-00', 100, '2020-09-16 16:39:56', NULL, 1),
+(1, 1, 0, '0000-00-00', '0000-00-00', '0000-00-00', 499, '2020-09-16 14:53:01', NULL, 1),
+(2, 6, 1000, '2020-09-17', '2020-09-25', '2020-09-23', 399, '2020-09-16 14:57:35', NULL, 1),
+(3, 7, 1000, '2020-09-16', '2020-09-30', '2020-09-24', 198, '2020-09-16 16:30:10', NULL, 1),
+(4, 8, 1500, '2020-09-16', '0000-00-00', '0000-00-00', 98, '2020-09-16 16:39:56', NULL, 1),
 (15, 10, 0, '2020-09-18', '0000-00-00', '0000-00-00', 200, '2020-09-18 01:06:44', NULL, 1),
-(16, 8, 0, '2020-09-18', '0000-00-00', '0000-00-00', 200, '2020-09-18 01:52:19', NULL, 1),
+(16, 8, 0, '2020-09-18', '0000-00-00', '0000-00-00', 198, '2020-09-18 01:52:19', NULL, 1),
 (19, 11, 147852369, '2020-09-18', '2020-09-30', '2020-09-18', 300, '2020-09-18 12:37:05', NULL, 1),
 (20, 11, 0, '2020-09-18', '0000-00-00', '0000-00-00', 300, '2020-09-18 12:37:37', NULL, 1),
-(23, 1, 150000145, '2020-09-19', '0000-00-00', '0000-00-00', 800, '2020-09-19 01:14:16', NULL, 1),
-(24, 1, 0, '2020-09-21', '0000-00-00', '0000-00-00', 200, '2020-09-21 14:25:39', NULL, 1),
-(25, 1, 0, '2020-09-21', '0000-00-00', '0000-00-00', 200, '2020-09-21 14:26:46', NULL, 1),
-(26, 1, 17786, '2020-09-22', '0000-00-00', '0000-00-00', 200, '2020-09-22 06:07:42', NULL, 1),
-(27, 6, 0, '2020-09-22', '0000-00-00', '0000-00-00', 200, '2020-09-22 06:19:45', NULL, 1);
+(23, 1, 150000145, '2020-09-19', '0000-00-00', '0000-00-00', 289, '2020-09-19 01:14:16', NULL, 1),
+(24, 1, 0, '2020-09-21', '0000-00-00', '0000-00-00', -311, '2020-09-21 14:25:39', NULL, 1),
+(25, 1, 0, '2020-09-21', '0000-00-00', '0000-00-00', -311, '2020-09-21 14:26:46', NULL, 1),
+(26, 1, 17786, '2020-09-22', '0000-00-00', '0000-00-00', -311, '2020-09-22 06:07:42', NULL, 1),
+(27, 6, 0, '2020-09-22', '0000-00-00', '0000-00-00', 199, '2020-09-22 06:19:45', NULL, 1),
+(28, 1, 0, '2020-10-01', '2020-10-10', '2020-10-09', 200, '2020-10-01 09:32:35', NULL, 1),
+(29, 1, 0, '2020-10-02', '0000-00-00', '0000-00-00', 200, '2020-10-02 16:34:26', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -246,11 +331,12 @@ CREATE TABLE `job` (
 --
 
 INSERT INTO `job` (`job_id`, `job_vehicle_id`, `job_cus_id`, `job_vehicle_make_id`, `job_vehicle_model_id`, `job_vehicle_odo`, `job_vehicle_mileage`, `job_start_time`, `job_finish_time`, `job_description`, `job_created_user_id`, `job_status`) VALUES
-(4, 'BBX-9190', 1, 3, 3, 80000, 10000, '2020-09-23 11:40:13', '2020-09-24 03:00:56', 'This is my personal vehicle', NULL, 0),
-(5, 'CAR-4567', 2, 2, 2, 150000, 2500, '2020-09-23 12:41:21', '2020-09-24 05:39:28', 'Gollardo Lamborhini!!!', NULL, 0),
-(6, 'KE-8978', 11, 1, 1, 200000, 5000, '2020-09-23 13:36:19', '2020-09-24 05:42:37', '', NULL, 1),
-(8, 'BBY-9190', 3, 1, 1, 100000, 3000, '2020-09-24 06:50:58', NULL, '', NULL, 0),
-(9, 'BBY-9342', 6, 2, 2, 180000, 4000, '2020-09-24 06:52:38', NULL, '', NULL, 0);
+(4, 'BBX-9190', 1, 3, 3, 80000, 10000, '2020-09-23 11:40:13', NULL, 'This is my personal vehicle', NULL, 10),
+(5, 'CAR-4567', 2, 2, 2, 150000, 2500, '2020-09-23 12:41:21', '2020-10-03 11:15:34', 'Gollardo Lamborhini!!!', NULL, 1),
+(6, 'KE-8978', 11, 1, 1, 200000, 5000, '2020-09-23 13:36:19', NULL, '', NULL, 10),
+(8, 'BBY-9190', 3, 1, 1, 100000, 3000, '2020-09-24 06:50:58', '2020-09-25 14:57:26', '', NULL, 1),
+(9, 'BBY-9342', 6, 2, 2, 180000, 4000, '2020-09-24 06:52:38', NULL, '', NULL, 0),
+(10, 'BSX-8767', 10, 3, 3, 50000, 5000, '2020-09-25 08:28:12', '2020-09-25 15:17:07', '', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -307,6 +393,154 @@ INSERT INTO `login` (`login_id`, `username`, `password`, `user_id`, `login_statu
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `sale_grn`
+--
+
+CREATE TABLE `sale_grn` (
+  `sgrn_id` int(11) NOT NULL,
+  `sgrn_po_id` int(11) DEFAULT NULL,
+  `sgrn_total_amount` int(11) DEFAULT NULL,
+  `sgrn_created_at` timestamp NULL DEFAULT current_timestamp(),
+  `sgrn_created_user_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `sale_grn`
+--
+
+INSERT INTO `sale_grn` (`sgrn_id`, `sgrn_po_id`, `sgrn_total_amount`, `sgrn_created_at`, `sgrn_created_user_id`) VALUES
+(1, 1, 58750, NULL, NULL),
+(2, 2, 19000, '2020-10-05 10:14:16', NULL),
+(3, 5, 0, '2020-10-05 10:30:46', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sale_grn_item`
+--
+
+CREATE TABLE `sale_grn_item` (
+  `sgi_id` int(11) NOT NULL,
+  `sgi_item_id` int(11) DEFAULT NULL,
+  `sgi_p_price` int(11) DEFAULT NULL,
+  `sgi_qty` int(11) DEFAULT NULL,
+  `sgi_amount` int(11) DEFAULT NULL,
+  `sgi_grn_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `sale_grn_item`
+--
+
+INSERT INTO `sale_grn_item` (`sgi_id`, `sgi_item_id`, `sgi_p_price`, `sgi_qty`, `sgi_amount`, `sgi_grn_id`) VALUES
+(1, 1, 450, 95, 42750, 1),
+(2, 6, 800, 10, 8000, 1),
+(3, 8, 1000, 8, 8000, 1),
+(4, 1, 450, 20, 9000, 2),
+(5, 15, 200, 50, 10000, 2),
+(6, 1, 450, 0, 0, 3),
+(7, 7, 800, 0, 0, 3),
+(8, 10, 1000, 0, 0, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sale_purchase_order`
+--
+
+CREATE TABLE `sale_purchase_order` (
+  `po_id` int(11) NOT NULL,
+  `po_amount` int(11) DEFAULT NULL,
+  `po_supplier_id` int(11) DEFAULT NULL,
+  `po_created_at` timestamp NULL DEFAULT current_timestamp(),
+  `po_created_user_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `sale_purchase_order`
+--
+
+INSERT INTO `sale_purchase_order` (`po_id`, `po_amount`, `po_supplier_id`, `po_created_at`, `po_created_user_id`) VALUES
+(1, 63000, 1, '2020-10-03 17:26:21', NULL),
+(2, 21820, 5, '2020-10-03 17:28:28', NULL),
+(4, 0, NULL, '2020-10-03 17:32:46', NULL),
+(5, 20500, 3, '2020-10-04 15:35:28', NULL),
+(6, 0, NULL, '2020-10-04 15:38:17', NULL),
+(7, 1, 0, '2020-10-04 15:43:30', NULL),
+(8, 3, 0, '2020-10-04 15:43:45', NULL),
+(9, 1, 0, '2020-10-04 15:48:52', NULL),
+(10, 3, 0, '2020-10-04 15:48:59', NULL),
+(11, 2, NULL, '2020-10-04 15:49:50', NULL),
+(12, 1, NULL, '2020-10-04 15:50:03', NULL),
+(13, 0, 0, '2020-10-04 15:51:13', NULL),
+(14, 0, 0, '2020-10-04 15:51:45', NULL),
+(15, 0, 0, '2020-10-04 15:55:30', NULL),
+(16, 0, 0, '2020-10-04 15:56:04', NULL),
+(17, 0, 0, '2020-10-04 15:56:48', NULL),
+(18, 0, 0, '2020-10-05 03:34:45', NULL),
+(19, 1, 29800, '2020-10-05 03:36:36', NULL),
+(20, 1, 0, '2020-10-05 03:38:47', NULL),
+(21, 1, 0, '2020-10-05 03:43:02', NULL),
+(22, 1, 20250, '2020-10-05 03:43:20', NULL),
+(23, 1, 4500, '2020-10-05 03:49:35', NULL),
+(24, 45000, 5, '2020-10-05 03:51:00', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sale_purchase_order_item`
+--
+
+CREATE TABLE `sale_purchase_order_item` (
+  `poi_id` int(11) NOT NULL,
+  `poi_item_id` int(11) DEFAULT NULL,
+  `poi_item_price` int(11) DEFAULT NULL,
+  `poi_item_qty` int(11) DEFAULT NULL,
+  `poi_item_amount` int(11) DEFAULT NULL,
+  `poi_po_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `sale_purchase_order_item`
+--
+
+INSERT INTO `sale_purchase_order_item` (`poi_id`, `poi_item_id`, `poi_item_price`, `poi_item_qty`, `poi_item_amount`, `poi_po_id`) VALUES
+(1, 1, 450, 100, 45000, 1),
+(2, 6, 800, 10, 8000, 1),
+(3, 8, 1000, 10, 10000, 1),
+(4, 1, 470, 20, 9400, 2),
+(5, 15, 230, 54, 12420, 2),
+(6, 0, 0, 0, 0, 3),
+(7, 0, 0, 0, 0, 4),
+(8, 1, 450, 2, 900, 5),
+(9, 7, 800, 12, 9600, 5),
+(10, 10, 1000, 10, 10000, 5),
+(11, 8, 1000, 10, 10000, 6),
+(12, 1, 450, 12, 5400, 6),
+(13, 0, 0, 0, 0, 7),
+(14, 0, 0, 0, 0, 8),
+(15, 0, 0, 0, 0, 9),
+(16, 0, 0, 0, 0, 10),
+(17, 8, 1000, 10, 10000, 11),
+(18, 8, 1000, 10, 10000, 12),
+(19, 0, 0, 0, 0, 13),
+(20, 0, 0, 0, 0, 14),
+(21, 0, 0, 0, 0, 15),
+(22, 0, 0, 0, 0, 16),
+(23, 0, 0, 0, 0, 17),
+(24, 0, 0, 0, 0, 18),
+(25, 8, 1000, 5, 5000, 19),
+(26, 11, 1000, 10, 10000, 19),
+(27, 6, 740, 20, 14800, 19),
+(28, 0, 0, 0, 0, 20),
+(29, 0, 0, 0, 0, 21),
+(30, 1, 450, 45, 20250, 22),
+(31, 1, 450, 10, 4500, 23),
+(32, 1, 450, 100, 45000, 24);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `service`
 --
 
@@ -337,8 +571,8 @@ CREATE TABLE `service` (
 --
 
 INSERT INTO `service` (`service_id`, `service_name`, `service_price`, `service_required_item_id_1`, `service_required_item_id_2`, `service_required_item_id_3`, `service_required_item_id_4`, `service_required_item_id_5`, `service_required_item_id_6`, `service_worker_id_1`, `service_worker_id_2`, `service_worker_id_3`, `service_worker_id_4`, `service_cat_id`, `service_sub_cat_id`, `service_created_at`, `service_created_user_id`, `service_description`, `service_status`) VALUES
-(1, 'Engine Oil Change', 1500, 10, 0, 0, 0, 0, 0, 100, 0, 0, 0, 1, 1, '2020-09-10 04:22:58', NULL, 'Oil Change should be done once a year.', 1),
-(2, 'Interior Body Wash', 300, 10, 20, 0, 0, 0, 0, 100, 0, 0, 0, 2, 2, '2020-09-10 08:05:04', NULL, 'Clean the inside!', 1),
+(1, 'Engine Oil Change', 1300, 10, 0, 0, 0, 0, 0, 100, 0, 0, 0, 1, 2, '2020-09-10 04:22:58', NULL, 'Oil Change should be done once a year.', 1),
+(2, 'Interior Body Wash', 1500, 10, 20, 0, 0, 0, 0, 100, 0, 0, 0, 2, 2, '2020-09-10 08:05:04', NULL, 'Clean the inside!', 1),
 (6, 'Test Service Hello', 20000, 10, 0, 0, 0, 0, 0, 200, 0, 0, 0, 1, 1, '2020-09-11 11:39:54', NULL, '', 1),
 (7, 'Body Wash', 1500, 10, 0, 0, 0, 0, 0, 100, 200, 0, 0, 1, 2, '2020-09-22 06:06:23', NULL, 'dghe', 1);
 
@@ -418,7 +652,9 @@ CREATE TABLE `supplier` (
 INSERT INTO `supplier` (`sup_id`, `sup_name`, `sup_address_home`, `sup_address_street`, `sup_address_city`, `sup_address_state`, `sup_cn1`, `sup_cn2`, `sup_email`, `sup_description`, `sup_created_at`, `sup_status`) VALUES
 (1, 'Salinda Super', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-15 01:12:13', 1),
 (2, 'Uniliever', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-15 01:12:13', 1),
-(3, 'Anchor', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-15 01:12:13', 1);
+(3, 'Anchor', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-15 01:12:13', 1),
+(5, 'Ishara Traders', '185/A/2', 'Bollatha', 'Ganemulla', 'Western Provice, Sri Lanka', '0778154411', '0762084411', 'ishara.traders@gmail.com', '', '2020-10-02 14:32:49', 1),
+(8, 'Amaron', '', '', '', '', '0112240148', '', '', '', '2020-10-03 13:25:04', 1);
 
 -- --------------------------------------------------------
 
@@ -527,6 +763,24 @@ ALTER TABLE `customer`
   ADD PRIMARY KEY (`cus_id`);
 
 --
+-- Indexes for table `invoice`
+--
+ALTER TABLE `invoice`
+  ADD PRIMARY KEY (`invoice_id`);
+
+--
+-- Indexes for table `invoice_item`
+--
+ALTER TABLE `invoice_item`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `invoice_service`
+--
+ALTER TABLE `invoice_service`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `item`
 --
 ALTER TABLE `item`
@@ -574,6 +828,30 @@ ALTER TABLE `job_item`
 --
 ALTER TABLE `login`
   ADD PRIMARY KEY (`login_id`);
+
+--
+-- Indexes for table `sale_grn`
+--
+ALTER TABLE `sale_grn`
+  ADD PRIMARY KEY (`sgrn_id`);
+
+--
+-- Indexes for table `sale_grn_item`
+--
+ALTER TABLE `sale_grn_item`
+  ADD PRIMARY KEY (`sgi_id`);
+
+--
+-- Indexes for table `sale_purchase_order`
+--
+ALTER TABLE `sale_purchase_order`
+  ADD PRIMARY KEY (`po_id`);
+
+--
+-- Indexes for table `sale_purchase_order_item`
+--
+ALTER TABLE `sale_purchase_order_item`
+  ADD PRIMARY KEY (`poi_id`);
 
 --
 -- Indexes for table `service`
@@ -637,6 +915,24 @@ ALTER TABLE `customer`
   MODIFY `cus_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
+-- AUTO_INCREMENT for table `invoice`
+--
+ALTER TABLE `invoice`
+  MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+
+--
+-- AUTO_INCREMENT for table `invoice_item`
+--
+ALTER TABLE `invoice_item`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+
+--
+-- AUTO_INCREMENT for table `invoice_service`
+--
+ALTER TABLE `invoice_service`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
@@ -658,7 +954,7 @@ ALTER TABLE `item_size`
 -- AUTO_INCREMENT for table `item_stock`
 --
 ALTER TABLE `item_stock`
-  MODIFY `item_stock_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `item_stock_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `item_stock_level`
@@ -670,7 +966,7 @@ ALTER TABLE `item_stock_level`
 -- AUTO_INCREMENT for table `job`
 --
 ALTER TABLE `job`
-  MODIFY `job_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `job_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `job_item`
@@ -683,6 +979,30 @@ ALTER TABLE `job_item`
 --
 ALTER TABLE `login`
   MODIFY `login_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `sale_grn`
+--
+ALTER TABLE `sale_grn`
+  MODIFY `sgrn_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `sale_grn_item`
+--
+ALTER TABLE `sale_grn_item`
+  MODIFY `sgi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `sale_purchase_order`
+--
+ALTER TABLE `sale_purchase_order`
+  MODIFY `po_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT for table `sale_purchase_order_item`
+--
+ALTER TABLE `sale_purchase_order_item`
+  MODIFY `poi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `service`
@@ -706,7 +1026,7 @@ ALTER TABLE `service_sub_category`
 -- AUTO_INCREMENT for table `supplier`
 --
 ALTER TABLE `supplier`
-  MODIFY `sup_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `sup_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `user`

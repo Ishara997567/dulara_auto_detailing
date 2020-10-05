@@ -37,10 +37,10 @@ $(document).ready(function (){
         //Calculating the total amount of items
         $("#invoice_item_amount"+i).click(function (){
 
-        let itemPrice = $("#invoice_item_price"+i).val();
-        let itemQty = $("#invoice_item_qty"+i).val();
-        let itemAmount = (itemPrice * itemQty);
-        $("#invoice_item_amount"+i).val(itemAmount);
+            let itemPrice = $("#invoice_item_price"+i).val();
+            let itemQty = $("#invoice_item_qty"+i).val();
+            let itemAmount = (itemPrice * itemQty);
+            $("#invoice_item_amount"+i).val(itemAmount);
 
         });
 
@@ -83,11 +83,10 @@ $(document).ready(function (){
 
     });
 
-$(".invoice-data").click(function (e){
-    e.preventDefault();
-    //Getting Job Id
-    let jobId = $("#invoice_job_id").val();
-    //Getting Item Data
+    $(".invoice-data").click(function (){
+        //Getting Job Id
+        let jobId = $("#invoice_job_id").val();
+        //Getting Item Data
         let invoiceItemId = $("input[name='invoice_item_id[]']").map(function () {
             return this.value;
         }).get();
@@ -127,15 +126,27 @@ $(".invoice-data").click(function (e){
                 invoiceServiceId:invoiceServiceId,
                 invoiceServiceCharge:invoiceServiceCharge
 
-        },
+            },
             function (data,success){
                 if(success)
                 {
-                    $(".invoice-success-message").html("Invoice Created Successfully!").addClass("alert alert-success");
+                    $(".invoice-success-message").html("Invoice Created Successfully!").addClass("alert alert-success").focus();
+
+                    setTimeout(function(){
+                        $("form[name='form-invoice']").submit();
+                    },5000);
+
                 } else {
-                    $(".invoice-success-message").html("Invoice Failed To Create!").addClass("alert alert-danger");
+                    $(".invoice-success-message").html("Invoice Failed To Create!").addClass("alert alert-danger").focus();
 
                 }
             });
     });
+
+    showInvoiceDetails = function (x){
+        let url = '../controller/jobcontroller.php?status=show_invoice_details';
+        $.post(url, {invoiceId:x}, function(data){
+            $("#form_invoice_details").html(data);
+        })
+    }
 });

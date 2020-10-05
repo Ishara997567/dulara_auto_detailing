@@ -319,16 +319,16 @@ if($_REQUEST['status']) {
             break;
 
         case "fill_item_row":
-                    $service_name = $_POST['itemName'];
-                    $service_result = $inventoryObj->getItemByName($service_name);
+            $service_name = $_POST['itemName'];
+            $service_result = $inventoryObj->getItemByName($service_name);
 
-                    $data = array();
-                    while ($service_row = $service_result->fetch_assoc()) {
-                        $data['item_id'] = $service_row['item_id'];
-                        $data['item_price'] = $service_row['item_sale_uprice'];
-                    }
+            $data = array();
+            while ($service_row = $service_result->fetch_assoc()) {
+                $data['item_id'] = $service_row['item_id'];
+                $data['item_price'] = $service_row['item_sale_uprice'];
+            }
 
-                    echo json_encode($data);
+            echo json_encode($data);
 
 
             break;
@@ -354,13 +354,13 @@ if($_REQUEST['status']) {
             //getting post job id value
             $invoice_job_id = $_POST['jobId'];
 
-        //getting post item values
+            //getting post item values
             $invoice_item_id = $_POST['invoiceItemId'];
             $invoice_item_price = $_POST['invoiceItemPrice'];
             $invoice_item_qty = $_POST['invoiceItemQty'];
             $invoice_item_amount = $_POST['invoiceItemAmount'];
 
-        //getting post service values
+            //getting post service values
 
 
             $invoice_service_id = $_POST['invoiceServiceId'];
@@ -373,9 +373,9 @@ if($_REQUEST['status']) {
             $invoice_total_amount = $invoice_item_total_amount + $invoice_service_total_amount;
 
             //Inserting Data to Invoice Table
-        $invoice_id = $jobObj->addInvoice($invoice_job_id,$invoice_item_total_amount,$invoice_service_total_amount,$invoice_total_amount);
+            $invoice_id = $jobObj->addInvoice($invoice_job_id,$invoice_item_total_amount,$invoice_service_total_amount,$invoice_total_amount);
 
-        //Inserting Data into invoice_item table
+            //Inserting Data into invoice_item table
             for($i=0; $i < sizeof($invoice_item_id); $i++)
             {
                 $jobObj->addInvoiceItems($invoice_item_id[$i],$invoice_item_qty[$i], $invoice_item_price[$i], $invoice_item_amount[$i], $invoice_id);
@@ -388,6 +388,7 @@ if($_REQUEST['status']) {
 
             if($invoice_id > 0)
             {
+                $jobObj->changeJobStatusToInvoiced($invoice_job_id);
                 echo 1;
 
             }
@@ -396,7 +397,209 @@ if($_REQUEST['status']) {
                 echo 0;
             }
 
+        case "show_invoice_details":
+            $invoice_id = $_POST['invoiceId'];
+            $job_result = $jobObj->getJobByInvoiceId($invoice_id);
+            while($row=$job_result->fetch_assoc())
+            {
+            ?>
 
+
+
+
+                <!-- Invoice Id -->
+                <div class="form-group row">
+                    <label for="modal_invoice_id" class="text-left col-2 col-form-label">Invoice ID</label>
+                    <div class="col-3">
+                        <input type="text" class="form-control" id="modal_invoice_id" name="modal_invoice_id" value="<?php echo $invoice_id; ;?>" readonly/>
+                    </div>
+
+                    <div class="col-3">&nbsp;</div>
+                    <!-- Invoice Date -->
+                    <label for="modal_invoice_date" class="text-right col-1 col-form-label">Date</label>
+                    <div class="col-3">
+                        <?php
+                        $new_datetime = DateTime::createFromFormat ( "Y-m-d H:i:s", $row["invoice_created_at"] );
+
+                        ?>
+                        <input type="text" class="form-control" id="modal_invoice_date" name="modal_invoice_date" value="<?php echo $new_datetime->format('jS \of F Y'); ?>" readonly>
+                    </div>
+                </div>
+
+                <hr>
+
+                <!-- Job ID -->
+                <div class="form-group row">
+                    <label for="modal_invoice_job_id" class="text-left col-2 col-form-label">Job ID</label>
+                    <div class="col-3">
+                        <input type="text" class="form-control" id="modal_invoice_job_id" name="modal_invoice_job_id" value="<?php echo $row['job_id']; ?>" readonly/>
+                    </div>
+                </div>
+
+                <!-- Vehicle No -->
+                <div class="form-group row">
+                    <label for="modal_invoice_vehicle_no" class="text-left col-2 col-form-label">Vehicle No</label>
+                    <div class="col-3">
+                        <input type="text" class="form-control" id="modal_invoice_vehicle_no" name="modal_invoice_vehicle_no" value="<?php echo $row['job_vehicle_id']; ?>" readonly/>
+                    </div>
+                </div>
+
+                <!-- Vehicle Make and Model -->
+                <div class="form-group row">
+                    <label for="modal_invoice_vehicle" class="text-left col-2 col-form-label">Vehicle</label>
+                    <div class="col-3">
+                        <input type="text" class="form-control" id="modal_invoice_vehicle" name="modal_invoice_vehicle" value="<?php echo $row['vehicle_make_name']." ".$row['vehicle_model_name']; ; ?>" readonly/>
+                    </div>
+                </div>
+
+                <!-- Vehicle ODO -->
+                <div class="form-group row">
+                    <label for="modal_invoice_vehicle_odo" class="text-left col-2 col-form-label">ODO</label>
+                    <div class="col-3">
+                        <input type="text" class="form-control" id="modal_invoice_vehicle_odo" name="modal_invoice_vehicle_odo" value="<?php echo $row['job_vehicle_odo']; ?>" readonly/>
+                    </div>
+                </div>
+
+                <!-- Vehicle Mileage -->
+                <div class="form-group row">
+                    <label for="modal_invoice_vehicle_mileage" class="text-left col-2 col-form-label">Vehicle Mileage</label>
+                    <div class="col-3">
+                        <input type="text" class="form-control" id="modal_invoice_vehicle_mileage" name="modal_invoice_vehicle_mileage" value="<?php echo $row['job_vehicle_mileage']; ?>" readonly/>
+                    </div>
+                </div>
+                <hr>
+                <!-- Customer Name -->
+                <div class="form-group row">
+                    <label for="modal_invoice_cus_name" class="text-left col-2 col-form-label">Customer Name</label>
+                    <div class="col-3">
+                        <input type="text" class="form-control" id="modal_invoice_cus_name" name="modal_invoice_cus_name" value="<?php echo $row['cus_name']; ?>" readonly/>
+                    </div>
+                </div>
+                <!-- Customer CN1 -->
+                <div class="form-group row">
+                    <label for="modal_invoice_cus_cn1" class="text-left col-2 col-form-label">Contact No 1</label>
+                    <div class="col-3">
+                        <input type="text" class="form-control" id="modal_invoice_cus_cn1" name="modal_invoice_cus_cn1" value="<?php echo $row['cus_cn1']; ?>" readonly/>
+                    </div>
+                </div>
+
+                <!-- Customer CN2 -->
+                <div class="form-group row">
+                    <label for="modal_invoice_cus_cn2" class="text-left col-2 col-form-label">Contact No 2</label>
+                    <div class="col-3">
+                        <input type="text" class="form-control" id="modal_invoice_cus_cn2" name="modal_invoice_cus_cn2" value="<?php echo $row['cus_cn2']; ?>" readonly/>
+                    </div>
+                </div>
+
+                <hr>
+
+                <!-- Start Time -->
+                <div class="form-group row">
+                    <label for="modal_start_time" class="text-left col-2 col-form-label">Start Time</label>
+                    <div class="col-3">
+                        <input type="text" class="form-control" id="modal_start_time" name="modal_start_time" value="<?php echo $row['job_start_time']; ?>" readonly/>
+                    </div>
+                </div>
+
+                <!-- Finished Time -->
+                <div class="form-group row">
+                    <label for="modal_finished_time" class="text-left col-2 col-form-label">Finished Time</label>
+                    <div class="col-3">
+                        <input type="text" class="form-control" id="modal_finished_time" name="modal_finished_time" value="<?php echo $row['job_finish_time']; ?>" readonly/>
+                    </div>
+                </div>
+
+                <hr>
+
+                <h3 class="card-text">Item Replacements</h3>
+                <table class="table table-sm">
+                    <thead>
+                    <tr>
+                        <th scope="col">Item ID</th>
+                        <th>Item Name</th>
+                        <th>Item Price</th>
+                        <th>Quantity</th>
+                        <th>Amount</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <?php
+                    $invoice_item_result = $jobObj->getInvoiceItemsByInvoiceId($invoice_id);
+                    while($iirow = $invoice_item_result->fetch_assoc())
+                    {
+                    ?>
+                    <tr>
+                        <td scope="row"><?php echo $iirow['invoice_item_id'];?></td>
+                        <td><?php echo $iirow['item_name'];?></td>
+                        <td><?php echo $iirow['invoice_item_price'];?></td>
+                        <td><?php echo $iirow['invoice_item_qty'];?></td>
+                        <td><?php echo $iirow['invoice_item_amount']; ?></td>
+                    </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+
+                <h3 class="card-text">Services</h3>
+                <table class="table table-sm">
+                    <thead>
+                    <tr>
+                        <th scope="col">Service ID</th>
+                        <th>Service Name</th>
+                        <th>Service Price</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <?php
+                    $invoice_service_result = $jobObj->getInvoiceServicesByInvoiceId($invoice_id);
+                    while($r=$invoice_service_result->fetch_assoc())
+                    {
+                    ?>
+                    <tr>
+                        <td scope="row"><?php echo $r['invoice_service_id']; ?></td>
+                        <td><?php echo $r['service_name']; ?></td>
+                        <td><?php echo $r['invoice_service_price']; ?></td>
+                    </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+
+                <hr>
+
+                <!-- Total Item Amount -->
+                <div class="form-group row">
+                    <label for="modal_tot_item_amount" class="text-left col-2 col-form-label">Total Item Amount</label>
+                    <div class="col-3">
+                        <input type="text" class="form-control" id="modal_tot_item_amount" name="modal_tot_item_amount" value="<?php echo $row['invoice_item_total_amount']; ?>" readonly/>
+                    </div>
+                </div>
+
+                <!-- Total Service Amount -->
+                <div class="form-group row">
+                    <label for="modal_tot_service_amount" class="text-left col-2 col-form-label">Total Service Amount</label>
+                    <div class="col-3">
+                        <input type="text" class="form-control" id="modal_tot_service_amount" name="modal_tot_service_amount" value="<?php echo $row['invoice_service_total_amount']; ?>" readonly/>
+                    </div>
+                </div>
+
+                <!-- Total Invoice Amount -->
+                <div class="form-group row">
+                    <label for="modal_tot_invoice_amount" class="text-left col-2 col-form-label">Total Invoice Amount</label>
+                    <div class="col-3">
+                        <input type="text" class="form-control" id="modal_tot_invoice_amount" name="modal_tot_invoice_amount" value="<?php echo $row['invoice_amount']; ?>" readonly/>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+<?php
+            }
+            break;
     }
 }
 

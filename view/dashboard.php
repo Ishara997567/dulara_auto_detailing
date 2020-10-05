@@ -103,7 +103,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="sales-dashboard.php"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;Sale Management</a>
+                    <a class="nav-link" href="sale-management.php"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;Sale Management</a>
                 </li>
 
                 <li class="nav-item">

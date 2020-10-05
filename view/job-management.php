@@ -304,7 +304,7 @@ $jobObj = new Job(); ?>
 
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary"name="pending_job_submit">Save Changes</button>
+                        <button type="submit" class="btn btn-primary" name="pending_job_submit">Save Changes</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </form>
@@ -364,6 +364,7 @@ $jobObj = new Job(); ?>
                     <th scope="col">Vehicle ODO</th>
                     <th scope="col">Vehicle Mileage</th>
                     <th scope="col">Total Invoice Amount</th>
+                    <th scope="col">&nbsp;</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -383,6 +384,7 @@ $jobObj = new Job(); ?>
                     <td><?php echo $invoiced_row['job_vehicle_odo']; ?></td>
                     <td><?php echo $invoiced_row['job_vehicle_mileage']; ?></td>
                     <td><?php echo $invoiced_row['invoice_amount']; ?></td>
+                    <td><a href="#modal_invoice" onclick="showInvoiceDetails(<?php echo $invoiced_row['invoice_id'];?>)" class="btn btn-sm btn-outline-primary" data-toggle="modal"><i class="fa fa-lg fa-file-text-o"></i></a></td>
 
                 </tr>
                 <?php } ?>
@@ -390,10 +392,46 @@ $jobObj = new Job(); ?>
             </table>
         </div>
     </div>
+
+
+    <!-- Invoice Modal  -->
+    <div class="modal fade" role="dialog" tabindex="-1" id="modal_invoice" aria-labelledby="modal_invoice" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Job History</h3>
+                    <button type="button" data-dismiss="modal" class="close" aria-label="close">
+                        <span aria-hidden="true">
+                            &times;
+                        </span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <form action="#" id="form_invoice_details">
+
+
+
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- End of Invoice Modal  -->
+
+
 </div>
 <?php include '../includes/footer.php'; ?>
 <script src="../assets/js/job.js"></script>
-<script src="../assets/js/job-invoice.js"></script>
+<script src="../assets/js/job_invoice.js"></script>
 <script>
     $(".my-job-datatable").DataTable();
 </script>

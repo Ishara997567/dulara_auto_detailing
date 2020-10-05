@@ -123,4 +123,37 @@ class Job
         $sql = "SELECT i.invoice_id, i.invoice_amount, i.job_id, j.job_vehicle_id, c.cus_name, mk.vehicle_make_name, ml.vehicle_model_name, j.job_vehicle_odo, j.job_vehicle_mileage FROM invoice i, job j, customer c, vehicle_make mk, vehicle_model ml WHERE i.job_id = j.job_id AND j.job_cus_id=c.cus_id AND j.job_vehicle_model_id=ml.vehicle_model_id AND j.job_vehicle_make_id = mk.vehicle_make_id;";
         return $con->query($sql);
     }
+
+    public function changeJobStatusToInvoiced($job_id)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE job SET job_status=10, job_finish_time=null WHERE job_id='$job_id'";
+        $con->query($sql);
+    }
+
+    public function getJobByInvoiceId($invoice_id)
+    {
+        $con = $GLOBALS['conn'];
+
+        $sql = "SELECT i.invoice_amount, i.invoice_item_total_amount, i.invoice_service_total_amount, i.job_id, i.invoice_created_at, j.job_vehicle_id, j.job_start_time, j.job_finish_time, c.cus_name, c.cus_cn1, c.cus_cn2 ,mk.vehicle_make_name, ml.vehicle_model_name, j.job_vehicle_odo, j.job_vehicle_mileage FROM invoice i, job j, customer c, vehicle_make mk, vehicle_model ml WHERE i.invoice_id='$invoice_id' AND i.job_id = j.job_id AND j.job_cus_id=c.cus_id AND j.job_vehicle_model_id=ml.vehicle_model_id AND j.job_vehicle_make_id = mk.vehicle_make_id;";
+
+        return $con->query($sql);
+    }
+
+    public function getInvoiceItemsByInvoiceId($invoice_id)
+    {
+        $con = $GLOBALS['conn'];
+        $sql = "SELECT iitem.invoice_item_id, i.item_name, iitem.invoice_item_price, iitem.invoice_item_qty, iitem.invoice_item_amount FROM invoice_item iitem, item i WHERE invoice_id = '$invoice_id' AND iitem.invoice_item_id = i.item_id;;";
+        return $con->query($sql);
+
+    }
+
+    public function getInvoiceServicesByInvoiceId($invoice_id)
+    {
+        $con = $GLOBALS['conn'];
+        $sql = "SELECT iserv.invoice_service_id, s.service_name, iserv.invoice_service_price FROM invoice_service iserv, service s WHERE invoice_id = '$invoice_id' AND iserv.invoice_service_id = s.service_id;";
+        return $con->query($sql);
+
+    }
+
 }

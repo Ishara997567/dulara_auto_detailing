@@ -105,4 +105,40 @@ class Service{
         $sql = "SELECT * FROM service WHERE service_name = '$service_name'";
         return $con->query($sql);
     }
+    //Update Service Details
+        //Service Name
+    public function updateServiceName($id, $name)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE service SET service_name = '$name' WHERE service_id = '$id';";
+        $con->query($sql);
+        return $con->affected_rows;
+    }
+
+//Service Price
+    public function updateServicePrice($id, $price)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE service SET service_price = '$price' WHERE service_id = '$id';";
+        $con->query($sql);
+        return $con->affected_rows;
+    }
+
+    //Service Cat ID
+    public function updateServiceCategoryId($id, $cat_id)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE service SET service_cat_id = '$cat_id' WHERE service_id = '$id';";
+        $con->query($sql);
+        return $con->affected_rows;
+    }
+
+    //Service Sub Cat ID
+    public function updateServiceSubCategoryId($id, $sub_cat_id)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE service SET service_sub_cat_id = '$sub_cat_id' WHERE service_id = '$id';";
+        $con->query($sql);
+        return $con->affected_rows;
+    }
 }

@@ -651,7 +651,7 @@ $all_cat_results_results = $serviceObj->selectCategories();
                                         <div class="form-row mt-3">
                                             <div class="form-group col-10">&nbsp;</div>
                                             <div class="form-group col-2 d-flex justify-content-center">
-                                                <input type="submit" class="rounded-pill btn btn-primary" name="submit" id="submit" value="Save"/>
+                                                <input type="submit" class="rounded-pill btn btn-primary" name="submit" value="Save"/>
                                             </div>
                                         </div>
                                     </form>
@@ -732,7 +732,7 @@ $all_cat_results_results = $serviceObj->selectCategories();
                                         <div class="form-row mt-3">
                                             <div class="form-group col-8">&nbsp;</div>
                                             <div class="form-group col-4 d-flex justify-content-center">
-                                                <input type="submit" class="rounded-pill btn btn-primary" name="submit" id="submit" value="Save"/>
+                                                <input type="submit" class="rounded-pill btn btn-primary" name="submit" value="Save"/>
                                             </div>
                                         </div>
 
@@ -783,7 +783,7 @@ $all_cat_results_results = $serviceObj->selectCategories();
                                         <div class="form-row mt-3">
                                             <div class="form-group col-8">&nbsp;</div>
                                             <div class="form-group col-4 d-flex justify-content-center">
-                                                <input type="submit" class="rounded-pill btn btn-primary" name="submit" id="submit" value="Save"/>
+                                                <input type="submit" class="rounded-pill btn btn-primary" name="submit" value="Save"/>
                                             </div>
                                         </div>
                                     </form>
@@ -823,6 +823,11 @@ $all_cat_results_results = $serviceObj->selectCategories();
                     </button>
                 </div>
                 <form action="#" method="post" id="frm_manage_service">
+                    <div class="row padding welcome d-flex justify-content-center mt-3">
+                        <div class="col-6 text-center service-update-message">
+
+                        </div>
+                    </div>
                     <div class="modal-body" id="body_modal_manage">
                         <!-- Manage Form    -->
 
