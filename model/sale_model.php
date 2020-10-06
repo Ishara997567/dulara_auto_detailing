@@ -112,7 +112,7 @@ class Sale{
     public function getPOItemsByPOId($po_id)
     {
         $con = $GLOBALS['conn'];
-        $sql = "SELECT poi.poi_item_id, i.item_name, poi_item_price, poi.poi_item_qty, poi.poi_item_amount FROM sale_purchase_order_item poi, item i WHERE poi.poi_po_id = '$po_id' AND poi.poi_item_id = i.item_id;";
+        $sql = "SELECT poi.poi_item_id, i.item_name, poi.poi_item_price, poi.poi_item_qty, poi.poi_item_amount FROM sale_purchase_order_item poi, item i WHERE poi.poi_po_id = '$po_id' AND poi.poi_item_id = i.item_id;";
         return $con->query($sql);
     }
 
@@ -120,6 +120,34 @@ class Sale{
     {
         $con = $GLOBALS["conn"];
         $sql = "SELECT po.*, s.sup_name FROM sale_purchase_order po, supplier s WHERE po.po_supplier_id = s.sup_id AND po.po_created_at BETWEEN '$d_start' AND '$d_end';";
+        return $con->query($sql);
+    }
+
+    public function getGRN()
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT g.sgrn_id, p.po_id, g.sgrn_total_amount, p.po_amount, s.sup_name, g.sgrn_created_at FROM sale_grn g, sale_purchase_order p, supplier s WHERE g.sgrn_po_id = p.po_id AND p.po_supplier_id = s.sup_id;";
+        return $con->query($sql);
+    }
+
+    public function getGRNById($grn_id)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT g.sgrn_id, p.po_id, g.sgrn_total_amount, p.po_amount, s.sup_name, g.sgrn_created_at FROM sale_grn g, sale_purchase_order p, supplier s WHERE g.sgrn_po_id = p.po_id AND p.po_supplier_id = s.sup_id AND g.sgrn_id = '$grn_id';";
+        return $con->query($sql);
+    }
+
+    public function getGRNItemsByGRNId($grn_id)
+    {
+        $con = $GLOBALS['conn'];
+        $sql = "SELECT gi.sgi_item_id, i.item_name, pi.poi_item_qty, pi.poi_item_price, pi.poi_item_amount, gi.sgi_qty, gi.sgi_p_price, gi.sgi_amount FROM  sale_purchase_order p, sale_purchase_order_item pi, sale_grn g, sale_grn_item gi, item i WHERE g.sgrn_id = gi.sgi_grn_id AND p.po_id = pi.poi_po_id AND gi.sgi_item_id = pi.poi_item_id AND g.sgrn_po_id = p.po_id AND i.item_id = gi.sgi_item_id AND g.sgrn_id = '$grn_id';";
+        return $con->query($sql);
+    }
+
+    public function getGRNByDateRange($d_start, $d_end)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT g.sgrn_id, p.po_id, g.sgrn_total_amount, p.po_amount, s.sup_name, g.sgrn_created_at FROM sale_grn g, sale_purchase_order p, supplier s WHERE g.sgrn_po_id = p.po_id AND p.po_supplier_id = s.sup_id AND g.sgrn_created_at BETWEEN '$d_start' AND '$d_end';";
         return $con->query($sql);
     }
 }

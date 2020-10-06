@@ -158,7 +158,7 @@ if(isset($_REQUEST['status'])){
                     <td><a href="#modal_manage_po" data-toggle="modal" data-id="<?php echo $r["po_id"]; ?>"><i class="fa fa-lg fa-file-text-o"></i></a></td>
                 </tr>
 
-            <?php
+                <?php
 
             }
 
@@ -177,30 +177,30 @@ if(isset($_REQUEST['status'])){
 
 
                 <div class="form-group row">
-                    <label for="poh_pid" class="col-form-label col-1">PO ID</label>
+                    <label for="grnh_pid" class="col-form-label col-1">PO ID</label>
                     <div class="col-4">
-                        <input type="text" class="form-control" name="poh_pid" id="poh_pid" readonly value="<?php echo $po_row["po_id"]; ?>"/>
+                        <input type="text" class="form-control" name="grnh_pid" id="grnh_pid" readonly value="<?php echo $po_row["po_id"]; ?>"/>
                     </div>
                     <div class="col-1">&nbsp;</div>
-                    <label for="poh_supplier" class="col-form-label col-1">Supplier</label>
+                    <label for="grnh_supplier" class="col-form-label col-1">Supplier</label>
                     <div class="col-4">
-                        <input type="text" class="form-control" name="poh_supplier" id="poh_supplier" readonly value="<?php echo $po_row["sup_name"]; ?>"/>
+                        <input type="text" class="form-control" name="grnh_supplier" id="grnh_supplier" readonly value="<?php echo $po_row["sup_name"]; ?>"/>
                     </div>
                 </div>
 
                 <div class="form-group row">
 
-                    <label for="poh_amount" class="col-form-label col-1">Amount</label>
+                    <label for="grnh_amount" class="col-form-label col-1">Amount</label>
                     <div class="col-4">
-                        <input type="text" class="form-control" name="poh_amount" id="poh_amount" readonly value="<?php echo $po_row["po_amount"]; ?>"/>
+                        <input type="text" class="form-control" name="grnh_amount" id="grnh_amount" readonly value="<?php echo $po_row["po_amount"]; ?>"/>
                     </div>
 
                     <div class="col-1">&nbsp;</div>
 
 
-                    <label for="poh_date" class="col-form-label col-1">Date</label>
+                    <label for="grnh_date" class="col-form-label col-1">Date</label>
                     <div class="col-4">
-                        <input type="text" class="form-control" name="poh_date" id="poh_date" readonly value="<?php echo $date; ?>"/>
+                        <input type="text" class="form-control" name="grnh_date" id="grnh_date" readonly value="<?php echo $date; ?>"/>
                     </div>
                 </div>
 
@@ -219,27 +219,159 @@ if(isset($_REQUEST['status'])){
                         </thead>
 
                         <tbody>
-                <?php
+                        <?php
 
-                $poi_result = $saleObj->getPOItemsByPOId($po_id);
-                while($poi_row=$poi_result->fetch_assoc())
-                {
-                    ?>
-                        <tr>
-                            <th scope="row"><?php echo $poi_row["poi_item_id"]; ?></th>
-                            <td><?php echo $poi_row["item_name"]; ?></td>
-                            <td><?php echo $poi_row["poi_item_price"]; ?></td>
-                            <td><?php echo $poi_row["poi_item_qty"]; ?></td>
-                            <td><?php echo $poi_row["poi_item_amount"]; ?></td>
-                        </tr>
-                    <?php } ?>
+                        $poi_result = $saleObj->getPOItemsByPOId($po_id);
+                        while($poi_row=$poi_result->fetch_assoc())
+                        {
+                            ?>
+                            <tr>
+                                <th scope="row"><?php echo $poi_row["poi_item_id"]; ?></th>
+                                <td><?php echo $poi_row["item_name"]; ?></td>
+                                <td><?php echo $poi_row["poi_item_price"]; ?></td>
+                                <td><?php echo $poi_row["poi_item_qty"]; ?></td>
+                                <td><?php echo $poi_row["poi_item_amount"]; ?></td>
+                            </tr>
+                        <?php } ?>
                         </tbody>
                     </table>
                 </div>
 
 
 
-<?php
+                <?php
+
+            }
+
+            break;
+
+
+
+
+        case "grn_history_date_range":
+
+            $s_date = $_POST["startDate"];
+            $e_date = $_POST["endDate"];
+
+            $grn_result_by_date = $saleObj->getGRNByDateRange($s_date, $e_date);
+            while($r=$grn_result_by_date->fetch_assoc())
+            {
+                $timestamp = strtotime($r["sgrn_created_at"]);
+                $date = date("Y-m-d", $timestamp);
+                ?>
+                <tr>
+                    <th scope="row"><?php echo $r["sgrn_id"]; ?></th>
+                    <td><?php echo $r["po_id"]; ?></td>
+                    <td scope="row"><?php echo $r["sgrn_total_amount"]; ?></td>
+                    <td><?php echo $r["po_amount"]; ?></td>
+                    <td><?php echo $r["sup_name"]; ?></td>
+                    <td><?php echo $date; ?></td>
+                    <td><a href="#modal_manage_grn" data-toggle="modal" data-id="<?php echo $r["sgrn_id"]; ?>"><i class="fa fa-lg fa-file-text-o"></i></a></td>
+                </tr>
+
+                <?php
+
+            }
+
+
+            break;
+
+
+
+
+
+
+
+        case "manage_grn_history":
+            $grn_id = $_POST["grnId"];
+
+            $grn_result = $saleObj->getGRNById($grn_id);
+            while($grn_row = $grn_result->fetch_assoc())
+            {
+                $timestamp = strtotime($grn_row["sgrn_created_at"]);
+                $date = date("Y-m-d", $timestamp);
+                ?>
+
+
+                <div class="form-group row">
+                    <label for="grnh_id" class="col-form-label col-1">GRN ID</label>
+                    <div class="col-3">
+                        <input type="text" class="form-control" name="grnh_id" id="grnh_id" readonly value="<?php echo $grn_row["sgrn_id"]; ?>"/>
+                    </div>
+
+                    <label for="grnh_po_id" class="col-form-label col-1">PO ID</label>
+                    <div class="col-3">
+                        <input type="text" class="form-control" name="grnh_po_id" id="grnh_po_id" readonly value="<?php echo $grn_row["po_id"]; ?>"/>
+                    </div>
+
+
+                    <label for="grnh_supplier" class="col-form-label col-1">Supplier</label>
+                    <div class="col-3">
+                        <input type="text" class="form-control" name="grnh_supplier" id="grnh_supplier" readonly value="<?php echo $grn_row["sup_name"]; ?>"/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+
+                    <label for="grnh_amount" class="col-form-label col-1">GRN Amount</label>
+                    <div class="col-3">
+                        <input type="text" class="form-control" name="grnh_amount" id="grnh_amount" readonly value="<?php echo $grn_row["sgrn_total_amount"]; ?>"/>
+                    </div>
+
+                    <label for="grnh_po_amount" class="col-form-label col-1">PO Amount</label>
+                    <div class="col-3">
+                        <input type="text" class="form-control" name="grnh_po_amount" id="grnh_po_amount" readonly value="<?php echo $grn_row["po_amount"]; ?>"/>
+                    </div>
+
+
+                    <label for="grnh_date" class="col-form-label col-1">Date</label>
+                    <div class="col-3">
+                        <input type="text" class="form-control" name="grnh_date" id="grnh_date" readonly value="<?php echo $date; ?>"/>
+                    </div>
+                </div>
+
+
+
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                        <tr>
+                            <th scope="col">Item ID</th>
+                            <th>Item Name</th>
+                            <th>Ordered Qty</th>
+                            <th>PO Unit Price</th>
+                            <th>PO Item Amount</th>
+                            <th>Received Quantity</th>
+                            <th>GRN Unit Price</th>
+                            <th>GRN Amount</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <?php
+
+                        $sgi_result = $saleObj->getGRNItemsByGRNId($grn_id);
+                        while($sgi_row=$sgi_result->fetch_assoc())
+                        {
+                            ?>
+                            <tr>
+                                <th scope="row"><?php echo $sgi_row["sgi_item_id"]; ?></th>
+                                <td><?php echo $sgi_row["item_name"]; ?></td>
+                                <td><?php echo $sgi_row["poi_item_qty"]; ?></td>
+                                <td><?php echo $sgi_row["poi_item_price"]; ?></td>
+                                <td><?php echo $sgi_row["poi_item_amount"]; ?></td>
+                                <td><?php echo $sgi_row["sgi_qty"]; ?></td>
+                                <td><?php echo $sgi_row["sgi_p_price"]; ?></td>
+                                <td><?php echo $sgi_row["sgi_amount"]; ?></td>
+                            </tr>
+                        <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+
+
+
+                <?php
 
             }
 
