@@ -150,4 +150,29 @@ class Sale{
         $sql = "SELECT g.sgrn_id, p.po_id, g.sgrn_total_amount, p.po_amount, s.sup_name, g.sgrn_created_at FROM sale_grn g, sale_purchase_order p, supplier s WHERE g.sgrn_po_id = p.po_id AND p.po_supplier_id = s.sup_id AND g.sgrn_created_at BETWEEN '$d_start' AND '$d_end';";
         return $con->query($sql);
     }
+
+    public function getGRNTopItems()
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT g.sgi_item_id, i.item_name, g.sgi_qty FROM sale_grn_item g, item i WHERE g.sgi_item_id = i.item_id ORDER BY sgi_qty DESC LIMIT 5;";
+        return $con->query($sql);
+    }
+
+    public function getTotalPurchaseAmount()
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT SUM(po_amount) as tot FROM sale_purchase_order;";
+        $result = $con->query($sql);
+        $row =  $result->fetch_assoc();
+        return $row["tot"];
+    }
+
+    public function getTotalGRNAmount()
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT SUM(sgrn_total_amount) as tot FROM sale_grn;";
+        $result = $con->query($sql);
+        $row =  $result->fetch_assoc();
+        return $row["tot"];
+    }
 }

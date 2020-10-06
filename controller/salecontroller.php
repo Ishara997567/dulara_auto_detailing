@@ -116,7 +116,7 @@ if(isset($_REQUEST['status'])){
 
         case "generate_grn":
 
-            if(!($_POST["poID"] == "choose")){
+            if(!($_POST["poID"] == "choose")) {
 
                 $grn_po_id = $_POST["poID"];
                 $grn_item_id = $_POST["grnItemId"];
@@ -128,13 +128,19 @@ if(isset($_REQUEST['status'])){
                 $grn_total_amount = array_sum($grn_amount);
 
                 $grn_id = $saleObj->addGRN($grn_po_id, $grn_total_amount);
+                if ($grn_id > 0) {
 
-                $l = sizeof($grn_item_id);
+                    $l = sizeof($grn_item_id);
 
-                for($x=0; $x<$l; $x++)
-                {
-                    $saleObj->addGRNItems($grn_item_id[$x], $grn_purchasing_u_price[$x], $grn_qty[$x], $grn_amount[$x], $grn_id);
+                    for ($x = 0; $x < $l; $x++) {
+                        $saleObj->addGRNItems($grn_item_id[$x], $grn_purchasing_u_price[$x], $grn_qty[$x], $grn_amount[$x], $grn_id);
+                    }
+                    echo 1;
+
+                } else {
+                    echo 0;
                 }
+
             }
             break;
 

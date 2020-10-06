@@ -127,7 +127,7 @@ class Job
     public function changeJobStatusToInvoiced($job_id)
     {
         $con = $GLOBALS["conn"];
-        $sql = "UPDATE job SET job_status=10, job_finish_time=null WHERE job_id='$job_id'";
+        $sql = "UPDATE job SET job_status=10 WHERE job_id='$job_id'";
         $con->query($sql);
     }
 
@@ -155,5 +155,23 @@ class Job
         return $con->query($sql);
 
     }
+
+    public function getAllCompletedJobCount()
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT COUNT(job_id) AS c FROM job WHERE job_status = 10;";
+        $result = $con->query($sql);
+        $row = $result->fetch_assoc();
+        return $row["c"];
+    }
+    public function getTodayCompletedJobCount()
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT COUNT(job_id) AS c FROM job WHERE job_status = 10 AND DATE(job_finish_time) = CURDATE();";
+        $result = $con->query($sql);
+        $row = $result->fetch_assoc();
+        return $row["c"];
+    }
+
 
 }

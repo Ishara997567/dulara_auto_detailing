@@ -60,11 +60,13 @@ $saleObj = new Sale();
     function drawStuff() {
         var data = new google.visualization.arrayToDataTable([
             ['Item', 'Amount'],
-            ["Item 1", 44],
-            ["Item 2", 31],
-            ["Item 3", 12],
-            ["Item 4", 10],
-            ['Item 5', 3]
+            <?php
+            $top_item_result = $saleObj->getGRNTopItems();
+            while($i=$top_item_result->fetch_assoc())
+            {
+            ?>
+            ["<?php echo $i["item_name"]; ?>", <?php echo $i["sgi_qty"]; ?>],
+   <?php }  ?>
         ]);
 
         var options = {
@@ -247,7 +249,7 @@ $saleObj = new Sale();
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <form action="sale-grn-generate.php" method="post">
+                            <form action="#" method="post" id="frm_grn_generate">
                                 <div class="modal-body">
 
                                     <div class="row d-flex justify-content-center">
@@ -292,7 +294,7 @@ $saleObj = new Sale();
 
                                     <!-- Grn PO Amount   -->
                                     <div class="form-row">
-                                        <label for="grn_supplier" class="col-form-label col-1">PO Amount</label>
+                                        <label for="grn_po_amount" class="col-form-label col-1">PO Amount</label>
                                         <div class="form-group col-md-4">
                                             <input type="text" class="form-control" name="grn_po_amount " id="grn_po_amount" readonly>
                                         </div>
@@ -323,7 +325,7 @@ $saleObj = new Sale();
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <input type="submit" class="btn btn-primary" name="grn_submit" id="grn_submit" value="Generate"/>
+                                    <input type="button" class="btn btn-primary" name="grn_submit" id="grn_submit" value="Generate"/>
                                 </div>
                             </form>
                         </div>

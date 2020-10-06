@@ -1,4 +1,10 @@
-<?php include '../includes/header.php'; ?>
+<?php include '../includes/header.php';
+include "../model/sale_model.php";
+include "../model/job_model.php";
+
+$saleObj = new Sale();
+$jobObj = new Job();
+?>
 
     <style>
         a:link{
@@ -162,7 +168,7 @@
                     <div class="card border-success">
                         <div class="h3 card-header">Total Jobs for Today</div>
                         <div class="card-body d-flex justify-content-center">
-                            <p class="card-text circle-amount">99</p>
+                            <p class="card-text circle-amount"><?php echo $jobObj->getTodayCompletedJobCount(); ?></p>
                         </div>
                     </div>
                 </div>
@@ -171,7 +177,7 @@
                     <div class="card border-dark">
                         <div class="h3 card-header">Total Job Completion</div>
                         <div class="card-body d-flex justify-content-center">
-                            <p class="card-text text-center circle-amount">99</p>
+                            <p class="card-text text-center circle-amount"><?php echo $jobObj->getAllCompletedJobCount(); ?></p>
                         </div>
                     </div>
                 </div>
@@ -209,18 +215,27 @@
             <div class="row mt-3">
                 <div class="col-6">
                     <div class="card border-secondary">
-                        <div class="h3 card-header">Today Purchasing Amount</div>
+                        <div class="h3 card-header">Total Purchasing Amount</div>
                         <div class="card-body">
-                            <p class="display-3 text-center">Rs. 1,200,000</p>
+                            <?php
+
+                            $amount = $saleObj->getTotalPurchaseAmount();
+                            setlocale(LC_MONETARY, "en_US");
+                            ?>
+                            <p class="display-3 text-center">Rs. <?php echo number_format($amount, 2); ?> </p>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-6">
                     <div class="card border-primary">
-                        <div class="h3 card-header">Goods Received Today</div>
+                        <div class="h3 card-header">Total Goods Received</div>
                         <div class="card-body">
-                            <p class="display-3 text-center">Rs. 1,000,000</p>
+                            <?php
+                            $a = $saleObj->getTotalGRNAmount();
+                            setlocale(LC_MONETARY, "en_US")
+                            ?>
+                            <p class="display-3 text-center">Rs. <?php echo number_format($a, 2); ?></p>
                         </div>
                     </div>
                 </div>

@@ -1,6 +1,5 @@
 $(document).ready(function (){
-    $("#grn_submit").click(function (e){
-        e.preventDefault();
+    $("#grn_submit").click(function (){
 
         let grnPOId = $("#grn_po_id").val();
 

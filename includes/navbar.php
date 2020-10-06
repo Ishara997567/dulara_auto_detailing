@@ -69,7 +69,7 @@
                                 <div class="col-1">&nbsp;</div>
                             </div>
                             <hr/>
-                            <div class="row d-flex d-flex-row justify-content-center"><a href="notifications.php">See All Notification</a></div>
+                            <div class="row d-flex d-flex-row justify-content-center"><a href="notification-management.php">See All Notification</a></div>
                         </div>
                     </div>
                 </div>

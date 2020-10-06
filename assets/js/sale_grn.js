@@ -59,6 +59,16 @@ $(document).ready(function (){
                 grnPurchasingUnitPrice:grnPurchasingUnitPrice,
                 grnQty:grnQty,
                 grnAmount:grnAmount
+            },function (data, success){
+                if(data == "0")
+                {
+                    alert("Purchase Order Has Already Been Processed!");
+                    $("#grn_po_id").focus();
+                }
+                else if(data == "1")
+                {
+                    window.location.replace("http://localhost:8080/dulara_auto_detailing/view/sale-grn-generate.php");
+                }
             });
 
 
