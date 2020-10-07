@@ -465,7 +465,7 @@ $saleObj = new Sale();
                     </a>
                     <div class="dropdown-menu" aria-labelledby="supplier_nav_dropdown_nav_dropdown">
                         <a class="dropdown-item" href="#supplier_modal" data-target="#supplier_modal" data-toggle="modal"><i class="fa fa-user-plus"></i> New Supplier</a>
-                        <a class="dropdown-item" href="#"><i class="fa fa-file-text"></i> Manage Supplier</a>
+                        <a class="dropdown-item" href="sale-manage-supplier.php"><i class="fa fa-file-text"></i> Manage Supplier</a>
                     </div>
                 </li>
 

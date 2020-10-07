@@ -382,5 +382,130 @@ if(isset($_REQUEST['status'])){
             }
 
             break;
+
+        case "manage_supplier":
+            $sup_id = $_POST["supplierId"];
+
+            $sup_result = $saleObj->getSupplierById($sup_id);
+            while($sup_row=$sup_result->fetch_assoc())
+            {
+                ?>
+
+                <div class="form-row">
+                    <!-- Sup code  -->
+                    <div class="form-group col-3">
+                        <label for="manage_sup_code">Supplier Code</label>
+                        <input type="text" class="form-control" readonly="readonly" id="manage_sup_code" name="manage_sup_code" value="<?php echo $sup_id; ?>">
+                    </div>
+
+                    <!-- Sup Name  -->
+                    <div class="form-group col-6">
+                        <label for="manage_sup_name">Supplier Name</label>
+                        <input type="text" class="form-control" id="manage_sup_name" name="manage_sup_name" readonly value="<?php echo $sup_row["sup_name"]; ?>"/>
+                    </div>
+
+                    <div class="form-group col-3 mt-4">
+                        <button type="button" class="btn btn-outline-primary mt-2" id="sup_name_pencil"><i class="fa fa-pencil"></i></button>
+                        <button type="button" class="btn btn-outline-success mt-2" id="sup_name_check"><i class="fa fa-check"></i></button>
+                    </div>
+
+
+                </div>
+
+
+                <!-- Address Rows -->
+                <div class="form-row">
+                    <div class="form-group col-3">
+                        <label for="manage_sup_home_no">Address</label>
+                        <input type="text" class="form-control" id="manage_sup_home_no" name="manage_sup_home_no" readonly value="<?php echo $sup_row["sup_address_home"]; ?>"/>
+                    </div>
+
+                    <div class="form-group col-3 mt-4">
+                        <button type="button" class="btn btn-outline-primary mt-2" id="sup_add_home_no_pencil"><i class="fa fa-pencil"></i></button>
+                        <button type="button" class="btn btn-outline-success mt-2" id="sup_add_home_no_check"><i class="fa fa-check"></i></button>
+                    </div>
+
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-3">
+                        <input type="text" class="form-control" id="manage_sup_s_name" name="manage_sup_s_name" readonly value="<?php echo $sup_row["sup_address_street"]; ?>"/>
+                    </div>
+                    <div class="form-group col-3">
+                        <button type="button" class="btn btn-outline-primary" id="sup_add_street_pencil"><i class="fa fa-pencil"></i></button>
+                        <button type="button" class="btn btn-outline-success" id="sup_add_street_check"><i class="fa fa-check"></i></button>
+                    </div>
+                </div>
+
+
+
+                <div class="form-row">
+                    <div class="form-group col-3">
+                        <input type="text" class="form-control" id="manage_sup_city" name="manage_sup_city" readonly value="<?php echo $sup_row["sup_address_city"]; ?>"/>
+                    </div>
+                    <div class="form-group col-3">
+                        <button type="button" class="btn btn-outline-primary" id="sup_add_city_pencil"><i class="fa fa-pencil"></i></button>
+                        <button type="button" class="btn btn-outline-success" id="sup_add_city_check"><i class="fa fa-check"></i></button>
+                    </div>
+                </div>
+
+
+
+                <div class="form-row">
+                    <div class="form-group col-3">
+                        <input type="text" class="form-control" id="manage_sup_state" name="manage_sup_state" readonly value="<?php echo $sup_row["sup_address_state"]; ?>"/>
+                    </div>
+                    <div class="form-group col-3">
+                        <button type="button" class="btn btn-outline-primary" id="sup_add_state_pencil"><i class="fa fa-pencil"></i></button>
+                        <button type="button" class="btn btn-outline-success" id="sup_add_state_check"><i class="fa fa-check"></i></button>
+                    </div>
+                </div>
+
+
+                <div class="form-row">
+                    <!-- contact no 1 -->
+                    <div class="form-group col-4">
+                        <label for="manage_sup_cn1">Contact No 1</label>
+                        <input type="text" class="form-control" id="manage_sup_cn1" name="manage_sup_cn1" readonly value="<?php echo $sup_row["sup_cn1"]; ?>"/>
+                    </div>
+
+
+                    <div class="form-group col-2 mt-4">
+                        <button type="button" class="btn btn-outline-primary mt-2" id="sup_cn1_pencil"><i class="fa fa-pencil"></i></button>
+                        <button type="button" class="btn btn-outline-success mt-2" id="sup_cn1_check"><i class="fa fa-check"></i></button>
+                    </div>
+
+                    <!-- contact no 2 -->
+                    <div class="form-group col-4">
+                        <label for="manage_sup_cn2">Contact No 2</label>
+                        <input type="text" class="form-control" id="manage_sup_cn2" name="manage_sup_cn2" readonly value="<?php echo $sup_row["sup_cn2"]; ?>"/>
+                    </div>
+
+                    <div class="form-group col-2 mt-4">
+                        <button type="button" class="btn btn-outline-primary mt-2" id="sup_cn2_pencil"><i class="fa fa-pencil"></i></button>
+                        <button type="button" class="btn btn-outline-success mt-2" id="sup_cn2_check"><i class="fa fa-check"></i></button>
+                    </div>
+
+                </div>
+
+                <!--    email   -->
+                <div class="form-row">
+                    <div class="form-group col-6">
+                        <label for="manage_sup_email">Email</label>
+                        <input type="email" class="form-control" id="manage_sup_email" name="manage_sup_email" readonly value="<?php echo $sup_row["sup_email"]; ?>"/>
+                    </div>
+
+                    <div class="form-group col-3 mt-4">
+                        <button type="button" class="btn btn-outline-primary mt-2" id="sup_email_pencil"><i class="fa fa-pencil"></i></button>
+                        <button type="button" class="btn btn-outline-success mt-2" id="sup_email_check"><i class="fa fa-check"></i></button>
+                    </div>
+                </div>
+
+
+
+
+                <?php
+            }
+
+            break;
     }
 }

@@ -175,4 +175,11 @@ class Sale{
         $row =  $result->fetch_assoc();
         return $row["tot"];
     }
+
+    public function getSupplierById($sup_id)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT * FROM supplier WHERE sup_id = '$sup_id';";
+        return $con->query($sql);
+    }
 }

@@ -14,8 +14,8 @@ $(document).ready(function (){
             else{
                 $(".my-message").html("Item Failed to Update!").addClass("alert alert-danger");
             }
-        })
-    })
+        });
+    });
 
     //update manu code ajax call
     $("#btn_manufacturer_code_check").click(function(){
