@@ -182,4 +182,78 @@ class Sale{
         $sql = "SELECT * FROM supplier WHERE sup_id = '$sup_id';";
         return $con->query($sql);
     }
+
+    //Updating Supplier details
+    public function updateSupplierName($sup_id, $sup_name)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE supplier SET sup_name = '$sup_name' WHERE sup_id = '$sup_id';";
+        $con->query($sql);
+        return $con->affected_rows;
+    }
+
+    //Updating Supplier Home No
+    public function updateSupplierHomeNo($sup_id, $home_no)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE supplier SET sup_address_home = '$home_no' WHERE sup_id = '$sup_id';";
+        $con->query($sql);
+        return $con->affected_rows;
+    }
+
+    //Updating Supplier Street
+    public function updateSupplierStreet($sup_id, $street)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE supplier SET sup_address_street = '$street' WHERE sup_id = '$sup_id';";
+        $con->query($sql);
+        return $con->affected_rows;
+    }
+
+    //Updating Supplier City
+    public function updateSupplierCity($sup_id, $city)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE supplier SET sup_address_city = '$city' WHERE sup_id = '$sup_id';";
+        $con->query($sql);
+        return $con->affected_rows;
+    }
+
+    //Updating Supplier State
+    public function updateSupplierState($sup_id, $state)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE supplier SET sup_address_state = '$state' WHERE sup_id = '$sup_id';";
+        $con->query($sql);
+        return $con->affected_rows;
+    }
+
+    //Updating Supplier Contact No 1
+    public function updateSupplierCN1($sup_id, $cn1)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE supplier SET sup_cn1 = '$cn1' WHERE sup_id = '$sup_id';";
+        $con->query($sql);
+        return $con->affected_rows;
+    }
+
+    //Updating Supplier Contact No 2
+    public function updateSupplierCN2($sup_id, $cn2)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE supplier SET sup_cn2 = '$cn2' WHERE sup_id = '$sup_id';";
+        $con->query($sql);
+        return $con->affected_rows;
+    }
+
+
+    //Updating Supplier Email
+    public function updateSupplierEmail($sup_id, $email)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE supplier SET sup_email = '$email' WHERE sup_id = '$sup_id';";
+        $con->query($sql);
+        return $con->affected_rows;
+    }
+
 }

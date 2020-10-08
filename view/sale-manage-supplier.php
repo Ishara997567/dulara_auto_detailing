@@ -69,7 +69,7 @@ $saleObj = new Sale();
                 </div>
 
                 <form action="sale-manage-supplier.php" method="post" class="form-supplier">
-                    <div class="row padding d-flex justify-content-center">
+                    <div class="row padding d-flex justify-content-center mt-2">
                         <div class="col-6 text-center alert supplier-manage-box">
 
                         </div>

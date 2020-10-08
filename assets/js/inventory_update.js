@@ -12,7 +12,7 @@ $(document).ready(function (){
                 $(".my-message").html("Item Updated Successfully!").addClass("alert alert-success");
             }
             else{
-                $(".my-message").html("Item Failed to Update!").addClass("alert alert-danger");
+                $(".my-message").html("Item Name Failed to Update!").addClass("alert alert-danger");
             }
         });
     });

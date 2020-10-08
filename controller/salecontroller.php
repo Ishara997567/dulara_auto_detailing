@@ -507,5 +507,113 @@ if(isset($_REQUEST['status'])){
             }
 
             break;
+
+        case "update_supplier":
+            if(isset($_POST["manageSupId"]))
+            {
+                $sup_id = $_POST["manageSupId"];
+
+                //Getting Supplier Name
+                if(isset($_POST["manageSupName"]))
+                {
+                    $sup_name = $_POST["manageSupName"];
+                    $rows_affected = $saleObj->updateSupplierName($sup_id, $sup_name);
+
+                    if($rows_affected > 0)
+                        echo 1;
+                    else
+                        echo 0;
+                }
+
+
+                //Getting Supplier Home No
+                if(isset($_POST["manageSupHomeNo"]))
+                {
+                    $home_no = $_POST["manageSupHomeNo"];
+                    $rows_affected = $saleObj->updateSupplierHomeNo($sup_id, $home_no);
+
+                    if($rows_affected > 0)
+                        echo 1;
+                    else
+                        echo 0;
+                }
+
+                //Getting Supplier Street
+                if(isset($_POST["manageSupStreet"]))
+                {
+                    $street = $_POST["manageSupStreet"];
+                    $rows_affected = $saleObj->updateSupplierStreet($sup_id, $street);
+
+                    if($rows_affected > 0)
+                        echo 1;
+                    else
+                        echo 0;
+                }
+
+
+                //Getting Supplier City
+                if(isset($_POST["manageSupCity"]))
+                {
+                    $city = $_POST["manageSupCity"];
+                    $rows_affected = $saleObj->updateSupplierCity($sup_id, $city);
+
+                    if($rows_affected > 0)
+                        echo 1;
+                    else
+                        echo 0;
+                }
+
+
+                //Getting Supplier State
+                if(isset($_POST["manageSupState"]))
+                {
+                    $state = $_POST["manageSupState"];
+                    $rows_affected = $saleObj->updateSupplierState($sup_id, $state);
+
+                    if($rows_affected > 0)
+                        echo 1;
+                    else
+                        echo 0;
+                }
+
+
+                //Getting Supplier CN1
+                if(isset($_POST["manageSupCN1"]))
+                {
+                    $cn1 = $_POST["manageSupCN1"];
+                    $rows_affected = $saleObj->updateSupplierCN1($sup_id, $cn1);
+
+                    if($rows_affected > 0)
+                        echo 1;
+                    else
+                        echo 0;
+                }
+
+                //Getting Supplier CN2
+                if(isset($_POST["manageSupCN2"]))
+                {
+                    $cn2 = $_POST["manageSupCN2"];
+                    $rows_affected = $saleObj->updateSupplierCN2($sup_id, $cn2);
+
+                    if($rows_affected > 0)
+                        echo 1;
+                    else
+                        echo 0;
+                }
+
+                //Getting Supplier Email
+                if(isset($_POST["manageSupEmail"]))
+                {
+                    $email = $_POST["manageSupEmail"];
+                    $rows_affected = $saleObj->updateSupplierEmail($sup_id, $email);
+
+                    if($rows_affected > 0)
+                        echo 1;
+                    else
+                        echo 0;
+                }
+
+            }
+            break;
     }
 }
