@@ -113,7 +113,7 @@ $jobObj = new Job();
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="worker-management.php"><i class="fa fa-address-card"></i>&nbsp;&nbsp;Worker Management</a>
+                    <a class="nav-link" href="employee-management.php"><i class="fa fa-address-card"></i>&nbsp;&nbsp;Worker Management</a>
                 </li>
 
                 <li class="nav-item">

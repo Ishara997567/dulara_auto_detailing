@@ -173,8 +173,8 @@ $(document).ready(function() {
                     let selectedValue = $("#select_supplier option:selected").text();
                     $("#select_supplier").hide();
                     $("input[id='manage_supplier']").show().val(selectedValue);
-                })
-            })
+                });
+            });
 
             //item cat change
             $("#btn_item_category_pencil").click(function (){

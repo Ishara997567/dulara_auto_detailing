@@ -18,7 +18,7 @@ $(document).ready(function () {
             $("#btn_cus_add_cn2_check").hide();
             $("#btn_cus_email_check").hide();
 
-            //Customer Bank
+            //Customer Name
             $("#btn_cus_name_pencil").click(function () {
                 $(this).hide();
                 $('#btn_cus_name_check').show();

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 05, 2020 at 08:00 PM
+-- Generation Time: Oct 25, 2020 at 03:03 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.2
 
@@ -54,6 +54,105 @@ INSERT INTO `customer` (`cus_id`, `cus_name`, `cus_vehicle_no`, `cus_add_l1`, `c
 (9, 'Nuwan Nimasha', 'BBE-9876', '', '', '', '', '0754123659', '', ''),
 (10, 'Niroshan Premarathtne', 'BSX-8767', '', '', '', '', '0781235496', '0712458963', 'niroshan@email.com'),
 (11, 'Kethaka Ranasinghe', 'KE-8978', '', '', '', '', '0764789651', '', 'kethaka@gmail.com');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `employee`
+--
+
+CREATE TABLE `employee` (
+  `emp_id` int(11) NOT NULL,
+  `emp_fn` varchar(255) DEFAULT NULL,
+  `emp_ln` varchar(255) DEFAULT NULL,
+  `emp_dob` date DEFAULT NULL,
+  `emp_nic` varchar(12) DEFAULT NULL,
+  `emp_license_type` varchar(255) DEFAULT NULL,
+  `emp_license_no` varchar(255) DEFAULT NULL,
+  `emp_blood_group` varchar(3) DEFAULT NULL,
+  `emp_email` varchar(255) DEFAULT NULL,
+  `emp_address` varchar(255) DEFAULT NULL,
+  `emp_epf_no` varchar(255) DEFAULT NULL,
+  `emp_etf_no` varchar(255) DEFAULT NULL,
+  `emp_designation` varchar(255) DEFAULT NULL,
+  `emp_app_date` date DEFAULT NULL,
+  `emp_job_description` text DEFAULT NULL,
+  `emp_status` int(11) DEFAULT 1,
+  `emp_created_at` timestamp NULL DEFAULT current_timestamp(),
+  `emp_created_user_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `employee`
+--
+
+INSERT INTO `employee` (`emp_id`, `emp_fn`, `emp_ln`, `emp_dob`, `emp_nic`, `emp_license_type`, `emp_license_no`, `emp_blood_group`, `emp_email`, `emp_address`, `emp_epf_no`, `emp_etf_no`, `emp_designation`, `emp_app_date`, `emp_job_description`, `emp_status`, `emp_created_at`, `emp_created_user_id`) VALUES
+(1, 'Ishara', 'Perera', '1997-06-29', '971812869V', 'heavy', '66478455D', 'O+', 'ishara.perera@icloud.com', 'No. 185/A/2, Bollatha, Ganemulla.', '1478', '1479', 'DBA', '2020-10-25', 'Handles all the database related affairs of the system', 1, '2020-10-25 14:02:12', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `employee_contact`
+--
+
+CREATE TABLE `employee_contact` (
+  `emp_contact_id` int(11) NOT NULL,
+  `emp_contact_type` varchar(255) DEFAULT NULL,
+  `emp_contact_no` varchar(10) DEFAULT NULL,
+  `emp_contact_emp_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `employee_contact`
+--
+
+INSERT INTO `employee_contact` (`emp_contact_id`, `emp_contact_type`, `emp_contact_no`, `emp_contact_emp_id`) VALUES
+(1, 'Home', '0335682323', 1),
+(2, 'Mobile', '0778154411', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `employee_illness`
+--
+
+CREATE TABLE `employee_illness` (
+  `emp_illness_id` int(11) NOT NULL,
+  `emp_illness_name` varchar(255) DEFAULT NULL,
+  `emp_illness_is_going` int(11) DEFAULT NULL,
+  `emp_illness_emp_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `employee_illness`
+--
+
+INSERT INTO `employee_illness` (`emp_illness_id`, `emp_illness_name`, `emp_illness_is_going`, `emp_illness_emp_id`) VALUES
+(1, 'Corona', 1, 1),
+(2, 'Cough', 0, 1),
+(3, 'AIDS', 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `employee_roster`
+--
+
+CREATE TABLE `employee_roster` (
+  `emp_roster_id` int(11) NOT NULL,
+  `emp_roster_in_time` time DEFAULT NULL,
+  `emp_roster_out_time` time DEFAULT NULL,
+  `emp_roster_off_day` varchar(255) DEFAULT NULL,
+  `emp_roster_half_day` varchar(255) DEFAULT NULL,
+  `emp_roster_emp_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `employee_roster`
+--
+
+INSERT INTO `employee_roster` (`emp_roster_id`, `emp_roster_in_time`, `emp_roster_out_time`, `emp_roster_off_day`, `emp_roster_half_day`, `emp_roster_emp_id`) VALUES
+(1, '09:00:00', '18:00:00', 'Thu', 'Fri', 1);
 
 -- --------------------------------------------------------
 
@@ -763,6 +862,30 @@ ALTER TABLE `customer`
   ADD PRIMARY KEY (`cus_id`);
 
 --
+-- Indexes for table `employee`
+--
+ALTER TABLE `employee`
+  ADD PRIMARY KEY (`emp_id`);
+
+--
+-- Indexes for table `employee_contact`
+--
+ALTER TABLE `employee_contact`
+  ADD PRIMARY KEY (`emp_contact_id`);
+
+--
+-- Indexes for table `employee_illness`
+--
+ALTER TABLE `employee_illness`
+  ADD PRIMARY KEY (`emp_illness_id`);
+
+--
+-- Indexes for table `employee_roster`
+--
+ALTER TABLE `employee_roster`
+  ADD PRIMARY KEY (`emp_roster_id`);
+
+--
 -- Indexes for table `invoice`
 --
 ALTER TABLE `invoice`
@@ -913,6 +1036,30 @@ ALTER TABLE `vehicle_model`
 --
 ALTER TABLE `customer`
   MODIFY `cus_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `employee`
+--
+ALTER TABLE `employee`
+  MODIFY `emp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `employee_contact`
+--
+ALTER TABLE `employee_contact`
+  MODIFY `emp_contact_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `employee_illness`
+--
+ALTER TABLE `employee_illness`
+  MODIFY `emp_illness_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `employee_roster`
+--
+ALTER TABLE `employee_roster`
+  MODIFY `emp_roster_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `invoice`
