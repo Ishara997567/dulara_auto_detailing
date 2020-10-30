@@ -1,6 +1,8 @@
 <?php include '../model/customer_model.php';
-$cusObj = new Customer();
+include '../model/job_model.php';
 
+$cusObj = new Customer();
+$jobObj = new Job();
 
 if($_REQUEST["status"])
 {
@@ -55,7 +57,7 @@ if($_REQUEST["status"])
         case "manage_customer":
 
             $cus_id = $_POST["cusId"];
-            $cus_result = $cusObj->getCustomerById($cus_id);
+            $cus_result = $cusObj->getAllCustomerRelatedData($cus_id);
             while($cus_row = $cus_result->fetch_assoc())
             {
 
@@ -182,10 +184,29 @@ if($_REQUEST["status"])
                 <hr>
 
                 <!-- Vehicle and Service Details    -->
+
+                <!-- Vehicle Make -->
                 <div class="form-group row">
-                    <label for="vehicle_no" class="col-sm-4 col-form-label">Vehicle Number</label>
+                    <label for="vehicle_make" class="col-sm-4 col-form-label">Vehicle Make</label>
                     <div class="col-sm-3">
-                        <input type="text" class="form-control" readonly id="vehicle_no" placeholder="Vehicle Number">
+                        <input type="text" class="form-control" readonly id="vehicle_make" value="<?php echo $cus_row["vehicle_make_name"]; ?>">
+
+                        <select name="select_cus_vehicle_make" id="select_cus_vehicle_make" class="form-control custom-select">
+                            <?php
+                            $vehicle_make_result = $jobObj->getAllVehicleMakes();
+                            while($r=$vehicle_make_result->fetch_assoc())
+                            {
+                                ?>
+
+                                <option value="<?php echo  $r["vehicle_make_id"]; ?>"><?php echo  $r["vehicle_make_name"]; ?></option>
+
+                            <?php } ?>
+                        </select>
+
+                    </div>
+                    <div class="col-sm-2 ml-n3">
+                        <button type="button" class="btn btn-outline-primary" id="btn_cus_vehicle_make_pencil"><i class="fa fa-pencil"></i></button>
+                        <button type="button" class="btn btn-outline-success" id="btn_cus_vehicle_make_check"><i class="fa fa-check"></i></button>
                     </div>
                 </div>
 
@@ -193,41 +214,81 @@ if($_REQUEST["status"])
                 <div class="form-group row">
                     <label for="vehicle_model" class="col-sm-4 col-form-label">Vehicle Model</label>
                     <div class="col-sm-3">
-                        <input type="text" class="form-control" readonly id="vehicle_model" placeholder="Vehicle Model">
+                        <input type="text" class="form-control" readonly id="vehicle_model" value="<?php echo $cus_row["vehicle_model_name"]; ?>">
+
+                        <div id="vehicle_model_select_box">
+
+                        </div>
+
+                    </div>
+                    <div class="col-sm-2 ml-n3">
+                        <button type="button" class="btn btn-outline-success" id="btn_cus_vehicle_model_check"><i class="fa fa-check"></i></button>
                     </div>
                 </div>
 
-                <!-- Vehicle Make -->
+                <!-- Vehicle ODO  -->
                 <div class="form-group row">
-                    <label for="vehicle_make" class="col-sm-4 col-form-label">Vehicle Make</label>
+                    <label for="vehicle_odo" class="col-sm-4 col-form-label">Vehicle ODO</label>
                     <div class="col-sm-3">
-                        <input type="text" class="form-control" readonly id="vehicle_make" placeholder="Vehicle Make">
+                        <input type="number" class="form-control" readonly id="vehicle_odo" value="<?php echo $cus_row["job_vehicle_odo"]; ?>">
+                    </div>
+                    <div class="col-sm-2 ml-n3">
+                        <button type="button" class="btn btn-outline-primary" id="btn_cus_vehicle_odo_pencil"><i class="fa fa-pencil"></i></button>
+                        <button type="button" class="btn btn-outline-success" id="btn_cus_vehicle_odo_check"><i class="fa fa-check"></i></button>
                     </div>
                 </div>
 
                 <!-- Vehicle Mileage -->
                 <div class="form-group row">
-                    <label for="vehicle_mileage" class="col-sm-4 col-form-label">Vehicle Mileage</label>
+                    <label for="vehicle_odo" class="col-sm-4 col-form-label">Vehicle Mileage</label>
                     <div class="col-sm-3">
-                        <input type="text" class="form-control" readonly id="vehicle_mileage" placeholder="In Kilometers">
+                        <input type="number" class="form-control" readonly id="vehicle_mileage" value="<?php echo $cus_row["job_vehicle_mileage"]; ?>">
+                    </div>
+                    <div class="col-sm-2 ml-n3">
+                        <button type="button" class="btn btn-outline-primary" id="btn_cus_vehicle_mileage_pencil"><i class="fa fa-pencil"></i></button>
+                        <button type="button" class="btn btn-outline-success" id="btn_cus_vehicle_mileage_check"><i class="fa fa-check"></i></button>
                     </div>
                 </div>
-                <hr/>
-                <!-- Service Category -->
+
+                <!-- Customer Service Details History   -->
                 <div class="form-group row">
-                    <label for="job_service_category" class="col-sm-4 col-form-label">Service Category</label>
-                    <div class="col-sm-3">
-                        <input type="text" class="form-control" readonly id="job_service_category" placeholder="Service Category">
+                    <div class="table-responsive">
+                        <table class="table table-sm m-5">
+                            <thead>
+                            <tr>
+                                <th scope="col">Service ID</th>
+                                <th scope="col">Service Name</th>
+                                <th scope="col">Service Category</th>
+                                <th scope="col">Date</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+
+                            <?php
+                            $cus_service_result = $cusObj->getCustomerServices($cus_id);
+                            while($r=$cus_service_result->fetch_assoc())
+                            {
+                                ?>
+                                <!-- Service Category -->
+                                <tr>
+                                    <th scope="row"><?php echo $r["service_id"]; ?></th>
+                                    <td><?php echo $r["service_name"]; ?></td>
+                                    <td><?php echo $r["service_cat_name"]; ?></td>
+                                    <td><?php echo $r["job_finish_time"]; ?></td>
+                                </tr>
+
+
+
+                            <?php } ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-
-
-
-                <hr>
 
                 <!-- Feedback Status    -->
                 <div class="form-group row">
-                    <label for="vehicle_mileage" class="col-sm-4 col-form-label">Feedback</label>
+                    <label for="vehicle_odo" class="col-sm-4 col-form-label">Feedback</label>
                     <div class="col-sm-4">
                         <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half"></i>
                     </div>
@@ -313,6 +374,34 @@ if($_REQUEST["status"])
                 $cus_id = $_POST["cusId"];
                 $email = $_POST["email"];
                 $cusObj->updateEmail($cus_id, $email);
+            }
+
+            //Customer Vehicle Make update
+            if(isset($_POST["cusId"]) && isset($_POST["vehicleMake"])) {
+                $cus_id = $_POST["cusId"];
+                $vm = $_POST["vehicleMake"];
+                $cusObj->updateVehicleMake($cus_id, $vm);
+            }
+
+            //Customer Vehicle Model update
+            if(isset($_POST["cusId"]) && isset($_POST["vehicleModel"])) {
+                $cus_id = $_POST["cusId"];
+                $vm = $_POST["vehicleModel"];
+                $cusObj->updateVehicleModel($cus_id, $vm);
+            }
+
+            //Customer Vehicle ODO update
+            if(isset($_POST["cusId"]) && isset($_POST["vehicleODO"])) {
+                $cus_id = $_POST["cusId"];
+                $odo = $_POST["vehicleODO"];
+                $cusObj->updateVehicleODO($cus_id, $odo);
+            }
+
+            //Customer Vehicle Mileage update
+            if(isset($_POST["cusId"]) && isset($_POST["vehicleMileage"])) {
+                $cus_id = $_POST["cusId"];
+                $mileage = $_POST["vehicleMileage"];
+                $cusObj->updateVehicleMileage($cus_id, $mileage);
             }
 
 

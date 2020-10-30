@@ -28,7 +28,7 @@ $cusObj = new Customer();
                     <th scope="col" width="30%">Customer Name</th>
                     <th scope="col" width="20%">Vehicle Number</th>
                     <th scope="col">City</th>
-                    <th scope="col">Service</th>
+                    <th scope="col">Contact Number</th>
                     <th scope="col">&nbsp;</th>
                     <!--                <th scope="col">Manage</th>-->
                 </tr>
@@ -46,7 +46,7 @@ $cusObj = new Customer();
                         <td><?php echo $cus_row["cus_name"]; ?></td>
                         <td><?php echo $cus_row["cus_vehicle_no"]; ?></td>
                         <td><?php echo $cus_row["cus_add_l3"]; ?></td>
-                        <td>Full Service</td>
+                        <td><?php echo $cus_row["cus_cn1"]; ?></td>
                         <td id="modal_link"><a href="#cus_info_modal" data-target="#cus_info_modal" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-id="<?php echo $cus_row["cus_id"]; ?>"><i class="fa fa-file-text-o fa-lg"></i></a></td>
                     </tr>
                 <?php } ?>
@@ -89,7 +89,7 @@ $cusObj = new Customer();
 
 </div>
 <?php include '../includes/footer.php'; ?>
-<script src="../assets/js/manage_customer.js"></script>
+<script src="../assets/js/customer_manage.js"></script>
 <script>
     $(".customer-manage-table").DataTable();
 </script>

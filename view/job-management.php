@@ -352,7 +352,7 @@ $jobObj = new Job(); ?>
     <div class="card">
         <h5 class="card-header">Job History</h5>
         <div class="card-body">
-            <table class="table table-sm table-dark table-hover my-job-datatable">
+            <table class="table table-sm table-secondary table-hover my-job-datatable">
                 <thead>
                 <tr>
                     <th scope="col">Invoice ID</th>

@@ -674,11 +674,6 @@ if(isset($_REQUEST["status"]))
                 }
 
             }
-
-
-
-
-
             break;
     }
 

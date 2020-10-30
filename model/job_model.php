@@ -1,6 +1,6 @@
 <?php include_once '../commons/DbConnection.php';
 
-$dbConnnection = new DbConnection();
+$dbConnection = new DbConnection();
 
 class Job
 {

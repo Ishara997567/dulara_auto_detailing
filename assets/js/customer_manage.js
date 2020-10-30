@@ -18,6 +18,15 @@ $(document).ready(function () {
             $("#btn_cus_add_cn2_check").hide();
             $("#btn_cus_email_check").hide();
 
+            $("#btn_cus_vehicle_make_check").hide();
+            $("#btn_cus_vehicle_model_check").hide();
+            $("#btn_cus_vehicle_odo_check").hide();
+            $("#btn_cus_vehicle_mileage_check").hide();
+
+            //Hiding select boxes
+            $("#select_cus_vehicle_make").hide();
+            $("#select_cus_vehicle_model").hide();
+
             //Customer Name
             $("#btn_cus_name_pencil").click(function () {
                 $(this).hide();
@@ -129,6 +138,72 @@ $(document).ready(function () {
                 });
 
             });
+
+            //Customer Vehicle Make
+            $("#btn_cus_vehicle_make_pencil").click(function (){
+                $(this).hide();
+                $('#btn_cus_vehicle_make_check').show();
+                $("input[id='vehicle_make']").hide();
+                $("#select_cus_vehicle_make").show();
+
+                $("#btn_cus_vehicle_make_check").click(function(){
+                    $(this).hide();
+                    $("#btn_cus_vehicle_make_pencil").show();
+                    let selectedValue = $("#select_cus_vehicle_make option:selected").text();
+                    $("#select_cus_vehicle_make").hide();
+                    $("input[id='vehicle_make']").show().val(selectedValue);
+
+                    //Hiding Vehicle Model Input
+                    $("input[id='vehicle_model']").hide();
+
+                    //Showing Vehicle Model Check button
+                    $("#btn_cus_vehicle_model_check").show();
+
+                    let x = $("#select_cus_vehicle_make").val();
+                    $.post("customer-vehicle-model.php", {vehicleMakeID:x}, function (data){
+                        $("#vehicle_model_select_box").html(data);
+                    });
+                });
+            });
+
+
+            //Customer Vehicle Model
+            $("#btn_cus_vehicle_model_check").click(function () {
+                $(this).hide();
+                let selectedValue = $("#select_cus_vehicle_model option:selected").text();
+                $("#select_cus_vehicle_model").hide();
+                $("input[id='vehicle_model']").show().val(selectedValue);
+            });
+
+            //Customer vehicle ODO
+            $("#btn_cus_vehicle_odo_pencil").click(function () {
+                $(this).hide();
+                $('#btn_cus_vehicle_odo_check').show();
+                $("#vehicle_odo").prop("readonly", false);
+
+                $("#btn_cus_vehicle_odo_check").click(function () {
+                    $("#vehicle_odo").prop("readonly", true);
+                    $(this).hide();
+                    $("#btn_cus_vehicle_odo_pencil").show();
+                });
+
+            });
+
+            //Customer vehicle mileage
+            $("#btn_cus_vehicle_mileage_pencil").click(function () {
+                $(this).hide();
+                $('#btn_cus_vehicle_mileage_check').show();
+                $("#vehicle_mileage").prop("readonly", false);
+
+                $("#btn_cus_vehicle_mileage_check").click(function () {
+                    $("#vehicle_mileage").prop("readonly", true);
+                    $(this).hide();
+                    $("#btn_cus_vehicle_mileage_pencil").show();
+                });
+
+            });
+
+
 
             //Updating Database
             let u = "../controller/customercontroller.php?status=update_customer";
@@ -242,9 +317,65 @@ $(document).ready(function () {
                         messageDiv.html("Customer Email Failed to  Update!").addClass("alert alert-danger");
 
                     }
-                })
+                });
 
             });
+
+            //cus vehicle make
+            $("#btn_cus_vehicle_make_check").on("click", function (){
+               let vehicleMake = $("#select_cus_vehicle_make").val();
+                $.post(u, {cusId: cusId, vehicleMake: vehicleMake}, function (data, success) {
+                    if (success) {
+                        messageDiv.html("Customer Vehicle Make Updated Successfully!").addClass("alert alert-success");
+                    } else {
+                        messageDiv.html("Customer Vehicle Make to  Update!").addClass("alert alert-danger");
+
+                    }
+                });
+            });
+
+            //cus vehicle model
+            $("#btn_cus_vehicle_model_check").on("click", function (){
+                let vehicleModel = $("#select_cus_vehicle_model").val();
+                $.post(u, {cusId: cusId, vehicleModel: vehicleModel}, function (data, success) {
+                    if (success) {
+                        messageDiv.html("Customer Vehicle Model Updated Successfully!").addClass("alert alert-success");
+                    } else {
+                        messageDiv.html("Customer Vehicle Model to  Update!").addClass("alert alert-danger");
+
+                    }
+                });
+            });
+
+            //cus vehicle odo
+            $("#btn_cus_vehicle_odo_check").on("click", function (){
+                let vehicleODO = $("#vehicle_odo").val();
+                $.post(u, {cusId: cusId, vehicleODO: vehicleODO}, function (data, success) {
+                    if (success) {
+                        messageDiv.html("Customer Vehicle ODO Updated Successfully!").addClass("alert alert-success");
+                    } else {
+                        messageDiv.html("Customer Vehicle ODO to  Update!").addClass("alert alert-danger");
+
+                    }
+                });
+            });
+
+            //cus vehicle mileage
+            $("#btn_cus_vehicle_mileage_check").on("click", function (){
+                let vehicleMileage = $("#vehicle_mileage").val();
+                $.post(u, {cusId: cusId, vehicleMileage: vehicleMileage}, function (data, success) {
+                    if (success) {
+                        messageDiv.html("Customer Vehicle Mileage Updated Successfully!").addClass("alert alert-success");
+                    } else {
+                        messageDiv.html("Customer Vehicle Mileage to  Update!").addClass("alert alert-danger");
+
+                    }
+                });
+            });
+
+
+
+
             $(".save-changes").click(function () {
                 window.location.reload();
             });
