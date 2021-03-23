@@ -1,5 +1,6 @@
-<?php   include '../commons/sessions.php';
+<?php
 include '../model/login_model.php';
+include '../commons/session.php';
 
 $loginObj = new Login();
 
@@ -15,13 +16,29 @@ switch($status){
         $result = $loginObj->validateUser($u, $p);
 
         if($result->num_rows == 1){
+
+            $user_row = $result->fetch_assoc();
+
+            $user_id = $user_row['user_id'];
+            $user_fname = $user_row['user_first_name'];
+            $user_lname = $user_row['user_last_name'];
+            $user_access_level_id = $user_row['user_access_level'];
+
+            $user_array = array(
+                "user_id" => $user_id,
+                "user_fname" => $user_fname,
+                "user_lname" => $user_lname,
+                "user_access_level" => $user_access_level_id
+            );
+
+            $SESSION["user"] = $user_array;
+
             ?>
             <script> window.location = '../view/dashboard.php' </script>
             <?php
         } else {
             $msg = "Invalid Username or Password!";
             $msg = base64_encode($msg);
-
             ?>
             <script> window.location = '../view/login.php?msg=<?php echo $msg?>' </script>
             <?php
@@ -30,8 +47,6 @@ switch($status){
         break;
 
     case 'add_user':
-
-
         $fn = $_POST['first_name'];
         $ln = $_POST['last_name'];
         $email = $_POST['email'];
@@ -41,10 +56,6 @@ switch($status){
         $cn1 = $_POST['cn1'];
         $cn2 = $_POST['cn2'];
         $user_access_level = $_POST['user_role'];
-
-
-
-
 
 
         if($_FILES['user_img']['name'] != "") {
@@ -96,8 +107,11 @@ switch($status){
             <?php
         }
         break;
+
+    case "logout":
+        session_destroy();
+        header('../index.php');
+        break;
     default:
         echo "Thank you!";
-
-
 }

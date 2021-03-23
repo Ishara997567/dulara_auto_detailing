@@ -153,7 +153,7 @@ switch($status)
             <!-- Service name  -->
             <label for="service_price" class="col-2 col-form-label">Service Price</label>
             <div class="input-group col-5">
-                <input type="text" readonly class="form-control mr-2 txt-service-price" id="service_price" name="txt_service_price" value="<?php echo $row_service["service_price"]; ?>">
+                <input type="number" min="1" step="0.01" readonly class="form-control mr-2 txt-service-price" id="service_price" name="txt_service_price" value="<?php echo $row_service["service_price"]; ?>">
                 <button type="button" class="btn btn-outline-primary" id="btn_service_price_pencil"><i class="fa fa-pencil"></i></button>
                 <button type="button" class="btn btn-outline-success" id="btn_service_price_check" onclick="changeServicePrice(<?php echo $row_service["service_id"]; ?>)"><i class="fa fa-check"></i></button>
 

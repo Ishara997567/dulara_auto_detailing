@@ -4,6 +4,22 @@ $dbConnection = new DbConnection();
 
 class Customer
 {
+    public function storeCustomerMessage($m_heading, $message, $m_type_s, $m_to_whom_s, $specific_customer_names_s, $when_s)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "INSERT INTO customer_feedback_message (cfm_heading, cfm_message, cfm_type, cfm_to_whom, cfm_specific_customers, cfm_when) VALUES ('$m_heading', '$message', '$m_type_s', '$m_to_whom_s', '$specific_customer_names_s', '$when_s');";
+
+        $con->query($sql);
+        return $con->insert_id;
+    }
+
+    public function getCustomerName($term)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT * FROM customer WHERE cus_name LIKE '%{$term}%';";
+        return $con->query($sql);
+    }
+
     public function addCustomer($cus_name,$cus_vehicle, $cus_add_l1, $cus_add_l2, $cus_add_l3, $cus_add_l4, $cus_cn1, $cus_cn2, $cus_email)
     {
         $con = $GLOBALS["conn"];

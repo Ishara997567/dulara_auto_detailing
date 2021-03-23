@@ -22,7 +22,7 @@ $jobObj = new Job(); ?>
 
         <!-- New Job    -->
         <div class="col-3 d-flex justify-content-end">
-            <button class="rounded-pill btn btn-outline-primary" type="button" data-toggle="modal" data-target="#new_job_modal" data-whatever="@mdo"><i class="fa fa-plus"></i> New Job</button>
+            <button class="rounded-pill btn btn-outline-primary" type="button" data-toggle="modal" data-target="#new_job_modal"><i class="fa fa-plus"></i> New Job</button>
         </div>
     </div>
     <!-- Success Message From the Controller    -->

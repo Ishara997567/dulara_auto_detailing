@@ -24,7 +24,7 @@ $(document).ready(function() {
                 $("#btn_service_name_check").click(function(){
                     $("input[id='manage_service_name']").prop("readonly",true);
                     $(this).hide();
-                    $("#btn_service_name_pencil").show();
+                        $("#btn_service_name_pencil").show();
                 });
 
             });
@@ -206,8 +206,6 @@ $(document).ready(function() {
 
     changeServiceCategory = function (id){
         let serviceCatId = $("#select_service_category").val();
-        alert(id);
-        alert(serviceCatId);
         $.ajax({
             url: u,
             method: "post",

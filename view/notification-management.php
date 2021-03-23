@@ -7,7 +7,7 @@
 <!-- Content    -->
 <div class="container-fluid">
     <!-- Top Row    -->
-    <div class="row bg-light">
+    <div class="row bg-primary">
 <!--        <div class="h2 col-9">Notifications</div>-->
         <div class="col-9">
             <div class="navbar-brand ml-5"><i class="fa fa-tasks"></i>&nbsp;Notification Management</div>
@@ -23,7 +23,7 @@
 
     <!--    Body  -->
     <!-- Top Row of Body    -->
-    <div class="row mt-2">
+    <div class="row mt-2 bg-info">
         <!-- Side Panel top row -->
         <div class="col-3 d-flex justify-content-center" style="border-right: 2px solid black;">
             <div class="col-6">
@@ -47,7 +47,7 @@
     </div>
 
     <!-- Rest of the body   -->
-    <div class="row mt-3" id="notification_menu">
+    <div class="row mt-3 bg-danger" id="notification_menu">
         <div class="col-3">
             <!-- Notification 1  -->
             <div class="row">
@@ -75,7 +75,7 @@
             </div>
 
             <!-- Notification 2  -->
-            <div class="row">
+            <div class="row bg-dark">
                 <!-- Notification Header    -->
 
                 <div class="row  d-flex justify-content-around">
@@ -102,7 +102,7 @@
         <div class="col-9">&nbsp;</div>
     </div>
 
-    <div class="row mt-3" id="message_menu">
+    <div class="row mt-3 bg-warning" id="message_menu">
         <div class="col-3">
             <!-- Message 1  -->
             <p>

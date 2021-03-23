@@ -42,7 +42,7 @@ $(document).ready(function (){
 
         $("button[name='btn_remove[]']").click(function (){
             $(this).parent().parent('div').remove();
-        })
+        });
 
         $("#item_name"+c).autocomplete({
             source: "sale_item_autofill_results.php"

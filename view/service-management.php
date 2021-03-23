@@ -467,7 +467,7 @@ $all_cat_results_results = $serviceObj->selectCategories();
                                             <!-- Service Price    -->
                                             <div class="form-group col-4">
                                                 <label for="service_price">Service Price Rs.</label>
-                                                <input type="number" min="1" step="any" class="form-control" id="service_price" name="service_price" placeholder="Service Price">
+                                                <input type="number" min="1" step="0.01" class="form-control" id="service_price" name="service_price" placeholder="Service Price">
                                             </div>
 
                                         </div>
