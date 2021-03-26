@@ -121,7 +121,7 @@ $jobObj = new Job();
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fa fa-bar-chart"></i>&nbsp;&nbsp;Reports Management</a>
+                    <a class="nav-link" href="report-management.php"><i class="fa fa-bar-chart"></i>&nbsp;&nbsp;Reports Management</a>
                 </li>
             </ul>
         </div>

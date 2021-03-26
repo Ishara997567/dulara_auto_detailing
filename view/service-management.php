@@ -17,6 +17,7 @@ $all_cat_results_results = $serviceObj->selectCategories();
 <!-- Service Utilization Chart Script   -->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart']});
     google.charts.load('current', {'packages':['bar']});
     google.charts.setOnLoadCallback(function(){
         drawStuff1();
@@ -58,32 +59,36 @@ $all_cat_results_results = $serviceObj->selectCategories();
     //Service Request Chart
     function drawStuff2() {
         var data = google.visualization.arrayToDataTable([
-            ['Element', 'Density', { role: 'style' }],
-            ['Copper', 8.94, '#b87333'],            // RGB value
-            ['Silver', 10.49, 'silver'],            // English color name
-            ['Gold', 19.30, 'gold'],
+            ['Element', 'No of Service Requests', { role: 'style' }],
+            <?php
+                $result = $serviceObj->getServiceRequestCount();
+                while($r = $result->fetch_assoc())
+            {
+            ?>
+            ['<?php echo $r['service_name']; ?>', <?php echo $r['service_count'] ?> , '#b87333'],
 
-            ['Platinum', 21.45, 'color: #e5e4e2' ], // CSS-style declaration
-        ]);
+        <?php } ?>
+    ]);
 
-        var options = {
-            width: 500,
-            height: 400,
-            legend: { position: 'none' },
-            chart: {
-                title: 'Chess opening moves',
-                subtitle: 'popularity by percentage' },
-            axes: {
-                x: {
-                    0: { side: 'top', label: 'White to move'} // Top x-axis.
-                }
-            },
-            bar: { groupWidth: "90%" }
-        };
+    var options = {
+        width: 640,
+        height: 400,
+        curveType: 'function',
+        legend: { position: 'none' },
+        chart: {
+            title: 'Requests of Services Overview',
+            subtitle: 'popularity by percentage' },
+        axes: {
+            x: {
+                0: { side: 'top', label: 'Service'} // Top x-axis.
+            }
+        },
+        bar: { groupWidth: "90%" }
+    };
 
-        var chart = new google.charts.Bar(document.getElementById('service_requests'));
-        // Convert the Classic options to Material options.
-        chart.draw(data, google.charts.Bar.convertOptions(options));
+    var chart = new google.visualization.LineChart(document.getElementById('service_requests'));
+    // Convert the Classic options to Material options.
+    chart.draw(data, options);
     }
 </script>
 </head>
@@ -483,10 +488,10 @@ $all_cat_results_results = $serviceObj->selectCategories();
                                                     <?php
                                                     while($ir = $item_result->fetch_assoc())
                                                     {
-                                                    ?>
+                                                        ?>
 
-                                                    <option value="<?php echo $ir["item_id"] ;?>"><?php echo $ir["item_name"] ;?></option>
-                                                  <?php } ?>
+                                                        <option value="<?php echo $ir["item_id"] ;?>"><?php echo $ir["item_name"] ;?></option>
+                                                    <?php } ?>
                                                 </select>
                                             </div>
 
@@ -852,51 +857,51 @@ $all_cat_results_results = $serviceObj->selectCategories();
 
     <!-- Item Table -->
 
-        <div class="table-responsive mt-2">
-            <table class="table table-sm table-dark table-hover" id="table_manage">
-                <thead>
+    <div class="table-responsive mt-2">
+        <table class="table table-sm table-dark table-hover" id="table_manage">
+            <thead>
+            <tr>
+
+                <th scope="col">Service ID</th>
+                <th scope="col">Service Name</th>
+                <th scope="col">Service Price</th>
+                <th scope="col">Service Category</th>
+                <th scope="col">Service Sub Category</th>
+                <th>&nbsp;</th>
+                <!--                <th scope="col">Manage</th>-->
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            $all_service_results = $serviceObj->selectService();
+            while($row = $all_service_results->fetch_assoc()){
+                $service_id = $row["service_id"];
+
+                $category_result = $serviceObj->selectCategoryById($row["service_cat_id"]);
+                $category_row = $category_result->fetch_assoc();
+
+                $sub_cat_result = $serviceObj->selectSubCategoriesById($row["service_sub_cat_id"]);
+                $sub_cat_row = $sub_cat_result->fetch_assoc();
+                ?>
                 <tr>
 
-                    <th scope="col">Service ID</th>
-                    <th scope="col">Service Name</th>
-                    <th scope="col">Service Price</th>
-                    <th scope="col">Service Category</th>
-                    <th scope="col">Service Sub Category</th>
-                    <th>&nbsp;</th>
-                    <!--                <th scope="col">Manage</th>-->
+                    <th scope="row"><?php echo $service_id; ?></th>
+                    <td id="s_name" data-serviceName="<?php echo $row["service_name"]; ?>"><?php echo $row["service_name"]; ?></td>
+                    <td><?php echo "Rs. ".$row["service_price"]; ?></td>
+                    <td><?php echo $category_row["service_cat_name"]; ?></td>
+                    <td><?php echo $sub_cat_row["service_sub_cat_name"]; ?></td>
+                    <td id="table_data_manage_service_id"><a href="#modal_service_manage" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-id="<?php echo $service_id;?>"><i class="fa fa-file-text-o fa-lg"></i></a></td>
+
+
                 </tr>
-                </thead>
-                <tbody>
-                <?php
-                $all_service_results = $serviceObj->selectService();
-                while($row = $all_service_results->fetch_assoc()){
-                    $service_id = $row["service_id"];
-
-                    $category_result = $serviceObj->selectCategoryById($row["service_cat_id"]);
-                    $category_row = $category_result->fetch_assoc();
-
-                    $sub_cat_result = $serviceObj->selectSubCategoriesById($row["service_sub_cat_id"]);
-                    $sub_cat_row = $sub_cat_result->fetch_assoc();
-                    ?>
-                    <tr>
-
-                        <th scope="row"><?php echo $service_id; ?></th>
-                        <td id="s_name" data-serviceName="<?php echo $row["service_name"]; ?>"><?php echo $row["service_name"]; ?></td>
-                        <td><?php echo "Rs. ".$row["service_price"]; ?></td>
-                        <td><?php echo $category_row["service_cat_name"]; ?></td>
-                        <td><?php echo $sub_cat_row["service_sub_cat_name"]; ?></td>
-                        <td id="table_data_manage_service_id"><a href="#modal_service_manage" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-id="<?php echo $service_id;?>"><i class="fa fa-file-text-o fa-lg"></i></a></td>
-
-
-                    </tr>
-                <?php } ?>
-                </tbody>
-            </table>
-        </div>
+            <?php } ?>
+            </tbody>
+        </table>
+    </div>
 
 
     <hr>
-<div id="search_results_table"></div>
+    <div id="search_results_table"></div>
 
 
 </div>

@@ -11,6 +11,13 @@ class Service{
         return $con->insert_id;
     }
 
+    public function getServiceRequestCount()
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT i.invoice_service_id, s.service_name, COUNT(*) service_count FROM invoice_service i, service s WHERE i.invoice_service_id = s.service_id GROUP BY invoice_service_id LIMIT 5;";
+        return $con->query($sql);
+
+    }
     public function selectCategories(){
         $con = $GLOBALS["conn"];
         $sql = "SELECT * FROM service_category;";

@@ -1,8 +1,10 @@
 <?php
 include '../model/login_model.php';
 include '../commons/session.php';
+include '../model/notification_model.php';
 
 $loginObj = new Login();
+$notificationObj = new Notification();
 
 $status = $_REQUEST['status'];
 
@@ -81,10 +83,12 @@ switch($status){
 
                 $affected_rows = $loginObj->addLogin($email,$passwd, $user_id, 1);
 
-                if($affected_rows > 0)
+                if($affected_rows > 0) {
                     $msg = "New User Created Successfully!";
 
-
+                    $not_message = "A new system user account for <i><b>" .$fn. " ".$ln. "</b></i> has been created";
+                    $notificationObj->addNotification(7, $not_message);
+                }
             } else {
                 $msg = "Could not Create the User!";
 

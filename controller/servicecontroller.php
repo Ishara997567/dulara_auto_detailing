@@ -1,6 +1,8 @@
 <?php include '../model/service_model.php';
+include '../model/notification_model.php';
 
 $serviceObj = new Service();
+$notificationObj = new Notification();
 
 $status = $_REQUEST["status"];
 
@@ -21,6 +23,9 @@ switch($status)
             ?>
             <script>window.location = "../view/service-management.php?success_message=<?php echo $message; ?>"</script>
             <?php
+
+            $not_message = "A new service category named <i><b>". $cat_name ."</b></i> has been created";
+            $notificationObj->addNotification(1, $not_message);
         }
 
         else{
@@ -51,6 +56,9 @@ switch($status)
             ?>
             <script>window.location = "../view/service-management.php?success_message=<?php echo $message; ?>"</script>
             <?php
+
+            $not_message = "A new service sub category named <i><b>". $sub_cat_name ."</b></i> has been created";
+            $notificationObj->addNotification(1, $not_message);
         }
 
         else{
@@ -95,6 +103,9 @@ switch($status)
             ?>
             <script>window.location = "../view/service-management.php?success_message=<?php echo $message; ?>"</script>
             <?php
+
+            $not_message = "A new service named <i><b>". $service_name ."</b></i> has been created";
+            $notificationObj->addNotification(1, $not_message);
         }
         else{
             $message = base64_encode("New Service Failed to Created!");

@@ -1,6 +1,8 @@
 <?php include '../model/sale_model.php';
+include '../model/notification_model.php';
 
 $saleObj = new Sale();
+$notificationObj = new Notification();
 
 if(isset($_REQUEST['status'])){
     $status = $_REQUEST['status'];
@@ -26,6 +28,9 @@ if(isset($_REQUEST['status'])){
                 <script>window.location = "../view/sale-management.php?success_message=<?php echo $msg; ?>";</script>
 
                 <?php
+
+                $not_message = "A new supplier, <i><b>" .$sup_name. "</i></b> has been created";
+                $notificationObj->addNotification(5, $not_message);
 
             }
             else
@@ -72,6 +77,9 @@ if(isset($_REQUEST['status'])){
                 {
                     $saleObj->addPOItems($itemCodeSet[$x], $itemPriceSet[$x], $itemQtySet[$x], $itemAmountSet[$x], $po_id);
                 }
+
+                $not_message = "A new purchase order, <i><b>" .$po_id. "</i></b> to <i><b>" .$sup_id. "</i></b> has been created";
+                $notificationObj->addNotification(5, $not_message);
             }
             break;
 
@@ -136,6 +144,9 @@ if(isset($_REQUEST['status'])){
                         $saleObj->addGRNItems($grn_item_id[$x], $grn_purchasing_u_price[$x], $grn_qty[$x], $grn_amount[$x], $grn_id);
                     }
                     echo 1;
+
+                    $not_message = "A new good received note, <i><b>" .$grn_id. "</i></b> to purchase order, <i><b>" .$grn_po_id. "</i></b> has been created";
+                    $notificationObj->addNotification(5, $not_message);
 
                 } else {
                     echo 0;

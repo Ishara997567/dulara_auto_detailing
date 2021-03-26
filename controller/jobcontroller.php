@@ -1,10 +1,12 @@
 <?php include '../model/job_model.php';
 include '../model/inventory_model.php';
 include '../model/service_model.php';
+include '../model/notification_model.php';
 
 $jobObj = new Job();
 $inventoryObj = new Inventory();
 $serviceObj = new Service();
+$notificationObj = new Notification();
 
 
 if($_REQUEST['status']) {
@@ -61,6 +63,9 @@ if($_REQUEST['status']) {
                     ?>
                     <script>window.location = "../view/job-management.php?success_message=<?php echo $msg; ?>"</script>
                     <?php
+
+                    $not_message = "A new job <i><b>" .$last_job_id. "</b></i>, for vehicle number <b><i>". $job_vehicle_id ."</i></b> has been created";
+                    $notificationObj->addNotification(3, $not_message);
                 }
                 else
                 {
@@ -186,6 +191,9 @@ if($_REQUEST['status']) {
                     ?>
                     <script>window.location = "../view/job-management.php?success_message=<?php echo $msg; ?>"</script>
                     <?php
+
+                    $not_message = "Job status has been changed to <i><b>completed, </b></i> of <i><b>" .$job_id. "</b></i>";
+                    $notificationObj->addNotification(3, $not_message);
                 }
                 else
                 {
@@ -203,8 +211,7 @@ if($_REQUEST['status']) {
             $changed_status_job_id = $_POST['changedStatusJobId'];
             $jobObj->changeJobStatusToPendingAgain($changed_status_job_id);
 
-            echo "Hello! Are you getting me?";
-
+            $not_message = "Job satatus has been changed back to <i><b>pending, </b></i> of <i><b>". $changed_status_job_id."</b></i>";
             break;
 
         case "manage_completed_jobs":

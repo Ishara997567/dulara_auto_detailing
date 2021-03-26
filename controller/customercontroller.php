@@ -1,8 +1,12 @@
 <?php include '../model/customer_model.php';
 include '../model/job_model.php';
+include '../model/notification_model.php';
+include '../model/notificationtype_model.php';
 
 $cusObj = new Customer();
 $jobObj = new Job();
+$notificationObj = new Notification();
+$notificationTypeObj = new NotificationType();
 
 if($_REQUEST["status"])
 {
@@ -41,6 +45,9 @@ if($_REQUEST["status"])
                 ?>
                 <script>window.location = "../view/customer-management.php?success_message=<?php echo $msg; ?>"</script>
                 <?php
+
+                $not_message = "A new customer named <i><b>". $cus_name ."</b></i> created";
+                $notificationObj->addNotification(4, $not_message);
             }
             else
             {
@@ -325,6 +332,9 @@ if($_REQUEST["status"])
                 $cus_id = $_POST["cusId"];
                 $cus_name = $_POST["cusName"];
                 $cusObj->updateCusName($cus_id, $cus_name);
+
+                $notification_message = "Customer name of <i><b>" .$cus_id. "</b></i> has been changed to <i><b>".$cus_name."</i></b>";
+                $notificationObj->addNotification(4, $notification_message);
             }
 
             //Customer Home update
@@ -332,6 +342,9 @@ if($_REQUEST["status"])
                 $cus_id = $_POST["cusId"];
                 $home_no = $_POST["homeNo"];
                 $cusObj->updateHomeNo($cus_id, $home_no);
+
+                $notification_message = "Customer home address line of <i><b>" .$cus_id. "</b></i> has been changed to <i></b>".$home_no."</i></b>";
+                $notificationObj->addNotification(4, $notification_message);
             }
 
             //Customer Street update
@@ -339,6 +352,9 @@ if($_REQUEST["status"])
                 $cus_id = $_POST["cusId"];
                 $street = $_POST["street"];
                 $cusObj->updateStreet($cus_id, $street);
+
+                $notification_message = "Customer street address line of <i><b>" .$cus_id. "</b></i> has been changed to <i><b>".$street."</b></i>";
+                $notificationObj->addNotification(4, $notification_message);
             }
 
             //Customer City update
@@ -346,6 +362,9 @@ if($_REQUEST["status"])
                 $cus_id = $_POST["cusId"];
                 $city = $_POST["city"];
                 $cusObj->updateCity($cus_id, $city);
+
+                $notification_message = "Customer city address line of <i><b>" .$cus_id. "</b></i> has been changed to <i><b>".$city."</b></i>";
+                $notificationObj->addNotification(4, $notification_message);
             }
 
             //Customer State update
@@ -353,6 +372,9 @@ if($_REQUEST["status"])
                 $cus_id = $_POST["cusId"];
                 $state = $_POST["state"];
                 $cusObj->updateState($cus_id, $state);
+
+                $notification_message = "Customer state address line of <i><b>" .$cus_id. "</b></i> has been changed to <i><b>".$state."</b></i>";
+                $notificationObj->addNotification(4, $notification_message);
             }
 
             //Customer CN1 update
@@ -360,6 +382,9 @@ if($_REQUEST["status"])
                 $cus_id = $_POST["cusId"];
                 $cn1 = $_POST["cn1"];
                 $cusObj->updateCN1($cus_id, $cn1);
+
+                $notification_message = "Customer contact number 1 of <i><b>" .$cus_id. "</b></i> has been changed to <i><b>".$cn1."</b></i>";
+                $notificationObj->addNotification(4, $notification_message);
             }
 
             //Customer CN2 update
@@ -367,6 +392,9 @@ if($_REQUEST["status"])
                 $cus_id = $_POST["cusId"];
                 $cn2 = $_POST["cn2"];
                 $cusObj->updateCN2($cus_id, $cn2);
+
+                $notification_message = "Customer contact number 2 of <i><b>" .$cus_id. "</b></i> has been changed to <i><b>".$cn2."</b></i>";
+                $notificationObj->addNotification(4, $notification_message);
             }
 
             //Customer Email update
@@ -374,6 +402,9 @@ if($_REQUEST["status"])
                 $cus_id = $_POST["cusId"];
                 $email = $_POST["email"];
                 $cusObj->updateEmail($cus_id, $email);
+
+                $notification_message = "Customer email of <i><b>" .$cus_id. "</b></i> has been changed to <i><b>".$email."</b></i>";
+                $notificationObj->addNotification(4, $notification_message);
             }
 
             //Customer Vehicle Make update
@@ -381,6 +412,9 @@ if($_REQUEST["status"])
                 $cus_id = $_POST["cusId"];
                 $vm = $_POST["vehicleMake"];
                 $cusObj->updateVehicleMake($cus_id, $vm);
+                $notification_message = "Customer vehicle make of <i><b>" .$cus_id. "</b></i> has been changed to <i><b>".$vm."</b></i>";
+                $notificationObj->addNotification(4, $notification_message);
+
             }
 
             //Customer Vehicle Model update
@@ -388,6 +422,9 @@ if($_REQUEST["status"])
                 $cus_id = $_POST["cusId"];
                 $vm = $_POST["vehicleModel"];
                 $cusObj->updateVehicleModel($cus_id, $vm);
+
+                $notification_message = "Customer vehicle model of <i><b>" .$cus_id. "</b></i> has been changed to <i><b>".$vm."</b></i>";
+                $notificationObj->addNotification(4, $notification_message);
             }
 
             //Customer Vehicle ODO update
@@ -395,6 +432,9 @@ if($_REQUEST["status"])
                 $cus_id = $_POST["cusId"];
                 $odo = $_POST["vehicleODO"];
                 $cusObj->updateVehicleODO($cus_id, $odo);
+
+                $notification_message = "Customer vehicle ODO of <i><b>" .$cus_id. "</b></i> has been changed to <i><b>".$odo."</b></i>";
+                $notificationObj->addNotification(4, $notification_message);
             }
 
             //Customer Vehicle Mileage update
@@ -402,6 +442,9 @@ if($_REQUEST["status"])
                 $cus_id = $_POST["cusId"];
                 $mileage = $_POST["vehicleMileage"];
                 $cusObj->updateVehicleMileage($cus_id, $mileage);
+
+                $notification_message = "Customer vehicle mileage of <i><b>" .$cus_id. "</b></i> has been changed to <i><b>".$mileage."</b></i>";
+                $notificationObj->addNotification(4, $notification_message);
             }
 
             break;

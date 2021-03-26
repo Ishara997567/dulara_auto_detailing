@@ -1,6 +1,10 @@
 <?php include '../model/inventory_model.php';
+include "../model/notification_model.php";
+include "../model/notificationtype_model.php";
 
 $inventoryObj = new Inventory();
+$notificationObj = new Notification();
+$notificationTypeObj = new NotificationType();
 
 if($_REQUEST["status"])
 {
@@ -35,6 +39,8 @@ if($_REQUEST["status"])
 
                 <?php
 
+                $not_message = "A new item named <i><b>". $item_name ."</b></i> has been created";
+                $notificationObj->addNotification(2, $not_message);
             }
             else
             {
@@ -43,6 +49,7 @@ if($_REQUEST["status"])
                 <script>window.location = "../view/inventory-management.php?error_message=<?php echo $msg; ?>";</script>
 
                 <?php
+
             }
 
             break;
@@ -61,6 +68,9 @@ if($_REQUEST["status"])
                 <script>window.location = "../view/inventory-management.php?success_message=<?php echo $msg; ?>";</script>
 
                 <?php
+
+                $not_message = "A new item size named <i><b>". $item_size_name ."</b></i> has been created";
+                $notificationObj->addNotification(2, $not_message);
 
             }
             else
@@ -87,6 +97,9 @@ if($_REQUEST["status"])
                 <script>window.location = "../view/inventory-management.php?success_message=<?php echo $msg; ?>";</script>
 
                 <?php
+
+                $not_message = "A new item category named <i><b>". $item_cat_name ."</b></i> has been created";
+                $notificationObj->addNotification(2, $not_message);
 
             }
             else
@@ -390,6 +403,9 @@ if($_REQUEST["status"])
 
                 <?php
 
+                $not_message = "A new stock level for item <i><b>" .$stk_lvl_item_id. "</b></i> has been created";
+                $notificationObj->addNotification(2, $not_message);
+
             }
             else
             {
@@ -583,6 +599,9 @@ if($_REQUEST["status"])
                     <script>window.location = "../view/inventory-management.php?success_message=<?php echo $msg; ?>";</script>
 
                     <?php
+
+                    $not_message = "A new stock of ".$item_stock_qty." has been added for the item <i><b>" .$item_id. "</b></i>";
+                    $notificationObj->addNotification(2, $not_message);
 
                 }
                 else

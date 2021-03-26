@@ -1,5 +1,10 @@
 <?php include "../model/employee_model.php";
+include "../model/notification_model.php";
+include "../model/notificationtype_model.php";
+
 $empObj = new Employee();
+$notificationObj = new Notification();
+$notificationTypeObj = new NotificationType();
 
 if(isset($_REQUEST["status"]))
 {
@@ -58,6 +63,18 @@ if(isset($_REQUEST["status"]))
                         <script>window.location = "../view/employee-management.php?success_message=<?php echo $msg; ?>";</script>
 
                         <?php
+
+                        $result = $notificationTypeObj->getAllNotificationTypesById(6);
+                        $row = $result->fetch_assoc();
+
+                        $nt_type = $row['nt_type'];
+
+                        $not_message = "A new employee named <b><i>". $emp_fn ."</i></b> <b><i>". $emp_ln . "</i></b> assigned as <i><b>". $emp_designation ."</b></i> has been created";
+
+                        $notificationObj->addNotification(6, $not_message);
+
+
+
                     } else {
                         $msg = base64_encode("New Employee Failed to Create!");
                         ?>
@@ -466,8 +483,17 @@ if(isset($_REQUEST["status"]))
 
                     $affected_rows = $empObj->updateEmployeeContactNumber($emp_id, $contact_id, $contact_type, $contact_no);
 
-                    if($affected_rows > 0)
+                    if($affected_rows > 0) {
                         echo 1;
+
+                        $notification_msg = "Employee contact number or type of <b><i>" . $emp_id . "</i></b> has been change to <b><i>" .$contact_no. "</i></b> and <b><i>".$contact_type. "</i></b>";
+                        $notificationObj->addNotification(6, $notification_msg);
+
+                    }
+
+
+
+
                     else
                         echo 0;
                 }
@@ -481,8 +507,12 @@ if(isset($_REQUEST["status"]))
                     $affected_rows = $empObj->updateEmployeeIllness($emp_id,$illness_id, $illness_name, $is_going);
 
 
-                    if($affected_rows > 0)
+                    if($affected_rows > 0) {
                         echo 1;
+
+                        $notification_msg = "Employee illness name or status of <b><i>" . $emp_id . "</i></b> has been change to <b><i>" . $illness_name . "</i></b> and <b><i>" . $is_going . "</i></b>";
+                        $notificationObj->addNotification(6, $notification_msg);
+                    }
                     else
                         echo 0;
                 }
@@ -491,8 +521,12 @@ if(isset($_REQUEST["status"]))
                     $fn = $_POST["firstName"];
                     $affected_rows = $empObj->updateEmployeeFirstName($emp_id, $fn);
 
-                    if($affected_rows > 0)
+                    if($affected_rows > 0) {
                         echo 1;
+
+                        $notification_msg = "Employee first name of <b><i>" . $emp_id . "</i></b> has been change to <b><i>" .$fn."</i></b>";
+                        $notificationObj->addNotification(6, $notification_msg);
+                    }
                     else
                         echo 0;
                 }
@@ -502,8 +536,11 @@ if(isset($_REQUEST["status"]))
 
                     $affected_rows = $empObj->updateEmployeeLastName($emp_id, $ln);
 
-                    if($affected_rows > 0)
+                    if($affected_rows > 0) {
                         echo 1;
+                        $notification_msg = "Employee last name of <b><i>" . $emp_id . "</i></b> has been change to <b><i>" .$ln."</i></b>";
+                        $notificationObj->addNotification(6, $notification_msg);
+                    }
                     else
                         echo 0;
                 }
@@ -513,8 +550,11 @@ if(isset($_REQUEST["status"]))
 
                     $affected_rows = $empObj->updateEmployeeDOB($emp_id, $dob);
 
-                    if($affected_rows > 0)
+                    if($affected_rows > 0) {
                         echo 1;
+                        $notification_msg = "Employee birthday of <b><i>" . $emp_id . "</i></b> has been change to <b><i>" .$dob."</i></b>";
+                        $notificationObj->addNotification(6, $notification_msg);
+                    }
                     else
                         echo 0;
                 }
@@ -525,7 +565,11 @@ if(isset($_REQUEST["status"]))
                     $affected_rows = $empObj->updateEmployeeNIC($emp_id, $nic);
 
                     if($affected_rows > 0)
+                    {
                         echo 1;
+                        $notification_msg = "Employee National Identity Card number of <b><i>" . $emp_id . "</i></b> has been change to <b><i>" . $nic . "</i></b>";
+                        $notificationObj->addNotification(6, $notification_msg);
+                    }
                     else
                         echo 0;
                 }
@@ -535,8 +579,11 @@ if(isset($_REQUEST["status"]))
 
                     $affected_rows = $empObj->updateEmployeeLicenseType($emp_id, $lt);
 
-                    if($affected_rows > 0)
+                    if($affected_rows > 0) {
                         echo 1;
+                        $notification_msg = "Employee license type of <b><i>" . $emp_id . "</i></b> has been change to <b><i>" .$lt."</i></b>";
+                        $notificationObj->addNotification(6, $notification_msg);
+                    }
                     else
                         echo 0;
                 }
@@ -546,8 +593,12 @@ if(isset($_REQUEST["status"]))
 
                     $affected_rows = $empObj->updateEmployeeLicenseNO($emp_id, $lno);
 
-                    if($affected_rows > 0)
+                    if($affected_rows > 0) {
                         echo 1;
+
+                        $notification_msg = "Employee license number of <b><i>" . $emp_id . "</i></b> has been change to <b><i>" .$lno."</i></b>";
+                        $notificationObj->addNotification(6, $notification_msg);
+                    }
                     else
                         echo 0;
                 }
@@ -557,8 +608,11 @@ if(isset($_REQUEST["status"]))
 
                     $affected_rows = $empObj->updateEmployeeBloodGroup($emp_id, $bg);
 
-                    if($affected_rows > 0)
+                    if($affected_rows > 0) {
                         echo 1;
+                        $notification_msg = "Employee blood group of <b><i>" . $emp_id . "</i></b> has been change to <b><i>" .$bg."</i></b>";
+                        $notificationObj->addNotification(6, $notification_msg);
+                    }
                     else
                         echo 0;
                 }
@@ -568,8 +622,11 @@ if(isset($_REQUEST["status"]))
 
                     $affected_rows = $empObj->updateEmployeeEmail($emp_id, $email);
 
-                    if($affected_rows > 0)
+                    if($affected_rows > 0) {
                         echo 1;
+                        $notification_msg = "Employee email of <b><i>" . $emp_id . "</i></b> has been change to <b><i>" .$email."</i></b>";
+                        $notificationObj->addNotification(6, $notification_msg);
+                    }
                     else
                         echo 0;
                 }
@@ -579,8 +636,11 @@ if(isset($_REQUEST["status"]))
 
                     $affected_rows = $empObj->updateEmployeeAddress($emp_id, $address);
 
-                    if($affected_rows > 0)
+                    if($affected_rows > 0) {
                         echo 1;
+                        $notification_msg = "Employee address of <b><i>" . $emp_id . "</i></b> has been change to <b><i>" . $address . "</i></b>";
+                        $notificationObj->addNotification(6, $notification_msg);
+                    }
                     else
                         echo 0;
                 }
@@ -590,8 +650,11 @@ if(isset($_REQUEST["status"]))
 
                     $affected_rows = $empObj->updateEmployeeETFNo($emp_id, $etf_no);
 
-                    if($affected_rows > 0)
+                    if($affected_rows > 0) {
                         echo 1;
+                        $notification_msg = "Employee ETF number of <b><i>" . $emp_id . "</i></b> has been change to <b><i>" .$etf_no."</i></b>";
+                        $notificationObj->addNotification(6, $notification_msg);
+                    }
                     else
                         echo 0;
                 }
@@ -601,8 +664,11 @@ if(isset($_REQUEST["status"]))
 
                     $affected_rows = $empObj->updateEmployeeEPFNo($emp_id, $epf_no);
 
-                    if($affected_rows > 0)
+                    if($affected_rows > 0) {
                         echo 1;
+                        $notification_msg = "Employee EPF number of <b><i>" . $emp_id . "</i></b> has been change to <b><i>" .$epf_no."</i></b>";
+                        $notificationObj->addNotification(6, $notification_msg);
+                    }
                     else
                         echo 0;
                 }
@@ -612,8 +678,11 @@ if(isset($_REQUEST["status"]))
 
                     $affected_rows = $empObj->updateEmployeeDesignation($emp_id, $designation);
 
-                    if($affected_rows > 0)
+                    if($affected_rows > 0) {
                         echo 1;
+                        $notification_msg = "Employee designation of <b><i>" . $emp_id . "</i></b> has been change to <b><i>" .$designation."</i></b>";
+                        $notificationObj->addNotification(6, $notification_msg);
+                    }
                     else
                         echo 0;
                 }
@@ -623,8 +692,11 @@ if(isset($_REQUEST["status"]))
 
                     $affected_rows = $empObj->updateEmployeeAppointedDate($emp_id, $app_date);
 
-                    if($affected_rows > 0)
+                    if($affected_rows > 0) {
                         echo 1;
+                        $notification_msg = "Employee appointed date of <b><i>" . $emp_id . "</i></b> has been change to <b><i>" .$app_date."</i></b>";
+                        $notificationObj->addNotification(6, $notification_msg);
+                    }
                     else
                         echo 0;
                 }
@@ -634,8 +706,11 @@ if(isset($_REQUEST["status"]))
 
                     $affected_rows = $empObj->updateEmployeeRosterInTime($emp_id, $in_time);
 
-                    if($affected_rows > 0)
+                    if($affected_rows > 0) {
                         echo 1;
+                        $notification_msg = "Employee in time of <b><i>" . $emp_id . "</i></b> has been change to <b><i>" .$in_time."</i></b>";
+                        $notificationObj->addNotification(6, $notification_msg);
+                    }
                     else
                         echo 0;
                 }
@@ -645,8 +720,11 @@ if(isset($_REQUEST["status"]))
 
                     $affected_rows = $empObj->updateEmployeeRosterOutTime($emp_id, $out_time);
 
-                    if($affected_rows > 0)
+                    if($affected_rows > 0) {
                         echo 1;
+                        $notification_msg = "Employee out time of <b><i>" . $emp_id . "</i></b> has been change to <b><i>" .$out_time."</i></b>";
+                        $notificationObj->addNotification(6, $notification_msg);
+                    }
                     else
                         echo 0;
                 }
@@ -656,8 +734,11 @@ if(isset($_REQUEST["status"]))
 
                     $affected_rows = $empObj->updateEmployeeRosterOffDay($emp_id, $off_day);
 
-                    if($affected_rows > 0)
+                    if($affected_rows > 0) {
                         echo 1;
+                        $notification_msg = "Employee off day of <b><i>" . $emp_id . "</i></b> has been change to <b><i>" .$off_day."</i></b>";
+                        $notificationObj->addNotification(6, $notification_msg);
+                    }
                     else
                         echo 0;
                 }
@@ -667,8 +748,11 @@ if(isset($_REQUEST["status"]))
 
                     $affected_rows = $empObj->updateEmployeeRosterHalfDay($emp_id, $half_day);
 
-                    if($affected_rows > 0)
+                    if($affected_rows > 0) {
                         echo 1;
+                        $notification_msg = "Employee half day of <b><i>" . $emp_id . "</i></b> has been change to <b><i>" .$half_day."</i></b>";
+                        $notificationObj->addNotification(6, $notification_msg);
+                    }
                     else
                         echo 0;
                 }
