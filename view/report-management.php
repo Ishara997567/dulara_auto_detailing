@@ -24,12 +24,11 @@ $reportObj = new Report();
         <div class="row">
             <div class="col-md-6 mt-5">
                 <?php
-                $counter = 0;
                 $result = $reportObj->getOddReportModules();
                 while($r = $result->fetch_assoc())
                 {
                     ?>
-                    <a href="reports/<?php echo $r['rm_url']; ?>" class="custom-card">
+                    <a href="report-<?php echo $r['rm_url']; ?>" class="custom-card">
                         <div class="card w-100 mt-3 btn-outline-<?php echo $r["rm_color"]; ?> border-<?php echo $r["rm_color"]; ?>">
                             <div class="card-body">
                                 <h1 class="card-text text-center"><i class="fa fa-<?php echo $r["rm_icon"]; ?>"></i> <?php echo $r["rm_name"]; ?></h1>
@@ -44,7 +43,7 @@ $reportObj = new Report();
                 while($r = $result->fetch_assoc())
                 {
                     ?>
-                    <a href="reports/<?php echo $r['rm_url']; ?>" class="custom-card">
+                    <a href="report-<?php echo $r['rm_url']; ?>" class="custom-card">
                         <div class="card w-100 mt-3 btn-outline-<?php echo $r["rm_color"]; ?> border-<?php echo $r["rm_color"]; ?>">
                             <div class="card-body">
                                 <h1 class="card-text text-center"><i class="fa fa-<?php echo $r["rm_icon"]; ?>"></i> <?php echo $r["rm_name"]; ?></h1>

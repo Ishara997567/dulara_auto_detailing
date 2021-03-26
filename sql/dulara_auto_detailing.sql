@@ -678,12 +678,12 @@ CREATE TABLE `report_module` (
 --
 
 INSERT INTO `report_module` (`rm_id`, `rm_name`, `rm_color`, `rm_icon`, `rm_url`) VALUES
-(1, 'Service Reports', 'primary', 'car', 'service.php'),
-(2, 'Inventory Reports', 'danger', 'list', 'inventory.php'),
-(3, 'Job Reports', 'success', 'tasks', 'job.php'),
-(4, 'Customer Reports', 'info', 'users', 'customer.php'),
-(5, 'Sale Reports', 'warning', 'shopping-cart', 'sale.php'),
-(6, 'Employee Reports', 'secondary', 'address-card', 'worker.php');
+(1, 'Service Reports', 'primary', 'car', 'report-service.php'),
+(2, 'Inventory Reports', 'danger', 'list', 'report-inventory.php'),
+(3, 'Job Reports', 'success', 'tasks', 'report-job.php'),
+(4, 'Customer Reports', 'info', 'users', 'report-customer.php'),
+(5, 'Sale Reports', 'warning', 'shopping-cart', 'report-sale.php'),
+(6, 'Employee Reports', 'secondary', 'address-card', 'report-worker.php');
 
 -- --------------------------------------------------------
 
