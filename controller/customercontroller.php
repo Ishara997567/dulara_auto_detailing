@@ -8,7 +8,7 @@ $jobObj = new Job();
 $notificationObj = new Notification();
 $notificationTypeObj = new NotificationType();
 
-if($_REQUEST["status"])
+if(isset($_REQUEST["status"]))
 {
     $status = $_REQUEST["status"];
 

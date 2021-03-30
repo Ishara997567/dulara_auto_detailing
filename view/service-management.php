@@ -909,6 +909,4 @@ $all_cat_results_results = $serviceObj->selectCategories();
 <?php include '../includes/footer.php'; ?>
 <script src="../assets/js/services_manage.js"></script>
 <script src="../assets/js/new_service_validation.js"></script>
-<script>
-    $("#table_manage").DataTable();
-</script>
+

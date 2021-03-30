@@ -9,7 +9,7 @@ $serviceObj = new Service();
 $notificationObj = new Notification();
 
 
-if($_REQUEST['status']) {
+if(isset($_REQUEST["status"])) {
     $status = $_REQUEST['status'];
 
     switch ($status)
