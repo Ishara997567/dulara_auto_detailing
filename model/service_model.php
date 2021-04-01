@@ -18,6 +18,14 @@ class Service{
         return $con->query($sql);
 
     }
+
+    public function getServiceUtilization()
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT DAYNAME(invoice_created_at) as day, COUNT(DAYOFWEEK(invoice_created_at)) as services_per_day FROM invoice GROUP BY (DAYOFWEEK(invoice_created_at));";
+        return $con->query($sql);
+    }
+
     public function selectCategories(){
         $con = $GLOBALS["conn"];
         $sql = "SELECT * FROM service_category;";

@@ -27,13 +27,18 @@ $all_cat_results_results = $serviceObj->selectCategories();
 
     //Service Utilization Chart
     function drawStuff1() {
+        <?php
+        $result = $serviceObj->getServiceUtilization();
+        ?>
         var data = google.visualization.arrayToDataTable([
-            ['Element', 'Density', { role: 'style' }],
-            ['Copper', 8.94, '#b87333'],            // RGB value
-            ['Silver', 10.49, 'silver'],            // English color name
-            ['Gold', 19.30, 'gold'],
+            ['Day', 'Services Count', { role: 'style' }],
+            <?php
+            while($r=$result->fetch_assoc())
+            {
+            ?>
+            ['<?php echo $r['day']; ?>', <?php echo $r['services_per_day']; ?>, '#ff0000'],            // RGB value
+            <?php } ?>
 
-            ['Platinum', 21.45, 'color: #e5e4e2' ], // CSS-style declaration
         ]);
 
         var options = {
@@ -41,12 +46,13 @@ $all_cat_results_results = $serviceObj->selectCategories();
             height: 400,
             legend: { position: 'none' },
             chart: {
-                title: 'Chess opening moves',
-                subtitle: 'popularity by percentage' },
+                title: 'Day wise Service Count',
+            },
             axes: {
                 x: {
-                    0: { side: 'top', label: 'White to move'} // Top x-axis.
+                    0: { side: 'top', label: 'Day of the Week'} // Top x-axis.
                 }
+
             },
             bar: { groupWidth: "90%" }
         };
