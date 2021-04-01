@@ -242,51 +242,61 @@
     <div class="row padding">
         <!-- Card to display today's newly bought items -->
         <div class="col-md-6">
-            <div class="card text-white bg-primary mb-3 mt-3" style="max-width: 45rem;">
+            <div class="card text-white bg-info mb-3 mt-3" style="max-width: 45rem;">
                 <div class="card-header"><h4>Today</h4></div>
-                <div class="card-body">
-                    <ul class="card-text">
-                        <li>Engine Oil</li>
-                        <li>Seat Belt</li>
-                        <li>Air Filters</li>
-                        <li>Silencer</li>
-                        <li>Silencer</li>
-                        <li>Silencer</li>
-                        <li>Silencer</li>
-                    </ul>
+                <div class="card-body table-responsive bg-dark">
+                    <?php
+                    $r = $inventoryObj->getTodayStock();
+                    if($r->num_rows > 0)
+                    {
+
+                        ?>
+                        <table class="table table-sm table-hover table-dark text-white">
+                            <tr>
+                                <th scope="col">Item ID</th>
+                                <th scope="col">Item Name</th>
+                                <th scope="col">Stock</th>
+                            </tr>
+                            <?php
+
+                            while($row = $r->fetch_assoc())
+                            {
+                                ?>
+                                <tr>
+                                    <td scope="row"><?php echo $row["item_id"]; ?></td>
+                                    <td><?php echo $row["item_name"]; ?></td>
+                                    <td><?php echo $row["item_stock_qty"]; ?></td>
+                                </tr>
+                            <?php } ?>
+                        </table>
+                    <?php } else{  ?>
+                        <div class="h1 text-center">No Stock Added Today</div>
+                    <?php } ?>
                 </div>
             </div>
         </div>
         <!-- Card to display items to be ordered soon -->
         <div class="col-md-6">
-            <div class="card text-white bg-dark mb-3 mt-3" style="max-width: 45rem;">
+            <div class="card text-white bg-info mb-3 mt-3" style="max-width: 45rem;">
                 <div class="card-header"><h4>Order Soon...</h4></div>
-                <div class="card-body">
+                <div class="card-body bg-dark">
                     <ul class="card-text">
-                        <li>
-                            Engine Oil
-                            <div class="progress">
-                                <div class="progress-bar bg-danger" role="progressbar" style="width: 10%" aria-valuenow="10%" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </li>
-                        <li>
-                            Seat Belt
-                            <div class="progress">
-                                <div class="progress-bar bg-danger" role="progressbar" style="width: 15%" aria-valuenow="15%" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </li>
-                        <li>
-                            Air Filters
-                            <div class="progress">
-                                <div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20%" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </li>
-                        <li>
-                            Silencer
-                            <div class="progress">
-                                <div class="progress-bar bg-danger" role="progressbar" style="width: 22%" aria-valuenow="22%" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </li>
+                        <?php
+                        $item_stock_result = $inventoryObj->getStockItemAscOrder();
+
+
+                        while($isr = $item_stock_result->fetch_assoc())
+                        {
+                            $percentage = ($isr["sum_stock"] / $isr["stk_lvl_max"]) * 100
+
+                            ?>
+                            <li>
+                                <?php echo $isr["item_name"]; ?>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width: <?php echo $percentage;?>%" aria-valuenow="<?php echo $isr["sum_stock"];?>" aria-valuemin="<?php echo $isr["stk_lvl_min"];?>" aria-valuemax="<?php echo $isr["stk_lvl_max"];?>"><?php echo round($percentage);?>%</div>
+                                </div>
+                            </li>
+                        <?php } ?>
                     </ul>
                 </div>
             </div>
@@ -391,8 +401,8 @@
                                                         $supplier_result = $inventoryObj->getAllSuppliers();
                                                         while($sup_row = $supplier_result->fetch_assoc())
                                                         {
-                                                        ?>
-                                                        <option value="<?php echo $sup_row["sup_id"]; ?>"><?php echo $sup_row["sup_name"]; ?></option>
+                                                            ?>
+                                                            <option value="<?php echo $sup_row["sup_id"]; ?>"><?php echo $sup_row["sup_name"]; ?></option>
 
                                                         <?php } ?>
                                                     </select>
@@ -506,15 +516,7 @@
                                     <!-- Add Stock Level Pane   -->
                                     <div class="tab-pane" id="pane_stock_level_form">
                                         <div class="row padding d-flex justify-content-center">
-                                            <div class="col-6 text-center" id="error_stock_level" class="alert alert-success">
-                                                <?php
-                                                if(isset($_GET['error_stock']))
-                                                {
-                        $msg = $_GET['error_message'];
-                        echo $msg;
-                                                }
-                                                ?>
-                                            </div>
+                                            <div class="col-6 text-center .error-stock-level"></div>
                                         </div>
                                         <!-- Add Stock Form -->
                                         <form action="../controller/inventorycontroller.php?status=add_stock_level" method="post">
@@ -523,12 +525,12 @@
                                                 <label for="stock_lvl_item_category" class="col-2 col-form-label">Item Category</label>
                                                 <div class="col-3">
                                                     <select name="stock_lvl_item_category" id="stock_lvl_item_category" class="custom-select">
-                                                        <option value="choose" selected>Choose</option>
+                                                        <option value="choose" selected>Choose...</option>
                                                         <?php
                                                         $cat_result = $inventoryObj->getAllCategories();
                                                         while($cat_row = $cat_result->fetch_assoc())
                                                         {
-                                                        ?>
+                                                            ?>
 
                                                             <option value="<?php echo $cat_row["item_cat_id"];?>"><?php echo $cat_row["item_cat_name"];?></option>
 
@@ -539,16 +541,10 @@
 
 
                                             <div class="form-group row">
-                                                <!-- Stock Item ID  -->
-                                                <label for="stock_level_item_id" class="col-form-label col-2">Item ID</label>
-                                                <div class="col-3">
-                                                    <input type="text" id="stock_level_item_id" name="stock_level_item_id" class="form-control" value="Relevant ID" readonly/>
-                                                </div>
-
                                                 <!-- Stock Item Name    -->
                                                 <label for="stock_level_item_name" class="col-form-label col-2">Item Name</label>
-                                                <div class="col-5" id="change_to_select">
-                                                    <input type="text" id="stock_level_item_name" name="stock_level_item_name" class="ui-widget form-control"/>
+                                                <div class="col-4" id="change_to_select">
+                                                    <input type="text" id="stock_level_item_name" name="stock_level_item_name" class="ui-widget form-control" disabled/>
                                                 </div>
                                             </div>
 
@@ -757,50 +753,57 @@
 
     </div>
 
-    <!-- Item Table -->
-    <div class="table-responsive">
-        <table class="table table-hover table-sm mydatatable mx-4">
-            <thead>
-            <tr>
-                <th scope="col">Item ID</th>
-                <th scope="col">Item Name</th>
-                <th scope="col">Category</th>
-                <th scope="col">Supplier</th>
-                <th scope="col" class="text-center">Sale Unit Price(Rs.)</th>
-                <th scope="col" class="text-center">Purchase Unit Price(Rs.)</th>
-                <th scope="col" class="text-center">Stock</th>
-                <th scope="col"></th>
-                <!--                <th scope="col">Manage</th>-->
-            </tr>
-            </thead>
-            <tbody>
+    <!-- Item Table Inside the Card-->
+    <div class="card mt-2 border-dark">
+        <div class="card-header">
+            <h5 class="card-title">Inventory Items</h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover table-secondary table-sm mydatatable mx-4">
+                    <thead>
+                    <tr>
+                        <th scope="col">Item ID</th>
+                        <th scope="col">Item Name</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Supplier</th>
+                        <th scope="col" class="text-center">Sale Unit Price(Rs.)</th>
+                        <th scope="col" class="text-center">Purchase Unit Price(Rs.)</th>
+                        <th scope="col" class="text-center">Stock</th>
+                        <th scope="col"></th>
+                        <!--                <th scope="col">Manage</th>-->
+                    </tr>
+                    </thead>
+                    <tbody>
 
-            <?php
-            $item_results = $inventoryObj->getAllItems();
+                    <?php
+                    $item_results = $inventoryObj->getAllItems();
 
-            while($row_item = $item_results->fetch_assoc()){
+                    while($row_item = $item_results->fetch_assoc()){
 
-                $supplier_result = $inventoryObj->getSupplierById($row_item["item_supplier_id"]);
-                $row_supplier = $supplier_result->fetch_assoc();
+                        $supplier_result = $inventoryObj->getSupplierById($row_item["item_supplier_id"]);
+                        $row_supplier = $supplier_result->fetch_assoc();
 
-                $category_result = $inventoryObj->getCategoryById($row_item["item_category_id"]);
-                $row_category = $category_result->fetch_assoc();
-            ?>
-            <tr>
-                <th scope="row"><?php echo $row_item["item_id"]; ?></th>
-                <td><?php echo $row_item["item_name"]; ?></td>
-                <td><?php echo $row_category["item_cat_name"];?></td>
-                <td><?php echo $row_supplier["sup_name"]; ?></td>
-                <td class="text-center"><?php echo $row_item["item_sale_uprice"]; ?></td>
-                <td class="text-center"><?php echo $row_item["item_purchase_uprice"]; ?></td>
-                <td class="text-center"><?php echo $inventoryObj->getStockQty($row_item["item_id"]); ?></td>
-                <td><a href="#modal_add_stock" data-toggle="modal" class="btn btn-sm btn-outline-primary add-stock" data-id="<?php echo $row_item["item_id"]; ?>"><i class="fa fa-exchange"></i></a>
-                    <a href="#modal_manage_item" data-toggle="modal" class="btn btn-sm btn-outline-primary manage-item" data-id="<?php echo $row_item["item_id"]; ?>"><i class="fa fa-file-text-o fa-lg"></i></a></td>
-            </tr>
+                        $category_result = $inventoryObj->getCategoryById($row_item["item_category_id"]);
+                        $row_category = $category_result->fetch_assoc();
+                        ?>
+                        <tr>
+                            <th scope="row"><?php echo $row_item["item_id"]; ?></th>
+                            <td><?php echo $row_item["item_name"]; ?></td>
+                            <td><?php echo $row_category["item_cat_name"];?></td>
+                            <td><?php echo $row_supplier["sup_name"]; ?></td>
+                            <td class="text-center"><?php echo $row_item["item_sale_uprice"]; ?></td>
+                            <td class="text-center"><?php echo $row_item["item_purchase_uprice"]; ?></td>
+                            <td class="text-center"><?php echo $inventoryObj->getStockQty($row_item["item_id"]); ?></td>
+                            <td><a href="#modal_add_stock" data-toggle="modal" class="btn btn-sm btn-outline-primary add-stock" data-id="<?php echo $row_item["item_id"]; ?>"><i class="fa fa-exchange"></i></a>
+                                <a href="#modal_manage_item" data-toggle="modal" class="btn btn-sm btn-outline-primary manage-item" data-id="<?php echo $row_item["item_id"]; ?>"><i class="fa fa-file-text-o fa-lg"></i></a></td>
+                        </tr>
 
-<?php } ?>
-            </tbody>
-        </table>
+                    <?php } ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
 
@@ -814,20 +817,26 @@
         <div class="modal-xl modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Manage Item</h5>
+                    <h5 class="modal-title">Manage Item</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="#" method="post">
+                <form action="inventory-management.php" method="post">
+                    <div class="row padding welcome d-flex justify-content-center mt-3">
+                        <div class="col-8 my-message text-center">
+
+                        </div>
+                    </div>
                     <div class="modal-body" id="manage_modal_body">
+
 
                         <!-- Modal From the Controller with Relevant Item Id    -->
 
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <button type="submit" class="btn btn-primary btn-manage-save" name="manage_item_save">Save changes</button>
                     </div>
                 </form>
             </div>
@@ -853,6 +862,11 @@
 
                 <!-- Add Stock Modal Form   -->
                 <form action="../controller/inventorycontroller.php?status=add_stock" method="post">
+                    <div class="row padding welcome d-flex justify-content-center mt-3">
+                        <div class="col-8 stock-level-message text-center">
+
+                        </div>
+                    </div>
                     <div class="modal-body add-stock-form">
 
                     </div>
@@ -882,6 +896,7 @@
 <?php include '../includes/footer.php' ?>
 <script src="../assets/js/inventory.js"></script>
 <script src="../assets/js/inventory_validation.js"></script>
+<script src="../assets/js/inventory_update.js"></script>
 <script>
     $(".mydatatable").DataTable();
 </script>

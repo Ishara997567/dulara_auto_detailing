@@ -11,6 +11,13 @@ class Service{
         return $con->insert_id;
     }
 
+    public function getServiceRequestCount()
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT i.invoice_service_id, s.service_name, COUNT(*) service_count FROM invoice_service i, service s WHERE i.invoice_service_id = s.service_id GROUP BY invoice_service_id LIMIT 5;";
+        return $con->query($sql);
+
+    }
     public function selectCategories(){
         $con = $GLOBALS["conn"];
         $sql = "SELECT * FROM service_category;";
@@ -87,6 +94,57 @@ class Service{
 
         $con = $GLOBALS["conn"];
         $sql = "UPDATE service_category SET service_cat_name = '$cat_name', service_cat_created_at = '$mysql_timestamp' WHERE service_cat_id = '$cat_id'; ";
+        $con->query($sql);
+        return $con->affected_rows;
+    }
+
+    //Get Service Name to Auto-Fill the Invoice
+    public function getServiceBySearch($term)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT * FROM service WHERE service_name LIKE '%{$term}%';";
+        return $con->query($sql);
+    }
+
+    public function getServiceByName($service_name)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT * FROM service WHERE service_name = '$service_name'";
+        return $con->query($sql);
+    }
+    //Update Service Details
+        //Service Name
+    public function updateServiceName($id, $name)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE service SET service_name = '$name' WHERE service_id = '$id';";
+        $con->query($sql);
+        return $con->affected_rows;
+    }
+
+//Service Price
+    public function updateServicePrice($id, $price)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE service SET service_price = '$price' WHERE service_id = '$id';";
+        $con->query($sql);
+        return $con->affected_rows;
+    }
+
+    //Service Cat ID
+    public function updateServiceCategoryId($id, $cat_id)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE service SET service_cat_id = '$cat_id' WHERE service_id = '$id';";
+        $con->query($sql);
+        return $con->affected_rows;
+    }
+
+    //Service Sub Cat ID
+    public function updateServiceSubCategoryId($id, $sub_cat_id)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE service SET service_sub_cat_id = '$sub_cat_id' WHERE service_id = '$id';";
         $con->query($sql);
         return $con->affected_rows;
     }

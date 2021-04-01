@@ -14,7 +14,7 @@ $(document).ready(function(){
 
         //Regular Expression Patters
         var email_pat = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z]{2,6})+$/;
-        var nic_pat = /^[0-9]{9}[VX]$/;
+        var nic_pat = /^([0-9]{9}[x|X|v|V]|[0-9]{12})$;
         var phone_pat = /^07[0-9]{8}$/;
 
 

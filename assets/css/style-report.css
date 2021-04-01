@@ -1,0 +1,8 @@
+a.custom-card{
+    color: inherit;
+    text-decoration: none;
+}
+a.custom-card:hover {
+    text-decoration: none;
+    color: #00b3db;
+}

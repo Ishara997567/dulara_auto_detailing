@@ -15,7 +15,7 @@
                     </button>
 
                     <!-- Dropdown Menu  -->
-                    <div class="dropdown-menu dropdown-menu-center" id="dropdown_notification" aria-labelledby="dropdown_notification">
+                    <div class="dropdown-menu dropdown-menu-center pre-scrollable" id="dropdown_notification" aria-labelledby="dropdown_notification">
                         <div class="d-flex justify-content-center">
                             <div class="col-5">
                                 <div class="h5 text-center">Notifications</div>
@@ -27,50 +27,33 @@
                             </div>
                         </div>
 
-                        <div id="notification_panel">
-                            <!-- Notification 1  -->
-                            <!-- Notification Header    -->
-                            <div class="row d-flex flex-row">
-                                <div class="col-3 d-flex justify-content-end">
-                                    <h5><span class="badge badge-primary">Customer</span></h5>
+                        <?php include '../model/notification_model.php';
+                        $notificationObj = new Notification();
+                        $all_nots = $notificationObj->getAllNotifications();
+                        while($row = $all_nots->fetch_assoc())
+                        {
+                            ?>
+                                <div class="row d-flex flex-row">
+                                    <div class="col-3">
+                                        <h5><span class="text-left badge badge-<?php echo $row['nt_color']; ?>"><?php echo $row['nt_type']; ?></span></h5>
+                                    </div>
+                                    <div class="col-3">
+                                        &nbsp;
+                                    </div>
+                                    <div class="col-6"><?php echo $row['not_sent_datetime']; ?></div>
                                 </div>
-                                <div class="col-6">
-                                    &nbsp;
+                                <!-- Notification Body  -->
+                                <div class="row">
+                                    <div class="col-1">&nbsp;</div>
+                                    <div class="col-10 d-flex justify-content-start">
+                                        <a href="notification-management.php?not_id=<?php echo $row['not_id']; ?>" class="notification-link">
+                                            <h6 class="text-left"><?php echo $row['not_message']; ?></h6>
+                                        </a>
+                                    </div>
+                                    <div class="col-1">&nbsp;</div>
                                 </div>
-                                <div class="col-3">10<sup>th</sup> of August</div>
-                            </div>
-                            <!-- Notification Body  -->
-                            <div class="row">
-                                <div class="col-1">&nbsp;</div>
-                                <div class="col-10 d-flex justify-content-start">
-                                    <h6>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content</h6>
-                                </div>
-                                <div class="col-1">&nbsp;</div>
-                            </div>
-
-
-                            <!-- Notification 2  -->
-                            <!-- Notification Header    -->
-                            <div class="row d-flex flex-row">
-                                <div class="col-3 d-flex justify-content-end">
-                                    <h5><span class="badge badge-danger">Inventory</span></h5>
-                                </div>
-                                <div class="col-6">
-                                    &nbsp;
-                                </div>
-                                <div class="col-3">Yesterday</div>
-                            </div>
-                            <!-- Notification Body  -->
-                            <div class="row">
-                                <div class="col-1">&nbsp;</div>
-                                <div class="col-10 d-flex justify-content-start">
-                                    <h6>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content</h6>
-                                </div>
-                                <div class="col-1">&nbsp;</div>
-                            </div>
-                            <hr/>
-                            <div class="row d-flex d-flex-row justify-content-center"><a href="notifications.php">See All Notification</a></div>
-                        </div>
+                            <hr>
+                        <?php } ?>
                     </div>
                 </div>
             </li>
