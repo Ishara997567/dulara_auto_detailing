@@ -25,7 +25,7 @@ $reportObj = new Report();
             <h1 class="display-4 text-center">Service Reports</h1>
         </div>
     </div>
-    <form class="form">
+    <form class="form" method="post" action="report-generator.php">
         <div class="row form-group mt-4">
             <label for="service_report_type" class="mt-1">Report Type : </label>
             <div class="input-group col-md-5">
@@ -35,6 +35,8 @@ $reportObj = new Report();
                     <option value="cat_service_list">Category Wise Service Report</option>
                 </select>
             </div>
+
+            <input type="hidden" name="print_data" id="print_data" value=''>
 
             <div class="input-group col-md-6">
                 <div id="service_category_select" class="mr-4">
@@ -51,8 +53,8 @@ $reportObj = new Report();
                     </select>
                 </div>
                 <button type="button" class="btn btn-success mr-5" id="btn-generate-service-report"><i class="fa fa-file-text-o"></i> Generate</button>
-                <a href="report-generator.php" class="btn btn-primary mr-2 justify-content-end"><i class="fa fa-download"></i> Download</a>
-                <button type="button" class="btn btn-primary"><i class="fa fa-print"></i> Print</button>
+                <button type="submit" class="btn btn-primary mr-2 justify-content-end"><i class="fa fa-download"></i> Download</button>
+                <button type="button" class="btn btn-primary" id="btn-service-print"><i class="fa fa-print"></i> Print</button>
             </div>
         </div>
     </form>

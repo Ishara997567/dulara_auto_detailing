@@ -12,9 +12,7 @@ $(document).ready(function (){
                         "destroy": true,
                     });
 
-                    $.post('report-generator.php', {print_data:data}, function (data,success){
-                        alert(success);
-                    });
+                    $("#print_data").val(data);
                 });
             });
         } else if(status === "cat_service_list") {
@@ -29,4 +27,4 @@ $(document).ready(function (){
         }
     });
 
-})
+});

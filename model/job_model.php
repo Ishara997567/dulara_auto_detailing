@@ -4,6 +4,13 @@ $dbConnection = new DbConnection();
 
 class Job
 {
+    public function getLastJobID()
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT MAX(job_id)+1 as jobID FROM job;";
+        return $con->query($sql);
+    }
+
     public function getVehicleName($term)
     {
         $con = $GLOBALS["conn"];
@@ -120,7 +127,7 @@ class Job
     public function getInvoicedJobs()
     {
         $con = $GLOBALS["conn"];
-        $sql = "SELECT i.invoice_id, i.invoice_amount, i.job_id, j.job_vehicle_id, c.cus_name, mk.vehicle_make_name, ml.vehicle_model_name, j.job_vehicle_odo, j.job_vehicle_mileage FROM invoice i, job j, customer c, vehicle_make mk, vehicle_model ml WHERE i.job_id = j.job_id AND j.job_cus_id=c.cus_id AND j.job_vehicle_model_id=ml.vehicle_model_id AND j.job_vehicle_make_id = mk.vehicle_make_id;";
+        $sql = "SELECT i.invoice_id, i.invoice_amount, i.job_id, j.job_vehicle_id, c.cus_name, mk.vehicle_make_name, ml.vehicle_model_name, j.job_vehicle_odo, j.job_vehicle_mileage FROM invoice i, job j, customer c, vehicle_make mk, vehicle_model ml WHERE i.job_id = j.job_id AND j.job_cus_id=c.cus_id AND j.job_vehicle_model_id=ml.vehicle_model_id AND j.job_vehicle_make_id = mk.vehicle_make_id ORDER BY i.invoice_id DESC;";
         return $con->query($sql);
     }
 
@@ -171,6 +178,13 @@ class Job
         $result = $con->query($sql);
         $row = $result->fetch_assoc();
         return $row["c"];
+    }
+
+    public function getNewInvoiceID()
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT MAX(invoice_id)+1 as NewInvoiceID FROM invoice;";
+        return $con->query($sql);
     }
 
 

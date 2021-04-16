@@ -27,13 +27,18 @@ $all_cat_results_results = $serviceObj->selectCategories();
 
     //Service Utilization Chart
     function drawStuff1() {
+        <?php
+        $result = $serviceObj->getServiceUtilization();
+        ?>
         var data = google.visualization.arrayToDataTable([
-            ['Element', 'Density', { role: 'style' }],
-            ['Copper', 8.94, '#b87333'],            // RGB value
-            ['Silver', 10.49, 'silver'],            // English color name
-            ['Gold', 19.30, 'gold'],
+            ['Day', 'Services Count', { role: 'style' }],
+            <?php
+            while($r=$result->fetch_assoc())
+            {
+            ?>
+            ['<?php echo $r['day']; ?>', <?php echo $r['services_per_day']; ?>, '#ff0000'],            // RGB value
+            <?php } ?>
 
-            ['Platinum', 21.45, 'color: #e5e4e2' ], // CSS-style declaration
         ]);
 
         var options = {
@@ -41,12 +46,13 @@ $all_cat_results_results = $serviceObj->selectCategories();
             height: 400,
             legend: { position: 'none' },
             chart: {
-                title: 'Chess opening moves',
-                subtitle: 'popularity by percentage' },
+                title: 'Day wise Service Count',
+            },
             axes: {
                 x: {
-                    0: { side: 'top', label: 'White to move'} // Top x-axis.
+                    0: { side: 'top', label: 'Day of the Week'} // Top x-axis.
                 }
+
             },
             bar: { groupWidth: "90%" }
         };
@@ -61,34 +67,34 @@ $all_cat_results_results = $serviceObj->selectCategories();
         var data = google.visualization.arrayToDataTable([
             ['Element', 'No of Service Requests', { role: 'style' }],
             <?php
-                $result = $serviceObj->getServiceRequestCount();
-                while($r = $result->fetch_assoc())
+            $result = $serviceObj->getServiceRequestCount();
+            while($r = $result->fetch_assoc())
             {
             ?>
             ['<?php echo $r['service_name']; ?>', <?php echo $r['service_count'] ?> , '#b87333'],
 
-        <?php } ?>
-    ]);
+            <?php } ?>
+        ]);
 
-    var options = {
-        width: 640,
-        height: 400,
-        curveType: 'function',
-        legend: { position: 'none' },
-        chart: {
-            title: 'Requests of Services Overview',
-            subtitle: 'popularity by percentage' },
-        axes: {
-            x: {
-                0: { side: 'top', label: 'Service'} // Top x-axis.
-            }
-        },
-        bar: { groupWidth: "90%" }
-    };
+        var options = {
+            width: 640,
+            height: 400,
+            curveType: 'function',
+            legend: { position: 'none' },
+            chart: {
+                title: 'Requests of Services Overview',
+                subtitle: 'popularity by percentage' },
+            axes: {
+                x: {
+                    0: { side: 'top', label: 'Service'} // Top x-axis.
+                }
+            },
+            bar: { groupWidth: "90%" }
+        };
 
-    var chart = new google.visualization.LineChart(document.getElementById('service_requests'));
-    // Convert the Classic options to Material options.
-    chart.draw(data, options);
+        var chart = new google.visualization.LineChart(document.getElementById('service_requests'));
+        // Convert the Classic options to Material options.
+        chart.draw(data, options);
     }
 </script>
 </head>
@@ -310,6 +316,8 @@ $all_cat_results_results = $serviceObj->selectCategories();
     <?php  } ?>
 
     <!-- End of Error Message From the Controller  -->
+
+
 
 
     <div class="row padding mb-2">
@@ -852,10 +860,42 @@ $all_cat_results_results = $serviceObj->selectCategories();
 
     <!-- End of Manage Service Modal   -->
 
+    <!-- Delete Modal   -->
+    <div class="modal fade alert" id="modal_delete_service" tabindex="-1" role="dialog" aria-labelledby="modal_delete_service" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" >Delete Service</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                    <div class="modal-body">
+                        Do you want to delete the service?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-danger" id="btn_modal_delete_service_confirm">Yes</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+    <!-- End of Delete Modal   -->
+
+
+
     <!-- End of Modals  -->
 
 
     <!-- Item Table -->
+
+    <!-- Delete Message -->
+    <div class="row padding d-flex justify-content-center p-2">
+        <div class="col-11 display-4 text-center div-delete-message">
+
+        </div>
+    </div>
+    <!-- End of Delete Message -->
 
     <div class="table-responsive mt-2">
         <table class="table table-sm table-dark table-hover" id="table_manage">
@@ -867,6 +907,7 @@ $all_cat_results_results = $serviceObj->selectCategories();
                 <th scope="col">Service Price</th>
                 <th scope="col">Service Category</th>
                 <th scope="col">Service Sub Category</th>
+                <th>&nbsp;</th>
                 <th>&nbsp;</th>
                 <!--                <th scope="col">Manage</th>-->
             </tr>
@@ -890,7 +931,8 @@ $all_cat_results_results = $serviceObj->selectCategories();
                     <td><?php echo "Rs. ".$row["service_price"]; ?></td>
                     <td><?php echo $category_row["service_cat_name"]; ?></td>
                     <td><?php echo $sub_cat_row["service_sub_cat_name"]; ?></td>
-                    <td id="table_data_manage_service_id"><a href="#modal_service_manage" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-id="<?php echo $service_id;?>"><i class="fa fa-file-text-o fa-lg"></i></a></td>
+                    <td id="table_data_manage_service_id" class="text-right"><a href="#modal_service_manage" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-id="<?php echo $service_id;?>"><i class="fa fa-file-text-o fa-lg"></i></a></td>
+                    <td id="table_data_delete_service_id"><a href="#modal_delete_service" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-id="<?php echo $service_id;?>"><i class="fa fa-trash-o fa-lg"></i></a></td>
 
 
                 </tr>

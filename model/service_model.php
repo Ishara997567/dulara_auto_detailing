@@ -4,6 +4,15 @@
     $dbConnection = new DbConnection();
 
 class Service{
+
+    public function changeServiceStatus($service_id)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE service SET service_status = 0 WHERE service_id = '$service_id';";
+        $con->query($sql);
+        return $con->affected_rows;
+    }
+
     public function createCategory($cat_name, $description){
         $con = $GLOBALS["conn"];
         $sql = "INSERT INTO service_category (service_cat_name, service_cat_description) VALUES ('$cat_name','$description');";
@@ -14,10 +23,18 @@ class Service{
     public function getServiceRequestCount()
     {
         $con = $GLOBALS["conn"];
-        $sql = "SELECT i.invoice_service_id, s.service_name, COUNT(*) service_count FROM invoice_service i, service s WHERE i.invoice_service_id = s.service_id GROUP BY invoice_service_id LIMIT 5;";
+        $sql = "SELECT i.invoice_service_id, s.service_name, COUNT(*) service_count FROM invoice_service i, service s WHERE i.invoice_service_id = s.service_id AND service_status = 1 GROUP BY invoice_service_id LIMIT 5;";
         return $con->query($sql);
 
     }
+
+    public function getServiceUtilization()
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT DAYNAME(invoice_created_at) as day, COUNT(DAYOFWEEK(invoice_created_at)) as services_per_day FROM invoice GROUP BY (DAYOFWEEK(invoice_created_at));";
+        return $con->query($sql);
+    }
+
     public function selectCategories(){
         $con = $GLOBALS["conn"];
         $sql = "SELECT * FROM service_category;";
@@ -65,13 +82,13 @@ class Service{
     public function selectService()
     {
         $con = $GLOBALS["conn"];
-        $sql = "SELECT * FROM service;";
+        $sql = "SELECT * FROM service WHERE service_status = 1;";
         return $con->query($sql);
     }
 
     public function selectToManageService($service_id){
         $con = $GLOBALS["conn"];
-        $sql = "SELECT * FROM service WHERE service_id = '$service_id';";
+        $sql = "SELECT * FROM service WHERE service_id = '$service_id' AND service_status = 1;";
         return $con->query($sql);
     }
 
@@ -102,14 +119,14 @@ class Service{
     public function getServiceBySearch($term)
     {
         $con = $GLOBALS["conn"];
-        $sql = "SELECT * FROM service WHERE service_name LIKE '%{$term}%';";
+        $sql = "SELECT * FROM service WHERE service_name LIKE '%{$term}%' AND service_status = 1;";
         return $con->query($sql);
     }
 
     public function getServiceByName($service_name)
     {
         $con = $GLOBALS["conn"];
-        $sql = "SELECT * FROM service WHERE service_name = '$service_name'";
+        $sql = "SELECT * FROM service WHERE service_name = '$service_name' AND service_status = 1";
         return $con->query($sql);
     }
     //Update Service Details

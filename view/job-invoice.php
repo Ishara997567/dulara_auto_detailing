@@ -26,12 +26,15 @@ $jobObj = new Job(); ?>
 
         while($r=$invoice_job_result->fetch_assoc())
         {
+
+            $new_invoice_result = $jobObj->getNewInvoiceID();
+            $new_invoice_r = $new_invoice_result->fetch_assoc();
             ?>
             <!-- Invoice Id -->
             <div class="form-group row">
                 <label for="invoice_id" class="text-right col-1 col-form-label">Invoice ID</label>
                 <div class="col-3">
-                    <input type="text" class="form-control" id="invoice_id" name="invoice_id" value="IV12345" readonly/>
+                    <input type="text" class="form-control" id="invoice_id" name="invoice_id" value="<?php echo $new_invoice_r['NewInvoiceID']; ?>" readonly/>
                 </div>
 
                 <div class="col-4">&nbsp;</div>

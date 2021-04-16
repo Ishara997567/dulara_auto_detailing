@@ -1,6 +1,15 @@
 $(document).ready(function (){
     $("#vehicle_no").autocomplete({
         source: 'customer-autofill-results.php',
+        change: function (event, ui){
+            if(!ui.item)
+            {
+                $(".new-job-error").html("Please Select A Valid Vehicle Number from the list!").addClass("alert alert-danger");
+                $("frm_new_job").submit(function (){
+                    return false;
+                });
+            }
+        }
     });
 
     let url = '../controller/jobcontroller.php?status=autofill_customer'
@@ -23,6 +32,7 @@ $(document).ready(function (){
             $("#vehicle_model").html(data);
         });
     });
+
 
     $(".pending-job-table").on("click", ".see-more", function (){
         let jobId = $(this).data('id');

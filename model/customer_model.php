@@ -43,14 +43,14 @@ class Customer
     }
 
     //Updating Customer Information
-        //cus name
+    //cus name
     public function updateCusName($cus_id, $cus_name)
     {
         $con = $GLOBALS["conn"];
         $sql = "UPDATE customer SET cus_name= '$cus_name' WHERE cus_id='$cus_id';";
         $con->query($sql);
     }
-        //cus home
+    //cus home
     public function updateHomeNo($cus_id, $home_no)
     {
         $con = $GLOBALS["conn"];
@@ -158,5 +158,160 @@ class Customer
         $sql = "SELECT s.service_id, s.service_name, sc.service_cat_name, j.job_finish_time FROM customer c, service s, job j, invoice i, invoice_service iserv, service_category sc WHERE c.cus_id = '$cus_id' AND j.job_cus_id = c.cus_id AND j.job_id = i.job_id AND i.invoice_id = iserv.invoice_id AND s.service_id = iserv.invoice_service_id AND s.service_cat_id = sc.service_cat_id;";
         return $con->query($sql);
     }
+
+    //Loyalty Management
+    public function createLoyaltyProgram($loyalty_name, $loyalty_points, $loyalty_reward, $loyalty_description)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "INSERT INTO customer_loyalty (loyalty_name, loyalty_points, loyalty_reward, loyalty_description) VALUES ('$loyalty_name', '$loyalty_points', '$loyalty_reward', '$loyalty_description');";
+        return $con->query($sql);
+    }
+
+    public function getAllLoyaltyPrograms()
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT * FROM customer_loyalty WHERE loyalty_status = 1;";
+        return $con->query($sql);
+    }
+
+    public function getNewCustomerID()
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT MAX(cus_id)+1 as NewCusID FROM customer;";
+        return $con->query($sql);
+    }
+
+    public function getCustomerIDByInvoiceID($invoice_id)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT c.cus_id FROM invoice i, job j, customer c WHERE i.invoice_id = '$invoice_id' AND i.job_id = j.job_id AND j.job_cus_id = c.cus_id;";
+        return $con->query($sql);
+    }
+
+
+    public function addCustomerReferral($referrer_id, $referee_id, $description)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "INSERT INTO customer_referral (cr_referrer_id, cr_referee_id, cr_description) VALUES('$referrer_id', '$referee_id', '$description';";
+        return $con->query($sql);
+    }
+
+    public function allocateCustomerPoints($cus_id, $points_id)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "INSERT INTO customer_point_allocation (cpa_cus_id, cpa_point_id) VALUES ('$cus_id', '$points_id');";
+        return $con->query($sql);
+    }
+
+    public function getSumOfPointsByCustomerID($cus_id)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT SUM(cp.cp_points) as SumOfPoints FROM customer_point_allocation cpa, customer_points cp WHERE cpa.cpa_cus_id = '$cus_id' AND cp.cp_id = cpa.cpa_point_id AND cpa.cpa_status = 1;";
+        return $con->query($sql);
+    }
+
+    public function getLoyaltyProgramBySumOfPoints($sum_of_points)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT loyalty_name FROM customer_loyalty WHERE loyalty_points <= '$sum_of_points' AND loyalty_status = 1 ORDER BY loyalty_points DESC LIMIT 1;";
+        return $con->query($sql);
+    }
+
+    public function getLoyaltyByID($id)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT * FROM customer_loyalty WHERE loyalty_id = '$id' AND loyalty_status = 1;";
+        return $con->query($sql);
+    }
+
+    //updating Customer Loyalty
+
+    //Loyalty Name
+    public function updateLoyaltyName($id, $name)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE customer_loyalty SET loyalty_name = '$name' WHERE loyalty_id = '$id';";
+        $con->query($sql);
+    }
+
+    //Loyalty Points
+    public function updateLoyaltyPoints($id, $p)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE customer_loyalty SET loyalty_points = '$p' WHERE loyalty_id = '$id';";
+        $con->query($sql);
+    }
+
+    //Loyalty Reward
+    public function updateLoyaltyReward($id, $reward)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE customer_loyalty SET loyalty_reward = '$reward' WHERE loyalty_id = '$id';";
+        $con->query($sql);
+    }
+
+    //Delete Loyalty
+    public function changeLoyaltyStatus($id)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE customer_loyalty SET loyalty_status = 0 WHERE loyalty_id = '$id';";
+        $con->query($sql);
+        return $con->affected_rows;
+    }
+
+    public function getNextLoyaltyID()
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT MAX(loyalty_id)+1 as NewLoyaltyID FROM customer_loyalty;";
+        return $con->query($sql);
+    }
+
+    public function getLoyaltyToShowcase()
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT l.loyalty_id, l.loyalty_name, l.loyalty_points, l.loyalty_reward, c.clc_color AS color FROM customer_loyalty l, customer_loyalty_color c WHERE l.loyalty_id = c.clc_loyalty_id AND loyalty_status = 1;";
+        return $con->query($sql);
+    }
+
+    public function getNextPointID()
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT MAX(cp_id)+1 as NewPointID FROM customer_points WHERE cp_status = 1;";
+        return $con->query($sql);
+    }
+
+    public function addNewLoyaltyPointCategory($cat_name, $points, $description)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "INSERT INTO customer_points (cp_category_name, cp_points, cp_description) VALUES ('$cat_name', '$points', '$description');";
+        $con->query($sql);
+        return $con->insert_id;
+    }
+
+    public function getLoyaltyPoint()
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT * FROM customer_points where cp_status = 1;";
+        return $con->query($sql);
+    }
+
+    //Delete Loyalty Points Category
+    public function changeLoyaltyPointStatus($id)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE customer_points SET cp_status = 0 WHERE cp_id = '$id';";
+        $con->query($sql);
+        return $con->affected_rows;
+    }
+
+    //Reset Loyalty Points
+    public function resetLoyaltyPoints($cus_id)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE customer_point_allocation SET cpa_status = 0 WHERE cpa_cus_id = '$cus_id';";
+        $con->query($sql);
+        return $con->affected_rows;
+    }
+
 
 }

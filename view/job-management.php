@@ -74,14 +74,24 @@ $jobObj = new Job(); ?>
                 </div>
                 <!-- Modal form -->
 
-                <form action="../controller/jobcontroller.php?status=create_job" method="post">
+                <form action="../controller/jobcontroller.php?status=create_job" method="post" id="frm_new_job">
+
+                    <div class="row padding d-flex justify-content-center pt-3">
+                        <div class="col-8 text-center new-job-error">
+
+                        </div>
+                    </div>
+                    <?php
+                    $result = $jobObj->getLastJobID();
+                    $last_job_id = $result->fetch_assoc();
+                    ?>
                     <div class="modal-body">
 
                         <!-- Job ID -->
                         <div class="form-group row">
                             <label for="job_id" class="col-sm-4 col-form-label">Job ID</label>
                             <div class="col-sm-4">
-                                <input type="text" readonly class="form-control" id="job_id" value="JI04567">
+                                <input type="text" readonly class="form-control" id="job_id" value="<?php echo $last_job_id['jobID']; ?>">
                             </div>
                         </div>
                         <hr/>
@@ -154,7 +164,7 @@ $jobObj = new Job(); ?>
                         <div class="form-group row">
                             <label for="vehicle_odo" class="col-sm-4 col-form-label">Vehicle ODO</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="vehicle_odo" name="vehicle_odo" placeholder="In Kilometers">
+                                <input type="number" class="form-control" id="vehicle_odo" name="vehicle_odo" placeholder="In Kilometers">
                             </div>
                         </div>
 
@@ -165,7 +175,7 @@ $jobObj = new Job(); ?>
                         <div class="form-group row">
                             <label for="vehicle_mileage" class="col-sm-4 col-form-label">Vehicle Mileage</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="vehicle_mileage" name="vehicle_mileage" placeholder="In Kilometers">
+                                <input type="number" class="form-control" id="vehicle_mileage" name="vehicle_mileage" placeholder="In Kilometers">
                             </div>
                         </div>
                         <hr/>
@@ -431,6 +441,7 @@ $jobObj = new Job(); ?>
 </div>
 <?php include '../includes/footer.php'; ?>
 <script src="../assets/js/job.js"></script>
+<script src="../assets/js/new_job_validation.js"></script>
 <script src="../assets/js/job_invoice.js"></script>
 <script>
     $(".my-job-datatable").DataTable();
