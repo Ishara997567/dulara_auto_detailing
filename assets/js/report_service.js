@@ -13,7 +13,6 @@ $(document).ready(function (){
                     });
 
                     $("#print_data").val(data);
-                    alert(data);
                 });
             });
         } else if(status === "cat_service_list") {

@@ -46,7 +46,12 @@ if(isset($_REQUEST["status"]))
                 <script>window.location = "../view/customer-management.php?success_message=<?php echo $msg; ?>"</script>
                 <?php
 
+                $cus_point_id = $cusObj->allocateCustomerPoints($cus_id, 1);
+
                 $not_message = "A new customer named <i><b>". $cus_name ."</b></i> created";
+                $notificationObj->addNotification(4, $not_message);
+
+                $not_message = "The new customer <i><b>". $cus_name ."</b></i> has obtained <b><i>1</i></b> points!";
                 $notificationObj->addNotification(4, $not_message);
             }
             else
@@ -57,6 +62,29 @@ if(isset($_REQUEST["status"]))
                 <?php
 
             }
+
+
+            if(isset($_POST['cus_referral_invoice_id']) && !empty($_POST['cus_referral_invoice_id']))
+            {
+                $cus_referral_invoice_id = $_POST['cus_referral_invoice_id'];
+                $referrer_cus_id_result = $cusObj->getCustomerIDByInvoiceID($cus_referral_invoice_id);
+                $referrer_cus_id_row = $referrer_cus_id_result->fetch_assoc();
+
+                $referrer_cus_id = $referrer_cus_id_row['cus_id'];
+                $referee_cus_id = $_POST['cus_code'];
+                $description = $_POST['cus_referral_description'];
+
+                $cus_referral_id = $cusObj->addCustomerReferral($referrer_cus_id, $referee_cus_id, $description);
+                $cus_point_id = $cusObj->allocateCustomerPoints($cus_id, 2);
+
+                $not_message = "A new customer referral <i><b>". $cus_referral_id ."</b></i> created for the referrer <b><i>".$referrer_cus_id."</i></b>";
+                $notificationObj->addNotification(4, $not_message);
+
+                $not_message = "The referrer customer <i><b>". $cus_name ."</b></i> has obtained <b><i>5</i></b> points for the referee customer <b><i>".$referee_cus_id."</i></b>";
+                $notificationObj->addNotification(4, $not_message);
+            }
+
+
 
 
             break;
@@ -147,6 +175,9 @@ if(isset($_REQUEST["status"]))
                         <button type="button" class="btn btn-outline-success" id="btn_cus_add_state_check"><i class="fa fa-check"></i></button>
                     </div>
                 </div>
+
+
+
 
                 <div class="form-row">
                     <!-- contact no 1 -->
@@ -295,8 +326,8 @@ if(isset($_REQUEST["status"]))
 
                 <!-- Feedback Status    -->
                 <div class="form-group row">
-                    <label for="vehicle_odo" class="col-sm-4 col-form-label">Feedback</label>
-                    <div class="col-sm-4">
+                    <label for="customer_feedback" class="col-sm-4 col-form-label">Feedback</label>
+                    <div class="col-sm-3">
                         <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half"></i>
                     </div>
                     <div class="col-sm-4">
@@ -306,19 +337,39 @@ if(isset($_REQUEST["status"]))
                     </div>
                 </div>
 
+                <?php
+                $points_result = $cusObj->getSumOfPointsByCustomerID($cus_id);
+                $points_r = $points_result->fetch_assoc();
+                $sum_of_points = isset($points_r['SumOfPoints']) ? $points_r['SumOfPoints'] : 0;
+
+                $loyalty_result = $cusObj->getLoyaltyProgramBySumOfPoints($sum_of_points);
+                $loyalty_r = $loyalty_result->fetch_assoc();
+                $loyalty = isset($loyalty_r['loyalty_name']) ? $loyalty_r['loyalty_name'] : "-";
 
 
-                <!-- Royalty Enrollments    -->
+
+                ?>
+
+                <!-- Loyalty Points    -->
+                <div class="form-group row">
+                    <label for="loyalty_points" class="col-sm-4 col-form-label">Loyalty Points</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" readonly id="loyalty_points" value="<?php echo $sum_of_points; ?>">
+                    </div>
+                </div>
+
+
+                <!-- Loyalty Enrollments    -->
                 <div class="form-group row">
                     <label for="loyalty" class="col-sm-4 col-form-label">Loyalty Enrollments</label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control" readonly id="loyalty" placeholder="Loyalty Package">
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" readonly id="loyalty" value="<?php echo $loyalty; ?>">
                     </div>
-                    <div class="col-sm-4 mt-2">
-                        <a href="customer-loyalty-manage.php">
-                            <i class="fa fa-lg fa-info-circle"></i>
-                        </a>
+                    <div class="col-sm-1">
+                        <button type="button" class="btn btn-danger rounded-pill btn-reset-loyalty-points">Reset</button>
                     </div>
+
+                    <div class="col-sm-4 text-left mt-2 div-reset-message"></div>
                 </div>
 
                 <?php
@@ -463,7 +514,7 @@ if(isset($_REQUEST["status"]))
             foreach($m_type as $type) {
                 echo $type;
             }
-            
+
             foreach($m_to_whom as $whom) {
                 echo $whom;
             }
@@ -486,6 +537,194 @@ if(isset($_REQUEST["status"]))
 
 
 
+            break;
+
+        case "create_loyalty":
+
+            $loyalty_name = $_POST['loyalty_name'];
+            $loyalty_points = $_POST['loyalty_points'];
+            $loyalty_reward = $_POST['loyalty_reward'];
+            $loyalty_description = $_POST['loyalty_description'];
+
+            $last_loyalty_id = $cusObj ->createLoyaltyProgram($loyalty_name, $loyalty_points, $loyalty_reward, $loyalty_description);
+
+            if($last_loyalty_id > 0)
+            {
+                $msg = base64_encode("New Loyalty Program Created Successfully!");
+                ?>
+                <script>window.location = "../view/customer-loyalty-manage.php?success_message=<?php echo $msg; ?>"</script>
+                <?php
+
+                $not_message = "A new loyalty program named <i><b>". $loyalty_name ."</b></i> created";
+                $notificationObj->addNotification(4, $not_message);
+            }
+            else
+            {
+                $msg = base64_encode("New Loyalty Program Failed to Create!");
+                ?>
+                <script>window.location = "../view/customer-loyalty-manage.php?error_message=<?php echo $msg; ?>"</script>
+                <?php
+
+            }
+
+
+            break;
+
+        case "manage_loyalty":
+            $loyalty_id = $_POST['loyaltyID'];
+            $loyalty_result = $cusObj->getLoyaltyByID($loyalty_id);
+            while($r = $loyalty_result->fetch_assoc())
+            {
+                ?>
+                <div class="form-row">
+                    <!-- Loyalty Program ID  -->
+                    <div class="form-group col-3">
+                        <label for="manage_loy_code">Loyalty Program ID</label>
+                        <input type="text" class="form-control" readonly="readonly" id="manage_loy_code" value="<?php echo $r['loyalty_id']; ?>">
+                    </div>
+
+                    <!-- Loyalty Program Name  -->
+                    <div class="form-group col-8">
+                        <label for="manage_loy_name">Loyalty Program Name</label>
+                        <input type="text" class="form-control" id="manage_loy_name" value="<?php echo $r['loyalty_name']; ?>" readonly>
+                    </div>
+
+                    <div class="col-md-1 pt-2 mt-4">
+                        <button type="button" class="btn btn-outline-primary" id="btn_loyalty_name_pencil"><i class="fa fa-pencil"></i></button>
+                        <button type="button" class="btn btn-outline-success" id="btn_loyalty_name_check"><i class="fa fa-check"></i></button>
+                    </div>
+
+
+                </div>
+
+                <!--    Loyalty Points and Loyalty Reward   -->
+                <div class="form-row">
+
+                    <div class="form-group col-2">
+                        <label for="manage_loy_points">Loyalty Points</label>
+                        <input type="email" class="form-control" id="manage_loy_points" value="<?php echo $r['loyalty_points']; ?>" readonly>
+                    </div>
+
+                    <div class="col-md-1 pt-2 mt-4">
+                        <button type="button" class="btn btn-outline-primary" id="btn_loyalty_points_pencil"><i class="fa fa-pencil"></i></button>
+                        <button type="button" class="btn btn-outline-success" id="btn_loyalty_points_check"><i class="fa fa-check"></i></button>
+                    </div>
+
+                    <div class="form-group col-8">
+                        <label for="manage_loy_reward">Loyalty Reward</label>
+                        <input type="text" class="form-control" id="manage_loy_reward" value="<?php echo $r['loyalty_reward']; ?>" readonly>
+
+                    </div>
+
+                    <div class="col-md-1 pt-2 mt-4">
+                        <button type="button" class="btn btn-outline-primary" id="btn_loyalty_reward_pencil"><i class="fa fa-pencil"></i></button>
+                        <button type="button" class="btn btn-outline-success" id="btn_loyalty_reward_check"><i class="fa fa-check"></i></button>
+                    </div>
+
+                </div>
+
+                <?php
+            }
+            break;
+
+        case "loyalty_update":
+            if(isset($_POST['loyaltyID']) && isset($_POST['loyaltyName']))
+            {
+                $loyalty_id = $_POST["loyaltyID"];
+                $loyalty_name = $_POST["loyaltyName"];
+                $cusObj->updateLoyaltyName($loyalty_id, $loyalty_name);
+
+                $notification_message = "Loyalty Program Name of <i><b>" .$loyalty_id. "</b></i> has been changed to <i><b>".$loyalty_name."</b></i>";
+                $notificationObj->addNotification(4, $notification_message);
+            }
+
+            if(isset($_POST['loyaltyID']) && isset($_POST['loyaltyPoints']))
+            {
+                $loyalty_id = $_POST["loyaltyID"];
+                $loyalty_points = $_POST["loyaltyPoints"];
+                $cusObj->updateLoyaltyPoints($loyalty_id, $loyalty_points);
+
+                $notification_message = "Loyalty Program Points of <i><b>" .$loyalty_id. "</b></i> has been changed to <i><b>".$loyalty_points."</b></i>";
+                $notificationObj->addNotification(4, $notification_message);
+            }
+
+            if(isset($_POST['loyaltyID']) && isset($_POST['loyaltyReward']))
+            {
+                $loyalty_id = $_POST["loyaltyID"];
+                $loyalty_reward = $_POST["loyaltyReward"];
+                $cusObj->updateLoyaltyReward($loyalty_id, $loyalty_reward);
+
+                $notification_message = "Loyalty Program Reward of <i><b>" .$loyalty_id. "</b></i> has been changed to <i><b>".$loyalty_reward."</b></i>";
+                $notificationObj->addNotification(4, $notification_message);
+            }
+            break;
+
+        case "delete_loyalty":
+            if(isset($_POST['delete_loyalty_id']))
+            {
+                $loyalty_id = $_POST['delete_loyalty_id'];
+                $num_rows_affected = $cusObj->changeLoyaltyStatus($loyalty_id);
+                if($num_rows_affected > 0)
+                {
+                    echo "The Loyalty Program has been successfully deleted!";
+                } else {
+                    echo "The Loyalty Program could not be deleted!";
+                }
+            }
+            break;
+
+        case "create_loyalty_point_category":
+            $cat_name = $_POST['loyalty_point_cat_name'];
+            $points = $_POST['loyalty_points'];
+            $description = $_POST['loyalty_point_description'];
+
+            $point_id = $cusObj->addNewLoyaltyPointCategory($cat_name, $points, $description);
+
+            if($point_id > 0)
+            {
+                $msg = base64_encode("New Loyalty Point Category Created Successfully!");
+                ?>
+                <script>window.location = "../view/customer-loyalty-manage.php?success_message=<?php echo $msg; ?>"</script>
+                <?php
+
+                $not_message = "A new loyalty point category named <i><b>". $cat_name ."</b></i> created";
+                $notificationObj->addNotification(4, $not_message);
+            }
+            else
+            {
+                $msg = base64_encode("New Loyalty Point Category Failed to Create!");
+                ?>
+                <script>window.location = "../view/customer-loyalty-manage.php?error_message=<?php echo $msg; ?>"</script>
+                <?php
+
+            }
+
+            break;
+
+        case "delete_loyalty_point":
+            if(isset($_POST['pointID']))
+            {
+                $point_id = $_POST['pointID'];
+                $num_rows_affected = $cusObj->changeLoyaltyPointStatus($point_id);
+                if($num_rows_affected > 0)
+                {
+                    echo "The Loyalty Point Category has been successfully deleted!";
+                } else {
+                    echo "The Loyalty Point Category could not be deleted!";
+                }
+            }
+            break;
+
+        case "reset_loyalty_points":
+            if(isset($_POST['cusId']))
+            {
+                $cus_id = $_POST['cusId'];
+                $affected_rows = $cusObj->resetLoyaltyPoints($cus_id);
+                if($affected_rows > 0)
+                    echo 1;
+                else
+                    echo 0;
+            }
             break;
 
     }

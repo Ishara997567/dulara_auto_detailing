@@ -219,7 +219,7 @@ $(document).ready(function () {
                         messageDiv.html("Customer Name Failed to  Update!").addClass("alert alert-danger");
 
                     }
-                })
+                });
 
             });
 
@@ -373,7 +373,15 @@ $(document).ready(function () {
                 });
             });
 
-
+            $(".btn-reset-loyalty-points").click(function (){
+                let location = "../controller/customercontroller.php?status=reset_loyalty_points";
+                $.post(location, {cusId:cusId}, function (data, success){
+                    if(data === "1")
+                        $(".div-reset-message").html("Loyalty Points have been reset successfully!").addClass("text-success");
+                    else
+                        $(".div-reset-message").html("Loyalty Points could not be reset!").addClass("text-danger")
+                });
+            })
 
 
             $(".save-changes").click(function () {

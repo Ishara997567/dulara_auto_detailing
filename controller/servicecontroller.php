@@ -425,5 +425,19 @@ if(isset($_REQUEST["status"])){
                     echo 0;
             }
             break;
+
+        case "delete_service":
+            if(isset($_POST['delete_service_id']))
+            {
+                $service_id = $_POST['delete_service_id'];
+                $num_rows_affected = $serviceObj->changeServiceStatus($service_id);
+                if($num_rows_affected > 0)
+                {
+                    echo "The Service has been successfully deleted!";
+                } else {
+                    echo "The Service could not be deleted!";
+                }
+            }
+            break;
     }
 }

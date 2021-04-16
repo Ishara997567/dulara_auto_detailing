@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 26, 2021 at 11:40 AM
+-- Generation Time: Apr 16, 2021 at 08:46 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.4.14
 
@@ -62,7 +62,19 @@ INSERT INTO `customer` (`cus_id`, `cus_name`, `cus_vehicle_no`, `cus_add_l1`, `c
 (15, 'Hemal Rathnayake', 'DCX-4567', '', '', '', '', '0718254856', 'df', '', 1, '2021-01-28 16:11:30', 1),
 (16, 'Nanda Kumara', 'CDF-5678', '172', 'Wevallagara Rd, Bollatha', 'Ganemulla', '', '0764587965', '0768541258', 'nandakumara@gmail.com', 1, '2021-03-23 14:04:32', 1),
 (17, 'Nanda Kumara', 'CDF-5678', '', '', '', '', '0769852147', '', '', 1, '2021-03-23 14:07:07', 1),
-(18, 'Roger Rogans', 'CX-4534', '145', 'Drug Avenue', 'New York', 'USA', '0784512369', '1478932', '', 1, '2021-03-25 11:56:41', 1);
+(18, 'Roger Rogans', 'CX-4534', '145', 'Drug Avenue', 'New York', 'USA', '0784512369', '1478932', '', 1, '2021-03-25 11:56:41', 1),
+(19, 'Kamal Ranasinghe', 'CWW-9087', '23', 'Galle Rd,', 'Colombo', '', '0715098523', '', '', 1, '2021-04-13 02:37:47', 1),
+(20, 'Ishara Perera', 'BBX-9190', '185/A/2', 'Bollatha', 'Ganumulla', 'Western Province', '0778154411', '', 'esoft.isharaperera@gmail.com', 1, '2021-04-14 03:25:54', 1),
+(21, 'sdfsdfsd', 'BBX-9190', '185/A/2', 'Bollatha', 'Ganemulla', 'Sri Lanka', '0718054352', '', 'esoft.isharaperera@gmail.com', 1, '2021-04-14 03:51:13', 1),
+(22, 'Kamal', 'RTF-4567', '185/A/2', 'Bollatha', 'Ganemulla', 'Sri Lanka', '0778154411', '', 'esoft.isharaperera@gmail.com', 1, '2021-04-15 16:24:15', 1),
+(23, 'Malindi', 'CCX-5678', '', '', '', '', '0775623894', '', '', 1, '2021-04-15 16:27:56', 1),
+(24, 'Shermila', 'CAA-5623', '', '', '', '', '0778963541', '', '', 1, '2021-04-15 16:30:31', 1),
+(25, 'Chathu', 'DEF-1234', '', '', '', '', '0758489632', '', '', 1, '2021-04-15 16:31:26', 1),
+(26, 'Dilmi', 'TFR-4531', '', '', '', '', '0784563214', '', '', 1, '2021-04-15 16:33:00', 1),
+(27, 'Nipuni Sanjana', 'GRC-5643', '', '', '', '', '0741258478', '', '', 1, '2021-04-15 16:35:05', 1),
+(28, 'Chamodi', 'AAA-4312', '', '', '', '', '0778451698', '', '', 1, '2021-04-15 16:39:24', 1),
+(29, 'Hiran', 'AAA-9871', '', '', '', '', '0784512369', '', '', 1, '2021-04-15 16:41:12', 1),
+(30, 'Kumara Sandaruwa', 'AAB-7856', 'No. 23', 'Bohaga Junction', 'Kurunegala', 'Sri Lanka', '0784512965', '', '', 1, '2021-04-15 23:36:14', 1);
 
 -- --------------------------------------------------------
 
@@ -91,6 +103,136 @@ INSERT INTO `customer_feedback_message` (`cfm_id`, `cfm_heading`, `cfm_message`,
 (4, 'sdf', 'sdfsdf', '\"\"', '\"\"', '\"\"', '\"\"'),
 (5, 'Welcome to Dulara Auto Detaling', 'You are welcome for obtaining finest automobile services in the area!', '[\"sms\"]', '[\"new-customers\"]', '\"\"', '[\"on-arrival\"]'),
 (6, 'Welcome to Dulara Auto Detaling', 'You are welcome for obtaining finest automobile services in the area!', '[\"sms\"]', '[\"new-customers\"]', '\"\"', '[\"on-arrival\"]');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer_loyalty`
+--
+
+CREATE TABLE `customer_loyalty` (
+  `loyalty_id` int(11) NOT NULL,
+  `loyalty_name` varchar(255) NOT NULL,
+  `loyalty_points` int(11) DEFAULT NULL,
+  `loyalty_reward` varchar(255) DEFAULT NULL,
+  `loyalty_description` text DEFAULT NULL,
+  `loyalty_created_at` timestamp NULL DEFAULT current_timestamp(),
+  `loyalty_created_user_id` int(11) DEFAULT NULL,
+  `loyalty_status` int(11) DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `customer_loyalty`
+--
+
+INSERT INTO `customer_loyalty` (`loyalty_id`, `loyalty_name`, `loyalty_points`, `loyalty_reward`, `loyalty_description`, `loyalty_created_at`, `loyalty_created_user_id`, `loyalty_status`) VALUES
+(1, 'Small', 2, '50% off from the next service', 'Create Loyalty Program Test', '2021-04-15 06:52:37', NULL, 1),
+(2, 'Medium', 7, '2 Items free of charge', 'Creating Loyalty Programs', '2021-04-15 06:55:21', NULL, 1),
+(3, 'Large', 10, 'Free Service', 'Create Loyalty Program', '2021-04-15 06:55:37', NULL, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer_loyalty_color`
+--
+
+CREATE TABLE `customer_loyalty_color` (
+  `clc_id` int(11) NOT NULL,
+  `clc_loyalty_id` int(11) NOT NULL,
+  `clc_color` varchar(255) NOT NULL,
+  `clc_created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `customer_loyalty_color`
+--
+
+INSERT INTO `customer_loyalty_color` (`clc_id`, `clc_loyalty_id`, `clc_color`, `clc_created_at`) VALUES
+(1, 1, 'primary', '2021-04-16 03:31:34'),
+(2, 2, 'warning', '2021-04-16 03:31:34'),
+(3, 3, 'secondary', '2021-04-16 03:31:34'),
+(4, 4, 'success', '2021-04-16 03:31:34'),
+(5, 5, 'secondary', '2021-04-16 03:31:34'),
+(6, 6, 'muted', '2021-04-16 03:31:34');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer_points`
+--
+
+CREATE TABLE `customer_points` (
+  `cp_id` int(11) NOT NULL,
+  `cp_category_name` varchar(255) DEFAULT NULL,
+  `cp_points` int(11) DEFAULT NULL,
+  `cp_description` text DEFAULT NULL,
+  `cp_created_at` timestamp NULL DEFAULT current_timestamp(),
+  `cp_created_user_id` int(11) DEFAULT NULL,
+  `cp_status` int(11) DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `customer_points`
+--
+
+INSERT INTO `customer_points` (`cp_id`, `cp_category_name`, `cp_points`, `cp_description`, `cp_created_at`, `cp_created_user_id`, `cp_status`) VALUES
+(1, 'New Customer Visit', 1, 'The points are allocated to any new customer or new customer visits', '2021-04-15 16:51:43', NULL, 1),
+(2, 'Customer Referral', 5, 'The points are allocated to customer who introduced to customers to the company. 2 points will be granted for the referrer for each new customer he introduces.', '2021-04-15 16:53:05', NULL, 1),
+(3, 'Feedback Response', 1, 'The points are allocated to customers who respond to feedback sms', '2021-04-15 16:54:40', NULL, 1),
+(5, 'Test', 20, 'This is to test the insert query!', '2021-04-16 04:20:39', NULL, 0),
+(6, 'Success Message Point', 30, 'Success Message Test', '2021-04-16 04:49:25', NULL, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer_point_allocation`
+--
+
+CREATE TABLE `customer_point_allocation` (
+  `cpa_id` int(11) NOT NULL,
+  `cpa_cus_id` int(11) NOT NULL,
+  `cpa_point_id` int(11) NOT NULL,
+  `cpa_created_at` timestamp NULL DEFAULT current_timestamp(),
+  `cpa_status` int(11) DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `customer_point_allocation`
+--
+
+INSERT INTO `customer_point_allocation` (`cpa_id`, `cpa_cus_id`, `cpa_point_id`, `cpa_created_at`, `cpa_status`) VALUES
+(1, 30, 1, '2021-04-15 23:36:15', 1),
+(2, 30, 2, '2021-04-15 23:56:14', 1),
+(3, 30, 3, '2021-04-16 00:51:57', 1),
+(4, 1, 3, '2021-04-16 06:35:09', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer_referral`
+--
+
+CREATE TABLE `customer_referral` (
+  `cr_id` int(11) NOT NULL,
+  `cr_referrer_id` int(11) NOT NULL,
+  `cr_referee_id` int(11) NOT NULL,
+  `cr_description` text DEFAULT NULL,
+  `cr_created_at` timestamp NULL DEFAULT current_timestamp(),
+  `cr_created_user_id` int(11) DEFAULT NULL,
+  `cr_status` int(11) DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `customer_referral`
+--
+
+INSERT INTO `customer_referral` (`cr_id`, `cr_referrer_id`, `cr_referee_id`, `cr_description`, `cr_created_at`, `cr_created_user_id`, `cr_status`) VALUES
+(1, 6, 30, NULL, '2021-04-15 16:24:15', NULL, 1),
+(2, 3, 24, 'Customer Referral Test 2', '2021-04-15 16:30:31', NULL, 1),
+(3, 0, 25, '', '2021-04-15 16:31:26', NULL, 1),
+(4, 0, 26, '', '2021-04-15 16:33:00', NULL, 1),
+(5, 0, 27, '', '2021-04-15 16:35:05', NULL, 1),
+(6, 2, 29, 'Word of Mouth', '2021-04-15 16:41:12', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -236,7 +378,11 @@ INSERT INTO `invoice` (`invoice_id`, `job_id`, `invoice_item_total_amount`, `inv
 (40, 8, 5000, 1500, 6500, '2021-01-24 10:15:35', NULL, 1),
 (41, 10, 166800, 1300, 168100, '2021-01-27 14:05:53', NULL, 1),
 (42, 9, 0, 1500, 1500, '2021-01-28 10:37:11', NULL, 1),
-(43, 15, 6500, 1500, 8000, '2021-01-28 10:42:48', NULL, 1);
+(43, 15, 6500, 1500, 8000, '2021-01-28 10:42:48', NULL, 1),
+(44, 5, 5000, 1500, 6500, '2021-03-29 01:30:42', NULL, 1),
+(45, 21, 0, 1500, 1500, '2021-03-29 01:39:44', NULL, 1),
+(46, 22, 45000, 1500, 46500, '2021-04-13 02:42:41', NULL, 1),
+(47, 14, 0, 0, 0, '2021-04-15 14:57:28', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -274,7 +420,10 @@ INSERT INTO `invoice_item` (`id`, `invoice_item_id`, `invoice_item_qty`, `invoic
 (40, 0, 0, 0, 0, 42),
 (41, 1, 2, 850, 1700, 43),
 (42, 8, 4, 1200, 4800, 43),
-(43, 0, 0, 0, 0, 43);
+(43, 0, 0, 0, 0, 43),
+(44, 1, 5, 1000, 5000, 44),
+(45, 1, 45, 1000, 45000, 46),
+(46, 6, 7, 1000, 0, 47);
 
 --
 -- Triggers `invoice_item`
@@ -311,7 +460,10 @@ INSERT INTO `invoice_service` (`id`, `invoice_service_id`, `invoice_service_pric
 (22, 7, 1500, 40),
 (23, 1, 1300, 41),
 (24, 2, 1500, 42),
-(25, 2, 1500, 43);
+(25, 2, 1500, 43),
+(26, 2, 1500, 44),
+(27, 7, 1500, 45),
+(28, 12, 1500, 46);
 
 -- --------------------------------------------------------
 
@@ -435,26 +587,26 @@ CREATE TABLE `item_stock` (
 --
 
 INSERT INTO `item_stock` (`item_stock_id`, `item_id`, `item_stock_barcode`, `item_stock_manu_date`, `item_stock_date`, `item_stock_exp_date`, `item_stock_qty`, `item_stock_created_at`, `item_stock_created_user_id`, `item_stock_status`) VALUES
-(1, 1, 0, '0000-00-00', '0000-00-00', '0000-00-00', 483, '2020-09-16 14:53:01', NULL, 1),
-(2, 6, 1000, '2020-09-17', '2020-09-25', '2020-09-23', 399, '2020-09-16 14:57:35', NULL, 1),
+(1, 1, 0, '0000-00-00', '0000-00-00', '0000-00-00', 433, '2020-09-16 14:53:01', NULL, 1),
+(2, 6, 1000, '2020-09-17', '2020-09-25', '2020-09-23', 392, '2020-09-16 14:57:35', NULL, 1),
 (3, 7, 1000, '2020-09-16', '2020-09-30', '2020-09-24', 198, '2020-09-16 16:30:10', NULL, 1),
 (4, 8, 1500, '2020-09-16', '0000-00-00', '0000-00-00', 35, '2020-09-16 16:39:56', NULL, 1),
 (15, 10, 0, '2020-09-18', '0000-00-00', '0000-00-00', 190, '2020-09-18 01:06:44', NULL, 1),
 (16, 8, 0, '2020-09-18', '0000-00-00', '0000-00-00', 135, '2020-09-18 01:52:19', NULL, 1),
 (19, 11, 147852369, '2020-09-18', '2020-09-30', '2020-09-18', 298, '2020-09-18 12:37:05', NULL, 1),
 (20, 11, 0, '2020-09-18', '0000-00-00', '0000-00-00', 298, '2020-09-18 12:37:37', NULL, 1),
-(23, 1, 150000145, '2020-09-19', '0000-00-00', '0000-00-00', 273, '2020-09-19 01:14:16', NULL, 1),
-(24, 1, 0, '2020-09-21', '0000-00-00', '0000-00-00', -327, '2020-09-21 14:25:39', NULL, 1),
-(25, 1, 0, '2020-09-21', '0000-00-00', '0000-00-00', -327, '2020-09-21 14:26:46', NULL, 1),
-(26, 1, 17786, '2020-09-22', '0000-00-00', '0000-00-00', -327, '2020-09-22 06:07:42', NULL, 1),
-(27, 6, 0, '2020-09-22', '0000-00-00', '0000-00-00', 199, '2020-09-22 06:19:45', NULL, 1),
-(28, 1, 0, '2020-10-01', '2020-10-10', '2020-10-09', 184, '2020-10-01 09:32:35', NULL, 1),
-(29, 1, 0, '2020-10-02', '0000-00-00', '0000-00-00', 184, '2020-10-02 16:34:26', NULL, 1),
-(30, 1, 0, '2020-10-30', '0000-00-00', '0000-00-00', 494, '2020-10-30 11:46:02', NULL, 1),
-(31, 1, 0, '2021-01-27', '0000-00-00', '0000-00-00', -2, '2021-01-27 13:26:42', NULL, 1),
-(32, 1, 0, '2021-01-27', '0000-00-00', '0000-00-00', -2, '2021-01-27 13:27:48', NULL, 1),
-(33, 1, 0, '2021-01-28', '0000-00-00', '0000-00-00', -2, '2021-01-28 09:02:11', NULL, 1),
-(34, 1, 0, '2021-01-28', '0000-00-00', '0000-00-00', 500, '2021-01-28 12:36:22', NULL, 1);
+(23, 1, 150000145, '2020-09-19', '0000-00-00', '0000-00-00', 223, '2020-09-19 01:14:16', NULL, 1),
+(24, 1, 0, '2020-09-21', '0000-00-00', '0000-00-00', -377, '2020-09-21 14:25:39', NULL, 1),
+(25, 1, 0, '2020-09-21', '0000-00-00', '0000-00-00', -377, '2020-09-21 14:26:46', NULL, 1),
+(26, 1, 17786, '2020-09-22', '0000-00-00', '0000-00-00', -377, '2020-09-22 06:07:42', NULL, 1),
+(27, 6, 0, '2020-09-22', '0000-00-00', '0000-00-00', 192, '2020-09-22 06:19:45', NULL, 1),
+(28, 1, 0, '2020-10-01', '2020-10-10', '2020-10-09', 134, '2020-10-01 09:32:35', NULL, 1),
+(29, 1, 0, '2020-10-02', '0000-00-00', '0000-00-00', 134, '2020-10-02 16:34:26', NULL, 1),
+(30, 1, 0, '2020-10-30', '0000-00-00', '0000-00-00', 444, '2020-10-30 11:46:02', NULL, 1),
+(31, 1, 0, '2021-01-27', '0000-00-00', '0000-00-00', -52, '2021-01-27 13:26:42', NULL, 1),
+(32, 1, 0, '2021-01-27', '0000-00-00', '0000-00-00', -52, '2021-01-27 13:27:48', NULL, 1),
+(33, 1, 0, '2021-01-28', '0000-00-00', '0000-00-00', -52, '2021-01-28 09:02:11', NULL, 1),
+(34, 1, 0, '2021-01-28', '0000-00-00', '0000-00-00', 450, '2021-01-28 12:36:22', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -518,21 +670,24 @@ CREATE TABLE `job` (
 
 INSERT INTO `job` (`job_id`, `job_vehicle_id`, `job_cus_id`, `job_vehicle_make_id`, `job_vehicle_model_id`, `job_vehicle_odo`, `job_vehicle_mileage`, `job_start_time`, `job_finish_time`, `job_description`, `job_created_user_id`, `job_status`) VALUES
 (4, 'BBX-9190', 1, 3, 3, 80000, 100000, '2020-09-23 11:40:13', NULL, 'This is my personal vehicle', NULL, 10),
-(5, 'CAR-4567', 2, 2, 2, 1500, 25000, '2020-09-23 12:41:21', '2021-03-25 12:01:21', 'Gollardo Lamborhini!!!', NULL, 1),
+(5, 'CAR-4567', 2, 2, 2, 1500, 25000, '2020-09-23 12:41:21', '2021-03-25 12:01:21', 'Gollardo Lamborhini!!!', NULL, 10),
 (6, 'KE-8978', 11, 1, 1, 200000, 5000, '2020-09-23 13:36:19', NULL, '', NULL, 10),
-(8, 'BBY-9190', 3, 1, 1, 100000, 3000, '2020-09-24 06:50:58', '2020-09-25 14:57:26', '', NULL, 10),
+(8, 'BBY-9190', 3, 3, 3, 100000, 3000, '2020-09-24 06:50:58', '2020-09-25 14:57:26', '', NULL, 10),
 (9, 'BBY-9342', 6, 2, 2, 180000, 4000, '2020-09-24 06:52:38', '2021-01-28 10:24:06', '', NULL, 10),
 (10, 'BSX-8767', 10, 3, 3, 50000, 5000, '2020-09-25 08:28:12', '2020-09-25 15:17:07', '', NULL, 10),
 (11, 'BBX-9190', 1, 3, 3, 80000, 100000, '2020-10-26 00:56:18', '2020-10-26 00:56:25', 'Second Service', NULL, 10),
-(12, '', 0, 0, 0, 0, 0, '2021-01-27 13:54:16', NULL, '', NULL, 0),
 (13, 'BBX-9190', 1, 0, 0, 0, 0, '2021-01-27 13:55:27', NULL, '', NULL, 0),
-(14, 'BBY-9342', 6, 2, 2, 0, 0, '2021-01-27 13:56:29', '2021-01-28 10:22:20', '', NULL, 1),
+(14, 'BBY-9342', 6, 2, 2, 0, 0, '2021-01-27 13:56:29', '2021-01-28 10:22:20', '', NULL, 10),
 (15, 'BBX-9190', 1, 3, 3, 0, 0, '2021-01-27 13:56:48', '2021-01-27 14:06:46', '', NULL, 10),
 (16, 'BSX-8767', 0, 0, 0, 0, 0, '2021-01-28 10:54:21', NULL, '', NULL, 0),
 (17, 'HSD-6745', 14, 1, 1, 1000000, 4000, '2021-01-28 11:00:02', NULL, 'First time service.', NULL, 0),
-(18, '', 0, 0, 0, 0, 0, '2021-01-28 15:54:01', NULL, '', NULL, 0),
-(19, 'sdfsdf', 0, 0, 0, 0, 0, '2021-01-28 15:54:14', NULL, '', NULL, 0),
-(20, 'CDF-5678', 17, 1, 1, 50000, 6000, '2021-03-25 10:12:12', NULL, 'A notification test entry!', NULL, 0);
+(20, 'CDF-5678', 17, 1, 1, 50000, 6000, '2021-03-25 10:12:12', NULL, 'A notification test entry!', NULL, 0),
+(21, 'BBX-9190', 1, 1, 1, 60000, 5000, '2021-03-29 01:39:14', '2021-03-29 01:39:27', '', NULL, 10),
+(22, 'CWW-9087', 19, 1, 1, 50000, 5000, '2021-04-13 02:38:58', '2021-04-13 02:39:25', '', NULL, 10),
+(34, 'BBX-9190', 1, 3, 3, 100000, 5000, '2021-04-14 02:17:40', '2021-04-15 14:56:50', 'Multiple Job!', NULL, 1),
+(35, 'BBE-9876', 9, 2, 2, 500000, 2000, '2021-04-14 02:29:21', NULL, 'Last Job ID check!', NULL, 0),
+(36, 'CIA-5690', 4, 1, 1, 500000, 10000, '2021-04-16 00:47:38', NULL, 'Customer Manage AJAX Request Check!', NULL, 0),
+(37, 'AAB-7856', 30, 3, 3, 10000, 5000, '2021-04-16 00:50:41', NULL, 'Customer Loyalty Program Check!', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -630,7 +785,63 @@ INSERT INTO `notification` (`not_id`, `not_nt_id`, `not_message`, `not_sent_date
 (20, 2, 'A new item category named <i><b>Notification Test Item Category</b></i> has been created', '2021-03-25 16:11:26', 0, 0),
 (21, 4, 'A new customer named <i><b>Roger Rogans</b></i> created', '2021-03-25 17:26:42', 0, 0),
 (22, 1, 'A new service named <i><b>Engine Oil Change</b></i> has been created', '2021-03-25 17:30:45', 0, 0),
-(23, 3, 'Job status has been changed to <i><b>completed, </b></i> of <i><b>5</b></i>', '2021-03-25 17:31:21', 0, 0);
+(23, 3, 'Job status has been changed to <i><b>completed, </b></i> of <i><b>5</b></i>', '2021-03-25 17:31:21', 0, 0),
+(24, 3, 'A new job <i><b>21</b></i>, for vehicle number <b><i>BBX-9190</i></b> has been created', '2021-03-29 07:09:14', 0, 0),
+(25, 3, 'Job status has been changed to <i><b>completed, </b></i> of <i><b>21</b></i>', '2021-03-29 07:09:28', 0, 0),
+(26, 4, 'Customer vehicle make of <i><b>3</b></i> has been changed to <i><b>3</b></i>', '2021-04-01 22:10:07', 0, 0),
+(27, 4, 'Customer vehicle model of <i><b>3</b></i> has been changed to <i><b>3</b></i>', '2021-04-01 22:10:09', 0, 0),
+(28, 1, 'A new service named <i><b>Engine Tuning</b></i> has been created', '2021-04-13 08:04:29', 0, 0),
+(29, 4, 'A new customer named <i><b>Kamal Ranasinghe</b></i> created', '2021-04-13 08:07:47', 0, 0),
+(30, 3, 'A new job <i><b>22</b></i>, for vehicle number <b><i>CWW-9087</i></b> has been created', '2021-04-13 08:08:58', 0, 0),
+(31, 3, 'Job status has been changed to <i><b>completed, </b></i> of <i><b>22</b></i>', '2021-04-13 08:09:25', 0, 0),
+(32, 3, 'A new job <i><b>23</b></i>, for vehicle number <b><i>BBX-9192</i></b> has been created', '2021-04-13 08:09:59', 0, 0),
+(33, 5, 'A new purchase order, <i><b>40</i></b> to <i><b>1</i></b> has been created', '2021-04-13 08:16:28', 0, 0),
+(34, 5, 'A new good received note, <i><b>11</i></b> to purchase order, <i><b>39</i></b> has been created', '2021-04-13 08:17:57', 0, 0),
+(35, 3, 'A new job <i><b>24</b></i>, for vehicle number <b><i>BBX-9192</i></b> has been created', '2021-04-14 06:56:11', 0, 0),
+(36, 3, 'A new job <i><b>25</b></i>, for vehicle number <b><i></i></b> has been created', '2021-04-14 07:01:18', 0, 0),
+(37, 3, 'A new job <i><b>26</b></i>, for vehicle number <b><i></i></b> has been created', '2021-04-14 07:01:50', 0, 0),
+(38, 3, 'A new job <i><b>27</b></i>, for vehicle number <b><i></i></b> has been created', '2021-04-14 07:03:18', 0, 0),
+(39, 3, 'A new job <i><b>28</b></i>, for vehicle number <b><i></i></b> has been created', '2021-04-14 07:03:32', 0, 0),
+(40, 3, 'A new job <i><b>29</b></i>, for vehicle number <b><i></i></b> has been created', '2021-04-14 07:04:27', 0, 0),
+(41, 3, 'A new job <i><b>30</b></i>, for vehicle number <b><i></i></b> has been created', '2021-04-14 07:06:03', 0, 0),
+(42, 3, 'A new job <i><b>31</b></i>, for vehicle number <b><i></i></b> has been created', '2021-04-14 07:06:12', 0, 0),
+(43, 3, 'A new job <i><b>32</b></i>, for vehicle number <b><i></i></b> has been created', '2021-04-14 07:07:23', 0, 0),
+(44, 3, 'A new job <i><b>33</b></i>, for vehicle number <b><i>HSD-6745</i></b> has been created', '2021-04-14 07:29:42', 0, 0),
+(45, 3, 'A new job <i><b>34</b></i>, for vehicle number <b><i>BBX-9190</i></b> has been created', '2021-04-14 07:47:40', 0, 0),
+(46, 3, 'A new job <i><b>35</b></i>, for vehicle number <b><i>BBE-9876</i></b> has been created', '2021-04-14 07:59:21', 0, 0),
+(47, 4, 'A new customer named <i><b>Ishara Perera</b></i> created', '2021-04-14 08:55:54', 0, 0),
+(48, 4, 'A new customer named <i><b>sdfsdfsd</b></i> created', '2021-04-14 09:21:13', 0, 0),
+(49, 4, 'A new loyalty program named <i><b>Small</b></i> created', '2021-04-15 12:22:37', 0, 0),
+(50, 4, 'A new loyalty program named <i><b>Small</b></i> created', '2021-04-15 12:23:21', 0, 0),
+(51, 4, 'A new loyalty program named <i><b>Medium</b></i> created', '2021-04-15 12:25:21', 0, 0),
+(52, 4, 'A new loyalty program named <i><b>Large</b></i> created', '2021-04-15 12:25:37', 0, 0),
+(53, 3, 'Job status has been changed to <i><b>completed, </b></i> of <i><b>34</b></i>', '2021-04-15 20:26:50', 0, 0),
+(54, 4, 'A new customer named <i><b>Kamal</b></i> created', '2021-04-15 21:54:15', 0, 0),
+(55, 4, 'A new customer named <i><b>Malindi</b></i> created', '2021-04-15 21:57:56', 0, 0),
+(56, 4, 'A new customer named <i><b>Shermila</b></i> created', '2021-04-15 22:00:31', 0, 0),
+(57, 4, 'A new customer named <i><b>Chathu</b></i> created', '2021-04-15 22:01:26', 0, 0),
+(58, 4, 'A new customer named <i><b>Dilmi</b></i> created', '2021-04-15 22:03:00', 0, 0),
+(59, 4, 'A new customer named <i><b>Nipuni Sanjana</b></i> created', '2021-04-15 22:05:05', 0, 0),
+(60, 4, 'A new customer named <i><b>Chamodi</b></i> created', '2021-04-15 22:09:24', 0, 0),
+(61, 4, 'A new customer named <i><b>Hiran</b></i> created', '2021-04-15 22:11:12', 0, 0),
+(62, 4, 'A new customer named <i><b>Kumara Sandaruwa</b></i> created', '2021-04-16 05:06:15', 0, 0),
+(63, 4, 'The new customer <i><b>Kumara Sandaruwa</b></i> has obtained <b><i>1</i></b> point!', '2021-04-16 05:06:15', 0, 0),
+(64, 3, 'A new job <i><b>36</b></i>, for vehicle number <b><i>CIA-5690</i></b> has been created', '2021-04-16 06:17:38', 0, 0),
+(65, 3, 'A new job <i><b>37</b></i>, for vehicle number <b><i>AAB-7856</i></b> has been created', '2021-04-16 06:20:41', 0, 0),
+(66, 4, 'Loyalty Program Name of <i><b>1</b></i> has been changed to <i><b>Small for Beginners</b></i>', '2021-04-16 07:53:23', 0, 0),
+(67, 4, 'Loyalty Program Name of <i><b>3</b></i> has been changed to <i><b>Medium for Loyal Customers</b></i>', '2021-04-16 07:53:36', 0, 0),
+(68, 4, 'Loyalty Program Name of <i><b>4</b></i> has been changed to <i><b>Large for Partners</b></i>', '2021-04-16 07:54:01', 0, 0),
+(69, 4, 'Loyalty Program Points of <i><b>4</b></i> has been changed to <i><b>15</b></i>', '2021-04-16 07:58:29', 0, 0),
+(70, 4, 'Loyalty Program Points of <i><b>4</b></i> has been changed to <i><b>10</b></i>', '2021-04-16 07:58:36', 0, 0),
+(71, 4, 'Loyalty Program Reward of <i><b>1</b></i> has been changed to <i><b>50% off from the next service fuck off bitch</b></i>', '2021-04-16 08:03:31', 0, 0),
+(72, 4, 'Loyalty Program Reward of <i><b>1</b></i> has been changed to <i><b>50% off from the next service</b></i>', '2021-04-16 08:03:49', 0, 0),
+(73, 4, 'Loyalty Program Points of <i><b>1</b></i> has been changed to <i><b>1</b></i>', '2021-04-16 08:04:07', 0, 0),
+(74, 4, 'Loyalty Program Points of <i><b>1</b></i> has been changed to <i><b>2</b></i>', '2021-04-16 08:04:14', 0, 0),
+(75, 4, 'Loyalty Program Name of <i><b>2</b></i> has been changed to <i><b>Medium</b></i>', '2021-04-16 09:09:27', 0, 0),
+(76, 4, 'Loyalty Program Name of <i><b>3</b></i> has been changed to <i><b>Large</b></i>', '2021-04-16 09:11:15', 0, 0),
+(77, 4, 'Loyalty Program Name of <i><b>1</b></i> has been changed to <i><b>Small</b></i>', '2021-04-16 09:15:01', 0, 0),
+(78, 4, 'A new loyalty point category named <i><b>Test</b></i> created', '2021-04-16 09:50:39', 0, 0),
+(79, 4, 'A new loyalty point category named <i><b>Success Message Point</b></i> created', '2021-04-16 10:19:25', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -678,12 +889,12 @@ CREATE TABLE `report_module` (
 --
 
 INSERT INTO `report_module` (`rm_id`, `rm_name`, `rm_color`, `rm_icon`, `rm_url`) VALUES
-(1, 'Service Reports', 'primary', 'car', 'report-service.php'),
-(2, 'Inventory Reports', 'danger', 'list', 'report-inventory.php'),
-(3, 'Job Reports', 'success', 'tasks', 'report-job.php'),
-(4, 'Customer Reports', 'info', 'users', 'report-customer.php'),
-(5, 'Sale Reports', 'warning', 'shopping-cart', 'report-sale.php'),
-(6, 'Employee Reports', 'secondary', 'address-card', 'report-worker.php');
+(1, 'Service Reports', 'primary', 'car', 'service.php'),
+(2, 'Inventory Reports', 'danger', 'list', 'inventory.php'),
+(3, 'Job Reports', 'success', 'tasks', 'job.php'),
+(4, 'Customer Reports', 'info', 'users', 'customer.php'),
+(5, 'Sale Reports', 'warning', 'shopping-cart', 'sale.php'),
+(6, 'Employee Reports', 'secondary', 'address-card', 'worker.php');
 
 -- --------------------------------------------------------
 
@@ -713,7 +924,8 @@ INSERT INTO `sale_grn` (`sgrn_id`, `sgrn_po_id`, `sgrn_total_amount`, `sgrn_crea
 (7, 35, 45000, '2021-01-27 14:29:11', NULL),
 (8, 33, 3200, '2021-01-27 14:29:58', NULL),
 (9, 34, 0, '2021-01-28 11:58:36', NULL),
-(10, 34, 0, '2021-01-28 16:04:20', NULL);
+(10, 34, 0, '2021-01-28 16:04:20', NULL),
+(11, 39, 183000, '2021-04-13 02:47:57', NULL);
 
 -- --------------------------------------------------------
 
@@ -752,7 +964,9 @@ INSERT INTO `sale_grn_item` (`sgi_id`, `sgi_item_id`, `sgi_p_price`, `sgi_qty`, 
 (15, 12, 1000, 45, 45000, 7),
 (16, 6, 800, 4, 3200, 8),
 (17, 6, 800, 0, 0, 9),
-(18, 6, 800, 0, 0, 10);
+(18, 6, 800, 0, 0, 10),
+(19, 1, 45000, 4, 180000, 11),
+(20, 10, 1000, 3, 3000, 11);
 
 -- --------------------------------------------------------
 
@@ -810,7 +1024,8 @@ INSERT INTO `sale_purchase_order` (`po_id`, `po_amount`, `po_supplier_id`, `po_c
 (36, 0, 1, '2021-01-28 11:52:44', NULL),
 (37, 0, 1, '2021-01-28 15:55:45', NULL),
 (38, 270000, 1, '2021-01-28 15:59:48', NULL),
-(39, 272000, 1, '2021-03-25 10:33:08', NULL);
+(39, 272000, 1, '2021-03-25 10:33:08', NULL),
+(40, 53500, 1, '2021-04-13 02:46:28', NULL);
 
 -- --------------------------------------------------------
 
@@ -884,7 +1099,9 @@ INSERT INTO `sale_purchase_order_item` (`poi_id`, `poi_item_id`, `poi_item_price
 (50, 0, 0, 0, 0, 37),
 (51, 1, 45000, 6, 270000, 38),
 (52, 1, 45000, 6, 270000, 39),
-(53, 10, 1000, 2, 2000, 39);
+(53, 10, 1000, 2, 2000, 39),
+(54, 6, 850, 10, 8500, 40),
+(55, 1, 4500, 10, 45000, 40);
 
 -- --------------------------------------------------------
 
@@ -923,11 +1140,12 @@ INSERT INTO `service` (`service_id`, `service_name`, `service_price`, `service_r
 (2, 'Interior Body Wash', 1500, 10, 20, 0, 0, 0, 0, 100, 0, 0, 0, 2, 2, '2020-09-10 08:05:04', NULL, 'Clean the inside!', 1),
 (6, 'Test Service Hello', 20000, 10, 0, 0, 0, 0, 0, 200, 0, 0, 0, 1, 1, '2020-09-11 11:39:54', NULL, '', 1),
 (7, 'Body Wash', 1500, 10, 0, 0, 0, 0, 0, 100, 200, 0, 0, 1, 2, '2020-09-22 06:06:23', NULL, 'dghe', 1),
-(8, 'Cut And Polishdfsd', 0, 8, 0, 0, 0, 0, 0, 100, 0, 0, 0, 2, 2, '2021-01-27 00:10:00', NULL, '', 1),
-(9, 'Hello', 1500, 6, 0, 0, 0, 0, 0, 100, 0, 0, 0, 1, 1, '2021-01-28 07:24:13', NULL, '', 1),
-(10, 'Test Results - updating', 0, 8, 0, 0, 0, 0, 0, 100, 0, 0, 0, 3, 3, '2021-01-28 15:00:20', NULL, '', 1),
+(8, 'Cut And Polishdfsd', 0, 8, 0, 0, 0, 0, 0, 100, 0, 0, 0, 2, 2, '2021-01-27 00:10:00', NULL, '', 0),
+(9, 'Hello', 1500, 6, 0, 0, 0, 0, 0, 100, 0, 0, 0, 1, 1, '2021-01-28 07:24:13', NULL, '', 0),
+(10, 'Test Results - updating', 0, 8, 0, 0, 0, 0, 0, 100, 0, 0, 0, 3, 3, '2021-01-28 15:00:20', NULL, '', 0),
 (11, 'Clean The Body Parts', 1500, 17, 0, 0, 0, 0, 0, 100, 0, 0, 0, 5, 4, '2021-03-25 11:54:12', NULL, '', 1),
-(12, 'Engine Oil Change', 1500, 1, 0, 0, 0, 0, 0, 100, 0, 0, 0, 1, 1, '2021-03-25 12:00:45', NULL, '', 1);
+(12, 'Engine Oil Change', 1500, 1, 0, 0, 0, 0, 0, 100, 0, 0, 0, 1, 1, '2021-03-25 12:00:45', NULL, '', 1),
+(13, 'Engine Tuning', 1500, 15, 0, 0, 0, 0, 0, 100, 0, 0, 0, 1, 1, '2021-04-13 02:34:28', NULL, '', 1);
 
 -- --------------------------------------------------------
 
@@ -1010,7 +1228,7 @@ INSERT INTO `supplier` (`sup_id`, `sup_name`, `sup_address_home`, `sup_address_s
 (1, 'Salinda Super', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-15 01:12:13', 1),
 (2, 'Uniliever', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-15 01:12:13', 1),
 (3, 'Anchor', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-15 01:12:13', 1),
-(5, 'Ishara Traders', '185/A/2', 'Bollatha', 'Ganemulla', 'Western Provice, Sri Lanka', '0778154411', '0762084411', 'ishara.traders@gmail.com', '', '2020-10-02 14:32:49', 1),
+(5, 'Ishara Traders', '185/A/2', 'Bollatha', 'Ganemulla', 'Western Provice, Sri Lanka', '0778154411', '0762084411', 'ishara.traders@gmail.com', 'Best Trading Company in the Area', '2020-10-02 14:32:49', 1),
 (8, 'Amaron', '', '', '', '', '0112240148', '', '', '', '2020-10-03 13:25:04', 1);
 
 -- --------------------------------------------------------
@@ -1127,6 +1345,36 @@ ALTER TABLE `customer`
 --
 ALTER TABLE `customer_feedback_message`
   ADD PRIMARY KEY (`cfm_id`);
+
+--
+-- Indexes for table `customer_loyalty`
+--
+ALTER TABLE `customer_loyalty`
+  ADD PRIMARY KEY (`loyalty_id`);
+
+--
+-- Indexes for table `customer_loyalty_color`
+--
+ALTER TABLE `customer_loyalty_color`
+  ADD PRIMARY KEY (`clc_id`);
+
+--
+-- Indexes for table `customer_points`
+--
+ALTER TABLE `customer_points`
+  ADD PRIMARY KEY (`cp_id`);
+
+--
+-- Indexes for table `customer_point_allocation`
+--
+ALTER TABLE `customer_point_allocation`
+  ADD PRIMARY KEY (`cpa_id`);
+
+--
+-- Indexes for table `customer_referral`
+--
+ALTER TABLE `customer_referral`
+  ADD PRIMARY KEY (`cr_id`);
 
 --
 -- Indexes for table `employee`
@@ -1320,13 +1568,43 @@ ALTER TABLE `vehicle_model`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `cus_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `cus_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `customer_feedback_message`
 --
 ALTER TABLE `customer_feedback_message`
   MODIFY `cfm_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `customer_loyalty`
+--
+ALTER TABLE `customer_loyalty`
+  MODIFY `loyalty_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `customer_loyalty_color`
+--
+ALTER TABLE `customer_loyalty_color`
+  MODIFY `clc_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `customer_points`
+--
+ALTER TABLE `customer_points`
+  MODIFY `cp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `customer_point_allocation`
+--
+ALTER TABLE `customer_point_allocation`
+  MODIFY `cpa_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `customer_referral`
+--
+ALTER TABLE `customer_referral`
+  MODIFY `cr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `employee`
@@ -1356,19 +1634,19 @@ ALTER TABLE `employee_roster`
 -- AUTO_INCREMENT for table `invoice`
 --
 ALTER TABLE `invoice`
-  MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `invoice_item`
 --
 ALTER TABLE `invoice_item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `invoice_service`
 --
 ALTER TABLE `invoice_service`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `item`
@@ -1404,7 +1682,7 @@ ALTER TABLE `item_stock_level`
 -- AUTO_INCREMENT for table `job`
 --
 ALTER TABLE `job`
-  MODIFY `job_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `job_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `job_item`
@@ -1422,7 +1700,7 @@ ALTER TABLE `login`
 -- AUTO_INCREMENT for table `notification`
 --
 ALTER TABLE `notification`
-  MODIFY `not_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `not_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
 
 --
 -- AUTO_INCREMENT for table `notification_type`
@@ -1440,31 +1718,31 @@ ALTER TABLE `report_module`
 -- AUTO_INCREMENT for table `sale_grn`
 --
 ALTER TABLE `sale_grn`
-  MODIFY `sgrn_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `sgrn_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `sale_grn_item`
 --
 ALTER TABLE `sale_grn_item`
-  MODIFY `sgi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `sgi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `sale_purchase_order`
 --
 ALTER TABLE `sale_purchase_order`
-  MODIFY `po_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `po_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `sale_purchase_order_item`
 --
 ALTER TABLE `sale_purchase_order_item`
-  MODIFY `poi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `poi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `service`
 --
 ALTER TABLE `service`
-  MODIFY `service_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `service_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `service_category`

@@ -1,4 +1,17 @@
 $(document).ready(function() {
+
+    $("#table_manage, #table_search_manage").on("click", "#table_data_delete_service_id a", function () {
+        const sid = $(this).data('id');
+        const url = "../controller/servicecontroller.php?status=delete_service";
+        $("#btn_modal_delete_service_confirm").click(function (){
+            $.post(url, {delete_service_id: sid}, function (data, success) {
+                $(".div-delete-message").html(data).addClass("alert alert-danger");
+                $("#modal_delete_service").modal('hide');
+                window.setTimeout(function(){location.reload()},3000)
+            });
+        });
+    });
+
     $("#table_manage, #table_search_manage").on("click", "#table_data_manage_service_id a", function () {
         const sid = $(this).data('id');
 
@@ -24,7 +37,7 @@ $(document).ready(function() {
                 $("#btn_service_name_check").click(function(){
                     $("input[id='manage_service_name']").prop("readonly",true);
                     $(this).hide();
-                        $("#btn_service_name_pencil").show();
+                    $("#btn_service_name_pencil").show();
                 });
 
             });
@@ -121,7 +134,7 @@ $(document).ready(function() {
     });
     $("#table_manage_categories_del a").click(function(){
         const delSubCatId = $(this).data('id');
-       $("#td_service_name input[id='txt_change_sub_cat_name"+delSubCatId+"']").prop("readonly", true);
+        $("#td_service_name input[id='txt_change_sub_cat_name"+delSubCatId+"']").prop("readonly", true);
     });
 
 
@@ -169,21 +182,21 @@ $(document).ready(function() {
     const u = "../controller/servicecontroller.php?status=change_service";
 
     changeServiceName = function (id){
-      let serviceName = $("#manage_service_name").val();
-      $.ajax({
-          url: u,
-          method: "post",
-          data: {serviceId:id, serviceName:serviceName},
-          dataType: "html",
-          success: function(data){
-              if(data == "1") {
-                  $(".service-update-message").html("Service Name Updated Successfully!").addClass("alert alert-success");
-              } else {
-                  $(".service-update-message").html("Service Name Failed to Update!").addClass("alert alert-danger");
+        let serviceName = $("#manage_service_name").val();
+        $.ajax({
+            url: u,
+            method: "post",
+            data: {serviceId:id, serviceName:serviceName},
+            dataType: "html",
+            success: function(data){
+                if(data == "1") {
+                    $(".service-update-message").html("Service Name Updated Successfully!").addClass("alert alert-success");
+                } else {
+                    $(".service-update-message").html("Service Name Failed to Update!").addClass("alert alert-danger");
 
-              }
-          }
-      })
+                }
+            }
+        })
     };
 
     changeServicePrice = function (id){
@@ -240,6 +253,6 @@ $(document).ready(function() {
         })
     };
 
-
 });
+
 

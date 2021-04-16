@@ -76,8 +76,8 @@ $cusObj = new Customer();
                         <div class="modal-body customer-manage-modal"></div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-outline-primary save-changes">Save Changes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary save-changes">Save Changes</button>
                     </div>
                 </form>
             </div>

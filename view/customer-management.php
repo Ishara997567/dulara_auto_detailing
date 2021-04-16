@@ -1,4 +1,9 @@
-<?php include '../includes/header.php'; ?>
+<?php include '../includes/header.php';
+include '../model/customer_model.php';
+
+$cusObj = new Customer();
+
+?>
 <title>Customer Management</title>
 <!--Load the AJAX API-->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -137,7 +142,10 @@
     <!-- End of Error Message From the Controller  -->
 
 
-
+    <?php
+    $result = $cusObj->getNewCustomerID();
+    $r = $result->fetch_assoc();
+    ?>
 
 
 
@@ -151,7 +159,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="../controller/customercontroller.php?status=add_customer" method="post">
+                <form action="../controller/customercontroller.php?status=add_customer" method="post" id="frm_customer">
                     <div class="modal-body">
                         <div class="row padding d-flex justify-content-center">
                             <div class="col-6 text-center" id="error_new_customer">
@@ -163,7 +171,7 @@
                             <!-- Cus code  -->
                             <div class="form-group col-2">
                                 <label for="cus_code">Customer Code</label>
-                                <input type="text" class="form-control" readonly="readonly" id="cus_code" name="cus_code" placeholder="Customer Code">
+                                <input type="text" class="form-control" readonly="readonly" id="cus_code" name="cus_code" value="<?php echo $r['NewCusID']; ?>">
                             </div>
 
                         </div>
@@ -174,7 +182,7 @@
                         <div class="form-row">
                             <!-- Cus Vehicle No  -->
                             <div class="form-group col-4">
-                                <label for="cus_code">Vehicle Number</label>
+                                <label for="cus_vehicle_no">Vehicle Number</label>
                                 <input type="text" class="form-control" id="cus_vehicle_no" name="cus_vehicle_no" placeholder="Vehicle Number">
                             </div>
 
@@ -231,10 +239,39 @@
                         <!--    email   -->
                         <div class="form-row">
                             <div class="form-group col-6">
-                                <label for="email">Customer Email</label>
+                                <label for="cus_email">Customer Email</label>
                                 <input type="email" class="form-control" id="cus_email" name="cus_email" placeholder="username@example.com" >
                             </div>
                         </div>
+
+            <!-- Customer Referral Radio Buttons  -->
+                        <div class="row">
+                            <legend class="col-form-label col-md-2 pt-0">Customer Referral</legend>
+                            <div class="col-md-1">
+                                <div class="form-check text-left">
+                                    <input class="form-check-input" type="radio" name="cus_referral" id="cus_referral_yes" value="1">
+                                    <label class="form-check-label" for="cus_referral_yes">
+                                        Yes
+                                    </label>
+                                </div>
+                                <div class="form-check text-left">
+                                    <input class="form-check-input" type="radio" name="cus_referral" id="cus_referral_no" value="0" checked>
+                                    <label class="form-check-label" for="cus_referral_no">
+                                        No
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 text-left">
+                                <input type="text" id="cus_referral_invoice_id" name="cus_referral_invoice_id" class="form-control" placeholder="Enter Invoice ID">
+                            </div>
+
+                            <div class="col-md-6 text-left">
+                                <textarea name="cus_referral_description" id="cus_referral_description" class="form-control"></textarea>
+                            </div>
+                        </div>
+
+
 
                     </div>
                     <div class="modal-footer">
@@ -255,45 +292,33 @@
                     <h4 class="card-title">Loyalty Programs & Packages</h4>
                     <!-- First row 2 Loyalty Packages -->
                     <div class="row">
-                        <div class="col-sm-6">
-                            <div class="card bg-danger">
+                        <?php
+                        $loyalty_result = $cusObj->getLoyaltyToShowcase();
+                        while($r = $loyalty_result->fetch_assoc())
+                        {
+                        ?>
+                        <div class="col-sm-6 p-2">
+                            <div class="card bg-<?php echo $r['color']; ?>">
                                 <div class="card-body">
-                                    <h5 class="card-title">Loyalty Program 1</h5>
-                                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                    <a href="#" class="btn btn-outline-primary">Go somewhere</a>
+                                    <h5 class="card-title h2"><?php echo $r['loyalty_name']; ?></h5>
+                                    <table class="table table-sm">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">Loyalty Reward</th>
+                                            <td><?php echo $r['loyalty_reward']; ?></td>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">Points</th>
+                                                <td><?php echo $r['loyalty_points']; ?></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6">
-                            <div class="card bg-warning">
-                                <div class="card-body">
-                                    <h5 class="card-title">Loyalty Program 2</h5>
-                                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                    <a href="#" class="btn btn-outline-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Second row 2 loyalty packages  -->
-                    <div class="row mt-4">
-                        <div class="col-sm-6">
-                            <div class="card bg-success">
-                                <div class="card-body">
-                                    <h5 class="card-title">Loyalty Program 3</h5>
-                                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                    <a href="#" class="btn btn-outline-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="card bg-secondary">
-                                <div class="card-body">
-                                    <h5 class="card-title">Loyalty Program 4</h5>
-                                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                    <a href="#" class="btn btn-outline-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
+                        <?php } ?>
                     </div>
                     <div class="col-md-12 d-flex justify-content-end mt-2">
                         <a href="customer-loyalty-manage.php" class="btn btn-outline-primary rounded-pill">Manage Loyalty</a>
