@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 16, 2021 at 08:46 AM
+-- Generation Time: Apr 18, 2021 at 11:35 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.4.14
 
@@ -75,6 +75,44 @@ INSERT INTO `customer` (`cus_id`, `cus_name`, `cus_vehicle_no`, `cus_add_l1`, `c
 (28, 'Chamodi', 'AAA-4312', '', '', '', '', '0778451698', '', '', 1, '2021-04-15 16:39:24', 1),
 (29, 'Hiran', 'AAA-9871', '', '', '', '', '0784512369', '', '', 1, '2021-04-15 16:41:12', 1),
 (30, 'Kumara Sandaruwa', 'AAB-7856', 'No. 23', 'Bohaga Junction', 'Kurunegala', 'Sri Lanka', '0784512965', '', '', 1, '2021-04-15 23:36:14', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer_feedback`
+--
+
+CREATE TABLE `customer_feedback` (
+  `feedback_id` int(11) NOT NULL,
+  `feedback_cus_name` text DEFAULT NULL,
+  `feedback_cus_vno` varchar(255) DEFAULT NULL,
+  `feedback_invoice` varchar(255) DEFAULT NULL,
+  `feedback_star_rating` int(11) DEFAULT NULL,
+  `feedback_review` text DEFAULT NULL,
+  `feedback_is_liked` int(11) DEFAULT 0,
+  `feedback_is_replied` int(11) DEFAULT 0,
+  `feedback_reply` text DEFAULT NULL,
+  `feedback_created_at` timestamp NULL DEFAULT current_timestamp(),
+  `feedback_status` int(11) DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `customer_feedback`
+--
+
+INSERT INTO `customer_feedback` (`feedback_id`, `feedback_cus_name`, `feedback_cus_vno`, `feedback_invoice`, `feedback_star_rating`, `feedback_review`, `feedback_is_liked`, `feedback_is_replied`, `feedback_reply`, `feedback_created_at`, `feedback_status`) VALUES
+(1, 'Ishara Perera', 'BBX-9190', 'INT1', 5, 'Very Good', 1, 1, 'Thank you for the feedback!', '2021-04-18 09:47:45', 1),
+(2, 'Lasini Senevirathne', 'BBY-9190', '8', 5, 'Very Good!', 1, 0, '', '2021-04-18 09:49:25', 1),
+(3, 'Lasini Senevirathne', 'BBY-9190', '8', 5, 'Very Good!', 1, 0, '', '2021-04-18 09:50:25', 1),
+(4, 'Test', 'BBY-9871', '1', 3, 'Test', 0, 0, NULL, '2021-04-18 09:50:57', 1),
+(5, 'Test2', 'CAR-4567', '1', 5, 'Test2', 1, 0, NULL, '2021-04-18 09:51:28', 1),
+(6, 'Test3', 'VVV-8970', '1', 5, 'Test3', 0, 0, NULL, '2021-04-18 09:52:35', 1),
+(7, 'Test3', 'VVV-8970', '1', 5, 'Test3', 0, 0, NULL, '2021-04-18 09:52:38', 1),
+(8, 'Ishara', 'BBX-9190', '2', 5, 'Hello', 1, 0, NULL, '2021-04-18 09:54:04', 1),
+(9, 'Ishara', 'BBX-9190', '2', 5, 'Hello', 1, 0, '', '2021-04-18 09:54:33', 1),
+(12, 'Niroshan Premarathne', 'BSX-8767', '10', 5, 'Really good!', 0, 1, 'Thank you Niroshan sir! Come again soon...', '2021-04-18 09:56:52', 1),
+(13, 'Test3', 'BBV-0391', '1', 5, 'Test3', 0, 0, NULL, '2021-04-18 09:58:14', 1),
+(14, 'Dinuth Randika', 'TTT-3456', '23', 5, 'Really Appreaciated!', 0, 0, NULL, '2021-04-18 13:12:31', 1);
 
 -- --------------------------------------------------------
 
@@ -1341,6 +1379,12 @@ ALTER TABLE `customer`
   ADD PRIMARY KEY (`cus_id`);
 
 --
+-- Indexes for table `customer_feedback`
+--
+ALTER TABLE `customer_feedback`
+  ADD PRIMARY KEY (`feedback_id`);
+
+--
 -- Indexes for table `customer_feedback_message`
 --
 ALTER TABLE `customer_feedback_message`
@@ -1569,6 +1613,12 @@ ALTER TABLE `vehicle_model`
 --
 ALTER TABLE `customer`
   MODIFY `cus_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+
+--
+-- AUTO_INCREMENT for table `customer_feedback`
+--
+ALTER TABLE `customer_feedback`
+  MODIFY `feedback_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `customer_feedback_message`
