@@ -339,39 +339,38 @@ $cusObj = new Customer();
                         <!--                    <a href="#" class="btn btn-outline-primary">Go somewhere</a>-->
                     </div>
                     <!-- Review Viewing -->
+
                     <div class="row mt-2">
                         <div class="col-md-12 h5">Top Reviews</div>
+                        <?php
+                        $review_result = $cusObj->getReviews();
+                        while($r = $review_result->fetch_assoc())
+                        {
+
+                            $is_liked = $r['feedback_is_liked'];
+                            $is_liked_class = $is_liked == 0 ? "secondary" : "danger";
+
+                            $is_replied = $r['feedback_is_replied'];
+                            $reply = $r['feedback_reply'];
+                            $is_replied_class = $is_replied == 0 ? "secondary" : "success";
+                        ?>
                         <!-- Review 1   -->
-                        <div class="col-md-6">
+                        <div class="col-md-6 mb-2">
                             <div class="card" style="width: 18rem;">
                                 <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                    <h5 class="card-title"><?php echo $r['cus_name']; ?></h5>
+                                    <h6 class="card-subtitle mb-2 text-muted"><?php echo $r['cus_vehicle_no']; ?></h6>
+                                    <p class="card-text"><?php echo $r['feedback_review']; ?></p>
                                     <div class="col-md-12 d-flex justify-content-end">
-                                        <a href="#" class="card-link btn btn-outline-dark border-0"><i class="fa fa-heart"></i></a>
-                                        <a href="#" class="card-link btn btn-outline-dark border-0"><i class="fa fa-comment"></i></a>
+<a href="#" class="homepage-is-like card-link btn btn-outline-<?php echo $is_liked_class; ?> border-0" data-fid="<?php echo $r['feedback_id']; ?>" data-cs="<?php echo $is_liked; ?>"><i class="fa fa-heart"></i></a>
+
+                                        <a href="#modal_feedback_reply" data-toggle="modal" data-target="#modal_feedback_reply" class="homepage-reply btn-sm btn-outline-<?php echo $is_replied_class; ?>" data-id="<?php echo $r['feedback_id']; ?>" data-fid="<?php echo $r['feedback_id']; ?>" data-replied="<?php echo $is_replied; ?>" data-reply="<?php echo $reply; ?>"><i class="fa fa-comment fa-lg"></i></a>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Review 2   -->
-                        <div class="col-md-6">
-                            <div class="card" style="width: 18rem;">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    <div class="col-md-12 d-flex justify-content-end">
-                                        <a href="#" class="card-link btn btn-outline-danger border-0"><i class="fa fa-heart"></i></a>
-                                        <a href="#" class="card-link btn btn-outline-success border-0"><i class="fa fa-comment"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
+                        <?php } ?>
                     </div>
                     <div class="col-md-12 d-flex justify-content-end mt-2">
                         <a href="customer-feedback-manage.php" class="btn btn-outline-primary rounded-pill">Manage Feedbacks</a>
@@ -379,6 +378,49 @@ $cusObj = new Customer();
                 </div>
             </div>
         </div>
+
+
+
+
+        <!-- Feedback Reply Modal -->
+
+
+        <div class="modal fade" id="modal_feedback_reply" tabindex="-1" role="dialog" aria-labelledby="modal_feedback_reply" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal_feedback_reply">Reply for the Feedback</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row padding d-flex justify-content-center">
+                            <div class="col-md-11 text-center feedback-reply-message">
+
+                            </div>
+                        </div>
+                        <textarea id="textarea-feedback-reply" class="form-control"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button id="submit-feedback-reply" type="button" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- End ofFeedback Reply Modal -->
+
+
+
+
+
+
+
+
         <?php include '../includes/footer.php'; ?>
 
         <script src="../assets/js/customer_validations.js"></script>

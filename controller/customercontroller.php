@@ -727,5 +727,30 @@ if(isset($_REQUEST["status"]))
             }
             break;
 
+        case "change_is_like":
+            if(isset($_GET['fid']))
+            {
+                $fid = $_GET['fid'];
+                $is_like = $_GET['is_like'];
+
+                $cusObj->changeIsLike($is_like, $fid);
+            }
+            break;
+
+        case "change_reply":
+            if(isset($_POST['fid']))
+            {
+                $fid = $_POST['fid'];
+                $is_replied = $_POST['is_replied'];
+                $reply = $_POST['reply'];
+
+                $af_rows = $cusObj->replyFeedback($fid, $is_replied, $reply);
+
+                if($af_rows > 0)
+                    echo 1;
+                else
+                    echo 0;
+            }
+            break;
     }
 }

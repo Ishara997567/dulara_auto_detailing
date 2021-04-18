@@ -313,5 +313,35 @@ class Customer
         return $con->affected_rows;
     }
 
+    //Customer Feedbacks
 
+    public function getReviews()
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT f.feedback_id, c.cus_name, c.cus_vehicle_no, i.invoice_id, f.feedback_star_rating, f.feedback_review, f.feedback_is_liked, f.feedback_is_replied, f.feedback_reply FROM customer_feedback f, customer c, job j, invoice i WHERE f.feedback_cus_vno = c.cus_vehicle_no AND j.job_vehicle_id = f.feedback_cus_vno AND i.job_id = j.job_id GROUP BY feedback_id ORDER BY feedback_id DESC LIMIT 4;";
+        return $con->query($sql);
+    }
+
+    public function getAllFeedbacks()
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT f.feedback_id, c.cus_name, c.cus_vehicle_no, i.invoice_id, f.feedback_star_rating, f.feedback_review, f.feedback_is_liked, f.feedback_is_replied, f.feedback_reply FROM customer_feedback f, customer c, job j, invoice i WHERE f.feedback_cus_vno = c.cus_vehicle_no AND j.job_vehicle_id = f.feedback_cus_vno AND i.job_id = j.job_id GROUP BY feedback_id;";
+        return $con->query($sql);
+    }
+
+    public function changeIsLike($val, $fid)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE customer_feedback SET feedback_is_liked = '$val' WHERE feedback_id = '$fid';";
+        $con->query($sql);
+        return $con->affected_rows;
+    }
+
+    public function replyFeedback($fid, $is_replied, $reply)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "UPDATE customer_feedback SET feedback_is_replied = '$is_replied', feedback_reply = '$reply' WHERE feedback_id = '$fid';";
+        $con->query($sql);
+        return $con->affected_rows;
+    }
 }
