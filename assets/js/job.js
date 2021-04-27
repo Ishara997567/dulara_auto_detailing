@@ -73,7 +73,7 @@ $(document).ready(function (){
                         let url = '../controller/jobcontroller.php?status=job_status_back_to_pending';
                         $.post(url, {changedStatusJobId:jobId}, function(){
                             window.setTimeout(function(){
-                                location.reload();
+                                location.reload(true);
                             },2000)
                         });
                     });

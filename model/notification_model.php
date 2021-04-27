@@ -12,6 +12,13 @@ class Notification
         return $con->insert_id;
     }
 
+    public function getLimitedNotifications()
+    {
+        $con = $GLOBALS['conn'];
+        $sql = "SELECT * FROM notification n, notification_type nt WHERE n.not_nt_id = nt.nt_id ORDER BY n.not_id DESC LIMIT 5;";
+        return $con->query($sql);
+    }
+
     public function getAllNotifications()
     {
         $con = $GLOBALS['conn'];

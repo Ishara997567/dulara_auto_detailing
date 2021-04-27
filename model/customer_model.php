@@ -344,4 +344,11 @@ class Customer
         $con->query($sql);
         return $con->affected_rows;
     }
+
+    public function getStarRatingForAnalytics()
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT feedback_star_rating, COUNT(feedback_star_rating) as count FROM customer_feedback GROUP BY feedback_star_rating ORDER BY feedback_star_rating DESC;";
+        return $con->query($sql);
+    }
 }

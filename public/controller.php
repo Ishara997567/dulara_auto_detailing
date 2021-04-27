@@ -17,8 +17,20 @@ if(isset($_REQUEST['status']))
 
             $affected_rows = $feedbackObj->insertFeedback($customer_name, $customer_vno, $customer_invoice_no, $customer_rating, $customer_review);
 
-            if($affected_rows > 0)
+
+
+            if($affected_rows > 0) {
+
+
+                //Allocating Points to the Customer for providing side reviews!
+                $customer_id_result = $feedbackObj->getCustomerIDByVehicleNo($customer_vno);
+                $customer_id_r = $customer_id_result->fetch_assoc();
+
+                $feedbackObj->allocateCustomerPointsForSiteReview($customer_id_r['cus_id']);
+
+
                 echo 1;
+            }
             else
                 echo 0;
 

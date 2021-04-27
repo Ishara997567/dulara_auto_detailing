@@ -112,9 +112,9 @@ $(document).ready(function(){
             $.post(url, {fid:fid, is_replied:current_status, reply:new_reply}, function (data){
                 if(data === "1")
                 {
-                    $(".feedback-reply-message").html("Reply Submitted Successfully!").addClass("alert alert-success");
+                    $(".feedback-reply-message").html("<button type='button' class='close' data-dismiss='alert'>&times;</button> Reply Submitted Successfully!").addClass("alert alert-success alert-dismissible");
                 } else {
-                    $(".feedback-reply-message").html("Something went wrong!").addClass("alert alert-danger");
+                    $(".feedback-reply-message").html("<button type='button' class='close' data-dismiss='alert'>&times;</button> Something went wrong!").addClass("alert alert-danger alert-dismissible");
                 }
             });
 

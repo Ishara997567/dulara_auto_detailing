@@ -1,10 +1,18 @@
-<?php include '../includes/header.php';
+<?php
 include '../model/login_model.php';
 
 $loginObj = new Login();
 
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- Include bootstrap css files in the head    -->
+    <?php include '../includes/bootstrap_includes_css.php'; ?>
 <title>Login Page</title>
 <style>
 
@@ -125,7 +133,10 @@ $loginObj = new Login();
         <!-- Error Message  -->
         <div class="row padding">
             <div class="col-md-4">&nbsp;</div>
-            <div class="col-md-6 d-flex justify-content-center alert alert-danger text-center">
+            <div class="col-md-6 d-flex justify-content-center alert alert-danger text-center alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
                 <?php echo $msg; ?>
             </div>
         </div>

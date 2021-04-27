@@ -196,13 +196,23 @@ $cusObj = new Customer();
                         $is_replied = $r['feedback_is_replied'];
                         $reply = $r['feedback_reply'];
                         $is_replied_class = $is_replied == 0 ? "secondary" : "success";
+
+                        $no_of_starts = $r['feedback_star_rating'];
+
                         ?>
                         <tr>
                             <th scope="row"><?php echo $r['feedback_id']; ?></th>
                             <td><?php echo $r['cus_name']; ?></td>
                             <td><?php echo $r['cus_vehicle_no']; ?></td>
                             <td><?php echo $r['invoice_id']; ?></td>
-                            <td><?php echo $r['feedback_star_rating']; ?></td>
+                            <td>
+                                <?php
+                                for($i=0; $i < $no_of_starts; $i++)
+                                {
+                                    ?>
+                                <i class="fa fa-star" style="color: orange"></i>
+                       <?php    } ?>
+                            </td>
                             <td><?php echo $r['feedback_review']; ?></td>
                             <td id="td-feedback-like"><a href="#" class="btn-sm btn-outline-<?php echo $is_liked_class; ?>" data-fid="<?php echo $r['feedback_id']; ?>" data-cs="<?php echo $is_liked; ?>"><i class="fa fa-heart fa-lg"></i></a></td>
                             <td id="td-feedback-reply"><a href="#modal_feedback_reply" data-toggle="modal" data-target="#modal_feedback_reply" class="btn-sm btn-outline-<?php echo $is_replied_class; ?>" data-id="<?php echo $r['feedback_id']; ?>" data-fid="<?php echo $r['feedback_id']; ?>" data-replied="<?php echo $is_replied; ?>" data-reply="<?php echo $reply; ?>"><i class="fa fa-comment fa-lg"></i></a></td>

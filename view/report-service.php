@@ -25,7 +25,7 @@ $reportObj = new Report();
             <h1 class="display-4 text-center">Service Reports</h1>
         </div>
     </div>
-    <form class="form" method="post" action="report-generator.php">
+    <form class="form" method="post" action="report-generator1.php">
         <div class="row form-group mt-4">
             <label for="service_report_type" class="mt-1">Report Type : </label>
             <div class="input-group col-md-5">
@@ -36,7 +36,7 @@ $reportObj = new Report();
                 </select>
             </div>
 
-            <input type="hidden" name="print_data" id="print_data" value=''>
+            <input type="hidden" name="print_data" id="print_data">
 
             <div class="input-group col-md-6">
                 <div id="service_category_select" class="mr-4">

@@ -110,12 +110,12 @@ span.active a.active ~ a:after{
 }
 
 span:hover a:after{
-  color:blue !important;
+  color:orange !important;
 }
 
 span.active a:after,
 .stars a.active:after{
-  color:blue;
+  color:orange;
 }
 
 

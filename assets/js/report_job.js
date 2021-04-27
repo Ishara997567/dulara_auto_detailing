@@ -22,8 +22,8 @@ $(document).ready(function (){
                 $.post(url, {from:from_date, to:to_date}, function(data){
                     $(".split-job-data").html(data);
                     $("#result_table").DataTable();
-                })
-            })
+                });
+            });
         }
     });
 })

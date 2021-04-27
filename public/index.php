@@ -173,11 +173,81 @@ $feedbackObj = new Feedback();
 <!-- End of Customer Feedback Modal    -->
 
 
-<!--- Meet the team -->
-
+<!--- Feedbacks -->
+<div class="container-fluid padding">
+    <div class="row welcome text-center padding">
+        <div class="col-12">
+            <h2 class="font-weight-bold">Thank you for giving us your care...</h2>
+            <hr class="my-4"/>
+        </div>
+    </div>
+</div>
 
 <!--- Cards -->
+<div class="container-fluid">
+    <div class="row padding" style="border: #00b3db double thick;">
+        <?php
+        $feedback = $feedbackObj->getAllFeedbacks();
+        while($r = $feedback->fetch_assoc())
+        {
 
+            $stars = $r['feedback_star_rating'];
+
+            $is_liked = $r['feedback_is_liked'];
+            $is_liked_class = $is_liked == 0 ? "secondary" : "danger";
+
+            $is_replied = $r['feedback_is_replied'];
+            $reply = $r['feedback_reply'];
+            $is_replied_class = $is_replied == 0 ? "secondary" : "success";
+
+
+            $reply = $r['feedback_reply'];
+
+            $timestamp = strtotime($r['feedback_created_at']);
+
+            $date = date("M d Y", $timestamp);
+
+            ?>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header h5"><?php echo $r['cus_name']; ?></div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h6 class="card-subtitle mb-2 text-muted"><?php echo $r['cus_vehicle_no']; ?></h6>
+                            <h6 class="card-subtitle mb-2 text-muted"><?php echo $date; ?></h6>
+                        </div>
+                        <p class="card-text h5 font-weight-light"><?php echo $r['feedback_review']; ?></p>
+                        <p class="card-text">
+                            <?php
+                            for($i = 0 ; $i < $stars; $i++)
+                            {
+                                ?>
+                                <i class="fa fa-star" style="color: orange"></i>
+                            <?php } ?>
+                        </p>
+                        <?php
+                        if($is_replied == 1)
+                        {
+                            ?>
+                            <p class="card-text text-center" style="border: #1b1e21 double 1px;">
+
+                                DULARA AUTO DETAILING <br/>
+                                <b><?php echo $reply; ?></b>
+
+                            </p>
+                        <?php } ?>
+                        <div class="public-links col-md-12 d-flex justify-content-end">
+                            <button data-toggle="tooltip" data-placement="top" title="Only company can react to the reviews" class="card-link btn btn-outline-<?php echo $is_liked_class; ?> border-0" data-fid="<?php echo $r['feedback_id']; ?>" data-cs="<?php echo $is_liked; ?>"><i class="fa fa-heart"></i></button>
+
+                            <button data-toggle="tooltip" data-placement="top" title="Only company can reply to the reviews" class="card-link border-0 btn-sm btn-outline-<?php echo $is_replied_class; ?>" data-id="<?php echo $r['feedback_id']; ?>" data-fid="<?php echo $r['feedback_id']; ?>" data-replied="<?php echo $is_replied; ?>" data-reply="<?php echo $reply; ?>"><i class="fa fa-comment fa-lg"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php } ?>
+    </div>
+    <hr class="my-4"/>
+</div>
 
 <!--- Two Column Section -->
 

@@ -56,7 +56,7 @@ $(document).ready(function (){
 
         if(review === "")
         {
-            feedbackMessage.html("Please Enter Customer Vehicle Number!").addClass("alert alert-danger");
+            feedbackMessage.html("Please Give Your Review on behalf of our Service!").addClass("alert alert-danger");
             $("#feedback_message").focus();
             return false;
         }
@@ -77,5 +77,9 @@ $(document).ready(function (){
         });
 
 
+    });
+
+    $(".public-links button").click(function (e){
+        e.preventDefault();
     });
 })

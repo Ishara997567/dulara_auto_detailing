@@ -52,17 +52,19 @@ $cusObj = new Customer();
         // Create the data table.
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Topping');
-        data.addColumn('number', 'Slices');
+        data.addColumn('number', 'Count');
         data.addRows([
-            ['5', 10],
-            ['4', 8],
-            ['3', 5],
-            ['2', 3],
-            ['1', 1]
+            <?php
+            $result = $cusObj->getStarRatingForAnalytics();
+            while($r = $result->fetch_assoc())
+            {
+            ?>
+            ['<?php echo $r['feedback_star_rating']; ?>', <?php echo $r['count']; ?>],
+            <?php } ?>
         ]);
 
         // Set chart options
-        var options = {'title':'How Much Pizza I Ate Last Night',
+        var options = {'title':'Star Rating Provided by the Customer',
             'width':300,
             'height':200};
 
@@ -353,6 +355,10 @@ $cusObj = new Customer();
                             $is_replied = $r['feedback_is_replied'];
                             $reply = $r['feedback_reply'];
                             $is_replied_class = $is_replied == 0 ? "secondary" : "success";
+
+                            $no_of_starts = $r['feedback_star_rating'];
+
+
                         ?>
                         <!-- Review 1   -->
                         <div class="col-md-6 mb-2">
@@ -361,6 +367,12 @@ $cusObj = new Customer();
                                     <h5 class="card-title"><?php echo $r['cus_name']; ?></h5>
                                     <h6 class="card-subtitle mb-2 text-muted"><?php echo $r['cus_vehicle_no']; ?></h6>
                                     <p class="card-text"><?php echo $r['feedback_review']; ?></p>
+                                    <p class="card-text">
+                                        <?php for($i = 0; $i < $no_of_starts; $i++) {
+                                            ?>
+                                        <i class="fa fa-star" style="color: orange"></i>
+                                    <?php   }   ?>
+                                    </p>
                                     <div class="col-md-12 d-flex justify-content-end">
 <a href="#" class="homepage-is-like card-link btn btn-outline-<?php echo $is_liked_class; ?> border-0" data-fid="<?php echo $r['feedback_id']; ?>" data-cs="<?php echo $is_liked; ?>"><i class="fa fa-heart"></i></a>
 
