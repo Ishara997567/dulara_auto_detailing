@@ -110,10 +110,10 @@ $(document).ready(function (){
         let pointID = $(this).data('id');
         const url = "../controller/customercontroller.php?status=delete_loyalty_point";
         $("#btn_modal_delete_loyalty_point_confirm").click(function (){
-            $.post(url, {pointID: pointID}, function (data, success) {
+            $.post(url, {pointID: pointID}, function (data) {
                 $(".div-delete-point-message").html(data).addClass("alert alert-danger");
                 $("#modal_delete_loyalty_points").modal('hide');
-                window.setTimeout(function(){location.reload()},3000)
+                window.setTimeout(function(){window.location.reload(true)},3000)
             });
         });
     });

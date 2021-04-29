@@ -41,7 +41,7 @@
                 </div>
             </div>
 
-            <div id="notification-menu">
+            <div id="notification-menu" class="pl-3" style="height: 500px; overflow-y: scroll;">
                 <?php
                 $a = $notificationObj->getAllNotifications();
                 while($row = $a->fetch_assoc())

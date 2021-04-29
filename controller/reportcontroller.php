@@ -21,10 +21,10 @@ if(isset($_REQUEST["status"])) {
                 </thead>
                 <tbody>
                 <?php
-
                 while($row = $result->fetch_assoc())
                 {
                     ?>
+
                     <tr>
                         <th scope="row"><?php echo $row['service_id']; ?></th>
                         <td><?php echo $row['service_name']; ?></td>
@@ -32,6 +32,7 @@ if(isset($_REQUEST["status"])) {
                         <td><?php echo $row['service_cat_name']; ?></td>
                         <td><?php echo $row['service_sub_cat_name']; ?></td>
                     </tr>
+
                 <?php } ?>
                 </tbody>
             </table>
@@ -582,6 +583,176 @@ if(isset($_REQUEST["status"])) {
                 <?php
 
             }
+            break;
+
+        case "customer_all":
+            $result = $reportObj->getAllCustomers();
+            ?>
+            <table class="table table-sm" id="result-table">
+                <thead>
+                <tr>
+                    <th scope="col">Customer ID</th>
+                    <th scope="col">Customer Name</th>
+                    <th scope="col">Vehicle Number</th>
+                    <th scope="col">Address Line 1</th>
+                    <th scope="col">Address Line 2</th>
+                    <th scope="col">Address Line 3</th>
+                    <th scope="col">Address Line 4</th>
+                    <th scope="col">Contact No 1</th>
+                    <th scope="col">Contact No 2</th>
+                    <th scope="col">Email</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+
+                while($row = $result->fetch_assoc())
+                {
+                    ?>
+                    <tr>
+                        <th scope="row"><?php echo $row['cus_id']; ?></th>
+                        <td><?php echo $row['cus_name']; ?></td>
+                        <td><?php echo $row['cus_vehicle_no']; ?></td>
+                        <td><?php echo $row['cus_add_l1']; ?></td>
+                        <td><?php echo $row['cus_add_l2']; ?></td>
+                        <td><?php echo $row['cus_add_l3']; ?></td>
+                        <td><?php echo $row['cus_add_l4']; ?></td>
+                        <td><?php echo $row['cus_cn1']; ?></td>
+                        <td><?php echo $row['cus_cn2']; ?></td>
+                        <td><?php echo $row['cus_email']; ?></td>
+                    </tr>
+                <?php } ?>
+                </tbody>
+            </table>
+
+            <?php
+            break;
+
+        case "customer_vehicle_no_wise":
+            if(isset($_POST['vno']))
+            {
+                $vehicle_no = $_POST['vno'];
+                $result = $reportObj->getCustomerByVehicleNo($vehicle_no);
+                $row = $result->fetch_assoc();
+                if(is_array($row) || is_object($row)) {
+
+                    ?>
+                    <div class="row">
+                        <div class="col-md-2">&nbsp;</div>
+                        <div class="col-md-8 display-1 text-center"><?php echo $row['Customer Name']; ?></div>
+                        <div class="col-md-2">&nbsp;</div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                            <tr>
+                                <th scope="col">&nbsp;</th>
+                                <th scope="col">&nbsp;</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php
+
+                            foreach($row as $f => $r)
+                            {
+                                ?>
+                                <tr>
+                                    <th scope="row"><?php echo $f; ?></th>
+                                    <td><?php echo $r; ?></td>
+                                </tr>
+                            <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
+                    <?php
+                }
+            }
+            break;
+
+        case "customer_feedback":
+            ?>
+           <div class="table-responsive">
+                <table class="table table-hover table-sm" id="result-table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Feedback ID</th>
+                        <th scope="col">Customer Name</th>
+                        <th scope="col">Vehicle Number</th>
+                        <th scope="col">Job Invoice ID</th>
+                        <th scope="col">Star Rating</th>
+                        <th scope="col">Review</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    $feedback = $reportObj->getAllFeedbacks();
+                    while($r = $feedback->fetch_assoc())
+                    {
+                        $is_liked = $r['feedback_is_liked'];
+                        $is_liked_class = $is_liked == 0 ? "secondary" : "danger";
+
+                        $is_replied = $r['feedback_is_replied'];
+                        $reply = $r['feedback_reply'];
+                        $is_replied_class = $is_replied == 0 ? "secondary" : "success";
+
+                        $no_of_starts = $r['feedback_star_rating'];
+
+                        ?>
+                    <tr>
+                        <th scope="row"><?php echo $r['feedback_id']; ?></th>
+                        <td><?php echo $r['cus_name']; ?></td>
+                        <td><?php echo $r['cus_vehicle_no']; ?></td>
+                        <td><?php echo $r['invoice_id']; ?></td>
+                        <td>
+                            <?php
+                            for($i=0; $i < $no_of_starts; $i++)
+                            {
+                                ?>
+                                <i class="fa fa-star" style="color: orange"></i>
+                            <?php    } ?>
+                        </td>
+                        <td><?php echo $r['feedback_review']; ?></td>
+                    </tr>
+                    <?php } ?>
+                    </tbody>
+                    </table>
+</div>
+                    <?php
+            break;
+
+        case "customer_loyalty":
+            $result = $reportObj->getAllLoyaltyEnrollments();
+            ?>
+            <table class="table table-sm" id="result-table">
+                <thead>
+                <tr>
+                    <th scope="col">Customer ID</th>
+                    <th scope="col">Customer Name</th>
+                    <th scope="col">Total Loyalty Points</th>
+                    <th scope="col">Loyalty Package Enrolled in</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+
+                while($row = $result->fetch_assoc())
+                {
+                    $lr = $reportObj->getLoyaltyNameByPoints($row['tot_points']);
+                    $lrow = $lr->fetch_assoc();
+                    $loyalty_package = $lrow['loyalty_name'] ?? "(No Enrollments Yet)";
+
+                    ?>
+                    <tr>
+                        <th scope="row"><?php echo $row['cus_id']; ?></th>
+                        <td><?php echo $row['cus_name']; ?></td>
+                        <td><?php echo $row['tot_points']; ?></td>
+                        <td><?php echo $loyalty_package; ?></td>
+                    </tr>
+                <?php } ?>
+                </tbody>
+            </table>
+
+            <?php
             break;
     }
 }

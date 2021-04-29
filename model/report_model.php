@@ -131,4 +131,40 @@ class Report{
         return $con->query($sql);
     }
 
+    //Customer Reports
+    public function getAllCustomers()
+    {
+        $con = $GLOBALS['conn'];
+        $sql = "SELECT * FROM customer;";
+        return $con->query($sql);
+    }
+
+    public function getCustomerByVehicleNo($vno)
+    {
+        $con = $GLOBALS['conn'];
+        $sql = "SELECT cus_id as 'Customer ID', cus_name as 'Customer Name', cus_vehicle_no as 'Vehicle Number', cus_add_l1 as 'Address Line 1', cus_add_l2 as 'Address Line 2',cus_add_l3 as 'Address Line 3',cus_add_l4 as 'Address Line 4', cus_cn1 as 'Contact No 1', cus_cn2 as 'Contact No 1', cus_email as 'Email' FROM customer WHERE cus_vehicle_no = '$vno' LIMIT 1;";
+        return $con->query($sql);
+    }
+
+    public function getAllFeedbacks()
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT f.feedback_id, c.cus_name, c.cus_vehicle_no, i.invoice_id, f.feedback_star_rating, f.feedback_review, f.feedback_is_liked, f.feedback_is_replied, f.feedback_reply FROM customer_feedback f, customer c, job j, invoice i WHERE f.feedback_cus_vno = c.cus_vehicle_no AND j.job_vehicle_id = f.feedback_cus_vno AND i.job_id = j.job_id GROUP BY feedback_id;";
+        return $con->query($sql);
+    }
+
+    public function getLoyaltyNameByPoints($tot_points)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT loyalty_name FROM customer_loyalty WHERE loyalty_points <= '$tot_points' ORDER BY loyalty_points DESC LIMIT 1;";
+        return $con->query($sql);
+    }
+
+    public function getAllLoyaltyEnrollments()
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT c.cus_id, c.cus_name, SUM(cp.cp_points) as tot_points FROM customer_point_allocation cpa, customer c, customer_points cp WHERE cpa.cpa_cus_id = c.cus_id AND cpa.cpa_point_id = cp.cp_id GROUP BY cpa.cpa_cus_id;";
+        return $con->query($sql);
+    }
+
 }

@@ -4,6 +4,8 @@ include "../model/job_model.php";
 
 $saleObj = new Sale();
 $jobObj = new Job();
+
+
 ?>
 
     <style>

@@ -1,6 +1,8 @@
 <?php include '../includes/header.php'; ?>
 <?php include '../model/job_model.php';
 
+
+
 $jobObj = new Job(); ?>
 
 <title>Job Management</title>

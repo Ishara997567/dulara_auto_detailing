@@ -1,6 +1,6 @@
 <?php
-include '../model/login_model.php';
 include '../commons/session.php';
+include '../model/login_model.php';
 include '../model/notification_model.php';
 
 $loginObj = new Login();
@@ -22,6 +22,7 @@ if(isset($_REQUEST["status"]))
 
                 $user_row = $result->fetch_assoc();
 
+
                 $user_id = $user_row['user_id'];
                 $user_fname = $user_row['user_first_name'];
                 $user_lname = $user_row['user_last_name'];
@@ -31,11 +32,11 @@ if(isset($_REQUEST["status"]))
                     "user_id" => $user_id,
                     "user_fname" => $user_fname,
                     "user_lname" => $user_lname,
-                    "user_access_level" => $user_access_level_id
+                    "user_access_level" => $user_access_level_id,
+                    "authenticated" => true
                 );
 
-                $SESSION["user"] = $user_array;
-
+                $_SESSION["user"] = $user_array;
                 ?>
                 <script> window.location = '../view/dashboard.php' </script>
                 <?php
@@ -76,6 +77,8 @@ if(isset($_REQUEST["status"]))
             }
             if($loginObj->validateEmail($email)){
 
+                $msg = '';
+
                 $r = $loginObj->insertUser($fn, $ln, $email, $gender, $dob, $nic, $cn1, $cn2, $user_access_level,$user_img);
 
                 if($r>0) {
@@ -106,16 +109,18 @@ if(isset($_REQUEST["status"]))
                 $fatal_message = base64_encode($m);
                 ?>
 
-                <!-- Go to the location - Paste the code from the notepad   -->
                 <script>window.location = "../view/login.php?fatal=<?php echo $fatal_message; ?>"</script>
-                <!-- End of Pasting -->
                 <?php
             }
             break;
 
         case "logout":
             session_destroy();
-            header('../index.php');
+
+            ?>
+            <script> window.location="../index.php"</script>
+            <?php
+
             break;
         default:
             echo "Thank you!";

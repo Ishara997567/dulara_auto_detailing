@@ -324,27 +324,14 @@ if(isset($_REQUEST["status"]))
                     </div>
                 </div>
 
-                <!-- Feedback Status    -->
-                <div class="form-group row">
-                    <label for="customer_feedback" class="col-sm-4 col-form-label">Feedback</label>
-                    <div class="col-sm-3">
-                        <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half"></i>
-                    </div>
-                    <div class="col-sm-4">
-                        <a href="customer-feedback-manage.php">
-                            <i class="fa fa-lg fa-info-circle"></i>
-                        </a>
-                    </div>
-                </div>
-
                 <?php
                 $points_result = $cusObj->getSumOfPointsByCustomerID($cus_id);
                 $points_r = $points_result->fetch_assoc();
-                $sum_of_points = isset($points_r['SumOfPoints']) ? $points_r['SumOfPoints'] : 0;
+                $sum_of_points = $points_r['SumOfPoints'] ?? 0;
 
                 $loyalty_result = $cusObj->getLoyaltyProgramBySumOfPoints($sum_of_points);
                 $loyalty_r = $loyalty_result->fetch_assoc();
-                $loyalty = isset($loyalty_r['loyalty_name']) ? $loyalty_r['loyalty_name'] : "-";
+                $loyalty = $loyalty_r['loyalty_name'] ?? "-";
 
 
 
@@ -727,5 +714,30 @@ if(isset($_REQUEST["status"]))
             }
             break;
 
+        case "change_is_like":
+            if(isset($_GET['fid']))
+            {
+                $fid = $_GET['fid'];
+                $is_like = $_GET['is_like'];
+
+                $cusObj->changeIsLike($is_like, $fid);
+            }
+            break;
+
+        case "change_reply":
+            if(isset($_POST['fid']))
+            {
+                $fid = $_POST['fid'];
+                $is_replied = $_POST['is_replied'];
+                $reply = $_POST['reply'];
+
+                $af_rows = $cusObj->replyFeedback($fid, $is_replied, $reply);
+
+                if($af_rows > 0)
+                    echo 1;
+                else
+                    echo 0;
+            }
+            break;
     }
 }

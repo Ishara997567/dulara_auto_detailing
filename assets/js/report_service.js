@@ -11,7 +11,6 @@ $(document).ready(function (){
                     $("#result-table").DataTable({
                         "destroy": true,
                     });
-
                     $("#print_data").val(data);
                 });
             });
@@ -21,7 +20,10 @@ $(document).ready(function (){
                 let cat_id = $("#service_category").val();
                 $.post(url, {cat_id:cat_id}, function(data){
                     $(".split-service-data").html(data);
-                    $("#result-table").DataTable();
+                    $("#result-table").DataTable({
+                        "destroy": true,
+                    });
+                    $("#print_data").val(data);
                 });
             });
         }
