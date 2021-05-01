@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 27, 2021 at 10:32 PM
+-- Generation Time: May 01, 2021 at 08:42 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.4.14
 
@@ -64,8 +64,6 @@ INSERT INTO `customer` (`cus_id`, `cus_name`, `cus_vehicle_no`, `cus_add_l1`, `c
 (17, 'Nanda Kumara', 'CDF-5678', '', '', '', '', '0769852147', '', '', 1, '2021-03-23 14:07:07', 1),
 (18, 'Roger Rogans', 'CX-4534', '145', 'Drug Avenue', 'New York', 'USA', '0784512369', '1478932', '', 1, '2021-03-25 11:56:41', 1),
 (19, 'Kamal Ranasinghe', 'CWW-9087', '23', 'Galle Rd,', 'Colombo', '', '0715098523', '', '', 1, '2021-04-13 02:37:47', 1),
-(20, 'Ishara Perera', 'BBX-9190', '185/A/2', 'Bollatha', 'Ganumulla', 'Western Province', '0778154411', '', 'esoft.isharaperera@gmail.com', 1, '2021-04-14 03:25:54', 1),
-(21, 'sdfsdfsd', 'BBX-9190', '185/A/2', 'Bollatha', 'Ganemulla', 'Sri Lanka', '0718054352', '', 'esoft.isharaperera@gmail.com', 1, '2021-04-14 03:51:13', 1),
 (22, 'Kamal', 'RTF-4567', '185/A/2', 'Bollatha', 'Ganemulla', 'Sri Lanka', '0778154411', '', 'esoft.isharaperera@gmail.com', 1, '2021-04-15 16:24:15', 1),
 (23, 'Malindi', 'CCX-5678', '', '', '', '', '0775623894', '', '', 1, '2021-04-15 16:27:56', 1),
 (24, 'Shermila', 'CAA-5623', '', '', '', '', '0778963541', '', '', 1, '2021-04-15 16:30:31', 1),
@@ -74,7 +72,11 @@ INSERT INTO `customer` (`cus_id`, `cus_name`, `cus_vehicle_no`, `cus_add_l1`, `c
 (27, 'Nipuni Sanjana', 'GRC-5643', '', '', '', '', '0741258478', '', '', 1, '2021-04-15 16:35:05', 1),
 (28, 'Chamodi', 'AAA-4312', '', '', '', '', '0778451698', '', '', 1, '2021-04-15 16:39:24', 1),
 (29, 'Hiran', 'AAA-9871', '', '', '', '', '0784512369', '', '', 1, '2021-04-15 16:41:12', 1),
-(30, 'Kumara Sandaruwa', 'AAB-7856', 'No. 23', 'Bohaga Junction', 'Kurunegala', 'Sri Lanka', '0784512965', '', '', 1, '2021-04-15 23:36:14', 1);
+(30, 'Kumara Sandaruwa', 'AAB-7856', 'No. 23', 'Bohaga Junction', 'Kurunegala', 'Sri Lanka', '0784512965', '', '', 1, '2021-04-15 23:36:14', 1),
+(31, 'Padmakumara Ratnayake', 'SD-3981', 'No 45,', 'Pannala Rd', 'Kuliyapitiya', 'Sri Lanka', '0718965231', '0789854123', 'pkratnayake@gmail.com', 1, '2021-05-01 01:58:02', 1),
+(32, 'Saman Kumara', 'EE-3456', '', '', '', '', '0774512369', '0789645123', '', 1, '2021-05-01 06:15:45', 1),
+(33, 'Krish Kumar', 'AA-4567', '', '', '', '', '0714589632', '0774581245', '', 1, '2021-05-01 06:25:43', 1),
+(34, 'David Perera', 'XXX-4578', '', '', '', '', '0714589632', '0778457896', '', 1, '2021-05-01 06:31:34', 1);
 
 -- --------------------------------------------------------
 
@@ -252,7 +254,15 @@ INSERT INTO `customer_point_allocation` (`cpa_id`, `cpa_cus_id`, `cpa_point_id`,
 (7, 0, 4, '2021-04-21 07:21:16', 1),
 (8, 9, 4, '2021-04-21 07:24:51', 1),
 (9, 2, 4, '2021-04-22 13:35:04', 1),
-(10, 10, 4, '2021-04-23 08:34:02', 1);
+(10, 10, 4, '2021-04-23 08:34:02', 1),
+(11, 31, 1, '2021-05-01 01:58:03', 1),
+(12, 31, 2, '2021-05-01 01:58:03', 1),
+(13, 32, 1, '2021-05-01 06:15:46', 1),
+(14, 32, 2, '2021-05-01 06:15:46', 1),
+(15, 33, 1, '2021-05-01 06:25:43', 1),
+(16, 33, 2, '2021-05-01 06:25:43', 1),
+(17, 34, 1, '2021-05-01 06:31:34', 1),
+(18, 1, 2, '2021-05-01 06:31:34', 1);
 
 -- --------------------------------------------------------
 
@@ -280,7 +290,8 @@ INSERT INTO `customer_referral` (`cr_id`, `cr_referrer_id`, `cr_referee_id`, `cr
 (3, 0, 25, '', '2021-04-15 16:31:26', NULL, 1),
 (4, 0, 26, '', '2021-04-15 16:33:00', NULL, 1),
 (5, 0, 27, '', '2021-04-15 16:35:05', NULL, 1),
-(6, 2, 29, 'Word of Mouth', '2021-04-15 16:41:12', NULL, 1);
+(6, 2, 29, 'Word of Mouth', '2021-04-15 16:41:12', NULL, 1),
+(7, 1, 34, '', '2021-05-01 06:31:34', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -422,7 +433,6 @@ INSERT INTO `invoice` (`invoice_id`, `job_id`, `invoice_item_total_amount`, `inv
 (36, 6, 3000, 300, 3300, '2020-09-29 13:22:53', NULL, 1),
 (37, 4, 3400, 1800, 5200, '2020-09-29 17:35:14', NULL, 1),
 (38, 11, 10000, 1500, 11500, '2020-10-26 00:56:53', NULL, 1),
-(39, 8, 0, 0, 0, '2021-01-24 10:14:37', NULL, 1),
 (40, 8, 5000, 1500, 6500, '2021-01-24 10:15:35', NULL, 1),
 (41, 10, 166800, 1300, 168100, '2021-01-27 14:05:53', NULL, 1),
 (42, 9, 0, 1500, 1500, '2021-01-28 10:37:11', NULL, 1),
@@ -430,9 +440,12 @@ INSERT INTO `invoice` (`invoice_id`, `job_id`, `invoice_item_total_amount`, `inv
 (44, 5, 5000, 1500, 6500, '2021-03-29 01:30:42', NULL, 1),
 (45, 21, 0, 1500, 1500, '2021-03-29 01:39:44', NULL, 1),
 (46, 22, 45000, 1500, 46500, '2021-04-13 02:42:41', NULL, 1),
-(47, 14, 0, 0, 0, '2021-04-15 14:57:28', NULL, 1),
 (48, 37, 8200, 1500, 9700, '2021-04-19 09:18:04', NULL, 1),
-(49, 35, 0, 1500, 1500, '2021-04-21 07:23:42', NULL, 1);
+(50, 34, 2000, 1500, 3500, '2021-05-01 02:39:02', NULL, 1),
+(51, 17, 5000, 1500, 6500, '2021-05-01 02:42:05', NULL, 1),
+(52, 36, 2000, 0, 2000, '2021-05-01 02:47:46', NULL, 1),
+(53, 39, 2000, 0, 2000, '2021-05-01 02:55:04', NULL, 1),
+(54, 40, 0, 1500, 1500, '2021-05-01 02:59:08', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -475,7 +488,12 @@ INSERT INTO `invoice_item` (`id`, `invoice_item_id`, `invoice_item_qty`, `invoic
 (45, 1, 45, 1000, 45000, 46),
 (46, 6, 7, 1000, 0, 47),
 (47, 1, 5, 1000, 5000, 48),
-(48, 14, 4, 800, 3200, 48);
+(48, 14, 4, 800, 3200, 48),
+(49, 1, 2, 1000, 2000, 50),
+(50, 6, 2, 1000, 2000, 51),
+(51, 7, 3, 1000, 3000, 51),
+(52, 1, 2, 1000, 2000, 52),
+(53, 1, 2, 1000, 2000, 53);
 
 --
 -- Triggers `invoice_item`
@@ -517,7 +535,10 @@ INSERT INTO `invoice_service` (`id`, `invoice_service_id`, `invoice_service_pric
 (27, 7, 1500, 45),
 (28, 12, 1500, 46),
 (29, 7, 1500, 48),
-(30, 12, 1500, 49);
+(30, 12, 1500, 49),
+(31, 7, 1500, 50),
+(32, 2, 1500, 51),
+(33, 2, 1500, 54);
 
 -- --------------------------------------------------------
 
@@ -641,26 +662,26 @@ CREATE TABLE `item_stock` (
 --
 
 INSERT INTO `item_stock` (`item_stock_id`, `item_id`, `item_stock_barcode`, `item_stock_manu_date`, `item_stock_date`, `item_stock_exp_date`, `item_stock_qty`, `item_stock_created_at`, `item_stock_created_user_id`, `item_stock_status`) VALUES
-(1, 1, 0, '0000-00-00', '0000-00-00', '0000-00-00', 428, '2020-09-16 14:53:01', NULL, 1),
-(2, 6, 1000, '2020-09-17', '2020-09-25', '2020-09-23', 392, '2020-09-16 14:57:35', NULL, 1),
-(3, 7, 1000, '2020-09-16', '2020-09-30', '2020-09-24', 198, '2020-09-16 16:30:10', NULL, 1),
+(1, 1, 0, '0000-00-00', '0000-00-00', '0000-00-00', 422, '2020-09-16 14:53:01', NULL, 1),
+(2, 6, 1000, '2020-09-17', '2020-09-25', '2020-09-23', 390, '2020-09-16 14:57:35', NULL, 1),
+(3, 7, 1000, '2020-09-16', '2020-09-30', '2020-09-24', 195, '2020-09-16 16:30:10', NULL, 1),
 (4, 8, 1500, '2020-09-16', '0000-00-00', '0000-00-00', 35, '2020-09-16 16:39:56', NULL, 1),
 (15, 10, 0, '2020-09-18', '0000-00-00', '0000-00-00', 190, '2020-09-18 01:06:44', NULL, 1),
 (16, 8, 0, '2020-09-18', '0000-00-00', '0000-00-00', 135, '2020-09-18 01:52:19', NULL, 1),
 (19, 11, 147852369, '2020-09-18', '2020-09-30', '2020-09-18', 298, '2020-09-18 12:37:05', NULL, 1),
 (20, 11, 0, '2020-09-18', '0000-00-00', '0000-00-00', 298, '2020-09-18 12:37:37', NULL, 1),
-(23, 1, 150000145, '2020-09-19', '0000-00-00', '0000-00-00', 218, '2020-09-19 01:14:16', NULL, 1),
-(24, 1, 0, '2020-09-21', '0000-00-00', '0000-00-00', -382, '2020-09-21 14:25:39', NULL, 1),
-(25, 1, 0, '2020-09-21', '0000-00-00', '0000-00-00', -382, '2020-09-21 14:26:46', NULL, 1),
-(26, 1, 17786, '2020-09-22', '0000-00-00', '0000-00-00', -382, '2020-09-22 06:07:42', NULL, 1),
-(27, 6, 0, '2020-09-22', '0000-00-00', '0000-00-00', 192, '2020-09-22 06:19:45', NULL, 1),
-(28, 1, 0, '2020-10-01', '2020-10-10', '2020-10-09', 129, '2020-10-01 09:32:35', NULL, 1),
-(29, 1, 0, '2020-10-02', '0000-00-00', '0000-00-00', 129, '2020-10-02 16:34:26', NULL, 1),
-(30, 1, 0, '2020-10-30', '0000-00-00', '0000-00-00', 439, '2020-10-30 11:46:02', NULL, 1),
-(31, 1, 0, '2021-01-27', '0000-00-00', '0000-00-00', -57, '2021-01-27 13:26:42', NULL, 1),
-(32, 1, 0, '2021-01-27', '0000-00-00', '0000-00-00', -57, '2021-01-27 13:27:48', NULL, 1),
-(33, 1, 0, '2021-01-28', '0000-00-00', '0000-00-00', -57, '2021-01-28 09:02:11', NULL, 1),
-(34, 1, 0, '2021-01-28', '0000-00-00', '0000-00-00', 445, '2021-01-28 12:36:22', NULL, 1);
+(23, 1, 150000145, '2020-09-19', '0000-00-00', '0000-00-00', 212, '2020-09-19 01:14:16', NULL, 1),
+(24, 1, 0, '2020-09-21', '0000-00-00', '0000-00-00', -388, '2020-09-21 14:25:39', NULL, 1),
+(25, 1, 0, '2020-09-21', '0000-00-00', '0000-00-00', -388, '2020-09-21 14:26:46', NULL, 1),
+(26, 1, 17786, '2020-09-22', '0000-00-00', '0000-00-00', -388, '2020-09-22 06:07:42', NULL, 1),
+(27, 6, 0, '2020-09-22', '0000-00-00', '0000-00-00', 190, '2020-09-22 06:19:45', NULL, 1),
+(28, 1, 0, '2020-10-01', '2020-10-10', '2020-10-09', 123, '2020-10-01 09:32:35', NULL, 1),
+(29, 1, 0, '2020-10-02', '0000-00-00', '0000-00-00', 123, '2020-10-02 16:34:26', NULL, 1),
+(30, 1, 0, '2020-10-30', '0000-00-00', '0000-00-00', 433, '2020-10-30 11:46:02', NULL, 1),
+(31, 1, 0, '2021-01-27', '0000-00-00', '0000-00-00', -63, '2021-01-27 13:26:42', NULL, 1),
+(32, 1, 0, '2021-01-27', '0000-00-00', '0000-00-00', -63, '2021-01-27 13:27:48', NULL, 1),
+(33, 1, 0, '2021-01-28', '0000-00-00', '0000-00-00', -63, '2021-01-28 09:02:11', NULL, 1),
+(34, 1, 0, '2021-01-28', '0000-00-00', '0000-00-00', 439, '2021-01-28 12:36:22', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -734,14 +755,17 @@ INSERT INTO `job` (`job_id`, `job_vehicle_id`, `job_cus_id`, `job_vehicle_make_i
 (14, 'BBY-9342', 6, 2, 2, 0, 0, '2021-01-27 13:56:29', '2021-01-28 10:22:20', '', NULL, 10),
 (15, 'BBX-9190', 1, 3, 3, 0, 0, '2021-01-27 13:56:48', '2021-01-27 14:06:46', '', NULL, 10),
 (16, 'BSX-8767', 0, 0, 0, 0, 0, '2021-01-28 10:54:21', NULL, '', NULL, 0),
-(17, 'HSD-6745', 14, 1, 1, 1000000, 4000, '2021-01-28 11:00:02', NULL, 'First time service.', NULL, 0),
+(17, 'HSD-6745', 14, 1, 1, 1000000, 4000, '2021-01-28 11:00:02', '2021-05-01 02:41:34', 'First time service.', NULL, 10),
 (20, 'CDF-5678', 17, 1, 1, 50000, 6000, '2021-03-25 10:12:12', NULL, 'A notification test entry!', NULL, 0),
 (21, 'BBX-9190', 1, 1, 1, 60000, 5000, '2021-03-29 01:39:14', '2021-03-29 01:39:27', '', NULL, 10),
 (22, 'CWW-9087', 19, 1, 1, 50000, 5000, '2021-04-13 02:38:58', '2021-04-13 02:39:25', '', NULL, 10),
-(34, 'BBX-9190', 1, 3, 3, 100000, 5000, '2021-04-14 02:17:40', '2021-04-15 14:56:50', 'Multiple Job!', NULL, 1),
+(34, 'BBX-9190', 1, 3, 3, 100000, 5000, '2021-04-14 02:17:40', '2021-04-15 14:56:50', 'Multiple Job!', NULL, 10),
 (35, 'BBE-9876', 9, 2, 2, 500000, 2000, '2021-04-14 02:29:21', '2021-04-21 07:23:30', 'Last Job ID check!', NULL, 10),
-(36, 'CIA-5690', 4, 1, 1, 500000, 10000, '2021-04-16 00:47:38', NULL, 'Customer Manage AJAX Request Check!', NULL, 0),
-(37, 'AAB-7856', 30, 3, 3, 10000, 5000, '2021-04-16 00:50:41', '2021-04-19 09:17:21', 'Customer Loyalty Program Check!', NULL, 10);
+(36, 'CIA-5690', 4, 1, 1, 500000, 10000, '2021-04-16 00:47:38', '2021-05-01 02:47:30', 'Customer Manage AJAX Request Check!', NULL, 10),
+(37, 'AAB-7856', 30, 3, 3, 10000, 5000, '2021-04-16 00:50:41', '2021-04-19 09:17:21', 'Customer Loyalty Program Check!', NULL, 10),
+(38, 'SD-3981', 31, 4, 4, 250000, 5000, '2021-05-01 01:58:38', '2021-05-01 01:59:29', '', NULL, 1),
+(39, 'BBX-9190', 1, 3, 3, 200000, 5000, '2021-05-01 02:52:56', '2021-05-01 02:53:05', '', NULL, 10),
+(40, 'TTA-3456', 13, 4, 4, 300000, 6000, '2021-05-01 02:58:37', '2021-05-01 02:58:44', '', NULL, 10);
 
 -- --------------------------------------------------------
 
@@ -792,9 +816,9 @@ CREATE TABLE `login` (
 --
 
 INSERT INTO `login` (`login_id`, `username`, `password`, `user_id`, `login_status`) VALUES
-(1, 'esoft.isharaperera@gmail.com', '40BD001563085FC35165329EA1FF5C5ECBDBBEEF', 1, 1),
+(1, 'pgi.perera888@gmail.com', '40BD001563085FC35165329EA1FF5C5ECBDBBEEF', 1, 1),
 (2, 'lasini.senevirathne@icloud.com', '40BD001563085FC35165329EA1FF5C5ECBDBBEEF', 2, 1),
-(3, 'kamal.ranasinghe@email.com', '2B91712EE1F43FFE4C3D7784C3A4365E41607DE4', 3, 1),
+(3, 'kamal@email.com', '40BD001563085FC35165329EA1FF5C5ECBDBBEEF', 3, 1),
 (4, 'mayura.gunarathne@email.com', 'F9EC55464E399A82E0242C72252379D026BF535B', 4, 1),
 (5, '', 'DA39A3EE5E6B4B0D3255BFEF95601890AFD80709', 5, 1);
 
@@ -900,7 +924,73 @@ INSERT INTO `notification` (`not_id`, `not_nt_id`, `not_message`, `not_sent_date
 (81, 3, 'Job status has been changed to <i><b>completed, </b></i> of <i><b>37</b></i>', '2021-04-19 14:47:21', 0, 0),
 (82, 4, 'Loyalty Program Name of <i><b>1</b></i> has been changed to <i><b>Small Test</b></i>', '2021-04-21 11:15:02', 0, 0),
 (83, 4, 'Loyalty Program Name of <i><b>1</b></i> has been changed to <i><b>Small</b></i>', '2021-04-21 11:15:36', 0, 0),
-(84, 3, 'Job status has been changed to <i><b>completed, </b></i> of <i><b>35</b></i>', '2021-04-21 12:53:30', 0, 0);
+(84, 3, 'Job status has been changed to <i><b>completed, </b></i> of <i><b>35</b></i>', '2021-04-21 12:53:30', 0, 0),
+(85, 4, 'User first name of <i><b>3</b></i> has been changed to <i><b>Huttha</i></b>', '2021-04-29 22:37:37', 0, 0),
+(86, 4, 'User first name of <i><b>3</b></i> has been changed to <i><b>Kamal</i></b>', '2021-04-29 22:37:59', 0, 0),
+(87, 4, 'User first name of <i><b>3</b></i> has been changed to <i><b>Huttha</i></b>', '2021-04-29 22:40:50', 0, 0),
+(88, 4, 'User first name of <i><b>3</b></i> has been changed to <i><b>Kamal</i></b>', '2021-04-29 22:41:24', 0, 0),
+(89, 4, 'User first name of <i><b>3</b></i> has been changed to <i><b>hi</i></b>', '2021-04-29 22:44:25', 0, 0),
+(90, 4, 'User first name of <i><b>3</b></i> has been changed to <i><b>Kamal</i></b>', '2021-04-29 22:44:43', 0, 0),
+(91, 4, 'User first name of <i><b>3</b></i> has been changed to <i><b>Kamaldf</i></b>', '2021-04-29 22:44:49', 0, 0),
+(92, 4, 'User first name of <i><b>3</b></i> has been changed to <i><b>Kamal</i></b>', '2021-04-29 22:44:56', 0, 0),
+(93, 4, 'User first name of <i><b>3</b></i> has been changed to <i><b>Kamalsdfds</i></b>', '2021-04-29 22:45:05', 0, 0),
+(94, 4, 'User first name of <i><b>3</b></i> has been changed to <i><b>Kamal</i></b>', '2021-04-29 22:46:43', 0, 0),
+(95, 4, 'User first name of <i><b>3</b></i> has been changed to <i><b>Kamaldfd</i></b>', '2021-04-29 22:46:48', 0, 0),
+(96, 4, 'User first name of <i><b>3</b></i> has been changed to <i><b>Kama</i></b>', '2021-04-29 22:48:14', 0, 0),
+(97, 4, 'User first name of <i><b>3</b></i> has been changed to <i><b>Kamal</i></b>', '2021-04-29 22:48:23', 0, 0),
+(98, 7, 'User last name of <i><b>3</b></i> has been changed to <i><b></i></b>', '2021-04-29 22:52:44', 0, 0),
+(99, 7, 'User last name of <i><b>3</b></i> has been changed to <i><b></i></b>', '2021-04-29 22:54:24', 0, 0),
+(100, 7, 'User first name of <i><b>3</b></i> has been changed to <i><b>Hello</i></b>', '2021-04-29 22:57:46', 0, 0),
+(101, 7, 'User last name of <i><b>3</b></i> has been changed to <i><b></i></b>', '2021-04-29 22:58:40', 0, 0),
+(102, 7, 'User last name of <i><b>3</b></i> has been changed to <i><b></i></b>', '2021-04-29 23:00:08', 0, 0),
+(103, 7, 'User last name of <i><b>3</b></i> has been changed to <i><b>Hello</i></b>', '2021-04-29 23:01:58', 0, 0),
+(104, 7, 'User last name of <i><b>3</b></i> has been changed to <i><b>Ranasinghe</i></b>', '2021-04-29 23:02:07', 0, 0),
+(105, 7, 'User first name of <i><b>3</b></i> has been changed to <i><b>Kamal</i></b>', '2021-04-29 23:02:16', 0, 0),
+(106, 7, 'User first name of <i><b>1</b></i> has been changed to <i><b>Isharas</i></b>', '2021-04-29 23:14:49', 0, 0),
+(107, 7, 'User first name of <i><b>1</b></i> has been changed to <i><b>Ishara</i></b>', '2021-04-29 23:15:08', 0, 0),
+(108, 7, 'User Email of <i><b>1</b></i> has been changed to <i><b>esoft.isharaperera@gmail.com</i></b>', '2021-04-29 23:21:59', 0, 0),
+(109, 7, 'User Email of <i><b>1</b></i> has been changed to <i><b>pgi.perera888@gmail.com</i></b>', '2021-04-29 23:22:20', 0, 0),
+(110, 7, 'User Date of Birth<i><b>3</b></i> has been changed to <i><b>1997-06-11</i></b>', '2021-04-29 23:29:00', 0, 0),
+(111, 7, 'User Date of Birth<i><b>3</b></i> has been changed to <i><b>1997-06-29</i></b>', '2021-04-29 23:29:12', 0, 0),
+(112, 7, 'User Gender<i><b>3</b></i> has been changed to <i><b>Female</i></b>', '2021-04-29 23:33:12', 0, 0),
+(113, 7, 'User Gender<i><b>3</b></i> has been changed to <i><b>Male</i></b>', '2021-04-29 23:33:23', 0, 0),
+(114, 7, 'User Gender<i><b>3</b></i> has been changed to <i><b>199723456789</i></b>', '2021-04-29 23:37:56', 0, 0),
+(115, 7, 'User Gender<i><b>3</b></i> has been changed to <i><b>971812869V</i></b>', '2021-04-29 23:38:06', 0, 0),
+(116, 7, 'User Contact Number 1 <i><b>3</b></i> has been changed to <i><b>0756043536</i></b>', '2021-04-29 23:44:05', 0, 0),
+(117, 7, 'User Contact Number 2 of <i><b>3</b></i> has been changed to <i><b>0756043536</i></b>', '2021-04-29 23:46:34', 0, 0),
+(118, 7, 'User Contact Number 2 of <i><b>3</b></i> has been changed to <i><b>0762084411</i></b>', '2021-04-29 23:49:05', 0, 0),
+(119, 7, 'User Contact Number 2 of <i><b>3</b></i> has been changed to <i><b>1</i></b>', '2021-04-29 23:52:51', 0, 0),
+(120, 7, 'User Role of <i><b>3</b></i> has been changed to <i><b>2</i></b>', '2021-04-29 23:53:18', 0, 0),
+(121, 7, 'User Role of <i><b>3</b></i> has been changed to <i><b>Administrator</i></b>', '2021-04-29 23:54:40', 0, 0),
+(122, 7, 'User Email of <i><b>3</b></i> has been changed to <i><b>kamal@email.com</i></b>', '2021-04-30 02:04:15', 0, 0),
+(123, 3, 'A new vehicle has been created', '2021-05-01 07:07:39', 0, 0),
+(124, 3, 'A new vehicle has been created', '2021-05-01 07:11:38', 0, 0),
+(125, 3, 'A new vehicle has been created', '2021-05-01 07:12:18', 0, 0),
+(126, 3, 'A new vehicle has been created', '2021-05-01 07:22:01', 0, 0),
+(127, 4, 'A new customer named <i><b>Padmakumara Ratnayake</b></i> created', '2021-05-01 07:28:03', 0, 0),
+(128, 4, 'The new customer <i><b>Padmakumara Ratnayake</b></i> has obtained <b><i>1</i></b> points!', '2021-05-01 07:28:03', 0, 0),
+(129, 4, 'A new customer referral <i><b></b></i> created for the referrer <b><i>11</i></b>', '2021-05-01 07:28:03', 0, 0),
+(130, 4, 'The referrer customer <i><b>Padmakumara Ratnayake</b></i> has obtained <b><i>5</i></b> points for the referee customer <b><i>31</i></b>', '2021-05-01 07:28:03', 0, 0),
+(131, 3, 'A new job <i><b>38</b></i>, for vehicle number <b><i>SD-3981</i></b> has been created', '2021-05-01 07:28:38', 0, 0),
+(132, 3, 'Job status has been changed to <i><b>completed, </b></i> of <i><b>38</b></i>', '2021-05-01 07:29:29', 0, 0),
+(133, 3, 'Job status has been changed to <i><b>completed, </b></i> of <i><b>17</b></i>', '2021-05-01 08:11:34', 0, 0),
+(134, 3, 'Job status has been changed to <i><b>completed, </b></i> of <i><b>36</b></i>', '2021-05-01 08:17:30', 0, 0),
+(135, 3, 'A new job <i><b>39</b></i>, for vehicle number <b><i>BBX-9190</i></b> has been created', '2021-05-01 08:22:56', 0, 0),
+(136, 3, 'Job status has been changed to <i><b>completed, </b></i> of <i><b>39</b></i>', '2021-05-01 08:23:05', 0, 0),
+(137, 3, 'A new job <i><b>40</b></i>, for vehicle number <b><i>TTA-3456</i></b> has been created', '2021-05-01 08:28:37', 0, 0),
+(138, 3, 'Job status has been changed to <i><b>completed, </b></i> of <i><b>40</b></i>', '2021-05-01 08:28:44', 0, 0),
+(139, 4, 'A new customer named <i><b>Saman Kumara</b></i> created', '2021-05-01 11:45:46', 0, 0),
+(140, 4, 'The new customer <i><b>Saman Kumara</b></i> has obtained <b><i>1</i></b> points!', '2021-05-01 11:45:46', 0, 0),
+(141, 4, 'A new customer referral <i><b></b></i> created for the referrer <b><i>3</i></b>', '2021-05-01 11:45:46', 0, 0),
+(142, 4, 'The referrer customer <i><b>Saman Kumara</b></i> has obtained <b><i>5</i></b> points for the referee customer <b><i>32</i></b>', '2021-05-01 11:45:46', 0, 0),
+(143, 4, 'A new customer named <i><b>Krish Kumar</b></i> created', '2021-05-01 11:55:43', 0, 0),
+(144, 4, 'The new customer <i><b>Krish Kumar</b></i> has obtained <b><i>1</i></b> points!', '2021-05-01 11:55:43', 0, 0),
+(145, 4, 'A new customer referral <i><b>-1</b></i> created for the referrer <b><i>3</i></b>', '2021-05-01 11:55:43', 0, 0),
+(146, 4, 'The referrer customer <i><b>Krish Kumar</b></i> has obtained <b><i>5</i></b> points for the referee customer <b><i>33</i></b>', '2021-05-01 11:55:43', 0, 0),
+(147, 4, 'A new customer named <i><b>David Perera</b></i> created', '2021-05-01 12:01:34', 0, 0),
+(148, 4, 'The new customer <i><b>David Perera</b></i> has obtained <b><i>1</i></b> points!', '2021-05-01 12:01:34', 0, 0),
+(149, 4, 'A new customer referral <i><b>1</b></i> created for the referrer <b><i>1</i></b>', '2021-05-01 12:01:34', 0, 0),
+(150, 4, 'The referrer customer <i><b>David Perera</b></i> has obtained <b><i>5</i></b> points for the referee customer <b><i>34</i></b>', '2021-05-01 12:01:35', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -974,16 +1064,11 @@ CREATE TABLE `sale_grn` (
 --
 
 INSERT INTO `sale_grn` (`sgrn_id`, `sgrn_po_id`, `sgrn_total_amount`, `sgrn_created_at`, `sgrn_created_user_id`) VALUES
-(1, 1, 58750, NULL, NULL),
+(1, 1, 58750, '2021-04-13 03:47:57', NULL),
 (2, 2, 19000, '2020-10-05 10:14:16', NULL),
-(3, 5, 0, '2020-10-05 10:30:46', NULL),
 (4, 26, 30200, '2020-10-30 11:36:47', NULL),
-(5, 35, 0, '2021-01-27 14:26:51', NULL),
-(6, 30, 0, '2021-01-27 14:27:54', NULL),
 (7, 35, 45000, '2021-01-27 14:29:11', NULL),
 (8, 33, 3200, '2021-01-27 14:29:58', NULL),
-(9, 34, 0, '2021-01-28 11:58:36', NULL),
-(10, 34, 0, '2021-01-28 16:04:20', NULL),
 (11, 39, 183000, '2021-04-13 02:47:57', NULL);
 
 -- --------------------------------------------------------
@@ -1317,10 +1402,10 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `user_first_name`, `user_last_name`, `user_email`, `user_gender`, `user_dob`, `user_nic`, `user_cn1`, `user_cn2`, `user_access_level`, `user_image`, `user_created_at`, `user_status`) VALUES
-(1, 'Ishara', 'Perera', 'esoft.isharaperera@gmail.com', 'Male', '1997-06-29', '971812869V', '0778154411', '0778154411', 1, '1599121893_ish_edited.png', '2020-09-03 08:31:33', 1),
+(1, 'Ishara', 'Perera', 'pgi.perera888@gmail.com', 'Male', '1997-06-29', '971812869V', '0778154411', '0778154411', 1, '1619727350_image1.jpeg', '2020-09-03 08:31:33', 1),
 (2, 'Lasini', 'Senevirathne', 'lasini.senevirathne@icloud.com', 'Female', '1998-05-13', '986341323V', '0762084411', '0778154411', 1, '1599213411_IMG_1582756223-2.jpeg', '2020-09-04 09:56:51', 1),
-(3, 'Kamal', 'Ranasinghe', 'kamal.ranasinghe@email.com', 'Male', '1997-06-29', '971812869V', '0778154411', '0718054352', 2, 'default_user_img.png', '2021-01-26 23:54:15', 1),
-(4, '', 'Gunarathne', 'mayura.gunarathne@email.com', 'Male', '1998-05-13', '986341323V', '0764587963', '0715847321', 1, '1611705415_ish_edited-DESKTOP-OT3PLU9.jpg', '2021-01-26 23:56:55', 1),
+(3, 'Kamal', 'Ranasinghe', 'kamal@email.com', 'Male', '1997-06-29', '971812869V', '0756043536', '0762084411', 1, '1619728479_Steve Jobs Quote Wallpaper.jpg', '2021-01-26 23:54:15', 1),
+(4, 'Mayura', 'Gunarathne', 'mayura.gunarathne@email.com', 'Male', '1998-05-13', '986341323V', '0764587963', '0715847321', 1, '1611705415_ish_edited-DESKTOP-OT3PLU9.jpg', '2021-01-26 23:56:55', 1),
 (5, '', '', '', 'Male', '0000-00-00', '', '', '', 0, 'default_user_img.png', '2021-01-27 00:01:10', 1);
 
 -- --------------------------------------------------------
@@ -1363,7 +1448,8 @@ CREATE TABLE `vehicle_make` (
 INSERT INTO `vehicle_make` (`vehicle_make_id`, `vehicle_make_name`, `vehcile_make_created_at`, `vehicle_make_status`) VALUES
 (1, 'MERCEDEZ', '2020-09-23 08:14:02', 1),
 (2, 'LAMBORGHINI', '2020-09-23 08:14:02', 1),
-(3, 'BMW', '2020-09-23 08:14:02', 1);
+(3, 'BMW', '2020-09-23 08:14:02', 1),
+(4, 'TOYOTA', '2021-05-01 01:52:01', 1);
 
 -- --------------------------------------------------------
 
@@ -1387,7 +1473,8 @@ CREATE TABLE `vehicle_model` (
 INSERT INTO `vehicle_model` (`vehicle_model_id`, `vehicle_model_name`, `vehicle_model_make_id`, `vehicle_model_year`, `vehicle_model_created_at`, `vehicle_model_status`) VALUES
 (1, 'BENZ', 1, 2019, '2020-09-23 08:16:15', 1),
 (2, 'GOLLARDO', 2, 2018, '2020-09-23 08:16:15', 1),
-(3, 'I8', 3, 2019, '2020-09-23 08:16:15', 1);
+(3, 'I8', 3, 2019, '2020-09-23 08:16:15', 1),
+(4, 'COROLLA', 4, 2008, '2021-05-01 01:52:01', 1);
 
 --
 -- Indexes for dumped tables
@@ -1633,7 +1720,7 @@ ALTER TABLE `vehicle_model`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `cus_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `cus_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `customer_feedback`
@@ -1669,13 +1756,13 @@ ALTER TABLE `customer_points`
 -- AUTO_INCREMENT for table `customer_point_allocation`
 --
 ALTER TABLE `customer_point_allocation`
-  MODIFY `cpa_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `cpa_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `customer_referral`
 --
 ALTER TABLE `customer_referral`
-  MODIFY `cr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `cr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `employee`
@@ -1705,19 +1792,19 @@ ALTER TABLE `employee_roster`
 -- AUTO_INCREMENT for table `invoice`
 --
 ALTER TABLE `invoice`
-  MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT for table `invoice_item`
 --
 ALTER TABLE `invoice_item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `invoice_service`
 --
 ALTER TABLE `invoice_service`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `item`
@@ -1753,7 +1840,7 @@ ALTER TABLE `item_stock_level`
 -- AUTO_INCREMENT for table `job`
 --
 ALTER TABLE `job`
-  MODIFY `job_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `job_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `job_item`
@@ -1771,7 +1858,7 @@ ALTER TABLE `login`
 -- AUTO_INCREMENT for table `notification`
 --
 ALTER TABLE `notification`
-  MODIFY `not_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+  MODIFY `not_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=151;
 
 --
 -- AUTO_INCREMENT for table `notification_type`
@@ -1849,13 +1936,13 @@ ALTER TABLE `user_access_level`
 -- AUTO_INCREMENT for table `vehicle_make`
 --
 ALTER TABLE `vehicle_make`
-  MODIFY `vehicle_make_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `vehicle_make_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `vehicle_model`
 --
 ALTER TABLE `vehicle_model`
-  MODIFY `vehicle_model_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `vehicle_model_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables

@@ -18,7 +18,7 @@ $jobObj = new Job(); ?>
     </div>
 
     <!-- Invoice Form   -->
-    <form action="job-invoice-generate.php" method="post" name="form-invoice">
+    <form action="job-management.php" method="post" name="form-invoice">
         <?php
         $invoice_job_id = base64_decode($_GET['invoice_job_id']);
 

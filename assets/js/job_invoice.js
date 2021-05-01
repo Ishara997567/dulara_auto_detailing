@@ -128,14 +128,8 @@ $(document).ready(function (){
 
             },
             function (data,success){
-                if(success)
-                {
+                if(success) {
                     $(".invoice-success-message").html("Invoice Created Successfully!").addClass("alert alert-success").focus();
-
-                    setTimeout(function(){
-                        $("form[name='form-invoice']").submit();
-                    },5000);
-
                 } else {
                     $(".invoice-success-message").html("Invoice Failed To Create!").addClass("alert alert-danger").focus();
 

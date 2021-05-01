@@ -192,8 +192,9 @@ class Customer
     public function addCustomerReferral($referrer_id, $referee_id, $description)
     {
         $con = $GLOBALS["conn"];
-        $sql = "INSERT INTO customer_referral (cr_referrer_id, cr_referee_id, cr_description) VALUES('$referrer_id', '$referee_id', '$description';";
-        return $con->query($sql);
+        $sql = "INSERT INTO customer_referral (cr_referrer_id, cr_referee_id, cr_description) VALUES('$referrer_id', '$referee_id', '$description');";
+        $con->query($sql);
+        return $con->affected_rows;
     }
 
     public function allocateCustomerPoints($cus_id, $points_id)

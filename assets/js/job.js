@@ -88,4 +88,24 @@ $(document).ready(function (){
         });
     });
 
+    const newVehicleMakeID = $("#new_vehicle_make_id").val();
+    $("#preview_new_vehicle_make").hide();
+    $("#new_vehicle_make_id").val("");
+    $("input[name='new_create_vehicle_make']").change(function (){
+        if($("#new_create_vehicle_make_yes").is(":checked")){
+            $("#preview_new_select_vehicle_make").hide();
+            $("#preview_new_vehicle_make").show();
+            $("#new_vehicle_make_id").val(newVehicleMakeID);
+
+            return false;
+        }
+
+        if($("#new_create_vehicle_make_no").is(":checked")){
+            $("#preview_new_select_vehicle_make").show();
+            $("#preview_new_vehicle_make").hide();
+            $("#new_vehicle_make_id").val("");
+            $("#new_vehicle_make_name").val("");
+            return false;
+        }
+    });
 });

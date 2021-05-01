@@ -113,11 +113,15 @@ $cusObj = new Customer();
         ?>
 
         <div class="row padding d-flex justify-content-center">
-            <div class="col-11 display-4 text-center alert alert-success">
+            <div class="col-11 display-4 text-center fade show alert alert-success alert-dismissible">
                 <?php
                 echo base64_decode($_GET['success_message']);
 
                 ?>
+
+                <button type="button" class="close" data-dismiss="alert">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
         </div>
 

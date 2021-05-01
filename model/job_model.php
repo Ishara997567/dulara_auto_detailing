@@ -4,6 +4,40 @@ $dbConnection = new DbConnection();
 
 class Job
 {
+    public function getLastVehicleModelID()
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT MAX(vehicle_model_id)+1 as VModelID  FROM vehicle_model;";
+        $result = $con->query($sql);
+        $r = $result->fetch_assoc();
+        return $r['VModelID'];
+    }
+
+    public function getLastVehicleMakelID()
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT MAX(vehicle_make_id)+1 as VMakeID  FROM vehicle_make;";
+        $result = $con->query($sql);
+        $r = $result->fetch_assoc();
+        return $r['VMakeID'];
+    }
+
+    public function addVehicleModelOnly($model_name, $make_id, $year)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "INSERT INTO vehicle_model (vehicle_model_name, vehicle_model_make_id, vehicle_model_year) VALUES ('$model_name', '$make_id', '$year');";
+        $con->query($sql);
+        return $con->affected_rows;
+    }
+
+    public function addVehicleMake($make_name)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "INSERT INTO vehicle_make (vehicle_make_name) VALUES ('$make_name');";
+        $con->query($sql);
+        return $con->affected_rows;
+    }
+
     public function getLastJobID()
     {
         $con = $GLOBALS["conn"];

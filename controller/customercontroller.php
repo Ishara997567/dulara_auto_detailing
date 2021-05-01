@@ -75,7 +75,7 @@ if(isset($_REQUEST["status"]))
                 $description = $_POST['cus_referral_description'];
 
                 $cus_referral_id = $cusObj->addCustomerReferral($referrer_cus_id, $referee_cus_id, $description);
-                $cus_point_id = $cusObj->allocateCustomerPoints($cus_id, 2);
+                $cus_point_id = $cusObj->allocateCustomerPoints($referrer_cus_id, 2);
 
                 $not_message = "A new customer referral <i><b>". $cus_referral_id ."</b></i> created for the referrer <b><i>".$referrer_cus_id."</i></b>";
                 $notificationObj->addNotification(4, $not_message);
@@ -83,10 +83,6 @@ if(isset($_REQUEST["status"]))
                 $not_message = "The referrer customer <i><b>". $cus_name ."</b></i> has obtained <b><i>5</i></b> points for the referee customer <b><i>".$referee_cus_id."</i></b>";
                 $notificationObj->addNotification(4, $not_message);
             }
-
-
-
-
             break;
 
         case "manage_customer":
