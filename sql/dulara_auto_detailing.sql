@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 01, 2021 at 08:42 AM
+-- Generation Time: May 02, 2021 at 11:10 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.4.14
 
@@ -330,6 +330,45 @@ INSERT INTO `employee` (`emp_id`, `emp_fn`, `emp_ln`, `emp_dob`, `emp_nic`, `emp
 (3, 'Sunil', 'Susantha', '1968-05-23', '687895412V', 'choose', '', 'AB+', '', '', '', '', 'Mechanic', '2021-01-27', '', 1, '2021-01-27 15:27:34', NULL),
 (4, 'Sudath', 'Verehara', '2021-01-07', '971856487V', 'choose', '', 'O+', '', '', '', '', 'Accountant', '2021-01-28', '', 1, '2021-01-28 16:23:01', NULL),
 (5, 'Nanda', 'Kumara', '2001-10-24', '200178456987', 'light', '7845962', 'AB+', 'nandakumara@email.com', 'Colombo', '', '', 'Mechanic', '2021-03-25', '', 1, '2021-03-25 06:36:59', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `employee_attendance`
+--
+
+CREATE TABLE `employee_attendance` (
+  `att_id` int(11) NOT NULL,
+  `att_date` date DEFAULT NULL,
+  `att_in_time` datetime DEFAULT NULL,
+  `att_out_time` datetime DEFAULT NULL,
+  `att_emp_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `employee_attendance`
+--
+
+INSERT INTO `employee_attendance` (`att_id`, `att_date`, `att_in_time`, `att_out_time`, `att_emp_id`) VALUES
+(1, '2021-05-02', '2021-05-02 08:00:00', '2021-05-02 04:00:00', 1),
+(3, '2021-05-02', '2021-05-02 10:00:00', '2021-05-02 06:00:00', 3),
+(4, '2021-05-02', '2021-05-02 08:03:00', '2021-05-02 05:40:00', 5),
+(5, '2021-05-02', '2021-05-02 08:00:00', '2021-05-02 04:00:00', 1),
+(6, '2021-05-02', '2021-05-02 08:03:00', '2021-05-02 05:40:00', 2),
+(7, '2021-05-02', '2021-05-02 10:00:00', '2021-05-02 06:00:00', 3),
+(9, '2021-05-02', '2021-05-02 08:00:00', '2021-05-02 04:00:00', 1),
+(10, '2021-05-02', '2021-05-02 08:03:00', '2021-05-02 05:40:00', 2),
+(11, '2021-05-02', '2021-05-02 10:00:00', '2021-05-02 06:00:00', 3),
+(13, '2021-05-02', '2021-05-02 08:00:00', '2021-05-02 04:00:00', 1),
+(14, '2021-05-02', '2021-05-02 08:03:00', '2021-05-02 05:40:00', 2),
+(16, '2021-05-02', '2021-05-02 08:03:00', '2021-05-02 05:40:00', 5),
+(17, '2021-05-03', '2021-05-02 08:00:00', '2021-05-02 04:00:00', 1),
+(19, '2021-05-03', '2021-05-02 10:00:00', '2021-05-02 06:00:00', 3),
+(20, '2021-05-03', '2021-05-02 08:03:00', '2021-05-02 05:40:00', 5),
+(21, '2021-05-02', '2021-04-06 08:00:00', '2021-04-06 04:00:00', 1),
+(22, '2021-05-02', '2021-04-06 08:03:00', '2021-04-06 05:40:00', 2),
+(23, '2021-05-02', '2021-04-06 08:03:00', '2021-04-06 05:40:00', 3),
+(24, '2021-05-02', '2021-04-06 10:00:00', '2021-04-06 06:00:00', 4);
 
 -- --------------------------------------------------------
 
@@ -681,7 +720,8 @@ INSERT INTO `item_stock` (`item_stock_id`, `item_id`, `item_stock_barcode`, `ite
 (31, 1, 0, '2021-01-27', '0000-00-00', '0000-00-00', -63, '2021-01-27 13:26:42', NULL, 1),
 (32, 1, 0, '2021-01-27', '0000-00-00', '0000-00-00', -63, '2021-01-27 13:27:48', NULL, 1),
 (33, 1, 0, '2021-01-28', '0000-00-00', '0000-00-00', -63, '2021-01-28 09:02:11', NULL, 1),
-(34, 1, 0, '2021-01-28', '0000-00-00', '0000-00-00', 439, '2021-01-28 12:36:22', NULL, 1);
+(34, 1, 0, '2021-01-28', '0000-00-00', '0000-00-00', 439, '2021-01-28 12:36:22', NULL, 1),
+(35, 14, 0, '2021-05-02', '2021-05-31', '2021-05-02', 500, '2021-05-02 05:19:30', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -990,7 +1030,8 @@ INSERT INTO `notification` (`not_id`, `not_nt_id`, `not_message`, `not_sent_date
 (147, 4, 'A new customer named <i><b>David Perera</b></i> created', '2021-05-01 12:01:34', 0, 0),
 (148, 4, 'The new customer <i><b>David Perera</b></i> has obtained <b><i>1</i></b> points!', '2021-05-01 12:01:34', 0, 0),
 (149, 4, 'A new customer referral <i><b>1</b></i> created for the referrer <b><i>1</i></b>', '2021-05-01 12:01:34', 0, 0),
-(150, 4, 'The referrer customer <i><b>David Perera</b></i> has obtained <b><i>5</i></b> points for the referee customer <b><i>34</i></b>', '2021-05-01 12:01:35', 0, 0);
+(150, 4, 'The referrer customer <i><b>David Perera</b></i> has obtained <b><i>5</i></b> points for the referee customer <b><i>34</i></b>', '2021-05-01 12:01:35', 0, 0),
+(151, 2, 'A new stock of 500 has been added for the item <i><b>14</b></i>', '2021-05-02 10:49:30', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1280,7 +1321,7 @@ CREATE TABLE `service` (
 --
 
 INSERT INTO `service` (`service_id`, `service_name`, `service_price`, `service_required_item_id_1`, `service_required_item_id_2`, `service_required_item_id_3`, `service_required_item_id_4`, `service_required_item_id_5`, `service_required_item_id_6`, `service_worker_id_1`, `service_worker_id_2`, `service_worker_id_3`, `service_worker_id_4`, `service_cat_id`, `service_sub_cat_id`, `service_created_at`, `service_created_user_id`, `service_description`, `service_status`) VALUES
-(1, 'Engine Oil Change', 1400, 10, 0, 0, 0, 0, 0, 100, 0, 0, 0, 1, 1, '2020-09-10 04:22:58', NULL, 'Oil Change should be done once a year.', 1),
+(1, 'Engine Oil Change', 1500, 10, 0, 0, 0, 0, 0, 100, 0, 0, 0, 1, 2, '2020-09-10 04:22:58', NULL, 'Oil Change should be done once a year.', 1),
 (2, 'Interior Body Wash', 1500, 10, 20, 0, 0, 0, 0, 100, 0, 0, 0, 2, 2, '2020-09-10 08:05:04', NULL, 'Clean the inside!', 1),
 (6, 'Test Service Hello', 20000, 10, 0, 0, 0, 0, 0, 200, 0, 0, 0, 1, 1, '2020-09-11 11:39:54', NULL, '', 1),
 (7, 'Body Wash', 1500, 10, 0, 0, 0, 0, 0, 100, 200, 0, 0, 1, 2, '2020-09-22 06:06:23', NULL, 'dghe', 1),
@@ -1535,6 +1576,12 @@ ALTER TABLE `employee`
   ADD PRIMARY KEY (`emp_id`);
 
 --
+-- Indexes for table `employee_attendance`
+--
+ALTER TABLE `employee_attendance`
+  ADD PRIMARY KEY (`att_id`);
+
+--
 -- Indexes for table `employee_contact`
 --
 ALTER TABLE `employee_contact`
@@ -1771,6 +1818,12 @@ ALTER TABLE `employee`
   MODIFY `emp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT for table `employee_attendance`
+--
+ALTER TABLE `employee_attendance`
+  MODIFY `att_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+--
 -- AUTO_INCREMENT for table `employee_contact`
 --
 ALTER TABLE `employee_contact`
@@ -1828,7 +1881,7 @@ ALTER TABLE `item_size`
 -- AUTO_INCREMENT for table `item_stock`
 --
 ALTER TABLE `item_stock`
-  MODIFY `item_stock_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `item_stock_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `item_stock_level`
@@ -1858,7 +1911,7 @@ ALTER TABLE `login`
 -- AUTO_INCREMENT for table `notification`
 --
 ALTER TABLE `notification`
-  MODIFY `not_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=151;
+  MODIFY `not_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=152;
 
 --
 -- AUTO_INCREMENT for table `notification_type`

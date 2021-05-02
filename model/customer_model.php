@@ -352,4 +352,29 @@ class Customer
         $sql = "SELECT feedback_star_rating, COUNT(feedback_star_rating) as count FROM customer_feedback GROUP BY feedback_star_rating ORDER BY feedback_star_rating DESC;";
         return $con->query($sql);
     }
+
+    public function getAverageStarRating()
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT feedback_star_rating, COUNT(feedback_star_rating) as count, (feedback_star_rating * COUNT(feedback_star_rating)) as total FROM customer_feedback GROUP BY feedback_star_rating ORDER BY feedback_star_rating DESC;";
+        return $con->query($sql);
+    }
+
+    public function getTotalLoyaltyEnrollments($lowest_points)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT cpa_cus_id as customerID, SUM(p.cp_points) as points FROM customer_point_allocation a, customer_points p WHERE a.cpa_point_id = p.cp_id GROUP BY  cpa_cus_id HAVING points > '$lowest_points';";
+        $result = $con->query($sql);
+        return $result->num_rows;
+
+    }
+
+    public function getPointsOfSmallestLoyaltyProgram()
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT loyalty_points FROM customer_loyalty WHERE loyalty_status = 1 ORDER BY loyalty_points ASC LIMIT 1;";
+        $result = $con->query($sql);
+        $r = $result->fetch_assoc();
+        return $r['loyalty_points'];
+    }
 }

@@ -483,45 +483,6 @@ if(isset($_REQUEST["status"]))
 
             break;
 
-        case "customer_feedback_send_message":
-
-            //post values
-            $m_heading = $_POST["m_heading"];
-            $message = $_POST["message"];
-            $m_type = isset($_POST["m_type"]) ? $_POST["m_type"] : "";
-            $m_to_whom = isset($_POST["m_to_whom"]) ? $_POST["m_to_whom"] : "";
-            $specific_customer_names = isset($_POST["specific_customer_names"]) ? $_POST["specific_customer_names"] : "";
-            $when = isset($_POST["when"]) ? $_POST["when"] : "";
-
-
-            foreach($m_type as $type) {
-                echo $type;
-            }
-
-            foreach($m_to_whom as $whom) {
-                echo $whom;
-            }
-            foreach($specific_customer_names as $specific_customer_nam) {
-                echo $specific_customer_nam;
-            }
-            foreach($when as $w) {
-                echo $w;
-            }
-
-
-
-            //db string values
-            $m_type_s = json_encode($m_type);
-            $m_to_whom_s = json_encode($m_to_whom);
-            $specific_customer_names_s = json_encode($specific_customer_names);
-            $when_s = json_encode($when);
-
-            //$insert_id = $cusObj->storeCustomerMessage($m_heading,$message, $m_type_s, $m_to_whom_s, $specific_customer_names_s, $when_s);
-
-
-
-            break;
-
         case "create_loyalty":
 
             $loyalty_name = $_POST['loyalty_name'];

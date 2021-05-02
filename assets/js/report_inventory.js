@@ -12,11 +12,12 @@ $(document).ready(function (){
             $("#item_select").hide();
             $("#supplier_select").hide();
             $("#btn-generate-inventory-report").click(function (){
-                $.get(url,function (data){
+                $.post(url,function (data){
                     $(".split-inventory-data").html(data);
                     $("#result-table").DataTable({
                         "destroy": true,
                     });
+                    $("#print_data").val(data);
                 });
             });
         }
@@ -34,6 +35,8 @@ $(document).ready(function (){
                     $("#result-table").DataTable({
                         "destroy": true,
                     });
+                    $("#print_data").val(data);
+
                 });
 
             });
@@ -51,6 +54,7 @@ $(document).ready(function (){
                     $("#result-table").DataTable({
                         "destroy": true,
                     });
+                    $("#print_data").val(data);
                 });
             });
         }
@@ -68,6 +72,8 @@ $(document).ready(function (){
                     $("#result-table").DataTable({
                         "destroy": true,
                     });
+                    $("#print_data").val(data);
+
                 });
             });
             $("#btn-generate-inventory-report").click(function (){
@@ -77,6 +83,7 @@ $(document).ready(function (){
                     $("#result-table").DataTable({
                         "destroy": true,
                     });
+                    $("#print_data").val(data);
                 });
             })
         }

@@ -523,7 +523,7 @@
                                             <!-- Item Category -->
                                             <div class="form-group row">
                                                 <label for="stock_lvl_item_category" class="col-2 col-form-label">Item Category</label>
-                                                <div class="col-3">
+                                                <div class="col-4">
                                                     <select name="stock_lvl_item_category" id="stock_lvl_item_category" class="custom-select">
                                                         <option value="choose" selected>Choose...</option>
                                                         <?php

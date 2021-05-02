@@ -1,7 +1,7 @@
 <?php include '../includes/header.php';
-include '../model/sale_model.php';
+include '../model/employee_model.php';
 
-$saleObj = new Sale();
+$employeeObj = new Employee();
 
 ?>
 <title>Attendnace Sheet</title>
@@ -31,14 +31,20 @@ $saleObj = new Sale();
             </tr>
             </thead>
             <tbody>
+            <?php
+            $att_result = $employeeObj->getEmployeeAttendance();
+            while($att_r = $att_result->fetch_assoc())
+            {
+            ?>
                 <tr>
-                    <th scope="row">1</th>
-                    <td>173</td>
-                    <td>Ishara Perera</td>
-                    <td>10/10/2020</td>
-                    <td>08:05</td>
-                    <td>17:12</td>
+                    <th scope="row"><?php echo $att_r['att_id']; ?></th>
+                    <td><?php echo $att_r['emp_id']; ?></td>
+                    <td><?php echo $att_r['emp_fn']." ". $att_r['emp_ln']; ?></td>
+                    <td><?php echo $att_r['att_date']; ?></td>
+                    <td><?php echo $att_r['att_in_time']; ?></td>
+                    <td><?php echo $att_r['att_out_time']; ?></td>
                 </tr>
+            <?php } ?>
             </tbody>
         </table>
     </div>

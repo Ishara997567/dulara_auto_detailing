@@ -21,11 +21,12 @@ $(document).ready(function (){
             $("#sale-supplier-select").hide();
 
             $("#btn-generate-sale-report").click(function (){
-                $.get(url, function(data){
+                $.post(url, function(data){
                     $(".split-sale-data").html(data);
                     $("#result-table").DataTable({
                         "destroy": true,
                     });
+                    $("#print_data").val(data);
                 });
             });
         }
@@ -47,6 +48,8 @@ $(document).ready(function (){
                     $("#result_table").DataTable({
                         "destroy": true,
                     });
+                    alert(data);
+                    $("#print_data").val(data);
                 });
             });
         }
@@ -67,6 +70,7 @@ $(document).ready(function (){
                    $("#result_table").DataTable({
                        "destroy": true,
                    });
+                   $("#print_data").val(data);
                });
             });
 

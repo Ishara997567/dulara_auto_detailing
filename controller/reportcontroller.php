@@ -144,11 +144,6 @@ if(isset($_REQUEST["status"])) {
                         <th scope="col">Supplier</th>
                         <th scope="col">Sale Unit Price</th>
                         <th scope="col">Purchase Unit Price</th>
-                        <th scope="col">Handling Charges</th>
-                        <th scope="col">Discount</th>
-                        <th scope="col">Vat Rate</th>
-                        <th scope="col">Location</th>
-                        <th scope="col">Description</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -169,11 +164,6 @@ if(isset($_REQUEST["status"])) {
                             <td><?php echo $row['sup_name']; ?></td>
                             <td><?php echo $row['item_sale_uprice']; ?></td>
                             <td><?php echo $row['item_purchase_uprice']; ?></td>
-                            <td><?php echo $row['item_handling']; ?></td>
-                            <td><?php echo $row['item_discount']; ?></td>
-                            <td><?php echo $row['item_vat_rate']; ?></td>
-                            <td><?php echo $row['item_location']; ?></td>
-                            <td><?php echo $row['item_description']; ?></td>
                         </tr>
                         <?php
 
@@ -293,11 +283,7 @@ if(isset($_REQUEST["status"])) {
                         <th scope="col">Supplier</th>
                         <th scope="col">Sale Unit Price</th>
                         <th scope="col">Purchase Unit Price</th>
-                        <th scope="col">Handling Charges</th>
-                        <th scope="col">Discount</th>
-                        <th scope="col">Vat Rate</th>
-                        <th scope="col">Location</th>
-                        <th scope="col">Description</th>
+
                     </tr>
                     </thead>
                     <tbody>
@@ -316,11 +302,6 @@ if(isset($_REQUEST["status"])) {
                             <td><?php echo $row['sup_name']; ?></td>
                             <td><?php echo $row['item_sale_uprice']; ?></td>
                             <td><?php echo $row['item_purchase_uprice']; ?></td>
-                            <td><?php echo $row['item_handling']; ?></td>
-                            <td><?php echo $row['item_discount']; ?></td>
-                            <td><?php echo $row['item_vat_rate']; ?></td>
-                            <td><?php echo $row['item_location']; ?></td>
-                            <td><?php echo $row['item_description']; ?></td>
                         </tr>
                         <?php
 
@@ -358,14 +339,12 @@ if(isset($_REQUEST["status"])) {
                     <tr>
                         <th scope="col">Job ID</th>
                         <th scope="col">Vehicle Number</th>
-                        <th scope="col">Customer Name</th>
                         <th scope="col">Vehicle Make</th>
                         <th scope="col">Vehicle Model</th>
                         <th scope="col">Vehicle ODO</th>
                         <th scope="col">Vehicle Mileage</th>
                         <th scope="col">Job In-time</th>
                         <th scope="col">Job Out-time</th>
-                        <th scope="col">Description</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -376,14 +355,12 @@ if(isset($_REQUEST["status"])) {
                         <tr>
                             <th scope="row"><?php echo $row['job_id']; ?></th>
                             <td><?php echo $row['job_vehicle_id']; ?></td>
-                            <td><?php echo $row['cus_name']; ?></td>
                             <td><?php echo $row['vehicle_make_name']; ?></td>
                             <td><?php echo $row['vehicle_model_name']; ?></td>
                             <td><?php echo $row['job_vehicle_odo']; ?></td>
                             <td><?php echo $row['job_vehicle_mileage']; ?></td>
                             <td><?php echo $row['job_start_time']; ?></td>
                             <td><?php echo $row['job_finish_time']; ?></td>
-                            <td><?php echo $row['job_description']; ?></td>
                         </tr>
                         <?php
                     }
@@ -391,73 +368,118 @@ if(isset($_REQUEST["status"])) {
             }
             break;
 
+    case "job_customer_list":
+    if(isset($_POST['vno']))
+    {
+        $vehicle_no = $_POST['vno'];
+        $result = $reportObj->getCustomerWiseCompletedJobs($vehicle_no);
+        ?>
+    <table class="table table-sm" id="result_table">
+        <thead>
+        <tr>
+            <th scope="col">Job ID</th>
+            <th scope="col">Vehicle Number</th>
+            <th scope="col">Customer Name</th>
+            <th scope="col">Vehicle</th>
+            <th scope="col">Vehicle ODO</th>
+            <th scope="col">Vehicle Mileage</th>
+            <th scope="col">Job In-time</th>
+            <th scope="col">Job Out-time</th>
+            <th scope="col">Invoice Amount</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        while($row = $result->fetch_assoc())
+        {
+            ?>
+            <tr>
+                <th scope="row"><?php echo $row['job_id']; ?></th>
+                <td><?php echo $row['job_vehicle_id']; ?></td>
+                <td><?php echo $row['cus_name']; ?></td>
+                <td><?php echo $row['vehicle_make_name']." ".$row['vehicle_model_name']; ?></td>
+                <td><?php echo $row['job_vehicle_odo']; ?></td>
+                <td><?php echo $row['job_vehicle_mileage']; ?></td>
+                <td><?php echo $row['job_start_time']; ?></td>
+                <td><?php echo $row['job_finish_time']; ?></td>
+                <td><?php echo $row['invoice_amount']; ?></td>
+            </tr>
+            <?php
+        }
+    }
+        break;
+
         case "sale_daily_income_list":
             $result = $reportObj->getDailyIncome();
-            ?>
-            <div class="table-responsive">
-                <table class="table table-sm" id="result-table">
-                    <thead>
-                    <tr>
-                        <th scope="col">Invoice ID</th>
-                        <th scope="col">Job Name</th>
-                        <th scope="col">Total Item Amount (Rs.)</th>
-                        <th scope="col">Total Service Amount (Rs.)</th>
-                        <th scope="col">Total Invoice Amount (Rs.)</th>
-                        <th scope="col">Invoiced Time</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-
-                    <?php
-                    $total_daily_income = 0;
-                    $total_item_amount = 0;
-                    $total_service_amount = 0;
-                    while($row = $result->fetch_assoc())
-                    {
-                        $total_daily_income += $row['invoice_amount'];
-                        $total_item_amount += $row['invoice_item_total_amount'];
-                        $total_service_amount += $row['invoice_service_total_amount'];
-                        ?>
+            if(mysqli_num_rows($result) != 0)
+            {
+                ?>
+                <div class="table-responsive">
+                    <table class="table table-sm" id="result-table">
+                        <thead>
                         <tr>
-                            <th><?php echo $row['invoice_id']; ?></th>
-                            <td><?php echo $row['job_id']; ?></td>
-                            <td><?php echo $row['invoice_item_total_amount']; ?></td>
-                            <td><?php echo $row['invoice_service_total_amount']; ?></td>
-                            <td><?php echo $row['invoice_amount']; ?></td>
-                            <td><?php echo $row['created_at']; ?></td>
+                            <th scope="col">Invoice ID</th>
+                            <th scope="col">Job Name</th>
+                            <th scope="col">Total Item Amount (Rs.)</th>
+                            <th scope="col">Total Service Amount (Rs.)</th>
+                            <th scope="col">Total Invoice Amount (Rs.)</th>
+                            <th scope="col">Invoiced Time</th>
                         </tr>
+                        </thead>
+                        <tbody>
+
                         <?php
+                        $total_daily_income = 0;
+                        $total_item_amount = 0;
+                        $total_service_amount = 0;
+                        while($row = $result->fetch_assoc())
+                        {
+                            $total_daily_income += $row['invoice_amount'];
+                            $total_item_amount += $row['invoice_item_total_amount'];
+                            $total_service_amount += $row['invoice_service_total_amount'];
+                            ?>
+                            <tr>
+                                <th><?php echo $row['invoice_id']; ?></th>
+                                <td><?php echo $row['job_id']; ?></td>
+                                <td><?php echo $row['invoice_item_total_amount']; ?></td>
+                                <td><?php echo $row['invoice_service_total_amount']; ?></td>
+                                <td><?php echo $row['invoice_amount']; ?></td>
+                                <td><?php echo $row['created_at']; ?></td>
+                            </tr>
+                            <?php
 
-                    }
-                    ?>
-                    </tbody>
-                </table>
-            </div>
-            <hr>
-            <form>
-
-                <div class="form-group row">
-                    <label for="tot_item_amount" class="col-md-3 col-form-label">Total Daily Income from Items (Rs.): </label>
-                    <div class="col-md-2">
-                        <input type="text" id="tot_item_amount" name="tot_item_amount" class="form-control" readonly value="<?php echo $total_item_amount; ?>">
-                    </div>
+                        }
+                        ?>
+                        </tbody>
+                    </table>
                 </div>
+                <hr>
+                <form>
 
-                <div class="form-group row">
-                    <label for="tot_service_amount" class="col-md-3 col-form-label">Total Daily Income from Services (Rs.): </label>
-                    <div class="col-md-2">
-                        <input type="text" id="tot_service_amount" name="tot_service_amount" class="form-control" readonly value="<?php echo $total_service_amount; ?>">
+                    <div class="form-group row">
+                        <label for="tot_item_amount" class="col-md-3 col-form-label">Total Daily Income from Items (Rs.): </label>
+                        <div class="col-md-2">
+                            <input type="text" id="tot_item_amount" name="tot_item_amount" class="form-control" readonly value="<?php echo $total_item_amount; ?>">
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group row">
-                    <label for="tot_daily_income" class="col-md-3 col-form-label">Total Daily Income (Rs.): </label>
-                    <div class="col-md-2">
-                        <input type="text" id="tot_daily_income" name="tot_daily_income" class="form-control" readonly value="<?php echo $total_daily_income; ?>">
+                    <div class="form-group row">
+                        <label for="tot_service_amount" class="col-md-3 col-form-label">Total Daily Income from Services (Rs.): </label>
+                        <div class="col-md-2">
+                            <input type="text" id="tot_service_amount" name="tot_service_amount" class="form-control" readonly value="<?php echo $total_service_amount; ?>">
+                        </div>
                     </div>
-                </div>
-            </form>
-            <?php
+
+                    <div class="form-group row">
+                        <label for="tot_daily_income" class="col-md-3 col-form-label">Total Daily Income (Rs.): </label>
+                        <div class="col-md-2">
+                            <input type="text" id="tot_daily_income" name="tot_daily_income" class="form-control" readonly value="<?php echo $total_daily_income; ?>">
+                        </div>
+                    </div>
+                </form>
+
+                <?php
+            }
             break;
 
         case "sale_period_list":
@@ -519,7 +541,6 @@ if(isset($_REQUEST["status"])) {
                     </div>
                     <hr>
                     <form>
-
                         <div class="form-group row">
                             <label for="tot_item_amount" class="col-md-3 col-form-label">Total Daily Income from Items (Rs.): </label>
                             <div class="col-md-2">
@@ -597,7 +618,6 @@ if(isset($_REQUEST["status"])) {
                     <th scope="col">Address Line 1</th>
                     <th scope="col">Address Line 2</th>
                     <th scope="col">Address Line 3</th>
-                    <th scope="col">Address Line 4</th>
                     <th scope="col">Contact No 1</th>
                     <th scope="col">Contact No 2</th>
                     <th scope="col">Email</th>
@@ -616,7 +636,6 @@ if(isset($_REQUEST["status"])) {
                         <td><?php echo $row['cus_add_l1']; ?></td>
                         <td><?php echo $row['cus_add_l2']; ?></td>
                         <td><?php echo $row['cus_add_l3']; ?></td>
-                        <td><?php echo $row['cus_add_l4']; ?></td>
                         <td><?php echo $row['cus_cn1']; ?></td>
                         <td><?php echo $row['cus_cn2']; ?></td>
                         <td><?php echo $row['cus_email']; ?></td>
@@ -671,7 +690,7 @@ if(isset($_REQUEST["status"])) {
 
         case "customer_feedback":
             ?>
-           <div class="table-responsive">
+            <div class="table-responsive">
                 <table class="table table-hover table-sm" id="result-table">
                     <thead>
                     <tr>
@@ -698,26 +717,26 @@ if(isset($_REQUEST["status"])) {
                         $no_of_starts = $r['feedback_star_rating'];
 
                         ?>
-                    <tr>
-                        <th scope="row"><?php echo $r['feedback_id']; ?></th>
-                        <td><?php echo $r['cus_name']; ?></td>
-                        <td><?php echo $r['cus_vehicle_no']; ?></td>
-                        <td><?php echo $r['invoice_id']; ?></td>
-                        <td>
-                            <?php
-                            for($i=0; $i < $no_of_starts; $i++)
-                            {
-                                ?>
-                                <i class="fa fa-star" style="color: orange"></i>
-                            <?php    } ?>
-                        </td>
-                        <td><?php echo $r['feedback_review']; ?></td>
-                    </tr>
+                        <tr>
+                            <th scope="row"><?php echo $r['feedback_id']; ?></th>
+                            <td><?php echo $r['cus_name']; ?></td>
+                            <td><?php echo $r['cus_vehicle_no']; ?></td>
+                            <td><?php echo $r['invoice_id']; ?></td>
+                            <td>
+                                <?php
+                                for($i=0; $i < $no_of_starts; $i++)
+                                {
+                                    ?>
+                                    <i class="fa fa-star" style="color: orange"></i>
+                                <?php    } ?>
+                            </td>
+                            <td><?php echo $r['feedback_review']; ?></td>
+                        </tr>
                     <?php } ?>
                     </tbody>
-                    </table>
-</div>
-                    <?php
+                </table>
+            </div>
+            <?php
             break;
 
         case "customer_loyalty":
@@ -753,6 +772,158 @@ if(isset($_REQUEST["status"])) {
             </table>
 
             <?php
+            break;
+
+        case "worker_wise":
+            if(isset($_POST['workerName'])) {
+                $worker_name = $_POST['workerName'];
+                $result = $reportObj->getAllEmployeeByName($worker_name);
+                $row = $result->fetch_assoc();
+                if(is_array($row) || is_object($row)) {
+                    ?>
+                    <div class="row d-flex justify-content-center mt-2">
+                        <div class="col-10 text-center display-4"><?php echo $row['Employee First Name'].' '.$row['Employee Last Name']; ?></div>
+                    </div>
+                    <table class="table table-sm text-left" id="result-table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Field</th>
+                            <th scope="col">Details</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <?php
+                        foreach($row as $key=>$value)
+                        {
+                            ?>
+                            <tr>
+                                <td><?php echo $key; ?></td>
+                                <td><?php echo $value; ?></td>
+                            </tr>
+                            <?php
+                        }
+                        ?>
+                        </tbody>
+                    </table>
+                    <?php
+                }
+            }
+            break;
+
+        case "worker_attendance":
+            if(isset($_POST['from']) && isset($_POST['to'])){
+                $from = $_POST['from'];
+                $to = $_POST['to'];
+
+                $att_result = $reportObj->getEmployeeAttendanceByRange($from, $to);
+                ?>
+                <table class="table table-sm" id="result-table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Emp ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">In Time</th>
+                        <th scope="col">Out Time</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+
+                    while($row = $att_result->fetch_assoc())
+                    {
+                        ?>
+                        <tr>
+                            <th scope="row"><?php echo $row['att_id']; ?></th>
+                            <td><?php echo $row['emp_id']; ?></td>
+                            <td><?php echo $row['emp_fn']." ".$row['emp_ln']; ?></td>
+                            <td><?php echo $row['att_date']; ?></td>
+                            <td><?php echo $row['att_in_time']; ?></td>
+                            <td><?php echo $row['att_out_time']; ?></td>
+                        </tr>
+                    <?php } ?>
+                    </tbody>
+                </table>
+                <?php
+            }
+            break;
+
+        case "worker_all":
+            $result = $reportObj->getAllEmployee();
+            ?>
+            <table class="table table-sm" id="result-table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Date of Birth</th>
+                    <th scope="col">NIC</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Designation</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+
+                while($row = $result->fetch_assoc())
+                {
+                    ?>
+                    <tr>
+                        <th scope="row"><?php echo $row['emp_id']; ?></th>
+                        <td><?php echo $row['emp_fn']." ".$row['emp_ln']; ?></td>
+                        <td><?php echo $row['emp_dob']; ?></td>
+                        <td><?php echo $row['emp_dob']; ?></td>
+                        <td><?php echo $row['emp_dob']; ?></td>
+                        <td><?php echo $row['emp_address']; ?></td>
+                        <td><?php echo $row['emp_designation']; ?></td>
+                    </tr>
+                <?php } ?>
+                </tbody>
+            </table>
+            <?php
+            break;
+
+        case "worker_wise_attendance":
+            if(isset($_POST['from']) && isset($_POST['to']) && isset($_POST['workerName'])){
+
+                $name = $_POST['workerName'];
+                $from = $_POST['from'];
+                $to = $_POST['to'];
+
+                $att_result = $reportObj->getEmployeeAttendanceByNameAndRange($name,$from, $to);
+                ?>
+                <div class="row d-flex justify-content-center">
+                    <div class="col-10 text-center display-4"><?php echo $name; ?></div>
+                </div>
+                <table class="table table-sm" id="result-table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">In Time</th>
+                        <th scope="col">Out Time</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+
+                    while($row = $att_result->fetch_assoc())
+                    {
+                        ?>
+                        <tr>
+                            <th scope="row"><?php echo $row['att_id']; ?></th>
+                            <td><?php echo $row['att_date']; ?></td>
+                            <td><?php echo $row['att_in_time']; ?></td>
+                            <td><?php echo $row['att_out_time']; ?></td>
+                        </tr>
+                    <?php } ?>
+                    </tbody>
+                </table>
+                <?php
+            }
             break;
     }
 }

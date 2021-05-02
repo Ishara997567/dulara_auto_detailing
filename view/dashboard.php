@@ -1,9 +1,13 @@
 <?php include '../includes/header.php';
 include "../model/sale_model.php";
 include "../model/job_model.php";
+include "../model/customer_model.php";
+include "../model/employee_model.php";
 
 $saleObj = new Sale();
 $jobObj = new Job();
+$cusObj = new Customer();
+$empObj = new Employee();
 
 
 ?>
@@ -30,47 +34,42 @@ $jobObj = new Job();
     <title>Main Dashboard</title>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
-        google.charts.load('current', {'packages':['corechart']});
-        google.charts.setOnLoadCallback(drawChart1);
-        google.charts.setOnLoadCallback(drawChart2);
-
-        function drawChart1() {
+        google.charts.load("current", {packages:['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
             var data = google.visualization.arrayToDataTable([
-                ['Year', 'Sales', 'Expenses'],
-                ['2004',  1000,      400],
-                ['2005',  1170,      460],
-                ['2006',  660,       1120],
-                ['2007',  1030,      540]
+                ["Name", "No of Days", { role: "style" } ],
+                <?php
+                $result = $empObj->getEmployeeAttendanceKPI();
+                $count = 0;
+                while($r = $result->fetch_assoc())
+                {
+                $color = $count % 2 == 0 ? "#b87333" : "gold"
+                ?>
+                ["<?php echo $r['name']; ?>", <?php echo $r['DayCount']; ?>, "<?php echo $color; ?>"],
+                <?php $count++; } ?>
+                // ["Silver", 10.49, "silver"],
+                // ["Gold", 19.30, "gold"],
+                // ["Platinum", 21.45, "color: #e5e4e2"]
             ]);
 
-            var options = {
-                title: 'Worker KPI',
-                curveType: 'function',
-                legend: { position: 'bottom' }
-            };
-
-            var chart = new google.visualization.LineChart(document.getElementById('line_chart1'));
-
-            chart.draw(data, options);
-        }
-        function drawChart2() {
-            var data = google.visualization.arrayToDataTable([
-                ['Year', 'Sales', 'Expenses'],
-                ['2004',  1000,      400],
-                ['2005',  1170,      460],
-                ['2006',  660,       1120],
-                ['2007',  1030,      540]
-            ]);
+            var view = new google.visualization.DataView(data);
+            view.setColumns([0, 1,
+                { calc: "stringify",
+                    sourceColumn: 1,
+                    type: "string",
+                    role: "annotation" },
+                2]);
 
             var options = {
-                title: 'Customer Feedbakc Reception',
-                curveType: 'function',
-                legend: { position: 'bottom' }
+                title: "Attendance in <?php echo date("Y"); ?>",
+                width: 450,
+                height: 300,
+                bar: {groupWidth: "95%"},
+                legend: { position: "none" },
             };
-
-            var chart = new google.visualization.LineChart(document.getElementById('line_chart2'));
-
-            chart.draw(data, options);
+            var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+            chart.draw(view, options);
         }
     </script>
     </head>
@@ -188,7 +187,13 @@ $jobObj = new Job();
                     <div class="card border-danger">
                         <div class="h3  card-header">Loyalty Enrollments</div>
                         <div class="card-body d-flex justify-content-center">
-                            <p class="card-text text-center circle-amount">7</p>
+                            <p class="card-text text-center circle-amount">
+
+                                <?php
+                                echo $cusObj->getTotalLoyaltyEnrollments($cusObj->getPointsOfSmallestLoyaltyProgram());
+                                ?>
+
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -199,7 +204,7 @@ $jobObj = new Job();
                     <div class="card">
                         <div class="h3 card-header">Worker KPI</div>
                         <div class="card-body">
-                            <div id="line_chart1"></div>
+                            <div id="columnchart_values" class="d-flex justify-content-center"></div>
                         </div>
                     </div>
                 </div>
@@ -207,8 +212,40 @@ $jobObj = new Job();
                 <div class="col-6">
                     <div class="card">
                         <div class="h3 card-header">Customer Feedback</div>
-                        <div class="card-body">
-                            <div id="line_chart2"></div>
+                        <div class="card-bod p-5">
+                            <?php
+                            $rating_result = $cusObj->getAverageStarRating();
+                            $sum_count = 0;
+                            $sum_total = 0;
+                            while($r = $rating_result->fetch_assoc()){
+                                $sum_count += $r['feedback_star_rating'];
+                                $sum_total += $r['total'];
+                            }
+
+                            $average = $sum_total / $sum_count;
+                            ?>
+                            <h5 class="text-center">Average Rating</h5>
+                            <div class="d-flex justify-content-center">
+                            <?php
+                            for($i=0 ; $i<floor($average); $i++){
+                                ?>
+                                <i class="fa fa-star mr-1" style="color: orange;"></i>
+                                <?php
+                            }
+                            if(!is_int($average))
+                            {
+                                ?>
+                                <i class="fa fa-star-half" style="color: orange;"></i>
+                                <?php
+                            }
+                            ?>
+                            </div>
+                            <h1 class="text-center rounded-circle"><?php echo round($average,1); ?></h1>
+
+                            <div class="progress mt-4">
+
+                                <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: <?php echo ($average / 5) * 100; ?>%" aria-valuenow="<?php echo $average; ?>" aria-valuemin="0" aria-valuemax="5"></div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -216,6 +216,7 @@ if(isset($_REQUEST["status"])) {
             $jobObj->changeJobStatusToPendingAgain($changed_status_job_id);
 
             $not_message = "Job satatus has been changed back to <i><b>pending, </b></i> of <i><b>". $changed_status_job_id."</b></i>";
+            $notificationObj->addNotification(3, $not_message);
             break;
 
         case "manage_completed_jobs":

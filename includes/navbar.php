@@ -1,6 +1,9 @@
 <?php
 include '../model/user_model.php';
 $userObj = new User();
+include '../model/notification_model.php';
+$notificationObj = new Notification();
+$all_nots = $notificationObj->getLimitedNotifications();
 ?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_toggler" aria-controls="navbar_toggler" aria-expanded="false" aria-label="Toggle navigation">
@@ -15,6 +18,8 @@ $userObj = new User();
                 <div class="dropdown">
                     <button role="button" class="btn dropdown rounded-pill btn-outline-primary button-styles my-2 mr-1 my-sm-0" type="button" id="dropdown_notification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-fw fa-bell"></i>
+
+                        <span class="badge badge-danger" id="span_not_count"><?php echo $notificationObj->getUnreadNotificationCount(); ?></span>
                     </button>
 
                     <!-- Dropdown Menu  -->
@@ -30,11 +35,10 @@ $userObj = new User();
                             </div>
                         </div>
 
-                        <?php include '../model/notification_model.php';
-                        $notificationObj = new Notification();
-                        $all_nots = $notificationObj->getLimitedNotifications();
+                        <?php
                         while($row = $all_nots->fetch_assoc())
                         {
+                            $is_read = $row['not_is_read'] == 1;
                             ?>
                             <div class="row d-flex flex-row">
                                 <div class="col-3">
@@ -46,11 +50,17 @@ $userObj = new User();
                                 <div class="col-6"><?php echo $row['not_sent_datetime']; ?></div>
                             </div>
                             <!-- Notification Body  -->
-                            <div class="row">
+                            <div class="row" id="notification_row">
                                 <div class="col-1">&nbsp;</div>
-                                <div class="col-10 d-flex justify-content-start">
-                                    <a href="notification-management.php?not_id=<?php echo $row['not_id']; ?>" class="notification-link">
+                                <div class="col-10 d-flex justify-content-start" id="notification_col">
+                                    <a href="notification-management.php?not_id=<?php echo $row['not_id']; ?>" class="notification-link" data-id="<?php echo $row['not_id']; ?>">
+                                        <?php
+                                        if($is_read){
+                                        ?>
                                         <h6 class="text-left"><?php echo $row['not_message']; ?></h6>
+                                        <?php }  else { ?>
+                                        <h6 class="text-left"><b><?php echo $row['not_message']; ?></b></h6>
+                                     <?php   }?>
                                     </a>
                                 </div>
                                 <div class="col-1">&nbsp;</div>

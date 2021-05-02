@@ -15,7 +15,6 @@ $cusObj = new Customer();
     // Set a callback to run when the Google Visualization API is loaded.
     google.charts.setOnLoadCallback(
         function(){
-            drawChart1();
             drawChart2();
         }
     );
@@ -23,30 +22,6 @@ $cusObj = new Customer();
     // Callback that creates and populates a data table,
     // instantiates the pie chart, passes in the data and
     // draws it.
-    function drawChart1() {
-
-        // Create the data table.
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Topping');
-        data.addColumn('number', 'Slices');
-        data.addRows([
-            ['Mushrooms', 3],
-            ['Onions', 1],
-            ['Olives', 1],
-            ['Zucchini', 1],
-            ['Pepperoni', 2]
-        ]);
-
-        // Set chart options
-        var options = {'title':'How Much Pizza I Ate Last Night',
-            'width':350,
-            'height':200};
-
-        // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-        chart.draw(data, options);
-    }
-
     function drawChart2() {
 
         // Create the data table.
@@ -250,7 +225,7 @@ $cusObj = new Customer();
                             </div>
                         </div>
 
-            <!-- Customer Referral Radio Buttons  -->
+                        <!-- Customer Referral Radio Buttons  -->
                         <div class="row">
                             <legend class="col-form-label col-md-2 pt-0">Customer Referral</legend>
                             <div class="col-md-1">
@@ -302,28 +277,28 @@ $cusObj = new Customer();
                         $loyalty_result = $cusObj->getLoyaltyToShowcase();
                         while($r = $loyalty_result->fetch_assoc())
                         {
-                        ?>
-                        <div class="col-sm-6 p-2">
-                            <div class="card bg-<?php echo $r['color']; ?>">
-                                <div class="card-body">
-                                    <h5 class="card-title h2"><?php echo $r['loyalty_name']; ?></h5>
-                                    <table class="table table-sm">
-                                        <thead>
-                                        <tr>
-                                            <th scope="col">Loyalty Reward</th>
-                                            <td><?php echo $r['loyalty_reward']; ?></td>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
+                            ?>
+                            <div class="col-sm-6 p-2">
+                                <div class="card bg-<?php echo $r['color']; ?>">
+                                    <div class="card-body">
+                                        <h5 class="card-title h2"><?php echo $r['loyalty_name']; ?></h5>
+                                        <table class="table table-sm">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">Loyalty Reward</th>
+                                                <td><?php echo $r['loyalty_reward']; ?></td>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
                                             <tr>
                                                 <th scope="row">Points</th>
                                                 <td><?php echo $r['loyalty_points']; ?></td>
                                             </tr>
-                                        </tbody>
-                                    </table>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         <?php } ?>
                     </div>
                     <div class="col-md-12 d-flex justify-content-end mt-2">
@@ -340,8 +315,41 @@ $cusObj = new Customer();
                     <h4 class="card-title">Feedback from Customers</h4>
                     <!--Div that will hold the pie chart-->
                     <div class="row">
-                        <div id="chart_div" class="col-md-6"></div>
                         <div id="chart2_div" class="col-md-6"></div>
+                        <div class="col-md-6 text-center pt-5">
+                            <?php
+                            $rating_result = $cusObj->getAverageStarRating();
+                            $sum_count = 0;
+                            $sum_total = 0;
+                            while($r = $rating_result->fetch_assoc()){
+                                $sum_count += $r['feedback_star_rating'];
+                                $sum_total += $r['total'];
+                            }
+
+                            $average = $sum_total / $sum_count;
+                            ?>
+                            <h5>Average Rating</h5>
+                            <?php
+                            for($i=0 ; $i<floor($average); $i++){
+                                ?>
+                                <i class="fa fa-star" style="color: orange;"></i>
+                                <?php
+                            }
+                            if(!is_int($average))
+                            {
+                                ?>
+                                <i class="fa fa-star-half" style="color: orange;"></i>
+                                <?php
+                            }
+                            ?>
+                            <h1 class="text-center rounded-circle"><?php echo round($average,1); ?></h1>
+
+                            <div class="progress mt-4">
+
+                                <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: <?php echo ($average / 5) * 100; ?>%" aria-valuenow="<?php echo $average; ?>" aria-valuemin="0" aria-valuemax="5"></div>
+                            </div>
+
+                        </div>
                         <!--                    <a href="#" class="btn btn-outline-primary">Go somewhere</a>-->
                     </div>
                     <!-- Review Viewing -->
@@ -363,28 +371,28 @@ $cusObj = new Customer();
                             $no_of_starts = $r['feedback_star_rating'];
 
 
-                        ?>
-                        <!-- Review 1   -->
-                        <div class="col-md-6 mb-2">
-                            <div class="card" style="width: 18rem;">
-                                <div class="card-body">
-                                    <h5 class="card-title"><?php echo $r['cus_name']; ?></h5>
-                                    <h6 class="card-subtitle mb-2 text-muted"><?php echo $r['cus_vehicle_no']; ?></h6>
-                                    <p class="card-text"><?php echo $r['feedback_review']; ?></p>
-                                    <p class="card-text">
-                                        <?php for($i = 0; $i < $no_of_starts; $i++) {
-                                            ?>
-                                        <i class="fa fa-star" style="color: orange"></i>
-                                    <?php   }   ?>
-                                    </p>
-                                    <div class="col-md-12 d-flex justify-content-end">
-<a href="#" class="homepage-is-like card-link btn btn-outline-<?php echo $is_liked_class; ?> border-0" data-fid="<?php echo $r['feedback_id']; ?>" data-cs="<?php echo $is_liked; ?>"><i class="fa fa-heart"></i></a>
+                            ?>
+                            <!-- Review 1   -->
+                            <div class="col-md-6 mb-2">
+                                <div class="card" style="width: 18rem;">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><?php echo $r['cus_name']; ?></h5>
+                                        <h6 class="card-subtitle mb-2 text-muted"><?php echo $r['cus_vehicle_no']; ?></h6>
+                                        <p class="card-text"><?php echo $r['feedback_review']; ?></p>
+                                        <p class="card-text">
+                                            <?php for($i = 0; $i < $no_of_starts; $i++) {
+                                                ?>
+                                                <i class="fa fa-star" style="color: orange"></i>
+                                            <?php   }   ?>
+                                        </p>
+                                        <div class="col-md-12 d-flex justify-content-end">
+                                            <a href="#" class="homepage-is-like card-link btn btn-outline-<?php echo $is_liked_class; ?> border-0" data-fid="<?php echo $r['feedback_id']; ?>" data-cs="<?php echo $is_liked; ?>"><i class="fa fa-heart"></i></a>
 
-                                        <a href="#modal_feedback_reply" data-toggle="modal" data-target="#modal_feedback_reply" class="homepage-reply btn-sm btn-outline-<?php echo $is_replied_class; ?>" data-id="<?php echo $r['feedback_id']; ?>" data-fid="<?php echo $r['feedback_id']; ?>" data-replied="<?php echo $is_replied; ?>" data-reply="<?php echo $reply; ?>"><i class="fa fa-comment fa-lg"></i></a>
+                                            <a href="#modal_feedback_reply" data-toggle="modal" data-target="#modal_feedback_reply" class="homepage-reply btn-sm btn-outline-<?php echo $is_replied_class; ?>" data-id="<?php echo $r['feedback_id']; ?>" data-fid="<?php echo $r['feedback_id']; ?>" data-replied="<?php echo $is_replied; ?>" data-reply="<?php echo $reply; ?>"><i class="fa fa-comment fa-lg"></i></a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
                         <?php } ?>
                     </div>

@@ -167,4 +167,40 @@ class Report{
         return $con->query($sql);
     }
 
+    public function getEmployeeAttendanceByRange($from, $to)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT a.att_id, e.emp_id, e.emp_fn, e.emp_ln, a.att_date, a.att_in_time, a.att_out_time FROM employee_attendance a, employee e WHERE a.att_emp_id = e.emp_id AND cast(a.att_in_time as date)  BETWEEN '$from' AND '$to';";
+        return $con->query($sql);
+    }
+
+    public function getAllEmployee()
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT emp_id, emp_fn, emp_ln, emp_dob, emp_nic, emp_email, emp_address, emp_designation FROM employee;";
+        return $con->query($sql);
+    }
+
+    public function getAllEmployeeByName($name)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT emp_id as 'Employee ID', emp_fn as 'Employee First Name', emp_ln as 'Employee Last Name', emp_dob as 'Employee Date of Birth', emp_nic as 'Employee NIC', emp_email as 'Employee Email', emp_address as 'Employee Address', emp_designation as 'Employee Designation' FROM employee WHERE CONCAT(emp_fn,' ',emp_ln) = '$name' ;";
+        return $con->query($sql);
+    }
+
+
+    public function getEmployeeAttendanceByNameAndRange($name, $from, $to)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT a.att_id, a.att_date, a.att_in_time, a.att_out_time FROM employee_attendance a, employee e WHERE a.att_emp_id = e.emp_id AND cast(a.att_in_time as date)  BETWEEN '$from' AND '$to' AND CONCAT(e.emp_fn,' ',e.emp_ln) = '$name';";
+        return $con->query($sql);
+    }
+
+    public function getCustomerWiseCompletedJobs($vno)
+{
+    $con = $GLOBALS["conn"];
+        $sql = "SELECT j.job_id, j.job_vehicle_id, c.cus_name, vmake.vehicle_make_name, vmodel.vehicle_model_name, j.job_vehicle_odo, j.job_vehicle_mileage, j.job_start_time, j.job_finish_time, i.invoice_amount  FROM job j, customer c, vehicle_model vmodel, vehicle_make vmake, invoice i WHERE j.job_cus_id = c.cus_id AND j.job_vehicle_make_id = vmake.vehicle_make_id AND j.job_vehicle_model_id = vmodel.vehicle_model_id AND job_status = 10 AND j.job_id = i.job_id AND cus_vehicle_no = '$vno' ORDER BY j.job_id;";
+        return $con->query($sql);
+}
+
 }

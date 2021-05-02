@@ -54,7 +54,6 @@ $reportObj = new Report();
                 </div>
                 <button type="button" class="btn btn-success mr-5" id="btn-generate-service-report"><i class="fa fa-file-text-o"></i> Generate</button>
                 <button type="submit" class="btn btn-primary mr-2 justify-content-end"><i class="fa fa-download"></i> Download</button>
-                <button type="button" class="btn btn-primary" id="btn-service-print"><i class="fa fa-print"></i> Print</button>
             </div>
         </div>
     </form>

@@ -225,4 +225,35 @@ class Employee{
         $con->query($sql);
         return $con->affected_rows;
     }
+
+    public function addAttendance($att_date,$in_time,$out_time,$emp_id)
+    {
+        $con= $GLOBALS['conn'];
+        $sql="INSERT INTO employee_attendance (att_date, att_in_time, att_out_time, att_emp_id) VALUES ('$att_date','$in_time','$out_time','$emp_id');";
+        $con->query($sql);
+        return $con->affected_rows;
+
+    }
+
+    public function getEmployeeAttendance()
+    {
+        $con = $GLOBALS['conn'];
+        $sql = "SELECT a.att_id, e.emp_id, e.emp_fn, e.emp_ln, a.att_date, a.att_in_time, a.att_out_time FROM employee_attendance a, employee e WHERE a.att_emp_id = e.emp_id;";
+        return $con->query($sql);
+    }
+
+    public function getEmployeeName($term)
+    {
+        $con = $GLOBALS['conn'];
+        $sql = "SELECT CONCAT(emp_fn,' ',emp_ln) as emp_name FROM employee WHERE emp_fn LIKE '%{$term}%' OR emp_ln LIKE '%{$term}%';";
+        return $con->query($sql);
+    }
+
+
+    public function getEmployeeAttendanceKPI()
+    {
+        $con = $GLOBALS['conn'];
+        $sql = "SELECT a.att_emp_id, CONCAT(e.emp_fn,' ',emp_ln) as name, a.att_date, a.att_in_time, a.att_out_time, COUNT(a.att_emp_id) as DayCount FROM employee_attendance a, employee e WHERE YEAR(att_in_time) = YEAR(CURDATE()) AND a.att_emp_id = e.emp_id GROUP BY att_emp_id LIMIT 5;";
+        return $con->query($sql);
+    }
 }

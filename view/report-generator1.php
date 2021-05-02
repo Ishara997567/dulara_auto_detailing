@@ -2,14 +2,40 @@
 require_once ('../commons/vendor/tecnickcom/tcpdf/tcpdf.php');
 
 if(isset($_POST['print_data'])) {
+    class MYPDF extends TCPDF {
+
+        //Page header
+        public function Header() {
+            // Logo
+            $image_file = K_PATH_IMAGES.'logo.png';
+            $this->Image($image_file, 5, 10, 30, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+            // Set font
+            $this->SetFont('helvetica', 'B', 30);
+            // Title
+            $this->Cell(0, 15, 'DULARA AUTO DETAILING', 0, false, 'C', 0, '', 0, false, 'M', 'M');
+        }
+
+        // Page footer
+        public function Footer() {
+            // Position at 15 mm from bottom
+            $this->SetY(-15);
+            // Set font
+            $this->SetFont('helvetica', 'I', 8);
+            // Page number
+            $this->Cell(0, 10, 'Page '.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
+        }
+    }
+
+
+
     $data = $_POST['print_data'];
 
 // create new PDF document
-    $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+    $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
-    $pdf->SetCreator("Wael Salah");
-    $pdf->SetAuthor('Wael Salah');
-    $pdf->SetTitle('Demonstrating pdf with php');
+    $pdf->SetCreator("DULARA AUTO DETAILING");
+    $pdf->SetAuthor('DULARA AUTO DETAILING');
+    $pdf->SetTitle('Report');
 
     $pdf->setHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING, array(0, 6, 255), array(0, 64, 128));
     $pdf->setFooterData(array(0, 64, 0), array(0, 64, 128));
@@ -34,7 +60,7 @@ if(isset($_POST['print_data'])) {
 
 // set default font subsetting mode
 
-    $pdf->setFont('dejavusans', '', 10, '', true);
+    $pdf->setFont('dejavusans', '', 9, '', true);
 
     $pdf->AddPage();
 

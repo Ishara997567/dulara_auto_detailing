@@ -11,11 +11,19 @@ $empObj = new Employee();
     google.charts.setOnLoadCallback(drawChart);
     function drawChart() {
         var data = google.visualization.arrayToDataTable([
-            ["Element", "Density", { role: "style" } ],
-            ["Copper", 8.94, "#b87333"],
-            ["Silver", 10.49, "silver"],
-            ["Gold", 19.30, "gold"],
-            ["Platinum", 21.45, "color: #e5e4e2"]
+            ["Name", "No of Days", { role: "style" } ],
+            <?php
+            $result = $empObj->getEmployeeAttendanceKPI();
+            $count = 0;
+            while($r = $result->fetch_assoc())
+            {
+                $color = $count % 2 == 0 ? "#b87333" : "gold"
+            ?>
+            ["<?php echo $r['name']; ?>", <?php echo $r['DayCount']; ?>, "<?php echo $color; ?>"],
+            <?php $count++; } ?>
+            // ["Silver", 10.49, "silver"],
+            // ["Gold", 19.30, "gold"],
+            // ["Platinum", 21.45, "color: #e5e4e2"]
         ]);
 
         var view = new google.visualization.DataView(data);
@@ -27,7 +35,7 @@ $empObj = new Employee();
             2]);
 
         var options = {
-            title: "Average Task Completion Rate",
+            title: "Attendance in <?php echo date("Y"); ?>",
             width: 600,
             height: 400,
             bar: {groupWidth: "95%"},
@@ -55,21 +63,10 @@ $empObj = new Employee();
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Attendance</a>
                     <div class="dropdown-menu">
-                        <a href="#" class="dropdown-item"><i class="fa fa-plus"></i> New Attendance</a>
+                        <a href="#modal_new_attendance" data-toggle="modal" data-target="#modal_new_attendance" class="dropdown-item"><i class="fa fa-plus"></i> New Attendance</a>
                         <a href="employee-attendance-sheet.php" class="dropdown-item"><i class="fa fa-file-text-o"></i> Attendance Sheet</a>
                     </div>
                 </li>
-
-                <!-- Employee Payroll Nav Link   -->
-
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Payroll</a>
-                    <div class="dropdown-menu">
-                        <a href="#modal_new_payroll" data-toggle="modal" class="dropdown-item"><i class="fa fa-plus"></i> New Payroll</a>
-                        <a href="#" class="dropdown-item"><i class="fa fa-file-text-o"></i> Manage Payroll</a>
-                    </div>
-                </li>
-
             </ul>
         </div>
 
@@ -80,11 +77,49 @@ $empObj = new Employee();
     </nav>
 
 
+    <!-- Modal for new attendance   -->
+    <div class="modal fade" role="dialog" tabindex="-1" id="modal_new_attendance" aria-labelledby="modal_new_attendance" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">New Attendance</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="../controller/employeecontroller.php?status=add_attendance" method="post" enctype="multipart/form-data">
+
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <label for="new_attendance_date" class="col-form-label col-sm-4">Attendance Date</label>
+                            <div class="col-sm-8">
+                                <input type="date" id="new_attendance_date" name="new_attendance_date" class="form-control" value="<?php echo date("Y-m-d", strtotime("-1 days")); ?>"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="new_attendance_file" class="col-form-label col-sm-4">Upload File</label>
+                            <div class="col-sm-8">
+                                <input type="file" id="new_attendance_file" name="new_attendance_file" class="form-control">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <!-- End of Modal for new attendance   -->
+
+
     <!--End of Nav bar for Employee Management    -->
-
-
-
-
 
     <!-- Modal for new worker   -->
     <div class="modal fade" id="modal_new_worker" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -518,10 +553,10 @@ $empObj = new Employee();
                     </div>
 
 
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save Changes</button>
-                        </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save Changes</button>
+                    </div>
 
 
                 </form>

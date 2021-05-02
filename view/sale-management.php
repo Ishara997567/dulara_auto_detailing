@@ -7,7 +7,6 @@ $saleObj = new Sale();
 <script type="text/javascript">
     google.charts.load('current', {'packages':['bar','corechart']});
     google.charts.setOnLoadCallback(function(){
-        drawChart();
         drawStuff();
         drawChart1();
     });
@@ -16,6 +15,8 @@ $saleObj = new Sale();
     var totalSale = document.getElementById('tot_sale');
     //Column Chart for Sales
     function drawChart1() {
+
+
 
         var data = google.visualization.arrayToDataTable([
             ['Year', 'Sale', 'Expenses', 'Profit'],
@@ -38,23 +39,7 @@ $saleObj = new Sale();
     }
 
     //Pie Chart for Suppliers
-    function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-            ['Effort', 'Amount given'],
-            ['My all',      100],
-        ]);
 
-        var options = {
-            pieHole: 0.9,
-            pieSliceTextStyle: {
-                color: 'black',
-            },
-            legend: 'none'
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-        chart.draw(data, options);
-    }
 
     //Horizontal Bar Chart for Item Wise Purchases
     function drawStuff() {
@@ -66,7 +51,7 @@ $saleObj = new Sale();
             {
             ?>
             ["<?php echo $i["item_name"]; ?>", <?php echo $i["sgi_qty"]; ?>],
-   <?php }  ?>
+            <?php }  ?>
         ]);
 
         var options = {
@@ -334,130 +319,6 @@ $saleObj = new Sale();
 
 
 
-
-
-
-                <!-- Return Notes   -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="rn_nav_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Return Notes
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="rn_nav_dropdown">
-                        <a class="dropdown-item" href="#supplier_modal" data-target="#rn_modal" data-toggle="modal"><i class="fa fa-plus"></i> New Return Note</a>
-                        <a class="dropdown-item" href="sale-rn-history.php"><i class="fa fa-clock-o"></i> See Return Notes History</a>
-                    </div>
-                </li>
-
-
-
-
-                <!-- Modal for Return Notes-->
-                <div class="modal fade" id="rn_modal" tabindex="-1" role="dialog" aria-labelledby="rn_modal_modal" aria-hidden="true">
-                    <div class="modal-xl modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">New Return Note</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-
-                                <form action="#" method="post"></form>
-                                <div class="row">
-                                    <!-- RN ID  -->
-                                    <div class="form-group col-md-6">
-                                        <label for="rn_id">Return Note ID</label>
-                                        <input class="form-control" name="RN12494" type="text" id="rn_grn_id" readonly value="RN12494"/>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <!-- GRN Order ID  -->
-                                    <div class="form-group col-md-6">
-                                        <label for="grn">GRN Order ID</label>
-                                        <select class="form-control custom-select" name="grn" id="grn">
-                                            <option selected>Choose...</option>
-                                            <option value="GRN123696">GRN123696</option>
-                                            <option value="GRN123392">GRN123392</option>
-                                            <option value="GRN136944">GRN136944</option>
-                                            <option value="GRN123498">GRN123498</option>
-                                        </select>
-                                    </div>
-
-                                    <!-- Supplier   -->
-                                    <div class="form-group col-md-6">
-                                        <label for="supplier">Supplier</label>
-                                        <input class="form-control" type="text" id="rn_supplier" name="S12" readonly value="Supplier Name"/>
-                                    </div>
-
-
-
-                                </div>
-                                <!-- Table    -->
-                                <table class="table table-bordered">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Item Code</th>
-                                        <th scope="col">Item Name</th>
-                                        <th scope="col" width="30px">Received Quantity</th>
-                                        <th scope="col" width="30px">Return Quantity</th>
-                                        <th scope="col" >Return Type</th>
-                                        <th scope="col">Purchasing Unit Price</th>
-                                        <th scope="col">Amount</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                        <td><input type="text" class="form-control"/></td>
-                                        <td><input type="text" class="form-control"/></td>
-                                        <td>@mdo</td>
-                                        <td>@mdo</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>@fat</td>
-                                        <td><input type="text" class="form-control"/></td>
-                                        <td><input type="text" class="form-control"/></td>
-                                        <td>@fat</td>
-                                        <td>@fat</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>@fat</td>
-                                        <td><input type="text" class="form-control"/></td>
-                                        <td><input type="text" class="form-control"/></td>
-                                        <td>@fat</td>
-                                        <td>@fat</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <button type="button" class="btn btn-outline-primary rounded-pill" id="new_grn_record"><i class="fa fa-plus"></i> New Row</button>
-
-
-
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Generate</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
-
-
                 <!-- Suppliers  -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="supplier_nav_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -642,43 +503,47 @@ $saleObj = new Sale();
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title"><i class="fa fa-users"></i> Suppliers </h5>
-                            <div id="donutchart" style="width: 600px; height: 200px;"></div>
+                            <div class="d-flex justify-content-center">
+                                <div class="text-center" style="width: 200px; height: 200px; border: #007fff double 4px; border-radius: 50%;">
+                                <h1 class="card-text p-3 m-3 text-center text-dark" style="font-size: 100px;"><?php echo $count = $saleObj->getSupplierCount(); ?></h1>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="row">&nbsp;</div>
+<div class="row">&nbsp;</div>
 
-    <!-- Sales and Expenses Card    -->
-    <div class="card">
-        <div class="row">
-            <div class="col-md-12">
-                <h5 class="card-header">Sales and Expenses</h5>
-            </div>
-            <div class="col-md-9">
-                <div class="card-body">
-                    <div class="card">
-                        <div class="card-body">
-                            <div id="columnchart_material" style="width: 800px; height: 500px;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Card to express Sales, Expense and Profit   -->
-            <div class="col-md-3 d-flex align-items-center justify-content-center">
+<!-- Sales and Expenses Card    -->
+<div class="card">
+    <div class="row">
+        <div class="col-md-12">
+            <h5 class="card-header">Sales and Expenses</h5>
+        </div>
+        <div class="col-md-9">
+            <div class="card-body">
                 <div class="card">
                     <div class="card-body">
-                        <p id="tot_sale">Total Sale</p>
-                        <p id="tot_expense">Total Expense</p>
-                        <p id="tot_profit">Total Profit</p>
+                        <div id="columnchart_material" style="width: 800px; height: 500px;"></div>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- Card to express Sales, Expense and Profit   -->
+        <div class="col-md-3 d-flex align-items-center justify-content-center">
+            <div class="card">
+                <div class="card-body">
+                    <p id="tot_sale">Total Sale</p>
+                    <p id="tot_expense">Total Expense</p>
+                    <p id="tot_profit">Total Profit</p>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 </div>
 
 <?php include '../includes/footer.php'; ?>

@@ -12,11 +12,13 @@ $(document).ready(function (){
             $("#vno").hide();
 
             $("#btn-generate-customer-report").click(function (){
-                $.get(url,function (data){
+                $.post(url,function (data){
                     $(".split-customer-data").html(data);
                     $("#result-table").DataTable({
                         "destroy": true,
                     });
+                    $("#print_data").val(data);
+
                 });
             });
         } else if (status === "customer_vehicle_no_wise") {
@@ -45,6 +47,7 @@ $(document).ready(function (){
                                 $("#result-table").DataTable({
                                     "destroy": true,
                                 });
+                                $("#print_data").val(data);
                             }
                         }
                     });

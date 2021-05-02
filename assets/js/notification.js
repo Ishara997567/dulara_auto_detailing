@@ -1,14 +1,31 @@
 $(document).ready(function(){
-   $("#message-menu").hide();
-   //$("#notification_menu").hide();
+    $("#notification_row #notification_col a").on('click', function (){
+        const url = "../controller/notificationcontroller.php?status=change_is_read";
+        const notID = $(this).data('id');
 
-   $("#bell-icon").click(function (){
-       $("#message-menu").hide();
-       $("#notification-menu").show();
-   });
+        $.post(url, {notID:notID});
 
-    $("#message-icon").click(function (){
-        $("#notification-menu").hide();
-        $("#message-menu").show();
     });
+
+    $("#btn_mark_all_read").click(function (){
+        const url = "../controller/notificationcontroller.php?status=mark_read";
+        $.post(url, function (){
+            location.reload(true);
+        });
+    });
+
+    $("#btn_mark_all_unread").click(function (){
+        const url = "../controller/notificationcontroller.php?status=mark_unread";
+        $.post(url, function () {
+            location.reload(true);
+        });
+    });
+
+    $("#checkbox_disturb").change(function (){
+        if($(this).is(":checked")){
+            $("#span_not_count").hide();
+        } else {
+            $("#span_not_count").show();
+        }
+    })
 });
