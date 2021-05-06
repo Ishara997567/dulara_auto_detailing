@@ -365,6 +365,7 @@ if(isset($_REQUEST["status"])) {
 
             //getting post job id value
             $invoice_job_id = $_POST['jobId'];
+            $tax_rate = $_POST['taxRate'];
 
             //getting post item values
             $invoice_item_id = $_POST['invoiceItemId'];
@@ -385,7 +386,7 @@ if(isset($_REQUEST["status"])) {
             $invoice_total_amount = $invoice_item_total_amount + $invoice_service_total_amount;
 
             //Inserting Data to Invoice Table
-            $invoice_id = $jobObj->addInvoice($invoice_job_id,$invoice_item_total_amount,$invoice_service_total_amount,$invoice_total_amount);
+            $invoice_id = $jobObj->addInvoice($invoice_job_id,$invoice_item_total_amount,$invoice_service_total_amount,$invoice_total_amount, $tax_rate);
 
             //Inserting Data into invoice_item table
             for($i=0; $i < sizeof($invoice_item_id); $i++)
@@ -414,6 +415,7 @@ if(isset($_REQUEST["status"])) {
             $job_result = $jobObj->getJobByInvoiceId($invoice_id);
             while($row=$job_result->fetch_assoc())
             {
+                $tax = $row['invoice_tax'];
                 ?>
 
 
@@ -603,6 +605,14 @@ if(isset($_REQUEST["status"])) {
                     </div>
                 </div>
 
+                <!-- Total Invoice Amount -->
+                <div class="form-group row">
+                    <label for="modal_invoice_tax" class="text-left col-2 col-form-label">Tax Rate</label>
+                    <div class="col-3">
+                        <input type="text" class="form-control" id="modal_invoice_tax" name="modal_invoice_tax" value="<?php echo $tax; ?>" readonly/>
+                    </div>
+                </div>
+
 
 
 
@@ -654,6 +664,13 @@ if(isset($_REQUEST["status"])) {
                 ?>
                 <script>window.location = "../view/job-management.php?error_message=<?php echo $msg; ?>"</script>
                 <?php
+
+            }
+            break;
+
+        case "add_tax":
+            if(isset($_POST["taxRate"])){
+                $tax_rate = $_POST["taxRate"];
 
             }
             break;

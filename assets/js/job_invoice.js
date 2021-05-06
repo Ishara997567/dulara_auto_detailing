@@ -86,6 +86,9 @@ $(document).ready(function (){
     $(".invoice-data").click(function (){
         //Getting Job Id
         let jobId = $("#invoice_job_id").val();
+
+        let taxRate = $("#hidden_tax_rate").val();
+
         //Getting Item Data
         let invoiceItemId = $("input[name='invoice_item_id[]']").map(function () {
             return this.value;
@@ -118,6 +121,8 @@ $(document).ready(function (){
         $.post(url, {
                 jobId:jobId,
 
+                taxRate:taxRate,
+
                 invoiceItemId:invoiceItemId,
                 invoiceItemPrice:invoiceItemPrice,
                 invoiceItemQty:invoiceItemQty,
@@ -143,4 +148,11 @@ $(document).ready(function (){
             $("#form_invoice_details").html(data);
         })
     }
-});
+
+    $("#btn_submit_tax").click(function (){
+        let taxRate = $("#txt_tax_rate").val();
+        $("#hidden_tax_rate").val(taxRate);
+        alert($("#hidden_tax_rate").val());
+
+    });
+})

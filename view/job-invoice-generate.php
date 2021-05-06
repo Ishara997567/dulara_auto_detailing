@@ -7,19 +7,22 @@ $jobObj = new Job();
 
 if(isset($_POST['modal_invoice_id'])) {
 
-    $invoice_id = $_POST['modal_invoice_id']."<br/>";
-    $invoice_date = $_POST['modal_invoice_date']."<br/>";
-    $invoice_job_id = $_POST['modal_invoice_job_id']."<br/>";
-    $invoice_vehicle_no = $_POST['modal_invoice_vehicle_no']."<br/>";
-    $invoice_vehicle = $_POST['modal_invoice_vehicle']."<br/>";
-    $invoice_vehicle_odo = $_POST['modal_invoice_vehicle_odo']."<br/>";
-    $invoice_vehicle_mileage = $_POST['modal_invoice_vehicle_mileage']."<br/>";
-    $invoice_customer_name = $_POST['modal_invoice_cus_name']."<br/>";
+    $invoice_id = $_POST['modal_invoice_id'];
+    $invoice_date = $_POST['modal_invoice_date'];
+    $invoice_job_id = $_POST['modal_invoice_job_id'];
+    $invoice_vehicle_no = $_POST['modal_invoice_vehicle_no'];
+    $invoice_vehicle = $_POST['modal_invoice_vehicle'];
+    $invoice_vehicle_odo = $_POST['modal_invoice_vehicle_odo'];
+    $invoice_vehicle_mileage = $_POST['modal_invoice_vehicle_mileage'];
+    $invoice_customer_name = $_POST['modal_invoice_cus_name'];
 
-    $invoice_tot_item_amount = $_POST['modal_tot_item_amount']."<br/>";
-    $invoice_tot_service_amount = $_POST['modal_tot_service_amount']."<br/>";
+    $invoice_tot_item_amount = $_POST['modal_tot_item_amount'];
+    $invoice_tot_service_amount = $_POST['modal_tot_service_amount'];
 
-    $invoice_tot_amount = $_POST['modal_tot_invoice_amount']."<br/>";
+    $invoice_tax = $_POST['modal_invoice_tax'];
+    $invoice_tot_amount = $_POST['modal_tot_invoice_amount'];
+
+    $invoice_tot_amount *= ((100+$invoice_tax)/100);
 
 //Creating the PDF
 
@@ -228,6 +231,11 @@ EOD;
             <tr>
                 <td style="text-align: center">Total Amount</td>
                 <td style="text-align: right; text-decoration: underline">LKR {$invoice_tot_amount}</td>
+            </tr>
+            
+            <tr>
+                <td style="text-align: center">Tax</td>
+                <td style="text-align: right;">{$invoice_tax}%</td>
             </tr>
         </table>   
         <br>

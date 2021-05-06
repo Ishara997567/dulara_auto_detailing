@@ -137,9 +137,42 @@ $jobObj = new Job(); ?>
 
                 </tbody>
             </table>
+            <button type="button" class="btn btn-outline-success rounded-pill" data-toggle="modal" data-target="#modal_add_tax" id="btn_add_tax">Add Tax Rate</button>
         </div>
+        <input type="hidden" name="hidden_tax_rate" id="hidden_tax_rate">
         <input type="submit" class="btn btn-primary invoice-data" name="submit" value="Submit"/>
+
     </form>
+
+    <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modal_add_tax" aria-labelledby="modal_add_tax">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add the tax rate for the invoice</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="#">
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <label for="txt_tax_rate" class="col-form-label col-4">Tax Rate</label>
+                            <div class="col-8">
+                                <input type="number" min="0" max="100" name="txt_tax_rate" id="txt_tax_rate" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="btn_submit_tax">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 <?php include '../includes/footer.php'; ?>
 <script src="../assets/js/job_invoice.js"></script>
