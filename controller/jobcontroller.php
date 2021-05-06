@@ -1,5 +1,6 @@
 <?php include '../model/job_model.php';
 include '../model/inventory_model.php';
+include '../model/customer_model.php';
 include '../model/service_model.php';
 include '../model/notification_model.php';
 
@@ -7,6 +8,7 @@ $jobObj = new Job();
 $inventoryObj = new Inventory();
 $serviceObj = new Service();
 $notificationObj = new Notification();
+$cusObj = new Customer();
 
 
 if(isset($_REQUEST["status"])) {
@@ -63,6 +65,8 @@ if(isset($_REQUEST["status"])) {
                     ?>
                     <script>window.location = "../view/job-management.php?success_message=<?php echo $msg; ?>"</script>
                     <?php
+
+                    $cusObj->allocateCustomerPoints($job_cus_id, 1);
 
                     $not_message = "A new job <i><b>" .$last_job_id. "</b></i>, for vehicle number <b><i>". $job_vehicle_id ."</i></b> has been created";
                     $notificationObj->addNotification(3, $not_message);
@@ -212,6 +216,7 @@ if(isset($_REQUEST["status"])) {
             $jobObj->changeJobStatusToPendingAgain($changed_status_job_id);
 
             $not_message = "Job satatus has been changed back to <i><b>pending, </b></i> of <i><b>". $changed_status_job_id."</b></i>";
+            $notificationObj->addNotification(3, $not_message);
             break;
 
         case "manage_completed_jobs":
@@ -360,6 +365,7 @@ if(isset($_REQUEST["status"])) {
 
             //getting post job id value
             $invoice_job_id = $_POST['jobId'];
+            $tax_rate = $_POST['taxRate'];
 
             //getting post item values
             $invoice_item_id = $_POST['invoiceItemId'];
@@ -380,7 +386,7 @@ if(isset($_REQUEST["status"])) {
             $invoice_total_amount = $invoice_item_total_amount + $invoice_service_total_amount;
 
             //Inserting Data to Invoice Table
-            $invoice_id = $jobObj->addInvoice($invoice_job_id,$invoice_item_total_amount,$invoice_service_total_amount,$invoice_total_amount);
+            $invoice_id = $jobObj->addInvoice($invoice_job_id,$invoice_item_total_amount,$invoice_service_total_amount,$invoice_total_amount, $tax_rate);
 
             //Inserting Data into invoice_item table
             for($i=0; $i < sizeof($invoice_item_id); $i++)
@@ -403,13 +409,14 @@ if(isset($_REQUEST["status"])) {
             {
                 echo 0;
             }
-
+            break;
         case "show_invoice_details":
             $invoice_id = $_POST['invoiceId'];
             $job_result = $jobObj->getJobByInvoiceId($invoice_id);
             while($row=$job_result->fetch_assoc())
             {
-            ?>
+                $tax = $row['invoice_tax'];
+                ?>
 
 
 
@@ -535,15 +542,15 @@ if(isset($_REQUEST["status"])) {
                     $invoice_item_result = $jobObj->getInvoiceItemsByInvoiceId($invoice_id);
                     while($iirow = $invoice_item_result->fetch_assoc())
                     {
-                    ?>
-                    <tr>
-                        <td scope="row"><?php echo $iirow['invoice_item_id'];?></td>
-                        <td><?php echo $iirow['item_name'];?></td>
-                        <td><?php echo $iirow['invoice_item_price'];?></td>
-                        <td><?php echo $iirow['invoice_item_qty'];?></td>
-                        <td><?php echo $iirow['invoice_item_amount']; ?></td>
-                    </tr>
-                        <?php } ?>
+                        ?>
+                        <tr>
+                            <td scope="row"><?php echo $iirow['invoice_item_id'];?></td>
+                            <td><?php echo $iirow['item_name'];?></td>
+                            <td><?php echo $iirow['invoice_item_price'];?></td>
+                            <td><?php echo $iirow['invoice_item_qty'];?></td>
+                            <td><?php echo $iirow['invoice_item_amount']; ?></td>
+                        </tr>
+                    <?php } ?>
                     </tbody>
                 </table>
 
@@ -562,13 +569,13 @@ if(isset($_REQUEST["status"])) {
                     $invoice_service_result = $jobObj->getInvoiceServicesByInvoiceId($invoice_id);
                     while($r=$invoice_service_result->fetch_assoc())
                     {
-                    ?>
-                    <tr>
-                        <td scope="row"><?php echo $r['invoice_service_id']; ?></td>
-                        <td><?php echo $r['service_name']; ?></td>
-                        <td><?php echo $r['invoice_service_price']; ?></td>
-                    </tr>
-                        <?php } ?>
+                        ?>
+                        <tr>
+                            <td scope="row"><?php echo $r['invoice_service_id']; ?></td>
+                            <td><?php echo $r['service_name']; ?></td>
+                            <td><?php echo $r['invoice_service_price']; ?></td>
+                        </tr>
+                    <?php } ?>
                     </tbody>
                 </table>
 
@@ -598,13 +605,73 @@ if(isset($_REQUEST["status"])) {
                     </div>
                 </div>
 
+                <!-- Total Invoice Amount -->
+                <div class="form-group row">
+                    <label for="modal_invoice_tax" class="text-left col-2 col-form-label">Tax Rate</label>
+                    <div class="col-3">
+                        <input type="text" class="form-control" id="modal_invoice_tax" name="modal_invoice_tax" value="<?php echo $tax; ?>" readonly/>
+                    </div>
+                </div>
 
 
 
 
 
 
-<?php
+
+                <?php
+            }
+            break;
+
+        case "add_vehicle":
+            $message_flag = false;
+
+            $v_is_created = $_POST['new_create_vehicle_make'];
+
+            $v_model_name = strtoupper($_POST['new_vehicle_model_name']);
+            $v_model_year = $_POST['new_vehicle_model_year'];
+
+
+            $v_select_make_id = $_POST['new_select_vehicle_make'];
+
+            $v_make_id = $_POST['new_vehicle_make_id'];
+
+            $v_make_name = strtoupper($_POST['new_vehicle_make_name']);
+
+            if($v_is_created == 1) {
+                $ar1 = $jobObj->addVehicleMake($v_make_name);
+                $ar2 = $jobObj->addVehicleModelOnly($v_model_name, $v_make_id, $v_model_year);
+                $message_flag = $ar1 + $ar2 == 2;
+            } else {
+                $ar = $jobObj->addVehicleModelOnly($v_model_name, $v_select_make_id, $v_model_year);
+                $message_flag = $ar == 1;
+            }
+
+
+            if($message_flag)
+            {
+                $msg = base64_encode("New Vehicle Created Successfully!");
+                ?>
+                <script>window.location = "../view/job-management.php?success_message=<?php echo $msg; ?>"</script>
+                <?php
+
+                $not_message = "A new <b><i>Vehicle</i></b> has been created";
+                $notificationObj->addNotification(3, $not_message);
+            }
+            else
+            {
+                $msg = base64_encode("New Vehicle Failed to Create!");
+                ?>
+                <script>window.location = "../view/job-management.php?error_message=<?php echo $msg; ?>"</script>
+                <?php
+
+            }
+            break;
+
+        case "add_tax":
+            if(isset($_POST["taxRate"])){
+                $tax_rate = $_POST["taxRate"];
+
             }
             break;
     }

@@ -3,11 +3,82 @@ include '../model/sale_model.php';
 $saleObj = new Sale();
 ?>
 <title>Sales Dashboard</title>
+<?php
+
+$tot_sale = 0;
+$tot_expense = 0;
+
+$sale_array = array();
+$expense_array = array();
+
+$sale_result = $saleObj->getTotalSale();
+$expense_result = $saleObj->getTotalExpense();
+
+while($sale_row = $sale_result->fetch_assoc())
+{
+    $tot_sale += $sale_row['sale'];
+    $sale_array[$sale_row['smonth']] = $sale_row['sale'];
+}
+
+//sale month $variables
+$sJanuary = isset($sale_array['January']) ? $sale_array['January'] : 0;
+$sFebruary = isset($sale_array['February']) ? $sale_array['February'] : 0;
+$sMarch = isset($sale_array['March']) ? $sale_array['March'] : 0;
+$sApril = isset($sale_array['April']) ? $sale_array['April'] : 0;
+$sMay = isset($sale_array['May']) ? $sale_array['May'] : 0;
+$sJune = isset($sale_array['June']) ? $sale_array['June'] : 0;
+$sJuly = isset($sale_array['July']) ? $sale_array['July'] : 0;
+$sAugust = isset($sale_array['August']) ? $sale_array['August'] : 0;
+$sSeptember = isset($sale_array['September']) ? $sale_array['September'] : 0;
+$sOctober = isset($sale_array['October']) ? $sale_array['October'] : 0;
+$sNovember = isset($sale_array['November']) ? $sale_array['November'] : 0;
+$sDecember = isset($sale_array['December']) ? $sale_array['December'] : 0;
+
+
+
+
+while($expense_row = $expense_result->fetch_assoc())
+{
+    $tot_expense += $expense_row['expense'];
+    $expense_array[$expense_row['emonth']] = $expense_row['expense'];
+}
+
+$eJanuary = isset($expense_array['January']) ? $expense_array['January'] : 0;
+$eFebruary = isset($expense_array['February']) ? $expense_array['February'] : 0;
+$eMarch = isset($expense_array['March']) ? $expense_array['March'] : 0;
+$eApril = isset($expense_array['April']) ? $expense_array['April'] : 0;
+$eMay = isset($expense_array['May']) ? $expense_array['May'] : 0;
+$eJune = isset($expense_array['June']) ? $expense_array['June'] : 0;
+$eJuly = isset($expense_array['July']) ? $expense_array['July'] : 0;
+$eAugust = isset($expense_array['August']) ? $expense_array['August'] : 0;
+$eSeptember = isset($expense_array['September']) ? $expense_array['September'] : 0;
+$eOctober = isset($expense_array['October']) ? $expense_array['JOctober'] : 0;
+$eNovember = isset($expense_array['November']) ? $expense_array['November'] : 0;
+$eDecember = isset($expense_array['December']) ? $expense_array['December'] : 0;
+
+
+$pJanuary = $sJanuary - $eJanuary;
+$pFebruary = $sFebruary - $eFebruary;
+$pMarch = $sMarch - $eMarch;
+$pApril = $sApril - $eApril;
+$pMay = $sMay - $eMay;
+$pJune = $sJune - $eJune;
+$pJuly = $sJuly - $eJuly;
+$pAugust = $sAugust - $eAugust;
+$pSeptember = $sSeptember - $eSeptember;
+$pOctober = $sOctober - $eOctober;
+$pNovember = $sNovember - $eNovember;
+$pDecember = $sDecember - $eDecember;
+
+$tot_profit = $tot_sale - $tot_expense;
+
+
+
+?>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
     google.charts.load('current', {'packages':['bar','corechart']});
     google.charts.setOnLoadCallback(function(){
-        drawChart();
         drawStuff();
         drawChart1();
     });
@@ -17,18 +88,29 @@ $saleObj = new Sale();
     //Column Chart for Sales
     function drawChart1() {
 
+
+
         var data = google.visualization.arrayToDataTable([
-            ['Year', 'Sale', 'Expenses', 'Profit'],
-            ['2014', 1000, 400, 200],
-            ['2015', 1170, 460, 250],
-            ['2016', 660, 1120, 300],
-            ['2017', 1030, 540, 350]
+            ['Month', 'Sale', 'Expenses', 'Profit'],
+
+            ['January', <?php echo $sJanuary ;?>, <?php echo $eJanuary ;?>, <?php echo $pJanuary ;?>],
+            ['February', <?php echo $sFebruary ;?>, <?php echo $eFebruary ;?>, <?php echo $pFebruary ;?>],
+            ['March', <?php echo $sMarch ;?>, <?php echo $eMarch ;?>, <?php echo $pMarch ;?>],
+            ['April', <?php echo $sApril ;?>, <?php echo $eApril ;?>, <?php echo $pApril ;?>],
+            ['May', <?php echo $sMay ;?>, <?php echo $eMay ;?>, <?php echo $pMay ;?>],
+            ['June', <?php echo $sJune ;?>, <?php echo $eJune ;?>, <?php echo $pJune ;?>],
+            ['July', <?php echo $sJuly ;?>, <?php echo $eJuly ;?>, <?php echo $pJuly ;?>],
+            ['August', <?php echo $sAugust ;?>, <?php echo $eAugust ;?>, <?php echo $pAugust ;?>],
+            ['September', <?php echo $sSeptember ;?>, <?php echo $eSeptember ;?>, <?php echo $pSeptember ;?>],
+            ['October', <?php echo $sOctober ;?>, <?php echo $eOctober ;?>, <?php echo $pOctober ;?>],
+            ['November', <?php echo $sNovember ;?>, <?php echo $eNovember ;?>, <?php echo $pNovember ;?>],
+            ['December', <?php echo $sDecember ;?>, <?php echo $eDecember ;?>, <?php echo $pDecember ;?>],
         ]);
 
         var options = {
             chart: {
                 title: 'Company Performance',
-                subtitle: 'Sales, Expenses, and Profit: 2014-2017',
+                subtitle: 'Sales, Expenses, and Profit: <?php echo date("Y"); ?>',
             },
         };
 
@@ -38,23 +120,7 @@ $saleObj = new Sale();
     }
 
     //Pie Chart for Suppliers
-    function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-            ['Effort', 'Amount given'],
-            ['My all',      100],
-        ]);
 
-        var options = {
-            pieHole: 0.9,
-            pieSliceTextStyle: {
-                color: 'black',
-            },
-            legend: 'none'
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-        chart.draw(data, options);
-    }
 
     //Horizontal Bar Chart for Item Wise Purchases
     function drawStuff() {
@@ -66,7 +132,7 @@ $saleObj = new Sale();
             {
             ?>
             ["<?php echo $i["item_name"]; ?>", <?php echo $i["sgi_qty"]; ?>],
-   <?php }  ?>
+            <?php }  ?>
         ]);
 
         var options = {
@@ -334,130 +400,6 @@ $saleObj = new Sale();
 
 
 
-
-
-
-                <!-- Return Notes   -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="rn_nav_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Return Notes
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="rn_nav_dropdown">
-                        <a class="dropdown-item" href="#supplier_modal" data-target="#rn_modal" data-toggle="modal"><i class="fa fa-plus"></i> New Return Note</a>
-                        <a class="dropdown-item" href="sale-rn-history.php"><i class="fa fa-clock-o"></i> See Return Notes History</a>
-                    </div>
-                </li>
-
-
-
-
-                <!-- Modal for Return Notes-->
-                <div class="modal fade" id="rn_modal" tabindex="-1" role="dialog" aria-labelledby="rn_modal_modal" aria-hidden="true">
-                    <div class="modal-xl modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">New Return Note</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-
-                                <form action="#" method="post"></form>
-                                <div class="row">
-                                    <!-- RN ID  -->
-                                    <div class="form-group col-md-6">
-                                        <label for="rn_id">Return Note ID</label>
-                                        <input class="form-control" name="RN12494" type="text" id="rn_grn_id" readonly value="RN12494"/>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <!-- GRN Order ID  -->
-                                    <div class="form-group col-md-6">
-                                        <label for="grn">GRN Order ID</label>
-                                        <select class="form-control custom-select" name="grn" id="grn">
-                                            <option selected>Choose...</option>
-                                            <option value="GRN123696">GRN123696</option>
-                                            <option value="GRN123392">GRN123392</option>
-                                            <option value="GRN136944">GRN136944</option>
-                                            <option value="GRN123498">GRN123498</option>
-                                        </select>
-                                    </div>
-
-                                    <!-- Supplier   -->
-                                    <div class="form-group col-md-6">
-                                        <label for="supplier">Supplier</label>
-                                        <input class="form-control" type="text" id="rn_supplier" name="S12" readonly value="Supplier Name"/>
-                                    </div>
-
-
-
-                                </div>
-                                <!-- Table    -->
-                                <table class="table table-bordered">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Item Code</th>
-                                        <th scope="col">Item Name</th>
-                                        <th scope="col" width="30px">Received Quantity</th>
-                                        <th scope="col" width="30px">Return Quantity</th>
-                                        <th scope="col" >Return Type</th>
-                                        <th scope="col">Purchasing Unit Price</th>
-                                        <th scope="col">Amount</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                        <td><input type="text" class="form-control"/></td>
-                                        <td><input type="text" class="form-control"/></td>
-                                        <td>@mdo</td>
-                                        <td>@mdo</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>@fat</td>
-                                        <td><input type="text" class="form-control"/></td>
-                                        <td><input type="text" class="form-control"/></td>
-                                        <td>@fat</td>
-                                        <td>@fat</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>@fat</td>
-                                        <td><input type="text" class="form-control"/></td>
-                                        <td><input type="text" class="form-control"/></td>
-                                        <td>@fat</td>
-                                        <td>@fat</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <button type="button" class="btn btn-outline-primary rounded-pill" id="new_grn_record"><i class="fa fa-plus"></i> New Row</button>
-
-
-
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Generate</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
-
-
                 <!-- Suppliers  -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="supplier_nav_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -642,7 +584,11 @@ $saleObj = new Sale();
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title"><i class="fa fa-users"></i> Suppliers </h5>
-                            <div id="donutchart" style="width: 600px; height: 200px;"></div>
+                            <div class="d-flex justify-content-center">
+                                <div class="text-center" style="width: 200px; height: 200px; border: #007fff double 4px; border-radius: 50%;">
+                                    <h1 class="card-text p-3 m-3 text-center text-dark" style="font-size: 100px;"><?php echo $count = $saleObj->getSupplierCount(); ?></h1>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -671,9 +617,9 @@ $saleObj = new Sale();
             <div class="col-md-3 d-flex align-items-center justify-content-center">
                 <div class="card">
                     <div class="card-body">
-                        <p id="tot_sale">Total Sale</p>
-                        <p id="tot_expense">Total Expense</p>
-                        <p id="tot_profit">Total Profit</p>
+                        <p id="tot_sale">Total Sale:     LKR <?php echo $tot_sale; ?></p>
+                        <p id="tot_expense">Total Expense: LKR <?php echo $tot_expense; ?></p>
+                        <p id="tot_profit">Total Profit:   <b style="text-decoration: underline">LKR <?php echo $tot_profit; ?></b></p>
                     </div>
                 </div>
             </div>

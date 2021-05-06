@@ -759,6 +759,64 @@ if(isset($_REQUEST["status"]))
 
             }
             break;
+
+        case "add_attendance":
+            $adate=$_POST["new_attendance_date"];
+            $att_file=$_FILES["new_attendance_file"]["name"];
+
+            $att_file=time()."_".$att_file;
+
+
+            ///  get tempory location
+
+            $tmp_file=$_FILES["new_attendance_file"]["tmp_name"];
+            $destination="../documents/attendance/$att_file";
+            move_uploaded_file($tmp_file, $destination);
+
+
+            include '../commons/PHPExcel-1.8.1/Classes/PHPExcel.php';
+
+            $fileName=$destination;  // excel file;
+            $filetype=  PHPExcel_IOFactory::identify($fileName);
+            $objectReader= PHPExcel_IOFactory::createReader($filetype);
+            $fileObj=  PHPExcel_IOFactory::load($fileName);
+
+            $sheet= $fileObj->getActiveSheet();  ///  get the active Sheet
+            $maximumrow=$sheet->getHighestRow();
+
+            $maximumcolumn=$sheet->getHighestColumn();
+
+            for($row=2;$row<=$maximumrow;$row++)
+            {
+                $rowData = $sheet->rangeToArray('A' . $row . ':' . $maximumcolumn . $row,
+                    NULL,
+                    FALSE,
+                    TRUE);
+
+                $date = $rowData[0][1];
+                $intime = $date." ".$rowData[0][2];
+                $outtime = $date." ".$rowData[0][3];
+                $emp_id = $rowData[0][0];
+
+                $r = $empObj->addAttendance($adate, $intime, $outtime, $emp_id);
+
+                if($r > 0){
+                    $msg = base64_encode("New Attendance Added Successfully!");
+
+                    $not_message = "New Attendance sheet of <i><b>". $adate ."</b></i> added";
+                    $notificationObj->addNotification(6, $not_message);
+                    ?>
+                    <script>window.location = "../view/employee-management.php?success_message=<?php echo $msg; ?>";</script>
+
+                    <?php
+                } else{
+                    $msg = base64_encode("New Attendance Failed to Add!");
+                    ?>
+                    <script>window.location = "../view/employee-management.php?error_message=<?php echo $msg; ?>";</script>
+                    <?php
+                }
+            }
+            break;
     }
 
 }

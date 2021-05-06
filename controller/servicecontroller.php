@@ -229,107 +229,6 @@ if(isset($_REQUEST["status"])){
                 </div>
             </div>
 
-            <!-- Sixth Row -->
-            <div class="form-row">
-                <div class="form-group col-5">
-                    <label><b>Service Required Item List</b></label>
-                </div>
-            </div>
-
-            <!--Seventh Row -->
-            <div class="form-group row">
-                <!-- Item 1 -->
-                <div class="input-group col-6 mb-2">
-                    <input type="text" readonly class="col-2 form-control mr-2" value="Item Code 1">
-                    <input type="text" readonly class="form-control mr-2" id="editable_item_1" value="">
-                    <button type="button" class="btn btn-outline-primary" id="btn_editable_item_1_pencil"><i class="fa fa-pencil"></i></button>
-                    <button type="button" class="btn btn-outline-success" id="btn_editable_item_1_check"><i class="fa fa-check"></i></button>
-                </div>
-
-                <!-- Item 2 -->
-                <div class="input-group col-6 mb-2">
-                    <input type="text" readonly class="col-2 form-control mr-2" value="Item Code 2">
-                    <input type="text" readonly class="form-control mr-2" id="editable_item_2" value="">
-                    <button type="button" class="btn btn-outline-primary" id="btn_editable_item_2_pencil"><i class="fa fa-pencil"></i></button>
-                    <button type="button" class="btn btn-outline-success" id="btn_editable_item_2_check"><i class="fa fa-check"></i></button>
-                </div>
-
-                <!-- Item 3 -->
-                <div class="input-group col-6 mb-2">
-                    <input type="text" readonly class="col-2 form-control mr-2" value="Item Code 3">
-                    <input type="text" readonly class="form-control mr-2" id="editable_item_3" value="">
-                    <button type="button" class="btn btn-outline-primary" id="btn_editable_item_3_pencil"><i class="fa fa-pencil"></i></button>
-                    <button type="button" class="btn btn-outline-success" id="btn_editable_item_3_check"><i class="fa fa-check"></i></button>
-                </div>
-
-                <!-- Item 4 -->
-                <div class="input-group col-6 mb-2">
-                    <input type="text" readonly class="col-2 form-control mr-2" value="Item Code 4">
-                    <input type="text" readonly class="form-control mr-2" id="editable_item_4" value="">
-                    <button type="button" class="btn btn-outline-primary" id="btn_editable_item_4_pencil"><i class="fa fa-pencil"></i></button>
-                    <button type="button" class="btn btn-outline-success" id="btn_editable_item_4_check"><i class="fa fa-check"></i></button>
-                </div>
-
-                <!-- Item 5 -->
-                <div class="input-group col-6 mb-2">
-                    <input type="text" readonly class="col-2 form-control mr-2" value="Item Code 5">
-                    <input type="text" readonly class="form-control mr-2" id="editable_item_5" value="">
-                    <button type="button" class="btn btn-outline-primary" id="btn_editable_item_5_pencil"><i class="fa fa-pencil"></i></button>
-                    <button type="button" class="btn btn-outline-success" id="btn_editable_item_5_check"><i class="fa fa-check"></i></button>
-                </div>
-
-                <!-- Item 6 -->
-                <div class="input-group col-6 mb-2">
-                    <input type="text" readonly class="col-2 form-control mr-2" value="Item Code 6">
-                    <input type="text" readonly class="form-control mr-2" id="editable_item_6" value="">
-                    <button type="button" class="btn btn-outline-primary" id="btn_editable_item_6_pencil"> <i class="fa fa-pencil"></i> </button>
-                    <button type="button" class="btn btn-outline-success" id="btn_editable_item_6_check"><i class="fa fa-check"></i></button>
-                </div>
-            </div>
-
-            <!-- Eight Row -->
-            <div class="form-row">
-                <div class="form-group col-5">
-                    <label><b>Worker Assignment List</b></label>
-                </div>
-            </div>
-
-            <!--Ninth Row -->
-            <div class="form-group row">
-                <!-- Worker 1 -->
-                <div class="input-group col-6 mb-2">
-                    <input type="text" readonly class="col-2 form-control mr-2" value="Worker Code 1">
-                    <input type="text" readonly class="form-control mr-2" id="editable_worker_1" value="">
-                    <button type="button" class="btn btn-outline-primary" id="btn_editable_worker_1_pencil"> <i class="fa fa-pencil"></i> </button>
-                    <button type="button" class="btn btn-outline-success" id="btn_editable_worker_1_check"><i class="fa fa-check"></i></button>
-                </div>
-
-                <!-- Worker 2 -->
-                <div class="input-group col-6 mb-2">
-                    <input type="text" readonly class="col-2 form-control mr-2" value="Worker Code 2">
-                    <input type="text" readonly class="form-control mr-2" id="editable_worker_2" value="">
-                    <button type="button" class="btn btn-outline-primary" id="btn_editable_worker_2_pencil"> <i class="fa fa-pencil"></i> </button>
-                    <button type="button" class="btn btn-outline-success" id="btn_editable_worker_2_check"><i class="fa fa-check"></i></button>
-                </div>
-
-                <!-- Worker 3 -->
-                <div class="input-group col-6 mb-2">
-                    <input type="text" readonly class="col-2 form-control mr-2" value="Worker Code 3">
-                    <input type="text" readonly class="form-control mr-2" id="editable_worker_3" value="">
-                    <button type="button" class="btn btn-outline-primary" id="btn_editable_worker_3_pencil"> <i class="fa fa-pencil"></i> </button>
-                    <button type="button" class="btn btn-outline-success" id="btn_editable_worker_3_check"><i class="fa fa-check"></i></button>
-                </div>
-
-                <!-- Worker 4 -->
-                <div class="input-group col-6 mb-2">
-                    <input type="text" readonly class="col-2 form-control mr-2" value="Worker Code 4">
-                    <input type="text" readonly class="form-control mr-2" id="editable_worker_4" value="">
-                    <button type="button" class="btn btn-outline-primary" id="btn_editable_worker_4_pencil"> <i class="fa fa-pencil"></i> </button>
-                    <button type="button" class="btn btn-outline-success" id="btn_editable_worker_4_check"><i class="fa fa-check"></i></button>
-                </div>
-            </div>
-
-
             <?php
             break;
 
@@ -433,6 +332,8 @@ if(isset($_REQUEST["status"])){
                 $num_rows_affected = $serviceObj->changeServiceStatus($service_id);
                 if($num_rows_affected > 0)
                 {
+                    $not_message = "The service bearing id <i><b>". $service_id ."</b></i> has been deleted";
+                    $notificationObj->addNotification(1, $not_message);
                     echo "The Service has been successfully deleted!";
                 } else {
                     echo "The Service could not be deleted!";

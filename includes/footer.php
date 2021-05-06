@@ -2,6 +2,7 @@
 <?php include '../includes/bootstrap_includes_js.php'; ?>
 </body>
 </html>
+<script src="../assets/js/notification.js"></script>
 
 <!-- Confirm Password Validation    -->
 <script>

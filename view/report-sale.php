@@ -25,7 +25,7 @@ $reportObj = new Report();
             <h1 class="display-4 text-center">Sale Reports</h1>
         </div>
     </div>
-    <form class="form">
+    <form class="form" method="post" action="report-generator1.php">
         <div class="row form-group mt-4">
             <label for="sale_report_type" class="mt-1">Report Type : </label>
             <div class="input-group col-md-2">
@@ -36,6 +36,9 @@ $reportObj = new Report();
                     <option value="sale_supplier_list">Supplier Detail Report</option>
                 </select>
             </div>
+
+            <input type="hidden" name="print_data" id="print_data">
+
 
             <div class="input-group col-md-9">
 
@@ -60,8 +63,7 @@ $reportObj = new Report();
 
 
                 <button type="button" class="btn btn-success mr-5" id="btn-generate-sale-report"><i class="fa fa-file-text-o"></i> Generate</button>
-                <button type="button" class="btn btn-primary mr-2 justify-content-end"><i class="fa fa-download"></i> Download</button>
-                <button type="button" class="btn btn-primary"><i class="fa fa-print"></i> Print</button>
+                <button type="submit" class="btn btn-primary mr-2 justify-content-end"><i class="fa fa-download"></i> Download</button>
             </div>
     </form>
 </div>

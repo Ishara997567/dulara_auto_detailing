@@ -16,17 +16,159 @@ $jobObj = new Job(); ?>
 
 
     <!-- Top Row    -->
-    <div class="row padding welcome bg-light mb-3 py-2 mr-n5">
+    <div class="row padding welcome bg-light mb-3 py-2">
         <!-- Module Name    -->
         <div class="col-8">
             <div class="navbar-brand ml-5"><i class="fa fa-tasks"></i>&nbsp;Job Management</div>
         </div>
 
-        <!-- New Job    -->
-        <div class="col-3 d-flex justify-content-end">
+        <!-- New Job and Vehicle Model   -->
+        <div class="col-4 d-flex justify-content-end">
+            <button class="rounded-pill btn btn-outline-primary mr-3" type="button" data-toggle="modal" data-target="#new_vehicle_model_modal"><i class="fa fa-plus"></i> New Vehicle Model</button>
             <button class="rounded-pill btn btn-outline-primary" type="button" data-toggle="modal" data-target="#new_job_modal"><i class="fa fa-plus"></i> New Job</button>
         </div>
     </div>
+
+
+
+
+
+
+
+    <!-- Modal for New Vehicle Model    -->
+    <div class="modal fade" id="new_vehicle_model_modal" tabindex="-1" role="dialog" aria-labelledby="new_vehicle_model_modal" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">New Vehicle Model</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="../controller/jobcontroller.php?status=add_vehicle" method="post">
+
+                    <div class="modal-body">
+
+                        <div class="form-group row">
+                            <label class="col-form-label col-4" for="new_vehicle_model_id">New Vehicle Model ID</label>
+                            <div class="col-4">
+                                <?php
+                                $new_vehicle_model_id = $jobObj->getLastVehicleModelID();
+                                ?>
+                                <input type="text" id="new_vehicle_model_id" name="new_vehicle_model_id" class="form-control" value="<?php echo $new_vehicle_model_id; ?>" readonly/>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row">
+                            <label class="col-form-label col-4" for="new_vehicle_model_name">New Vehicle Model Name</label>
+                            <div class="col-8">
+                                <input type="text" id="new_vehicle_model_name" name="new_vehicle_model_name" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-form-label col-4" for="new_vehicle_model_year">Vehicle Model Year</label>
+                            <div class="col-8">
+                                <input type="text" id="new_vehicle_model_year" name="new_vehicle_model_year" class="form-control" />
+                            </div>
+                        </div>
+
+                        <hr>
+
+
+                        <fieldset class="form-group">
+                            <div class="row">
+                                <legend class="col-form-label col-4 pt-0">Create New Vehicle Make</legend>
+                                <div class="col-8">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="new_create_vehicle_make" id="new_create_vehicle_make_yes" value="1">
+                                        <label class="form-check-label" for="new_create_vehicle_make_yes">
+                                            Yes
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="new_create_vehicle_make" id="new_create_vehicle_make_no" value="0" checked>
+                                        <label class="form-check-label" for="new_create_vehicle_make_no">
+                                            No
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+
+
+                        <hr>
+
+
+                        <div class="form-group row" id="preview_new_select_vehicle_make">
+                            <label for="new_select_vehicle_make" class="col-4 col-form-label">Select Vehicle Make</label>
+                            <div class="col-8">
+                                <?php
+                                $vmake_result = $jobObj->getAllVehicleMakes();
+                                ?>
+                                <select name="new_select_vehicle_make" id="new_select_vehicle_make" class="custom-select">
+                                    <option value="choose" selected>Select A Vehicle Make</option>
+                                    <?php
+                                    while($vmaker = $vmake_result->fetch_assoc())
+                                    {
+                                        ?>
+                                        <option value="<?php echo $vmaker['vehicle_make_id']; ?>"><?php echo $vmaker['vehicle_make_name']; ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div id="preview_new_vehicle_make">
+                            <div class="form-group row">
+                                <label class="col-form-label col-4" for="new_vehicle_make_id">New Vehicle Make ID</label>
+                                <div class="col-4">
+                                    <?php $new_vehicle_make_id = $jobObj->getLastVehicleMakelID(); ?>
+                                    <input type="text" id="new_vehicle_make_id" name="new_vehicle_make_id" class="form-control" value="<?php echo $new_vehicle_make_id; ?>" readonly/>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-4" for="new_vehicle_make_name">New Vehicle Make Name</label>
+                                <div class="col-8">
+                                    <input type="text" id="new_vehicle_make_name" name="new_vehicle_make_name" class="form-control" />
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                        <button type="submit" class="btn btn-primary" id="btn_create_vehicle"><i class="fa fa-check"></i> Done</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- End of  Modal for New Vehicle Model    -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <!-- Success Message From the Controller    -->
     <?php
     if(isset($_GET['success_message']))
@@ -34,11 +176,14 @@ $jobObj = new Job(); ?>
         ?>
 
         <div class="row padding d-flex justify-content-center">
-            <div class="col-11 display-4 text-center alert alert-success">
+            <div class="col-11 display-4 text-center alert alert-success alert-dismissible fade show">
                 <?php
                 echo base64_decode($_GET['success_message']);
 
                 ?>
+                <button type="button" class="close" data-dismiss="alert">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
         </div>
 
@@ -52,11 +197,15 @@ $jobObj = new Job(); ?>
     {
         ?>
         <div class="row padding d-flex justify-content-center">
-            <div class="col-11 display-4 text-center alert alert-danger">
+            <div class="col-11 display-4 text-center alert alert-danger fade show alert-dismissible">
 
                 <?php
                 echo base64_decode($_GET['error_message']);
                 ?>
+
+                <button type="button" class="close" data-dismiss="alert">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
         </div>
 
@@ -132,7 +281,7 @@ $jobObj = new Job(); ?>
                         <div class="form-group row">
                             <label for="vehicle_make" class="col-sm-4 col-form-label">Vehicle Make</label>
                             <div class="col-sm-8">
-                                <select class="custom-select" id="vehicle_make" name="vehicle_make">
+                                <select class="custom-select" id="vehicle_make" name="vehicle_make" class="custom-select">
                                     <option value="choose" selected>Select Vehicle Make</option>
                                     <?php
                                     $vm_result = $jobObj->getAllVehicleMakes();
@@ -336,10 +485,10 @@ $jobObj = new Job(); ?>
                     </button>
                 </div>
                 <form action="../controller/jobcontroller.php?status=generate_invoice" method="post">
-                <div class="modal-body manage-completed-jobs">
+                    <div class="modal-body manage-completed-jobs">
 
 
-                </div>
+                    </div>
                 </form>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary generate-invoice-button" name="submit_generate_invoice">Generate Invoice</button>
@@ -385,20 +534,20 @@ $jobObj = new Job(); ?>
                 while($invoiced_row = $invoiced_result->fetch_assoc())
 
                 {
-                ?>
-                <tr>
-                    <th scope="row"><?php echo $invoiced_row['invoice_id'];?></th>
-                    <td><?php echo $invoiced_row['job_id']; ?></td>
-                    <td><?php echo $invoiced_row['job_vehicle_id'];?></td>
-                    <td><?php echo $invoiced_row['cus_name']; ?></td>
-                    <td><?php echo $invoiced_row['vehicle_make_name']; ?></td>
-                    <td><?php echo $invoiced_row['vehicle_model_name']; ?></td>
-                    <td><?php echo $invoiced_row['job_vehicle_odo']; ?></td>
-                    <td><?php echo $invoiced_row['job_vehicle_mileage']; ?></td>
-                    <td><?php echo $invoiced_row['invoice_amount']; ?></td>
-                    <td><a href="#modal_invoice" onclick="showInvoiceDetails(<?php echo $invoiced_row['invoice_id'];?>)" class="btn btn-sm btn-outline-primary" data-toggle="modal"><i class="fa fa-lg fa-file-text-o"></i></a></td>
+                    ?>
+                    <tr>
+                        <th scope="row"><?php echo $invoiced_row['invoice_id'];?></th>
+                        <td><?php echo $invoiced_row['job_id']; ?></td>
+                        <td><?php echo $invoiced_row['job_vehicle_id'];?></td>
+                        <td><?php echo $invoiced_row['cus_name']; ?></td>
+                        <td><?php echo $invoiced_row['vehicle_make_name']; ?></td>
+                        <td><?php echo $invoiced_row['vehicle_model_name']; ?></td>
+                        <td><?php echo $invoiced_row['job_vehicle_odo']; ?></td>
+                        <td><?php echo $invoiced_row['job_vehicle_mileage']; ?></td>
+                        <td><?php echo $invoiced_row['invoice_amount']; ?></td>
+                        <td><a href="#modal_invoice" onclick="showInvoiceDetails(<?php echo $invoiced_row['invoice_id'];?>)" class="btn btn-sm btn-outline-primary" data-toggle="modal"><i class="fa fa-lg fa-file-text-o"></i></a></td>
 
-                </tr>
+                    </tr>
                 <?php } ?>
                 </tbody>
             </table>
@@ -418,18 +567,20 @@ $jobObj = new Job(); ?>
                         </span>
                     </button>
                 </div>
-
-                <div class="modal-body">
-                    <form action="#" id="form_invoice_details">
-
+                <form action="job-invoice-generate.php" method="post">
+                    <div class="modal-body" id="form_invoice_details">
 
 
-                    </form>
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
+
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Print Invoice</button>
+                    </div>
+                </form>
 
             </div>
         </div>

@@ -4,6 +4,40 @@ $dbConnection = new DbConnection();
 
 class Job
 {
+    public function getLastVehicleModelID()
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT MAX(vehicle_model_id)+1 as VModelID  FROM vehicle_model;";
+        $result = $con->query($sql);
+        $r = $result->fetch_assoc();
+        return $r['VModelID'];
+    }
+
+    public function getLastVehicleMakelID()
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT MAX(vehicle_make_id)+1 as VMakeID  FROM vehicle_make;";
+        $result = $con->query($sql);
+        $r = $result->fetch_assoc();
+        return $r['VMakeID'];
+    }
+
+    public function addVehicleModelOnly($model_name, $make_id, $year)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "INSERT INTO vehicle_model (vehicle_model_name, vehicle_model_make_id, vehicle_model_year) VALUES ('$model_name', '$make_id', '$year');";
+        $con->query($sql);
+        return $con->affected_rows;
+    }
+
+    public function addVehicleMake($make_name)
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "INSERT INTO vehicle_make (vehicle_make_name) VALUES ('$make_name');";
+        $con->query($sql);
+        return $con->affected_rows;
+    }
+
     public function getLastJobID()
     {
         $con = $GLOBALS["conn"];
@@ -100,10 +134,10 @@ class Job
 
     //Making the Invoice
         //adding to invoice table
-    public function addInvoice($job_id, $tot_item_amount, $tot_service_amount, $invoice_amount)
+    public function addInvoice($job_id, $tot_item_amount, $tot_service_amount, $invoice_amount,$tax)
     {
         $con = $GLOBALS["conn"];
-        $sql = "INSERT INTO invoice (job_id, invoice_item_total_amount, invoice_service_total_amount, invoice_amount) VALUES ('$job_id', '$tot_item_amount', '$tot_service_amount', '$invoice_amount');";
+        $sql = "INSERT INTO invoice (job_id, invoice_item_total_amount, invoice_service_total_amount, invoice_amount, invoice_tax) VALUES ('$job_id', '$tot_item_amount', '$tot_service_amount', '$invoice_amount', '$tax');";
         $con->query($sql);
         return $con->insert_id;
     }
@@ -142,7 +176,7 @@ class Job
     {
         $con = $GLOBALS['conn'];
 
-        $sql = "SELECT i.invoice_amount, i.invoice_item_total_amount, i.invoice_service_total_amount, i.job_id, i.invoice_created_at, j.job_vehicle_id, j.job_start_time, j.job_finish_time, c.cus_name, c.cus_cn1, c.cus_cn2 ,mk.vehicle_make_name, ml.vehicle_model_name, j.job_vehicle_odo, j.job_vehicle_mileage FROM invoice i, job j, customer c, vehicle_make mk, vehicle_model ml WHERE i.invoice_id='$invoice_id' AND i.job_id = j.job_id AND j.job_cus_id=c.cus_id AND j.job_vehicle_model_id=ml.vehicle_model_id AND j.job_vehicle_make_id = mk.vehicle_make_id;";
+        $sql = "SELECT i.invoice_amount, i.invoice_tax, i.invoice_item_total_amount, i.invoice_service_total_amount, i.job_id, i.invoice_created_at, j.job_vehicle_id, j.job_start_time, j.job_finish_time, c.cus_name, c.cus_cn1, c.cus_cn2 ,mk.vehicle_make_name, ml.vehicle_model_name, j.job_vehicle_odo, j.job_vehicle_mileage FROM invoice i, job j, customer c, vehicle_make mk, vehicle_model ml WHERE i.invoice_id='$invoice_id' AND i.job_id = j.job_id AND j.job_cus_id=c.cus_id AND j.job_vehicle_model_id=ml.vehicle_model_id AND j.job_vehicle_make_id = mk.vehicle_make_id;";
 
         return $con->query($sql);
     }
@@ -158,7 +192,7 @@ class Job
     public function getInvoiceServicesByInvoiceId($invoice_id)
     {
         $con = $GLOBALS['conn'];
-        $sql = "SELECT iserv.invoice_service_id, s.service_name, iserv.invoice_service_price FROM invoice_service iserv, service s WHERE invoice_id = '$invoice_id' AND iserv.invoice_service_id = s.service_id;";
+        $sql = "SELECT iserv.invoice_service_id,  s.service_name, iserv.invoice_service_price FROM invoice_service iserv, service s WHERE invoice_id = '$invoice_id' AND iserv.invoice_service_id = s.service_id;";
         return $con->query($sql);
 
     }
@@ -186,6 +220,5 @@ class Job
         $sql = "SELECT MAX(invoice_id)+1 as NewInvoiceID FROM invoice;";
         return $con->query($sql);
     }
-
 
 }

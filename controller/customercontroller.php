@@ -75,7 +75,7 @@ if(isset($_REQUEST["status"]))
                 $description = $_POST['cus_referral_description'];
 
                 $cus_referral_id = $cusObj->addCustomerReferral($referrer_cus_id, $referee_cus_id, $description);
-                $cus_point_id = $cusObj->allocateCustomerPoints($cus_id, 2);
+                $cus_point_id = $cusObj->allocateCustomerPoints($referrer_cus_id, 2);
 
                 $not_message = "A new customer referral <i><b>". $cus_referral_id ."</b></i> created for the referrer <b><i>".$referrer_cus_id."</i></b>";
                 $notificationObj->addNotification(4, $not_message);
@@ -83,10 +83,6 @@ if(isset($_REQUEST["status"]))
                 $not_message = "The referrer customer <i><b>". $cus_name ."</b></i> has obtained <b><i>5</i></b> points for the referee customer <b><i>".$referee_cus_id."</i></b>";
                 $notificationObj->addNotification(4, $not_message);
             }
-
-
-
-
             break;
 
         case "manage_customer":
@@ -484,45 +480,6 @@ if(isset($_REQUEST["status"]))
                 $notification_message = "Customer vehicle mileage of <i><b>" .$cus_id. "</b></i> has been changed to <i><b>".$mileage."</b></i>";
                 $notificationObj->addNotification(4, $notification_message);
             }
-
-            break;
-
-        case "customer_feedback_send_message":
-
-            //post values
-            $m_heading = $_POST["m_heading"];
-            $message = $_POST["message"];
-            $m_type = isset($_POST["m_type"]) ? $_POST["m_type"] : "";
-            $m_to_whom = isset($_POST["m_to_whom"]) ? $_POST["m_to_whom"] : "";
-            $specific_customer_names = isset($_POST["specific_customer_names"]) ? $_POST["specific_customer_names"] : "";
-            $when = isset($_POST["when"]) ? $_POST["when"] : "";
-
-
-            foreach($m_type as $type) {
-                echo $type;
-            }
-
-            foreach($m_to_whom as $whom) {
-                echo $whom;
-            }
-            foreach($specific_customer_names as $specific_customer_nam) {
-                echo $specific_customer_nam;
-            }
-            foreach($when as $w) {
-                echo $w;
-            }
-
-
-
-            //db string values
-            $m_type_s = json_encode($m_type);
-            $m_to_whom_s = json_encode($m_to_whom);
-            $specific_customer_names_s = json_encode($specific_customer_names);
-            $when_s = json_encode($when);
-
-            //$insert_id = $cusObj->storeCustomerMessage($m_heading,$message, $m_type_s, $m_to_whom_s, $specific_customer_names_s, $when_s);
-
-
 
             break;
 

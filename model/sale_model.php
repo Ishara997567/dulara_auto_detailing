@@ -256,4 +256,27 @@ class Sale{
         return $con->affected_rows;
     }
 
+    public function getTotalSale()
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT MONTHNAME(invoice_created_at) as smonth, SUM(invoice_amount) as sale, YEAR(invoice_created_at) as year FROM invoice WHERE YEAR(invoice_created_at) = YEAR(CURDATE()) GROUP BY smonth ORDER BY smonth DESC;";
+        return $con->query($sql);
+    }
+
+    public function getTotalExpense()
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT MONTHNAME(sgrn_created_at) as emonth, SUM(sgrn_total_amount) as expense, YEAR(sgrn_created_at) as year FROM sale_grn WHERE YEAR(sgrn_created_at) = YEAR(CURDATE()) GROUP BY emonth ORDER BY emonth DESC;";
+        return $con->query($sql);
+    }
+
+    public function getSupplierCount()
+    {
+        $con = $GLOBALS["conn"];
+        $sql = "SELECT COUNT(sup_id) as c FROM supplier;";
+        $result = $con->query($sql);
+        $row = $result->fetch_assoc();
+        return $row['c'];
+    }
+
 }
